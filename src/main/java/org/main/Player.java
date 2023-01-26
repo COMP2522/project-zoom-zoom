@@ -9,25 +9,35 @@ import processing.core.PVector;
  */
 public class Player {
   private PVector position;
-  private PVector direction;
   private float size;
-  private float speed;
   private Color color;
   private Window window;
   private ArrayList<Track> track;
   private Boolean isOnTrack;
 
-  public Player(PVector position, PVector direction, float size, Color color,
-                float speed, ArrayList<Track> track, Window window) {
+  // Movement distance variable, unnecessary in game.
+  private int movement = 9;
+
+  /**
+   * Constructor mostly copied from ball labs.
+   *
+   * @param position Starting position
+   * @param size Size of ball
+   * @param color Ball's color (red goes faster)
+   * @param track Track pieces array
+   * @param window Window
+   */
+  public Player(PVector position, float size, Color color, ArrayList<Track> track, Window window) {
     this.position = position;
-    this.direction = direction;
     this.size = size;
     this.color = color;
-    this.speed = speed;
     this.track = track;
     this.window = window;
   }
 
+  /**
+   * Checks status. On track is checked here, but should be moved to car when it's implemented.
+   */
   public void update() {
     isOnTrack = false;
     for (Track track : track) {
@@ -52,16 +62,16 @@ public class Player {
    * Movement methods for testing.
    */
   public void moveUp() {
-    this.position = this.getPosition().add(new PVector(0, -5).mult(speed));
+    this.position = this.getPosition().add(new PVector(0, -movement));
   }
   public void moveDown() {
-    this.position = this.getPosition().add(new PVector(0, 5).mult(speed));
+    this.position = this.getPosition().add(new PVector(0, movement));
   }
   public void moveLeft() {
-    this.position = this.getPosition().add(new PVector(-5, 0).mult(speed));
+    this.position = this.getPosition().add(new PVector(-movement, 0));
   }
   public void moveRight() {
-    this.position = this.getPosition().add(new PVector(5,  0).mult(speed));
+    this.position = this.getPosition().add(new PVector(movement,  0));
   }
 
   public PVector getPosition() {

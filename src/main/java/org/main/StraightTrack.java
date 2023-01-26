@@ -14,6 +14,7 @@ public class StraightTrack extends Track {
   private float yCord2;
   private float width;
   private float height;
+  private int endDirection;
   private Color color = new Color(100, 100, 100);
   private Window window;
 
@@ -44,6 +45,10 @@ public class StraightTrack extends Track {
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
     window.rect(this.xCord1, this.yCord1, width, height);
     window.popStyle();
+  }
+
+  public int getEndDirection() {
+    return endDirection;
   }
 
   /**
