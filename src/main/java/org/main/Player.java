@@ -13,7 +13,9 @@ public class Player {
   private Color color;
   private Window window;
   private ArrayList<Track> track;
+  private ArrayList<Wall> walls;
   private Boolean isOnTrack;
+  private Boolean hashitWall;
 
   // Movement distance variable, unnecessary in game.
   private int movement = 9;
@@ -27,11 +29,13 @@ public class Player {
    * @param track Track pieces array
    * @param window Window
    */
-  public Player(PVector position, float size, Color color, ArrayList<Track> track, Window window) {
+  public Player(PVector position, float size, Color color, ArrayList<Track> track, ArrayList<Wall> walls,
+                Window window) {
     this.position = position;
     this.size = size;
     this.color = color;
     this.track = track;
+    this.walls = walls;
     this.window = window;
   }
 
@@ -43,6 +47,13 @@ public class Player {
     for (Track track : track) {
       if (track.isOnTrack(this.position)) {
         System.out.println("On The Track");
+        isOnTrack = true;
+      }
+    }
+    hashitWall = false;
+    for (Wall wall : walls) {
+      if (wall.hasHitWall(this.position)) {
+        System.out.println("Hit Wall");
         isOnTrack = true;
       }
     }
