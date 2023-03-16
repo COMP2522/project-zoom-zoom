@@ -1,7 +1,6 @@
 package project;
 
 import java.awt.*;
-
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -10,7 +9,7 @@ import processing.core.PVector;
  *
  * @author James Langille
  */
-public class Button{
+public class Button {
   private PVector position;
   private float width;
   private float height;
@@ -30,7 +29,8 @@ public class Button{
    * @param color of button
    * @param window screen
    */
-  public Button(PVector position, float width, float height, String title, Color color, Window window) {
+  public Button(PVector position, float width, float height,
+                String title, Color color, Window window) {
     this.position = position;
     this.width = width;
     this.height = height;
@@ -39,6 +39,9 @@ public class Button{
     this.window = window;
   }
 
+  /**
+   * Draw the buttons onto the screen.
+   */
   public void draw() {
     // Create and fill in colour for button shape
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
@@ -50,7 +53,9 @@ public class Button{
     window.text(title, position.x + (width / 2), position.y + (height / 2) - 5);
   }
 
-  // Update the button if it is clicked
+  /**
+   * Update the button's boolean status if they were clicked.
+   */
   public void update() {
     // Check if mouse left button has been pressed
     if (window.mousePressed && window.mouseButton == PApplet.LEFT && !pressed) {
@@ -58,7 +63,7 @@ public class Button{
       // Check if mouse click is in button dimensions
       if (window.mouseX >= position.x && window.mouseX <= position.x + width
           && window.mouseY >= position.y && window.mouseY <= position.y + height) {
-          clicked = true;
+        clicked = true;
       }
     } else {
       clicked = false;

@@ -10,7 +10,7 @@ import java.awt.*;
  *
  * @author James Langille
  */
-public class MainMenu extends PApplet {
+public class MainMenu {
   private final Window window;
   private static MainMenu instance;
   private Button onePlayer;
@@ -62,11 +62,17 @@ public class MainMenu extends PApplet {
     onePlayer.update();
     twoPlayer.draw();
     twoPlayer.update();
-    if (onePlayer.isClicked() || twoPlayer.isClicked()) {
-//      Button test = new Button(new PVector((float) (window.displayWidth / 3.125), 500), 100, 50, "Test",
-//          new Color(255, 0, 0), window);
-//      test.draw();
+    if (onePlayer.isClicked()) {
+      // Initialize one player game
+      window.init1Player();
+        // Change menu to one player game
         window.menu = 1;
+    }
+    if (twoPlayer.isClicked()) {
+      // Initialize two player game
+      window.init2Player();
+      // Change menu to two player game
+      window.menu = 2;
     }
     controls.draw();
     if (controls.isClicked()) {
