@@ -3,6 +3,7 @@ package project;
 
 import processing.core.PApplet;
 import processing.core.PVector;
+
 import java.awt.*;
 
 /**
@@ -75,9 +76,6 @@ public class MainMenu {
       window.menu = 2;
     }
     controls.draw();
-    if (controls.isClicked()) {
-      controls.update();
-    }
     quit.draw();
     quit.update();
     if (quit.isClicked()) {

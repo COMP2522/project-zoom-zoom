@@ -4,11 +4,9 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
-import javax.sound.sampled.*;
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 /**
  * Zoom zoom window class.
@@ -225,7 +223,9 @@ public class Window extends PApplet {
         break;
       }
     }
+
   }
+
 
   /**
    * Main function.
@@ -236,6 +236,7 @@ public class Window extends PApplet {
     String[] appletArgs = new String[]{"eatBubbles"};
     Window eatBubbles = new Window();
     PApplet.runSketch(appletArgs, eatBubbles);
+    // Run background music
     BGM.getBGM(true);
   }
 }
