@@ -3,7 +3,6 @@ package project;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-
 import java.awt.*;
 
 /**
@@ -45,20 +44,20 @@ public class MainMenu {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     window.textSize(40);
 
-    onePlayer = new Button(new PVector((float) (window.displayWidth / 2.125) - 40, 500), 200, 50,
-        "One Player", new Color(255, 0, 0), window);
-    twoPlayer = new Button(new PVector((float) (window.displayWidth / 2.125) - 50, 600), 225, 50,
-        "Two players", new Color(255, 0, 0), window);
-    controls = new Button(new PVector((float) (window.displayWidth / 2.125), 700), 150,
-        50, "Controls", new Color(200, 50, 50), window);
-    quit = new Button(new PVector((float) (window.displayWidth / 2.125), 800), 175,
+    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 500), 225, 50,
+        "One Player", new Color(52, 152, 235), window);
+    twoPlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 600), 225, 50,
+        "Two players", new Color(52, 73, 235), window);
+    controls = new Button(new PVector((float) (window.displayWidth / 2) - 100, 700), 225,
+        50, "Controls", new Color(104, 52, 235), window);
+    quit = new Button(new PVector((float) (window.displayWidth / 2) - 100, 800), 225,
         50, "Quit", new Color(200, 50, 50), window);
   }
 
   public void draw() {
-    window.background(0, 255, 150);
+    window.background(64, 64, 64);
     window.fill(0);
-    window.text("Zoom Zoom", window.displayWidth / 2,200);
+    window.text("Zoom Zoom", window.displayWidth / 2 + 10,window.displayHeight/4);
     onePlayer.draw();
     onePlayer.update();
     twoPlayer.draw();
@@ -76,6 +75,9 @@ public class MainMenu {
       window.menu = 2;
     }
     controls.draw();
+    if (controls.isClicked()) {
+      controls.update();
+    }
     quit.draw();
     quit.update();
     if (quit.isClicked()) {
