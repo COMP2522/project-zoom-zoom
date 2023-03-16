@@ -47,7 +47,7 @@ public class Button{
     // Create and fill in colour for text
     window.fill(0);
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
-    window.text(title, position.x + (width / 2), position.y + (height / 2));
+    window.text(title, position.x + (width / 2), position.y + (height / 2) - 5);
   }
 
   // Update the button if it is clicked
