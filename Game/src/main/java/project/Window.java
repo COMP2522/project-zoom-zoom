@@ -5,6 +5,7 @@ import processing.core.PVector;
 import processing.event.KeyEvent;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -15,8 +16,10 @@ import java.util.ArrayList;
  *
  */
 public class Window extends PApplet {
-
+  Timer timer;
+  Timer timer2;
   MainMenu mainMenu;
+  ControlMenu controlMenu;
   ArrayList<Sprite> sprites;
   ArrayList<Sprite> enemies;
   Player player1;
@@ -29,6 +32,8 @@ public class Window extends PApplet {
   int numEnemies = 1;
   int minSize = 10;
   int maxSize = 40;
+  public static boolean audio = true;
+  private int check = 1;
 
   /*
    * 0. Main menu
@@ -142,9 +147,11 @@ public class Window extends PApplet {
   @Override
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
-    if (keyCode == TAB)
+    if (keyCode == TAB) {
       menu = 0;
-    Controls.setMovementTrue(keyCode);
+    }
+    if (menu == 1 || menu == 2)
+      Controls.setMovementTrue(keyCode);
   }
 
   /**
@@ -152,7 +159,8 @@ public class Window extends PApplet {
    */
   @Override
   public void keyReleased() {
-    Controls.setMovementFalse(keyCode);
+    if (menu == 1 || menu == 2)
+      Controls.setMovementFalse(keyCode);
   }
 
   /**
@@ -161,6 +169,11 @@ public class Window extends PApplet {
    * in order of function calls.
    */
   public void draw() {
+    if (audio && check == 1) {
+      BGM.getBGM(true);
+      audio = false;
+      check++;
+    }
     background(0);
     switch (menu) {
       case 0 -> { // Main menu
@@ -170,7 +183,10 @@ public class Window extends PApplet {
         break;
       }
       case 1 -> { // 1 Player game
-        background(0);
+        background(64, 64, 64);
+        timer = Timer.getInstance();
+        timer.running = true;
+        timer.showTimer(this);
         // Move player around the screen.
         Controls.playerMovement();
         for (Sprite sprite : sprites) {
@@ -196,6 +212,9 @@ public class Window extends PApplet {
       }
       case 2 -> { // 2 Player game
         background(255,255,0);
+        timer2 = Timer.getInstance();
+        timer2.running = true;
+        timer2.showTimer(this);
         // Move player around the screen.
         Controls.playerMovement();
         for (Sprite sprite : sprites) {
@@ -219,11 +238,17 @@ public class Window extends PApplet {
         }
         break;
       }
+      case 3 -> {
+        background(64, 64, 64);
+        controlMenu = ControlMenu.getInstance(this);
+        controlMenu.setup();
+        controlMenu.draw();
+        break;
+      }
       default -> {
         break;
       }
     }
-
   }
 
 
@@ -237,6 +262,5 @@ public class Window extends PApplet {
     Window eatBubbles = new Window();
     PApplet.runSketch(appletArgs, eatBubbles);
     // Run background music
-    BGM.getBGM(true);
   }
 }

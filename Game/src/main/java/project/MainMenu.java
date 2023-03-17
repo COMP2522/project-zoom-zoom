@@ -66,8 +66,8 @@ public class MainMenu {
     if (onePlayer.isClicked()) {
       // Initialize one player game
       window.init1Player();
-        // Change menu to one player game
-        window.menu = 1;
+      // Change menu to one player game
+      window.menu = 1;
     }
     if (twoPlayer.isClicked()) {
       // Initialize two player game
@@ -76,6 +76,10 @@ public class MainMenu {
       window.menu = 2;
     }
     controls.draw();
+    controls.update();
+    if (controls.isClicked()) {
+      window.menu = 3;
+    }
     quit.draw();
     quit.update();
     if (quit.isClicked()) {
