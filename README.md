@@ -1,6 +1,10 @@
 # Project
+<b>Max V:</b> Tracks<br />
+<b>Mike:</b> Car & Parts<br />
+<b>Jayden:</b> UI & Settings<br />
+<b>James:</b> Controls & Player<br />
+<b>Rohil:</b> Manager & Bots
 
-## Technical Project Requirements
 
 The minimum requirements for the project are outlined here to give you a starting point. Meeting the minimum requirements alone will not guarantee you a good mark. You are welcome to meet and exceed the minimum requirements if you have good, creative ideas and would like to discuss them with me.
 
