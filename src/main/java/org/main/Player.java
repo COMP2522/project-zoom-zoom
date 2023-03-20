@@ -18,7 +18,7 @@ public class Player {
   private Boolean hashitWall;
 
   // Movement distance variable, unnecessary in game.
-  private int movement = 9;
+  private final int movement = 9;
 
   /**
    * Constructor mostly copied from ball labs.
@@ -26,16 +26,12 @@ public class Player {
    * @param position Starting position
    * @param size Size of ball
    * @param color Ball's color (red goes faster)
-   * @param track Track pieces array
    * @param window Window
    */
-  public Player(PVector position, float size, Color color, ArrayList<Track> track, ArrayList<Wall> walls,
-                Window window) {
+  public Player(PVector position, float size, Color color, Window window) {
     this.position = position;
     this.size = size;
     this.color = color;
-    this.track = track;
-    this.walls = walls;
     this.window = window;
   }
 
@@ -44,7 +40,7 @@ public class Player {
    */
   public void update() {
     isOnTrack = false;
-    for (Track track : track) {
+    /*for (Track track : track) {
       if (track.isOnTrack(this.position)) {
         System.out.println("On The Track");
         isOnTrack = true;
@@ -56,13 +52,14 @@ public class Player {
         System.out.println("Hit Wall");
         isOnTrack = true;
       }
-    }
+    }*/
   }
 
   /**
    * Standard draw.
    */
   public void draw() {
+    this.update();
     window.pushStyle();
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
     window.ellipse(this.position.x, this.position.y, size, size);
@@ -75,12 +72,15 @@ public class Player {
   public void moveUp() {
     this.position = this.getPosition().add(new PVector(0, -movement));
   }
+
   public void moveDown() {
     this.position = this.getPosition().add(new PVector(0, movement));
   }
+
   public void moveLeft() {
     this.position = this.getPosition().add(new PVector(-movement, 0));
   }
+
   public void moveRight() {
     this.position = this.getPosition().add(new PVector(movement,  0));
   }

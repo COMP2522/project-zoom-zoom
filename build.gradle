@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'org.bcit.comp2522.lectures.ll03'
+group 'org.bcit.comp2522.labs.lab02'
 version '1.0-SNAPSHOT'
 
 repositories {
