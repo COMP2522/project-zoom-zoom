@@ -73,18 +73,20 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = true;
-    // Up player2 control
-    if (keyCode == player2controls[0])
-      player2up = true;
-    // Down player2 control
-    if (keyCode == player2controls[1])
-      player2down = true;
-    // Left player2 control
-    if (keyCode == player2controls[2])
-      player2left = true;
-    // Right player2 control
-    if (keyCode == player2controls[3])
-      player2right = true;
+    if (player2 != null) {
+      // Up player2 control
+      if (keyCode == player2controls[0])
+        player2up = true;
+      // Down player2 control
+      if (keyCode == player2controls[1])
+        player2down = true;
+      // Left player2 control
+      if (keyCode == player2controls[2])
+        player2left = true;
+      // Right player2 control
+      if (keyCode == player2controls[3])
+        player2right = true;
+    }
   }
 
   /**
@@ -106,18 +108,20 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = false;
-    // Up player2 control
-    if (keyCode == player2controls[0])
-      player2up = false;
-    // Down player2 control
-    if (keyCode == player2controls[1])
-      player2down = false;
-    // Left player2 control
-    if (keyCode == player2controls[2])
-      player2left = false;
-    // Right player2 control
-    if (keyCode == player2controls[3])
-      player2right = false;
+    if (player2 != null) {
+      // Up player2 control
+      if (keyCode == player2controls[0])
+        player2up = false;
+      // Down player2 control
+      if (keyCode == player2controls[1])
+        player2down = false;
+      // Left player2 control
+      if (keyCode == player2controls[2])
+        player2left = false;
+      // Right player2 control
+      if (keyCode == player2controls[3])
+        player2right = false;
+    }
   }
 
   /**
@@ -190,13 +194,4 @@ public class Controls {
       player2controls[3] = key;
     }
   }
-
-
-
-
-
-
-
-
-
 }
