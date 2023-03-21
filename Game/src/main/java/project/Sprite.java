@@ -85,7 +85,7 @@ public class Sprite implements Comparable, Collidable, Drawable {
   public void draw() {
     window.pushStyle();
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
-    window.ellipse(this.position.x, this.position.y, size, size);
+    window.rect(this.position.x, this.position.y, size, size);
     window.popStyle();
   }
 
