@@ -21,17 +21,15 @@ public class Window extends PApplet {
   MainMenu mainMenu;
   ControlMenu controlMenu;
   ArrayList<Sprite> sprites;
-  ArrayList<Sprite> enemies;
   Player player1;
   Player player2;
-  Controls playerControls;
+//  Controls playerControls;
+  ControlTest playerControls;
   // Default player1 controls (arrow keys)
   int[] player1Keys = {38, 40, 37, 39};
   // Default player2 controls (WASD)
   int[] player2Keys = {87, 83, 65, 68};
-  int numEnemies = 1;
   int minSize = 10;
-  int maxSize = 40;
   public static boolean audio = true;
   private int check = 1;
 
@@ -56,18 +54,11 @@ public class Window extends PApplet {
     size(displayWidth, displayHeight);
   }
 
-  /**
-   * Called once at the beginning of the program.
-   * Initializes all objects.
-   */
-  public void setup() {
-  }
 
   /**
    * Initializes all sprites needed for a one player game.
    */
   public void init1Player() {
-    enemies = new ArrayList<Sprite>();
     sprites = new ArrayList<Sprite>();
 
     player1 = new Player(
@@ -78,33 +69,21 @@ public class Window extends PApplet {
         new Color(0, 255, 0),
         this);
 
-    player2 = new Player(
-        new PVector(this.width / 2, this.height / 2),
-        new PVector(500, 1),
-        (minSize + 10),
-        0.01F,
-        new Color(0, 255, 0),
-        this);
-    playerControls = new Controls(this, player1, player2, player1Keys, player2Keys);
-
-    for (int i = 0; i < numEnemies; i++) {
-      enemies.add(new Enemy(
-          new PVector(random(0, this.width), random(0, this.height)),
-          new PVector(random(-1, 1), random(-1, 1)),
-          random(minSize, maxSize),
-          random(0, 2),
-          new Color(255, 0, 0),
-          this
-      ));
-    }
-    sprites.addAll(enemies);
+//    player2 = new Player(
+//        new PVector(this.width / 2, this.height / 2),
+//        new PVector(500, 1),
+//        (minSize + 10),
+//        0.01F,
+//        new Color(0, 255, 0),
+//        this);
+//    playerControls = new Controls(this, player1, player1Keys);
+    playerControls = new ControlTest(player1, player1Keys);
     sprites.add(player1);
   }
   /**
    * Initializes all sprites needed for a two player game.
    */
   public void init2Player() {
-    enemies = new ArrayList<Sprite>();
     sprites = new ArrayList<Sprite>();
 
     player1 = new Player(
@@ -122,19 +101,7 @@ public class Window extends PApplet {
         0.01F,
         new Color(0, 255, 255),
         this);
-    playerControls = new Controls(this, player1, player2, player1Keys, player2Keys);
-
-    for (int i = 0; i < numEnemies; i++) {
-      enemies.add(new Enemy(
-          new PVector(random(0, this.width), random(0, this.height)),
-          new PVector(random(-1, 1), random(-1, 1)),
-          random(minSize, maxSize),
-          random(0, 2),
-          new Color(255, 0, 0),
-          this
-      ));
-    }
-    sprites.addAll(enemies);
+    playerControls = new ControlTest(player1, player2, player1Keys, player2Keys);
     sprites.add(player1);
     sprites.add(player2);
   }
@@ -151,7 +118,7 @@ public class Window extends PApplet {
       menu = 0;
     }
     if (menu == 1 || menu == 2)
-      Controls.setMovementTrue(keyCode);
+      ControlTest.setMovementTrue(keyCode);
   }
 
   /**
@@ -160,7 +127,7 @@ public class Window extends PApplet {
   @Override
   public void keyReleased() {
     if (menu == 1 || menu == 2)
-      Controls.setMovementFalse(keyCode);
+      ControlTest.setMovementFalse(keyCode);
   }
 
   /**
@@ -188,25 +155,10 @@ public class Window extends PApplet {
         timer.running = true;
         timer.showTimer(this);
         // Move player around the screen.
-        Controls.playerMovement();
+        ControlTest.playerMovement();
         for (Sprite sprite : sprites) {
           sprite.update();
           sprite.draw();
-        }
-        ArrayList<Sprite> toRemove = new ArrayList<Sprite>();
-        for (Sprite enemy : enemies) {
-          if (Collidable.collided(player1, enemy)) {
-            toRemove.add(enemy);
-          }
-
-        }
-        for (Sprite enemy : toRemove) {
-          // TODO: implement compareTo and equals to make this work
-          if (enemy.compareTo(player1) > 0 || enemy.equals(player1)) {
-            enemies.remove(enemy);
-            sprites.remove(enemy);
-          } else if (enemy.compareTo(player1) < 0) {
-          }
         }
         break;
       }
@@ -216,29 +168,14 @@ public class Window extends PApplet {
         timer2.running = true;
         timer2.showTimer(this);
         // Move player around the screen.
-        Controls.playerMovement();
+        ControlTest.playerMovement();
         for (Sprite sprite : sprites) {
           sprite.update();
           sprite.draw();
         }
-        ArrayList<Sprite> toRemove = new ArrayList<Sprite>();
-        for (Sprite enemy : enemies) {
-          if (Collidable.collided(player1, enemy)) {
-            toRemove.add(enemy);
-          }
-
-        }
-        for (Sprite enemy : toRemove) {
-          // TODO: implement compareTo and equals to make this work
-          if (enemy.compareTo(player1) > 0 || enemy.equals(player1)) {
-            enemies.remove(enemy);
-            sprites.remove(enemy);
-          } else if (enemy.compareTo(player1) < 0) {
-          }
-        }
         break;
       }
-      case 3 -> {
+      case 3 -> { // Control Menu
         background(64, 64, 64);
         controlMenu = ControlMenu.getInstance(this);
         controlMenu.setup();
@@ -258,9 +195,8 @@ public class Window extends PApplet {
    * @param passedArgs arguments from command line
    */
   public static void main(String[] passedArgs) {
-    String[] appletArgs = new String[]{"eatBubbles"};
-    Window eatBubbles = new Window();
-    PApplet.runSketch(appletArgs, eatBubbles);
-    // Run background music
+    String[] appletArgs = new String[]{"Zoom Zoom"};
+    Window zoomZoom = new Window();
+    PApplet.runSketch(appletArgs, zoomZoom);
   }
 }
