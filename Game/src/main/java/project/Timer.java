@@ -30,7 +30,7 @@ public class Timer {
       window.text(String.format("%02d:%02d.%03d",
           elapsedTime / 1000 / 60, // minutes
           elapsedTime / 1000 % 60, // seconds
-          elapsedTime % 1000), (float) window.displayWidth / 2 + 10, (float) window.displayHeight / 20);
+          elapsedTime % 1000), (float) window.displayWidth / 10, (float) window.displayHeight / 20);
     } else {
       window.text("00:00:000", (float) window.displayWidth / 2 + 10, (float) window.displayHeight / 20);
       startTime = 0;
