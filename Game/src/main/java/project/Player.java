@@ -11,10 +11,12 @@ import java.awt.*;
  */
 public class Player extends Sprite {
 
+  //Setting defaults
+
   int GEAR1 = 300;
   int GEAR2 = 100;
   int GEAR3 = 30;
-  int GEAR4 = 300;
+  int GEAR4 = 5;
 
   double POWER = 10000;
   final double DROPOFF = 0.3;
@@ -89,8 +91,9 @@ public class Player extends Sprite {
     revs = speed * gearRatio;
     xpos += speed / 10 * Math.cos(direction);
     ypos += speed / 10 * Math.sin(direction);
-    System.out.println("speed " + speed);
-    System.out.println("RPM " + revs);
+    System.out.println(direction);
+//    System.out.println("speed " + speed);
+//    System.out.println("RPM " + revs);
   }
 
   public void drag(){
@@ -128,13 +131,13 @@ public class Player extends Sprite {
 //  }
 
   public void turn(double turnAmt){
-    drifting = false;
+//    drifting = false;
     double momentum = weight * speed;
-    if(Math.abs(turnAmt) * momentum > grip) {
-      turnAmt /= momentum * 2 / grip;
-      System.out.println("lost grip");
-      drifting = true;
-    }
+//    if(Math.abs(turnAmt) * momentum > grip) {
+//      turnAmt /= momentum * 2 / grip;
+//      System.out.println("lost grip");
+//      drifting = true;
+//    }
     direction += turnAmt;
 
   }
