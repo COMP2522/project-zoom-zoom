@@ -157,10 +157,10 @@ public class Player extends Sprite {
   }
 
   public void shiftUp(){
-
+    gearRatio = PartGears.shiftUp();
   }
   public void shiftDown(){
-
+    gearRatio = PartGears.shiftUp();
   }
 
 
