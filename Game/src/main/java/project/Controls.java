@@ -127,35 +127,36 @@ public class Controls {
 
     if (player1up) {
       // handle player1 up control
-      player1.setSpeed(0.1F);
+      player1.acc();
+      System.out.println("up det");
     }
     if (player1down) {
       // handle player1 down control
-      player1.setSpeed(0);
+      player1.brake();
     }
     if (player1left) {
       // handle player1 left control
-      player1.setDirection(player1.getDirection().rotate(-Window.PI / 16));
+      player1.turn(0.3);
     }
     if (player1right) {
       // handle player1 right control
-      player1.setDirection(player1.getDirection().rotate(Window.PI / 16));
+      player1.turn(-0.3);
     }
     if (player2up) {
       // handle player2 up control
-      player2.setSpeed(0.01F);
+      player2.acc();
     }
     if (player2down) {
       // handle player2 down control
-      player2.setSpeed(0);
+      player2.brake();
     }
     if (player2left) {
       // handle player2 left control
-      player2.setDirection(player2.getDirection().rotate(-Window.PI / 16));
+      player2.turn(0.3);
     }
     if (player2right) {
       // handle player2 right control
-      player2.setDirection(player2.getDirection().rotate(Window.PI / 16));
+      player2.turn(-0.3);
     }
   }
 
