@@ -57,11 +57,19 @@ public class Player extends Sprite {
   boolean accelerating = true;
   int gearRatio = 300;
 
-  int xpos = 500;
-  int ypos = 500;
+  float xpos = 500;
+  float ypos = 500;
 
   int weight;
   int grip;
+
+  int LIMITER = 50;
+
+  public int getTimer() {
+    return timer;
+  }
+
+  int timer = 0;
 
   PartGears gear = new PartGears(GEAR1, GEAR2, GEAR3, GEAR4);
   PartEngine engine = new PartEngine(POWER, DROPOFF, OPREV, EWEIGHT);
@@ -91,21 +99,22 @@ public class Player extends Sprite {
     revs = speed * gearRatio;
     xpos += speed / 10 * Math.cos(direction);
     ypos += speed / 10 * Math.sin(direction);
-    System.out.println(direction);
+//    System.out.println(direction);
 //    System.out.println("speed " + speed);
 //    System.out.println("RPM " + revs);
+
   }
 
   public void drag(){
-    speed -= (aero.getDrag() * DRAGFACTOR * speed) / (weight * WFACTOR);
+    speed -= (aero.getDrag() * DRAGFACTOR * speed) / (weight * WFACTOR) / LIMITER;
   }
 
   public void acc(){
     double prpacc = engine.getPower() / (Math.abs(revs - engine.getOpRevs()) * engine.getDropoff())
             / (weight * WFACTOR) / (CAMBER * CSFACTOR);
     if (prpacc > 20) prpacc = 20;
-    speed += prpacc;
-    System.out.println("acc " + prpacc);
+    speed += prpacc / LIMITER;
+    //System.out.println("acc " + prpacc);
   }
 
 //  public void move(int g){
@@ -132,7 +141,7 @@ public class Player extends Sprite {
 
   public void turn(double turnAmt){
 //    drifting = false;
-    double momentum = weight * speed;
+//    double momentum = weight * speed;
 //    if(Math.abs(turnAmt) * momentum > grip) {
 //      turnAmt /= momentum * 2 / grip;
 //      System.out.println("lost grip");
