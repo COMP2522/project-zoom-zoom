@@ -158,6 +158,7 @@ public class GameManager extends PApplet {
    * @param passedArgs arguments from command line
    */
   public static void main(String[] passedArgs) {
+    BGM.getBGM(true);
     String[] appletArgs = new String[]{"eatBubbles"};
     GameManager eatBubbles = new GameManager();
     PApplet.runSketch(appletArgs, eatBubbles);
