@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 /**
@@ -13,6 +14,18 @@ import processing.core.PVector;
  */
 public class CarModMenu {
 
+  private PImage engine1image;
+  private PImage engine2image;
+  private PImage engine3image;
+  private PImage engine4image;
+  private PImage chassis1image;
+  private PImage chassis2image;
+  private PImage chassis3image;
+  private PImage chassis4image;
+  private PImage aero1image;
+  private PImage aero2image;
+  private PImage aero3image;
+  private PImage aero4image;
   private final Window window;
   private static CarModMenu instance;
   private MainMenu mainMenu;
@@ -28,21 +41,16 @@ public class CarModMenu {
   private Button chassis3;
   private Button chassis4;
   private ArrayList<Button> chassis = new ArrayList<Button>();
-  private Button brakes1;
-  private Button brakes2;
-  private Button brakes3;
-  private Button brakes4;
-  private ArrayList<Button> brakes = new ArrayList<Button>();
   private Button aero1;
   private Button aero2;
   private Button aero3;
   private Button aero4;
   private ArrayList<Button> aerodynamics = new ArrayList<Button>();
-  private Button tires1;
-  private Button tires2;
-  private Button tires3;
-  private Button tires4;
-  private ArrayList<Button> tires = new ArrayList<Button>();
+  private Button gears1;
+  private Button gears2;
+  private Button gears3;
+  private Button gears4;
+  private ArrayList<Button> gears = new ArrayList<Button>();
 
   /**
    * CarModMenu, private constructor to create a singleton of the class.
@@ -92,28 +100,14 @@ public class CarModMenu {
     engines.add(engine2);
     engines.add(engine3);
     engines.add(engine4);
-    // Instantiate the brakes buttons
-    brakes1 = new Button(new PVector((window.displayWidth / 8) + 200, (window.displayHeight / 5) + 50),
-        200, 100, "Brakes 1", new Color(255, 0, 0), window);
-    brakes2 = new Button(new PVector((window.displayWidth / 8) + 200, (window.displayHeight / 5) + 175),
-        200, 100, "Brakes 2", new Color(255, 0, 0), window);
-    brakes3 = new Button(new PVector((window.displayWidth / 8) + 200, (window.displayHeight / 5) + 300),
-        200, 100, "Brakes 3", new Color(255, 0, 0), window);
-    brakes4 = new Button(new PVector((window.displayWidth / 8) + 200, (window.displayHeight / 5) + 425),
-        200, 100, "Brakes 4", new Color(255, 0, 0), window);
-    // Add each brakes into the brakes arraylist
-    brakes.add(brakes1);
-    brakes.add(brakes2);
-    brakes.add(brakes3);
-    brakes.add(brakes4);
     // Instantiate the chassis buttons
-    chassis1 = new Button(new PVector((window.displayWidth / 8) + 500, (window.displayHeight / 5) + 50),
+    chassis1 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50),
         200, 100, "Chassis 1", new Color(255, 0, 0), window);
-    chassis2 = new Button(new PVector((window.displayWidth / 8) + 500, (window.displayHeight / 5) + 175),
+    chassis2 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 175),
         200, 100, "Chassis 2", new Color(255, 0, 0), window);
-    chassis3 = new Button(new PVector((window.displayWidth / 8) + 500, (window.displayHeight / 5) + 300),
+    chassis3 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 300),
         200, 100, "Chassis 3", new Color(255, 0, 0), window);
-    chassis4 = new Button(new PVector((window.displayWidth / 8) + 500, (window.displayHeight / 5) + 425),
+    chassis4 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 425),
         200, 100, "Chassis 4", new Color(255, 0, 0), window);
     // Add each chassis into the chassis arraylist
     chassis.add(chassis1);
@@ -121,13 +115,13 @@ public class CarModMenu {
     chassis.add(chassis3);
     chassis.add(chassis4);
     // Instantiate the aerodynamics buttons
-    aero1 = new Button(new PVector((window.displayWidth / 8) + 800, (window.displayHeight / 5) + 50),
+    aero1 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50),
         200, 100, "Aero 1", new Color(255, 0, 0), window);
-    aero2 = new Button(new PVector((window.displayWidth / 8) + 800, (window.displayHeight / 5) + 175),
+    aero2 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 175),
         200, 100, "Aero 2", new Color(255, 0, 0), window);
-    aero3 = new Button(new PVector((window.displayWidth / 8) + 800, (window.displayHeight / 5) + 300),
+    aero3 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 300),
         200, 100, "Aero 3", new Color(255, 0, 0), window);
-    aero4 = new Button(new PVector((window.displayWidth / 8) + 800, (window.displayHeight / 5) + 425),
+    aero4 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 425),
         200, 100, "Aero 4", new Color(255, 0, 0), window);
     // Add each aerodynamics into the aerodynamics arraylist
     aerodynamics.add(aero1);
@@ -135,19 +129,35 @@ public class CarModMenu {
     aerodynamics.add(aero3);
     aerodynamics.add(aero4);
     // Instantiate the gears buttons
-    tires1 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 50),
-        200, 100, "Tires 1", new Color(255, 0, 0), window);
-    tires2 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 175),
-        200, 100, "Tires 2", new Color(255, 0, 0), window);
-    tires3 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 300),
-        200, 100, "Tires 3", new Color(255, 0, 0), window);
-    tires4 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 425),
-        200, 100, "Tires 4", new Color(255, 0, 0), window);
+    gears1 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 50),
+        200, 100, "Gears 1", new Color(255, 0, 0), window);
+    gears2 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 175),
+        200, 100, "Gears 2", new Color(255, 0, 0), window);
+    gears3 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 300),
+        200, 100, "Gears 3", new Color(255, 0, 0), window);
+    gears4 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 425),
+        200, 100, "Gears 4", new Color(255, 0, 0), window);
     // Add each tires into the tires arraylist
-    tires.add(tires1);
-    tires.add(tires2);
-    tires.add(tires3);
-    tires.add(tires4);
+    gears.add(gears1);
+    gears.add(gears2);
+    gears.add(gears3);
+    gears.add(gears4);
+
+    // Set up images for engine buttons
+    engine1image = window.loadImage("Game/images/engine1.png");
+    engine2image = window.loadImage("Game/images/engine2.png");
+    engine3image = window.loadImage("Game/images/engine3.png");
+    engine4image = window.loadImage("Game/images/engine4.png");
+    // Set up images for chassis buttons
+    chassis1image = window.loadImage("Game/images/chassis1.png");
+    chassis2image = window.loadImage("Game/images/chassis2.png");
+    chassis3image = window.loadImage("Game/images/chassis3.png");
+    chassis4image = window.loadImage("Game/images/chassis4.png");
+    // Set up images for aero buttons
+    aero1image = window.loadImage("Game/images/aero1.png");
+    aero2image = window.loadImage("Game/images/aero2.png");
+    aero3image = window.loadImage("Game/images/aero3.png");
+    aero4image = window.loadImage("Game/images/aero4.png");
   }
 
   public void draw() {
@@ -157,10 +167,10 @@ public class CarModMenu {
     // Create text for each car part
     window.textSize(30);
     window.text("Engine", (window.displayWidth / 8), window.displayHeight / 5);
-    window.text("Brakes", (window.displayWidth / 8) + 300, window.displayHeight / 5);
-    window.text("Chassis", (window.displayWidth / 8) + 600, window.displayHeight / 5);
-    window.text("Aerodynamics", (window.displayWidth / 8) + 900, window.displayHeight / 5);
-    window.text("Tires", (window.displayWidth / 8) + 1200, window.displayHeight / 5);
+//    window.text("Brakes", (window.displayWidth / 8) + 300, window.displayHeight / 5);
+    window.text("Chassis", (window.displayWidth / 8) + 400, window.displayHeight / 5);
+    window.text("Aerodynamics", (window.displayWidth / 8) + 800, window.displayHeight / 5);
+    window.text("Gears", (window.displayWidth / 8) + 1200, window.displayHeight / 5);
 
     // Draw buttons for the engine
     for (Button engine : engines) {
@@ -171,16 +181,11 @@ public class CarModMenu {
 
       }
     }
-
-    // Draw buttons for the brakes
-    for (Button brake : brakes) {
-      brake.draw();
-      brake.update();
-      // If a brake button is clicked, update the player's part to that brake
-      if (brake.isClicked()) {
-
-      }
-    }
+    // Draw images for each engine
+    window.image(engine1image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 50);
+    window.image(engine2image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 175);
+    window.image(engine3image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 300);
+    window.image(engine4image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 425);
 
     // Draw buttons for the chassis
     for (Button chassi : chassis) {
@@ -190,6 +195,11 @@ public class CarModMenu {
 
       }
     }
+    // Draw images for each chassis
+    window.image(chassis1image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50);
+    window.image(chassis2image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 175);
+    window.image(chassis3image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 300);
+    window.image(chassis4image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 425);
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
@@ -200,13 +210,18 @@ public class CarModMenu {
 
       }
     }
+    // Draw images for each aero
+    window.image(aero1image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50);
+    window.image(aero2image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 175);
+    window.image(aero3image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 300);
+    window.image(aero4image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 425);
 
     // Draw buttons for the tires
-    for (Button tire : tires) {
-      tire.draw();
-      tire.update();
+    for (Button gear : gears) {
+      gear.draw();
+      gear.update();
       // If a tire button is clicked, update the player's part to that tire.
-      if (tire.isClicked()) {
+      if (gear.isClicked()) {
 
       }
     }
