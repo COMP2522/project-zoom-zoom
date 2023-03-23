@@ -29,7 +29,8 @@ public class Player extends Sprite {
   double DRAGFACTOR = 0.02;
 
   int CWEIGHT = 1000;
-  int WHEELBASE = 100;
+  int WHEELBASEX = 30;
+  int WHEELBASEY = 15;
 
   public void setBRAKE(double BRAKE) {
     this.BRAKE = BRAKE;
@@ -42,7 +43,7 @@ public class Player extends Sprite {
   double BRAKE = 1;
   int CAMBER = 15;
 
-  int TIREGRIP = 2000;
+  int TIREGRIP = 3000;
 
   static final double WFACTOR = 0.001;
   double CSFACTOR = 0.1;
@@ -52,6 +53,7 @@ public class Player extends Sprite {
   double speed = 0;
   double revs = 0;
   double direction = 0;
+  double grip;
   boolean drifting = false;
   boolean braking = false;
   boolean accelerating = true;
@@ -61,7 +63,7 @@ public class Player extends Sprite {
   float ypos = 500;
 
   int weight;
-  int grip;
+
 
   int LIMITER = 50;
 
@@ -74,7 +76,7 @@ public class Player extends Sprite {
   PartGears gear = new PartGears(GEAR1, GEAR2, GEAR3, GEAR4);
   PartEngine engine = new PartEngine(POWER, DROPOFF, OPREV, EWEIGHT);
   PartAero aero = new PartAero(DOWNFORCE, ADRAG, AWEIGHT);
-  PartChassis chassis = new PartChassis(CWEIGHT, WHEELBASE);
+  PartChassis chassis = new PartChassis(CWEIGHT, WHEELBASEX, WHEELBASEY);
 
 
   public Player(PVector position, PVector direction, float size, float speed,
@@ -96,6 +98,7 @@ public class Player extends Sprite {
   @Override
   public void update(){
     drag();
+    grip = TIREGRIP + PartAero.getDownForce() * speed;
     revs = speed * gearRatio;
     xpos += speed / 10 * Math.cos(direction);
     ypos += speed / 10 * Math.sin(direction);
@@ -140,15 +143,16 @@ public class Player extends Sprite {
 //  }
 
   public void turn(double turnAmt){
-//    drifting = false;
-//    double momentum = weight * speed;
-//    if(Math.abs(turnAmt) * momentum > grip) {
-//      turnAmt /= momentum * 2 / grip;
-//      System.out.println("lost grip");
-//      drifting = true;
-//    }
-    direction += turnAmt;
-
+    if (speed != 0) {
+      drifting = false;
+      double momentum = weight * speed;
+      if (Math.abs(turnAmt) * momentum > grip) {
+        turnAmt /= momentum / (grip * 1.5);
+        //System.out.println("lost grip");
+        drifting = true;
+      }
+      direction += turnAmt;
+    }
   }
   public void brake(){
       if(speed - (BRAKE / weight * WFACTOR) > 0){

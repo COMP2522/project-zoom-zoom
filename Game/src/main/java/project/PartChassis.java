@@ -2,7 +2,26 @@ package project;
 
 public class PartChassis {
     int weight;
-    int wheelBase;
+
+    public int getWheelBaseX() {
+        return wheelBaseX;
+    }
+
+    public void setWheelBaseX(int wheelBaseX) {
+        this.wheelBaseX = wheelBaseX;
+    }
+
+    public int getWheelBaseY() {
+        return wheelBaseY;
+    }
+
+    public void setWheelBaseY(int wheelBaseY) {
+        this.wheelBaseY = wheelBaseY;
+    }
+
+    int wheelBaseX;
+    int wheelBaseY;
+
 
     public int getWeight() {
         return weight;
@@ -12,16 +31,9 @@ public class PartChassis {
         this.weight = weight;
     }
 
-    public int getWheelBase() {
-        return wheelBase;
-    }
-
-    public void setWheelBase(int wheelBase) {
-        this.wheelBase = wheelBase;
-    }
-
-    public PartChassis(int w, int wb){
+    public PartChassis(int w, int wbx, int wby){
         weight = w;
-        wheelBase = wb;
+        wheelBaseX = wbx;
+        wheelBaseY = wby;
     }
 }

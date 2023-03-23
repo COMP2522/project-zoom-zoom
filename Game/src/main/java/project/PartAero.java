@@ -1,7 +1,7 @@
 package project;
 
 public class PartAero {
-    int downForce;
+    static int downForce;
     int drag;
     int weight;
 
@@ -23,7 +23,7 @@ public class PartAero {
         this.weight = weight;
     }
 
-    public int getDownForce() {
+    public static int getDownForce() {
         return downForce;
     }
 
