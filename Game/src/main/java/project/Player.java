@@ -80,7 +80,7 @@ public class Player extends Sprite {
 
 
   public Player(PVector position, PVector direction, float size, float speed,
-                Color color, Window window) {
+                Color color, GameManager window) {
     super(position, direction, size, speed, color, window);
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = PartGears.start();

@@ -17,7 +17,7 @@ public class Button {
   private String title;
   private boolean pressed = false;
   private boolean clicked = false;
-  private Window window;
+  private GameManager window;
 
   /**
    * Constructor to create a button object.
@@ -30,7 +30,7 @@ public class Button {
    * @param window screen
    */
   public Button(PVector position, float width, float height,
-                String title, Color color, Window window) {
+                String title, Color color, GameManager window) {
     this.position = position;
     this.width = width;
     this.height = height;
