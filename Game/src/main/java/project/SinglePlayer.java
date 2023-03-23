@@ -12,13 +12,10 @@ public class SinglePlayer extends PApplet{
   private static SinglePlayer instance;
   ArrayList<Sprite> sprites;
   Player player1;
-  Player player2;
   Controls playerControls;
   int minSize = 10;
   int maxSize = 40;
   int[] player1Keys = {38, 40, 37, 39};
-  int[] player2Keys = {87, 83, 65, 68};
-
 
   private SinglePlayer(GameManager window){
     this.window = window;
@@ -36,7 +33,6 @@ public class SinglePlayer extends PApplet{
    */
   public void init1Player() {
     sprites = new ArrayList<Sprite>();
-
     player1 = new Player(
         new PVector(window.width / 2, window.height / 2),
         new PVector(50, 1),
@@ -44,16 +40,7 @@ public class SinglePlayer extends PApplet{
         0.1F,
         new Color(0, 255, 0),
         window);
-
-    player2 = new Player(
-        new PVector(window.width / 2, window.height / 2),
-        new PVector(500, 1),
-        (minSize + 10),
-        0.01F,
-        new Color(0, 255, 0),
-        window);
-    playerControls = new Controls(window, player1, player2, player1Keys, player2Keys);
-
+    playerControls = new Controls(window, player1, player1Keys);
     sprites.add(player1);
   }
 
