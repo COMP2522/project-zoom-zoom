@@ -5,7 +5,7 @@ public class Controls {
   private static GameManager window;
   private static Player player1;
   private static Player player2;
-  // Index 0 is up, 1 is down, 2 is left, 3 is right
+  // Index 0 is up, 1 is down, 2 is left, 3 is right, 4 is shift gear up, 5 is shift gear down
   private static int[] player1controls;
   private static int[] player2controls;
 
@@ -24,8 +24,6 @@ public class Controls {
   private static boolean player2right = false;
   private static boolean player2gearUp = false;
   private static boolean player2gearDown = false;
-
-
   /**
    * Constructor for controls with one player.
    *
@@ -76,6 +74,12 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = true;
+    // Shift gear up player1 control
+    if (keyCode == player1controls[4])
+      player1gearUp = true;
+    // Shift gear down player1 control
+    if (keyCode == player1controls[5])
+      player1gearDown = true;
     // Do inner if statements if a second player exists
     if (player2 != null) {
       // Up player2 control
@@ -90,6 +94,12 @@ public class Controls {
       // Right player2 control
       if (keyCode == player2controls[3])
         player2right = true;
+      // Shift gear up player2 control
+      if (keyCode == player2controls[4])
+        player2gearUp = true;
+      // Shift gear down player2 control
+      if (keyCode == player2controls[5])
+        player2gearDown = true;
     }
   }
 
@@ -112,6 +122,12 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = false;
+    // Shift gear up player1 control
+    if (keyCode == player1controls[4])
+      player1gearUp = false;
+    // Shift gear down player1 control
+    if (keyCode == player1controls[5])
+      player1gearDown = false;
     // Do inner if statements if player 2 exists
     if (player2 != null) {
       // Up player2 control
@@ -126,6 +142,12 @@ public class Controls {
       // Right player2 control
       if (keyCode == player2controls[3])
         player2right = false;
+      // Shift gear up player2 control
+      if (keyCode == player2controls[4])
+        player2gearUp = false;
+      // Shift gear down player2 control
+      if (keyCode == player2controls[5])
+        player2gearDown = false;
     }
   }
 
@@ -137,7 +159,7 @@ public class Controls {
     if (player1up) {
       // handle player1 up control
       player1.acc();
-      System.out.println("up det");
+      System.out.println(player1controls[0]);
     }
     if (player1down) {
       // handle player1 down control
@@ -150,6 +172,14 @@ public class Controls {
     if (player1right) {
       // handle player1 right control
       player1.turn(0.3);
+    }
+    if (player1gearUp) {
+      // handle player1 gear up
+      System.out.println("p1up");
+    }
+    if (player1gearDown) {
+      // handle player1 gear down
+      System.out.println("p1down");
     }
     if (player2up) {
       // handle player2 up control
@@ -166,6 +196,14 @@ public class Controls {
     if (player2right) {
       // handle player2 right control
       player2.turn(-0.3);
+    }
+    if (player2gearUp) {
+      // handle player2 gear up
+      System.out.println("p2up");
+    }
+    if (player2gearDown) {
+      // handle player2 gear down
+      System.out.println("p2down");
     }
   }
 
