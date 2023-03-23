@@ -16,11 +16,14 @@ public class Controls {
   private static boolean player1down = false;
   private static boolean player1left = false;
   private static boolean player1right = false;
-
+  private static boolean player1gearUp = false;
+  private static boolean player1gearDown = false;
   private static boolean player2up = false;
   private static boolean player2down = false;
   private static boolean player2left = false;
   private static boolean player2right = false;
+  private static boolean player2gearUp = false;
+  private static boolean player2gearDown = false;
 
 
   /**
@@ -73,18 +76,21 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = true;
-    // Up player2 control
-    if (keyCode == player2controls[0])
-      player2up = true;
-    // Down player2 control
-    if (keyCode == player2controls[1])
-      player2down = true;
-    // Left player2 control
-    if (keyCode == player2controls[2])
-      player2left = true;
-    // Right player2 control
-    if (keyCode == player2controls[3])
-      player2right = true;
+    // Do inner if statements if a second player exists
+    if (player2 != null) {
+      // Up player2 control
+      if (keyCode == player2controls[0])
+        player2up = true;
+      // Down player2 control
+      if (keyCode == player2controls[1])
+        player2down = true;
+      // Left player2 control
+      if (keyCode == player2controls[2])
+        player2left = true;
+      // Right player2 control
+      if (keyCode == player2controls[3])
+        player2right = true;
+    }
   }
 
   /**
@@ -106,18 +112,21 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = false;
-    // Up player2 control
-    if (keyCode == player2controls[0])
-      player2up = false;
-    // Down player2 control
-    if (keyCode == player2controls[1])
-      player2down = false;
-    // Left player2 control
-    if (keyCode == player2controls[2])
-      player2left = false;
-    // Right player2 control
-    if (keyCode == player2controls[3])
-      player2right = false;
+    // Do inner if statements if player 2 exists
+    if (player2 != null) {
+      // Up player2 control
+      if (keyCode == player2controls[0])
+        player2up = false;
+      // Down player2 control
+      if (keyCode == player2controls[1])
+        player2down = false;
+      // Left player2 control
+      if (keyCode == player2controls[2])
+        player2left = false;
+      // Right player2 control
+      if (keyCode == player2controls[3])
+        player2right = false;
+    }
   }
 
   /**
