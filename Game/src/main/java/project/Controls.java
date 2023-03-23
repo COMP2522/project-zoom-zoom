@@ -175,11 +175,11 @@ public class Controls {
     }
     if (player1gearUp) {
       // handle player1 gear up
-      System.out.println("p1up");
+      player1.shiftUp();
     }
     if (player1gearDown) {
       // handle player1 gear down
-      System.out.println("p1down");
+      player1.shiftDown();
     }
     if (player2up) {
       // handle player2 up control
@@ -191,19 +191,19 @@ public class Controls {
     }
     if (player2left) {
       // handle player2 left control
-      player2.turn(0.3);
+      player2.turn(-0.3);
     }
     if (player2right) {
       // handle player2 right control
-      player2.turn(-0.3);
+      player2.turn(0.3);
     }
     if (player2gearUp) {
       // handle player2 gear up
-      System.out.println("p2up");
+      player2.shiftUp();
     }
     if (player2gearDown) {
       // handle player2 gear down
-      System.out.println("p2down");
+      player2.shiftDown();
     }
   }
 
