@@ -128,7 +128,7 @@ public class Controls {
     if (player1up) {
       // handle player1 up control
       player1.acc();
-      //System.out.println("up det");
+      System.out.println("up det");
     }
     if (player1down) {
       // handle player1 down control
@@ -136,11 +136,11 @@ public class Controls {
     }
     if (player1left) {
       // handle player1 left control
-      player1.turn(-0.05);
+      player1.turn(0.3);
     }
     if (player1right) {
       // handle player1 right control
-      player1.turn(0.05);
+      player1.turn(-0.3);
     }
     if (player2up) {
       // handle player2 up control
