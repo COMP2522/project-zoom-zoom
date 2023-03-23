@@ -26,7 +26,7 @@ public class CarModMenu {
   private PImage aero2image;
   private PImage aero3image;
   private PImage aero4image;
-  private final Window window;
+  private final GameManager window;
   private static CarModMenu instance;
   private MainMenu mainMenu;
   private Button backToMainMenu;
@@ -57,7 +57,7 @@ public class CarModMenu {
    *
    * @param window current window
    */
-  private CarModMenu(Window window) {
+  private CarModMenu(GameManager window) {
     this.window = window;
     mainMenu = MainMenu.getInstance(window);
   }
@@ -68,7 +68,7 @@ public class CarModMenu {
    * @param window window class
    * @return a car mod menu object
    */
-  public static CarModMenu getInstance(Window window) {
+  public static CarModMenu getInstance(GameManager window) {
     if (instance == null) {
       instance = new CarModMenu(window);
     }

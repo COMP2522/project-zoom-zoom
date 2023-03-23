@@ -22,7 +22,7 @@ public class Timer {
     return instance;
   }
 
-  public void showTimer(Window window) {
+  public void showTimer(GameManager window) {
     long elapsedTime = window.millis() - startTime;
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     window.textSize(40);

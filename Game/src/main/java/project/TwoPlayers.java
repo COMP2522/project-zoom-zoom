@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TwoPlayers extends PApplet {
-  private final Window window;
+  private final GameManager window;
   private static TwoPlayers instance;
   ArrayList<Sprite> sprites;
   Controls playerControls;
@@ -19,11 +19,11 @@ public class TwoPlayers extends PApplet {
   int[] player1Keys = {38, 40, 37, 39};
   int[] player2Keys = {87, 83, 65, 68};
 
-  private TwoPlayers(Window window){
+  private TwoPlayers(GameManager window){
     this.window = window;
   }
 
-  public static TwoPlayers getInstance(Window window) {
+  public static TwoPlayers getInstance(GameManager window) {
     if (instance == null) {
       instance = new TwoPlayers(window);
     }

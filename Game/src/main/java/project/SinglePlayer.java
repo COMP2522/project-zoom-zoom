@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SinglePlayer extends PApplet{
-  private final Window window;
+  private final GameManager window;
   private static SinglePlayer instance;
   ArrayList<Sprite> sprites;
   Player player1;
@@ -20,11 +20,11 @@ public class SinglePlayer extends PApplet{
   int[] player2Keys = {87, 83, 65, 68};
 
 
-  private SinglePlayer(Window window){
+  private SinglePlayer(GameManager window){
     this.window = window;
   }
 
-  public static SinglePlayer getInstance(Window window) {
+  public static SinglePlayer getInstance(GameManager window) {
     if (instance == null) {
       instance = new SinglePlayer(window);
     }
