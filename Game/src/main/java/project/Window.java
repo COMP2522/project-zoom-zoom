@@ -1,12 +1,7 @@
 package project;
 
 import processing.core.PApplet;
-import processing.core.PVector;
 import processing.event.KeyEvent;
-
-import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 
 /**
@@ -21,6 +16,7 @@ public class Window extends PApplet {
   CarModMenu carModMenu;
   SinglePlayer singlePlayer;
   TwoPlayers twoPlayers;
+  Stopwatch stopwatch;
   public static boolean audio = true;
   private int check = 1;
 
@@ -62,8 +58,9 @@ public class Window extends PApplet {
     if (keyCode == TAB) {
       menu = 0;
     }
-    if (menu == 1 || menu == 2)
+    if (menu == 1 || menu == 2) {
       Controls.setMovementTrue(keyCode);
+    }
   }
 
   /**
@@ -71,8 +68,9 @@ public class Window extends PApplet {
    */
   @Override
   public void keyReleased() {
-    if (menu == 1 || menu == 2)
+    if (menu == 1 || menu == 2) {
       Controls.setMovementFalse(keyCode);
+    }
   }
 
   /**
@@ -82,7 +80,7 @@ public class Window extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-//      BGM.getBGM(true);
+      BGM.getBGM(true);
       audio = false;
       check++;
     }
@@ -95,7 +93,6 @@ public class Window extends PApplet {
         break;
       }
       case 1 -> { // 1 Player game
-        background(64, 64, 64);
         singlePlayer = SinglePlayer.getInstance(this);
         singlePlayer.draw();
       }
@@ -107,6 +104,8 @@ public class Window extends PApplet {
       case 3 -> {
         background(64, 64, 64);
         controlMenu = ControlMenu.getInstance(this);
+        stopwatch = Stopwatch.getInstance(this);
+        stopwatch.showTimer(true);
         controlMenu.setup();
         controlMenu.draw();
         break;

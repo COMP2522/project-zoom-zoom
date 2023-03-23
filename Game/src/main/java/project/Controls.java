@@ -45,7 +45,7 @@ public class Controls {
    * @param player2 second player
    */
   public Controls (Window window, Player player1, Player player2,
-    int[] player1controls, int[] player2controls) {
+                   int[] player1controls, int[] player2controls) {
     Controls.window = window;
     Controls.player1 = player1;
     Controls.player2 = player2;
@@ -160,7 +160,7 @@ public class Controls {
     }
   }
 
-  public void setUp(Player player, int key) {
+  public static void setUp(Player player, int key) {
     if (player == player1) {
       player1controls[0] = key;
     } else {
@@ -168,7 +168,7 @@ public class Controls {
     }
   }
 
-  public void setDown(Player player, int key) {
+  public static void setDown(Player player, int key) {
     if (player == player1) {
       player1controls[1] = key;
     } else {
@@ -176,7 +176,7 @@ public class Controls {
     }
   }
 
-  public void setLeft(Player player, int key) {
+  public static void setLeft(Player player, int key) {
     if (player == player1) {
       player1controls[2] = key;
     } else {
@@ -184,7 +184,7 @@ public class Controls {
     }
   }
 
-  public void setRight(Player player, int key) {
+  public static void setRight(Player player, int key) {
     if (player == player1) {
       player1controls[3] = key;
     } else {

@@ -13,7 +13,7 @@ import processing.core.PVector;
  * @author James Langille
  */
 public class CarModMenu {
-
+  static Stopwatch stopwatch = Stopwatch.getInstance(SinglePlayer.window);
   private PImage engine1image;
   private PImage engine2image;
   private PImage engine3image;
@@ -231,8 +231,16 @@ public class CarModMenu {
     startRace.update();
     if (startRace.isClicked()) {
       if (mainMenu.gameType == 1) {
+        // Initialize one player game
+        SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
+        singlePlayer.init1Player();
+        singlePlayer.setTimerCheck(true);
         window.menu = 1;
       } else if (mainMenu.gameType == 2) {
+        stopwatch.resetTimer();
+        // Initialize two player game
+        TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
+        twoPlayers.init2Player();
         window.menu = 2;
       }
     }

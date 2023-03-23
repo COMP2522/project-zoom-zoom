@@ -11,9 +11,9 @@ public class TwoPlayers extends PApplet {
   private static TwoPlayers instance;
   ArrayList<Sprite> sprites;
   Controls playerControls;
-
   Player player1;
   Player player2;
+  static Stopwatch stopwatch;
   int minSize = 10;
   int maxSize = 40;
   int[] player1Keys = {38, 40, 37, 39};
@@ -37,7 +37,7 @@ public class TwoPlayers extends PApplet {
         new PVector(window.width / 2, window.height / 2),
         new PVector(50, 1),
         (minSize + 10),
-        0.1F,
+        0.01F,
         new Color(0, 255, 0),
         window);
 
@@ -56,6 +56,7 @@ public class TwoPlayers extends PApplet {
 
   public void draw() {
     window.background(255,255,0);
+
     // Move player around the screen.
     Controls.playerMovement();
     for (Sprite sprite : sprites) {

@@ -18,6 +18,7 @@ public class MainMenu {
   private Button twoPlayer;
   private Button controls;
   private Button quit;
+  public static SinglePlayer singlePlayer;
 
   // 1 = 1-Player, 2 = 2-Player
   int gameType = 0;
@@ -72,17 +73,11 @@ public class MainMenu {
     twoPlayer.draw();
     twoPlayer.update();
     if (onePlayer.isClicked()) {
-      // Initialize one player game
-      SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
-      singlePlayer.init1Player();
       // Change menu to one player game
       gameType = 1;
       window.menu = 4;
     }
     if (twoPlayer.isClicked()) {
-      // Initialize two player game
-      TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
-      twoPlayers.init2Player();
       // Change menu to two player game
       gameType = 2;
       window.menu = 4;

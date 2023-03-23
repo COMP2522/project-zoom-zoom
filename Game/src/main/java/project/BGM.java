@@ -11,7 +11,7 @@ public class BGM {
 
   public static void getBGM(boolean check) {
     try {
-      File audioFile = new File("Teriyaki Boyz Tokyo Drift ll Soundkim ll.wav");
+      File audioFile = new File("tokyodrift.wav");
       AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
       clip = AudioSystem.getClip();
       clip.open(audioStream);
