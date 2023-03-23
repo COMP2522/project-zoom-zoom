@@ -19,12 +19,20 @@ public class MainMenu {
   private Button controls;
   private Button quit;
 
+  // 1 = 1-Player, 2 = 2-Player
+  int gameType = 0;
+
+  /**
+   * Main menu, private constructor to create a singleton of the class.
+   *
+   * @param window current window
+   */
   private MainMenu(Window window) {
     this.window = window;
   }
 
   /**
-   * Singleton constructor for main menu.
+   * getInstance, method that creates a singleton of the class.
    *
    * @param window window class
    * @return a main menu object
@@ -68,14 +76,16 @@ public class MainMenu {
       SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
       singlePlayer.init1Player();
       // Change menu to one player game
-      window.menu = 1;
+      gameType = 1;
+      window.menu = 4;
     }
     if (twoPlayer.isClicked()) {
       // Initialize two player game
       TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
       twoPlayers.init2Player();
       // Change menu to two player game
-      window.menu = 2;
+      gameType = 2;
+      window.menu = 4;
     }
     controls.draw();
     controls.update();

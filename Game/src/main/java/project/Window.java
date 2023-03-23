@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class Window extends PApplet {
   MainMenu mainMenu;
   ControlMenu controlMenu;
+  CarModMenu carModMenu;
   SinglePlayer singlePlayer;
   TwoPlayers twoPlayers;
   public static boolean audio = true;
@@ -27,13 +28,12 @@ public class Window extends PApplet {
    * 0. Main menu
    * 1. 1 player game
    * 2. 2 player game
+   * 3. Control Menu
+   * 4. Car Mod Menu
    * more values will come when menus are implemented.
    * TODO
-   *  car mod menu
    *  track menu
-   *  control menu
    * car mod and track menus should happen before game starts
-   * control menu button in main menu
    */
   int menu = 0;
 
@@ -111,6 +111,11 @@ public class Window extends PApplet {
         controlMenu.draw();
         break;
       }
+      case 4 -> {
+        carModMenu = CarModMenu.getInstance(this);
+        carModMenu.setup();
+        carModMenu.draw();
+      }
       default -> {
         break;
       }
@@ -123,9 +128,9 @@ public class Window extends PApplet {
    * @param passedArgs arguments from command line
    */
   public static void main(String[] passedArgs) {
-    String[] appletArgs = new String[]{"eatBubbles"};
-    Window eatBubbles = new Window();
-    PApplet.runSketch(appletArgs, eatBubbles);
+    String[] appletArgs = new String[]{"Zoom Zoom"};
+    Window zooomZoom = new Window();
+    PApplet.runSketch(appletArgs, zooomZoom);
     // Run background music
   }
 }
