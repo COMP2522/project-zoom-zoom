@@ -3,7 +3,7 @@ package project;
 public class PartGears {
 
     static int [] gears = new int[4];
-    int currGear = 1;
+    static int currGear = 1;
 
     public PartGears(int a, int b, int c, int d) {
         gears[0] = a;
@@ -33,7 +33,7 @@ public class PartGears {
         return gears[0];
     }
 
-    public int shiftUp(){
+    public static int shiftUp(){
         if(currGear < 4){
             currGear++;
         }

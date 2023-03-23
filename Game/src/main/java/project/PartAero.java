@@ -2,7 +2,7 @@ package project;
 
 public class PartAero {
     int downForce;
-    static int drag;
+    int drag;
     int weight;
 
     public PartAero(int df, int drg, int w){
@@ -27,7 +27,7 @@ public class PartAero {
         return downForce;
     }
 
-    public static int getDrag() {
+    public int getDrag() {
         return drag;
     }
 
