@@ -65,13 +65,15 @@ public class MainMenu {
     twoPlayer.update();
     if (onePlayer.isClicked()) {
       // Initialize one player game
-      window.init1Player();
+      SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
+      singlePlayer.init1Player();
       // Change menu to one player game
       window.menu = 1;
     }
     if (twoPlayer.isClicked()) {
       // Initialize two player game
-      window.init2Player();
+      TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
+      twoPlayers.init2Player();
       // Change menu to two player game
       window.menu = 2;
     }
