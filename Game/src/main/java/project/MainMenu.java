@@ -12,7 +12,7 @@ import java.awt.*;
  * @author James Langille
  */
 public class MainMenu {
-  private final Window window;
+  private final GameManager window;
   private static MainMenu instance;
   private Button onePlayer;
   private Button twoPlayer;
@@ -27,7 +27,7 @@ public class MainMenu {
    *
    * @param window current window
    */
-  private MainMenu(Window window) {
+  private MainMenu(GameManager window) {
     this.window = window;
   }
 
@@ -37,14 +37,14 @@ public class MainMenu {
    * @param window window class
    * @return a main menu object
    */
-  public static MainMenu getInstance(Window window) {
+  public static MainMenu getInstance(GameManager window) {
     if (instance == null) {
       instance = new MainMenu(window);
     }
     return instance;
   }
 
-  public Window getWindow() {
+  public GameManager getGameManager() {
     return window;
   }
 

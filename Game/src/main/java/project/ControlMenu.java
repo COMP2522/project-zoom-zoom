@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class ControlMenu {
-  private final Window window;
+  private final GameManager window;
   private static ControlMenu instance;
 
   public Button audioButton;
@@ -16,11 +16,11 @@ public class ControlMenu {
 
   private boolean check = true;
 
-  private ControlMenu(Window window) {
+  private ControlMenu(GameManager window) {
     this.window = window;
   }
 
-  public static ControlMenu getInstance(Window window) {
+  public static ControlMenu getInstance(GameManager window) {
     if (instance == null) {
       instance = new ControlMenu(window);
     }
@@ -47,9 +47,9 @@ public class ControlMenu {
     if (audioButton.isClicked()) {
       BGM.stopBGM(false);
       check = true;
-      Window.audio = true;
+      GameManager.audio = true;
     }
-    if (test.isClicked() && check && Window.audio) {
+    if (test.isClicked() && check && GameManager.audio) {
       BGM.getBGM(true);
       check = false;
     }

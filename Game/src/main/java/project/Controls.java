@@ -2,7 +2,7 @@ package project;
 
 public class Controls {
 
-  private static Window window;
+  private static GameManager window;
   private static Player player1;
   private static Player player2;
   // Index 0 is up, 1 is down, 2 is left, 3 is right
@@ -29,7 +29,7 @@ public class Controls {
    * @param window of game
    * @param player1 first player
    */
-  public Controls (Window window, Player player1, int[] player1controls) {
+  public Controls (GameManager window, Player player1, int[] player1controls) {
     Controls.window = window;
     Controls.player1 = player1;
     Controls.player2 = null;
@@ -44,7 +44,7 @@ public class Controls {
    * @param player1 first player
    * @param player2 second player
    */
-  public Controls (Window window, Player player1, Player player2,
+  public Controls (GameManager window, Player player1, Player player2,
     int[] player1controls, int[] player2controls) {
     Controls.window = window;
     Controls.player1 = player1;
