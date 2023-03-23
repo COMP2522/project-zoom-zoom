@@ -7,7 +7,11 @@
   <component name="PDMPlugin">
     <option name="skipTestSources" value="false" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="17" project-jdk-type="JavaSDK">
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="18 (2)" project-jdk-type="JavaSDK">
+>>>>>>> 7421bda0a38e53115ace6d369991fb96607d967a
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

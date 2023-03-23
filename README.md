@@ -1,7 +1,7 @@
 # Project
-<b>Max V:</b> Track<br />
+<b>Max V:</b> Tracks<br />
 <b>Mike:</b> Car & Parts<br />
-<b>Jayden:</b> UI<br />
+<b>Jayden:</b> UI & Settings<br />
 <b>James:</b> Controls & Player<br />
 <b>Rohil:</b> Manager & Bots
 

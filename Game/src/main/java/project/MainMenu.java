@@ -11,7 +11,7 @@ import java.awt.*;
  *
  * @author James Langille
  */
-public class MainMenu extends PApplet {
+public class MainMenu {
   private final Window window;
   private static MainMenu instance;
   private Button onePlayer;
@@ -19,12 +19,20 @@ public class MainMenu extends PApplet {
   private Button controls;
   private Button quit;
 
+  // 1 = 1-Player, 2 = 2-Player
+  int gameType = 0;
+
+  /**
+   * Main menu, private constructor to create a singleton of the class.
+   *
+   * @param window current window
+   */
   private MainMenu(Window window) {
     this.window = window;
   }
 
   /**
-   * Singleton constructor for main menu.
+   * getInstance, method that creates a singleton of the class.
    *
    * @param window window class
    * @return a main menu object
@@ -45,31 +53,45 @@ public class MainMenu extends PApplet {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     window.textSize(40);
 
-    onePlayer = new Button(new PVector((float) (window.displayWidth / 2.125) - 40, 500), 200, 50,
-        "One Player", new Color(255, 0, 0), window);
-    twoPlayer = new Button(new PVector((float) (window.displayWidth / 2.125) - 50, 600), 225, 50,
-        "Two players", new Color(255, 0, 0), window);
-    controls = new Button(new PVector((float) (window.displayWidth / 2.125), 700), 150,
-        50, "Controls", new Color(200, 50, 50), window);
-    quit = new Button(new PVector((float) (window.displayWidth / 2.125), 800), 175,
+    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 500), 225, 50,
+        "One Player", new Color(52, 152, 235), window);
+    twoPlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 600), 225, 50,
+        "Two players", new Color(52, 73, 235), window);
+    controls = new Button(new PVector((float) (window.displayWidth / 2) - 100, 700), 225,
+        50, "Controls", new Color(104, 52, 235), window);
+    quit = new Button(new PVector((float) (window.displayWidth / 2) - 100, 800), 225,
         50, "Quit", new Color(200, 50, 50), window);
   }
 
   public void draw() {
-    window.background(0, 255, 150);
+    window.background(64, 64, 64);
     window.fill(0);
-    window.text("Zoom Zoom", window.displayWidth / 2,200);
+    window.text("Zoom Zoom", window.displayWidth / 2 + 10,window.displayHeight/4);
     onePlayer.draw();
     onePlayer.update();
     twoPlayer.draw();
     twoPlayer.update();
-    if (onePlayer.isClicked() || twoPlayer.isClicked()) {
-//      Button test = new Button(new PVector((float) (window.displayWidth / 3.125), 500), 100, 50, "Test",
-//          new Color(255, 0, 0), window);
-//      test.draw();
-        window.menu = 1;
+    if (onePlayer.isClicked()) {
+      // Initialize one player game
+      SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
+      singlePlayer.init1Player();
+      // Change menu to one player game
+      gameType = 1;
+      window.menu = 4;
+    }
+    if (twoPlayer.isClicked()) {
+      // Initialize two player game
+      TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
+      twoPlayers.init2Player();
+      // Change menu to two player game
+      gameType = 2;
+      window.menu = 4;
     }
     controls.draw();
+    controls.update();
+    if (controls.isClicked()) {
+      window.menu = 3;
+    }
     quit.draw();
     quit.update();
     if (quit.isClicked()) {
