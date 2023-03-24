@@ -155,11 +155,9 @@ public class Controls {
    * playerMovement, update the player's movement based on boolean variables.
    */
   public static void playerMovement() {
-
     if (player1up) {
       // handle player1 up control
       player1.acc();
-      System.out.println(player1controls[0]);
     }
     if (player1down) {
       // handle player1 down control
@@ -172,14 +170,6 @@ public class Controls {
     if (player1right) {
       // handle player1 right control
       player1.turn(0.3);
-    }
-    if (player1gearUp) {
-      // handle player1 gear up
-      player1.shiftUp();
-    }
-    if (player1gearDown) {
-      // handle player1 gear down
-      player1.shiftDown();
     }
     if (player2up) {
       // handle player2 up control
@@ -197,14 +187,39 @@ public class Controls {
       // handle player2 right control
       player2.turn(0.3);
     }
-    if (player2gearUp) {
-      // handle player2 gear up
-      player2.shiftUp();
+  }
+
+  /**
+   * shiftGears, allows users to shift their car gears up or down
+   * depending on keycode.
+   *
+   * @param keycode key press as int value
+   */
+  public static void shiftGears(int keycode) {
+    // Controls for player1 gear shifting
+    if (keycode == player1controls[4]) {
+      // Shift player1 gear up on key press
+//      player1.shiftUp();
+      System.out.println("P1shiftup");
+    } else if (keycode == player1controls[5]) {
+      // Shift player1 gear down on key press
+//      player1.shiftDown();
+      System.out.println("P1shiftdown");
     }
-    if (player2gearDown) {
-      // handle player2 gear down
-      player2.shiftDown();
+    // Check if two player was instantiated for a two player game
+    if (player2 != null) {
+      // Controls for player2 gear shifting
+      if (keycode == player2controls[4]) {
+        // Shift player2 gear up on key press
+//        player2.shiftUp();
+        System.out.println("P2shiftup");
+      } else if (keycode == player2controls[5]) {
+        // Shift player2 gear down on key press
+//        player2.shiftDown();
+        System.out.println("P2shiftdown");
+      }
     }
+
   }
 
   public void setUp(Player player, int key) {
@@ -238,13 +253,4 @@ public class Controls {
       player2controls[3] = key;
     }
   }
-
-
-
-
-
-
-
-
-
 }
