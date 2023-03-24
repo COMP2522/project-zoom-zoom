@@ -16,14 +16,13 @@ public class Controls {
   private static boolean player1down = false;
   private static boolean player1left = false;
   private static boolean player1right = false;
-  private static boolean player1gearUp = false;
-  private static boolean player1gearDown = false;
+
   private static boolean player2up = false;
   private static boolean player2down = false;
   private static boolean player2left = false;
   private static boolean player2right = false;
-  private static boolean player2gearUp = false;
-  private static boolean player2gearDown = false;
+
+
   /**
    * Constructor for controls with one player.
    *
@@ -74,12 +73,6 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = true;
-    // Shift gear up player1 control
-    if (keyCode == player1controls[4])
-      player1gearUp = true;
-    // Shift gear down player1 control
-    if (keyCode == player1controls[5])
-      player1gearDown = true;
     // Do inner if statements if a second player exists
     if (player2 != null) {
       // Up player2 control
@@ -94,12 +87,6 @@ public class Controls {
       // Right player2 control
       if (keyCode == player2controls[3])
         player2right = true;
-      // Shift gear up player2 control
-      if (keyCode == player2controls[4])
-        player2gearUp = true;
-      // Shift gear down player2 control
-      if (keyCode == player2controls[5])
-        player2gearDown = true;
     }
   }
 
@@ -122,12 +109,6 @@ public class Controls {
     // Right player1 control
     if (keyCode == player1controls[3])
       player1right = false;
-    // Shift gear up player1 control
-    if (keyCode == player1controls[4])
-      player1gearUp = false;
-    // Shift gear down player1 control
-    if (keyCode == player1controls[5])
-      player1gearDown = false;
     // Do inner if statements if player 2 exists
     if (player2 != null) {
       // Up player2 control
@@ -142,12 +123,6 @@ public class Controls {
       // Right player2 control
       if (keyCode == player2controls[3])
         player2right = false;
-      // Shift gear up player2 control
-      if (keyCode == player2controls[4])
-        player2gearUp = false;
-      // Shift gear down player2 control
-      if (keyCode == player2controls[5])
-        player2gearDown = false;
     }
   }
 
@@ -222,7 +197,7 @@ public class Controls {
 
   }
 
-  public void setUp(Player player, int key) {
+  public static void setUp(Player player, int key) {
     if (player == player1) {
       player1controls[0] = key;
     } else {
@@ -230,7 +205,7 @@ public class Controls {
     }
   }
 
-  public void setDown(Player player, int key) {
+  public static void setDown(Player player, int key) {
     if (player == player1) {
       player1controls[1] = key;
     } else {
@@ -238,7 +213,7 @@ public class Controls {
     }
   }
 
-  public void setLeft(Player player, int key) {
+  public static void setLeft(Player player, int key) {
     if (player == player1) {
       player1controls[2] = key;
     } else {
@@ -246,7 +221,7 @@ public class Controls {
     }
   }
 
-  public void setRight(Player player, int key) {
+  public static void setRight(Player player, int key) {
     if (player == player1) {
       player1controls[3] = key;
     } else {

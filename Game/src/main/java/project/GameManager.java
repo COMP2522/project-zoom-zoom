@@ -1,12 +1,8 @@
 package project;
 
 import processing.core.PApplet;
-import processing.core.PVector;
 import processing.event.KeyEvent;
 
-import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 /**
  * Game manager class to indicate whether the game is running or not
@@ -20,6 +16,7 @@ public class GameManager extends PApplet {
   CarModMenu carModMenu;
   SinglePlayer singlePlayer;
   TwoPlayers twoPlayers;
+  Stopwatch stopwatch;
   public static boolean audio = true;
   private int check = 1;
 
@@ -57,7 +54,6 @@ public class GameManager extends PApplet {
   public void setup() {
   }
 
-
   /**
    * keyPressed, take key event input and update the controls boolean variable to true.
    *
@@ -80,8 +76,9 @@ public class GameManager extends PApplet {
    */
   @Override
   public void keyReleased() {
-    if (menu == 1 || menu == 2)
+    if (menu == 1 || menu == 2) {
       Controls.setMovementFalse(keyCode);
+    }
   }
 
   /**
@@ -91,7 +88,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-//      BGM.getBGM(true);
+      BGM.getBGM(true);
       audio = false;
       check++;
     }
@@ -104,7 +101,6 @@ public class GameManager extends PApplet {
         break;
       }
       case 1 -> { // 1 Player game
-        background(64, 64, 64);
         singlePlayer = SinglePlayer.getInstance(this);
         singlePlayer.draw();
       }
@@ -116,6 +112,8 @@ public class GameManager extends PApplet {
       case 3 -> { // Control menu
         background(64, 64, 64);
         controlMenu = ControlMenu.getInstance(this);
+        stopwatch = Stopwatch.getInstance(this);
+        stopwatch.showTimer(true);
         controlMenu.setup();
         controlMenu.draw();
         break;
@@ -160,10 +158,8 @@ public class GameManager extends PApplet {
    * @param passedArgs arguments from command line
    */
   public static void main(String[] passedArgs) {
-    BGM.getBGM(true);
-    String[] appletArgs = new String[]{"eatBubbles"};
-    GameManager eatBubbles = new GameManager();
-    PApplet.runSketch(appletArgs, eatBubbles);
+    String[] appletArgs = new String[]{"Zoom Zoom"};
+    GameManager zoomZoom = new GameManager();
+    PApplet.runSketch(appletArgs, zoomZoom);
   }
 }
-

@@ -13,7 +13,6 @@ import processing.core.PVector;
  * @author James Langille
  */
 public class CarModMenu {
-
   private PImage engine1image;
   private PImage engine2image;
   private PImage engine3image;
@@ -27,6 +26,7 @@ public class CarModMenu {
   private PImage aero3image;
   private PImage aero4image;
   private final GameManager window;
+  Stopwatch stopwatch;
   private static CarModMenu instance;
   private MainMenu mainMenu;
   private Button backToMainMenu;
@@ -161,6 +161,7 @@ public class CarModMenu {
   }
 
   public void draw() {
+    stopwatch = Stopwatch.getInstance(window);
     window.background(64, 64, 64);
     window.fill(0);
     window.text("Car Modification", window.displayWidth / 2 + 10,window.displayHeight / 10);
@@ -231,8 +232,16 @@ public class CarModMenu {
     startRace.update();
     if (startRace.isClicked()) {
       if (mainMenu.gameType == 1) {
+        // Initialize one player game
+        SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
+        singlePlayer.init1Player();
+        singlePlayer.setTimerCheck(true);
         window.menu = 1;
       } else if (mainMenu.gameType == 2) {
+        stopwatch.resetTimer();
+        // Initialize two player game
+        TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
+        twoPlayers.init2Player();
         window.menu = 2;
       }
     }

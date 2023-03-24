@@ -2,7 +2,6 @@ package project;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-import processing.event.KeyEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ public class SinglePlayer extends PApplet{
   int minSize = 10;
   int maxSize = 40;
   int[] player1Keys = {87, 83, 65, 68, 20, 16};
+  static boolean timerCheck = false;
 
   private SinglePlayer(GameManager window){
     this.window = window;
@@ -46,11 +46,74 @@ public class SinglePlayer extends PApplet{
 
   public void draw() {
     window.background(64, 64, 64);
+//    if (!timerCheck) {
+//      CarModMenu.stopwatch.stopTimer();
+//    } else {
+//      CarModMenu.stopwatch.showTimer(true);
+//    }
+
     Controls.playerMovement();
     // Move player around the screen.
     for (Sprite sprite : sprites) {
       sprite.update();
       sprite.draw();
     }
+  }
+
+  public boolean isTimerCheck() {
+    return timerCheck;
+  }
+
+  public void setTimerCheck(boolean timerCheck) {
+    this.timerCheck = timerCheck;
+  }
+
+  public ArrayList<Sprite> getSprites() {
+    return sprites;
+  }
+
+  public void setSprites(ArrayList<Sprite> sprites) {
+    this.sprites = sprites;
+  }
+
+  public Player getPlayer1() {
+    return player1;
+  }
+
+  public void setPlayer1(Player player1) {
+    this.player1 = player1;
+  }
+
+
+  public Controls getPlayerControls() {
+    return playerControls;
+  }
+
+  public void setPlayerControls(Controls playerControls) {
+    this.playerControls = playerControls;
+  }
+
+  public int getMinSize() {
+    return minSize;
+  }
+
+  public void setMinSize(int minSize) {
+    this.minSize = minSize;
+  }
+
+  public int getMaxSize() {
+    return maxSize;
+  }
+
+  public void setMaxSize(int maxSize) {
+    this.maxSize = maxSize;
+  }
+
+  public int[] getPlayer1Keys() {
+    return player1Keys;
+  }
+
+  public void setPlayer1Keys(int[] player1Keys) {
+    this.player1Keys = player1Keys;
   }
 }
