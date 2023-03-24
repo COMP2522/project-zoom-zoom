@@ -172,9 +172,9 @@ public class Player extends Sprite {
   PartChassis chassis = new PartChassis(CWEIGHT, WHEELBASEX, WHEELBASEY);
 
 
-  public Player(PVector position, PVector direction, float size, float speed,
+  public Player(PVector position, PVector direction, PVector velocity, float size, float speed,
                 Color color, GameManager window) {
-    super(position, direction, size, speed, color, window);
+    super(position, direction, velocity, size, speed, color, window);
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = PartGears.start();
   }

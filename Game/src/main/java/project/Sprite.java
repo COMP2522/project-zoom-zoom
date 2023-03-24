@@ -11,6 +11,7 @@ import java.awt.*;
 public class Sprite implements Comparable, Collidable, Drawable {
   protected PVector position;
   protected PVector direction;
+  protected PVector velocity;
   protected float size;
 
   protected float speed;
@@ -27,7 +28,7 @@ public class Sprite implements Comparable, Collidable, Drawable {
    * @param color of the sprite
    * @param window the sprite is being displayed
    */
-  public Sprite(PVector position, PVector direction, float size, float speed,
+  public Sprite(PVector position, PVector direction, PVector velocity, float size, float speed,
                 Color color, GameManager window) {
     this.position = position;
     this.direction = direction;
@@ -35,6 +36,7 @@ public class Sprite implements Comparable, Collidable, Drawable {
     this.speed = speed;
     this.window = window;
     this.color = color;
+    this.velocity = velocity;
   }
 
   /**

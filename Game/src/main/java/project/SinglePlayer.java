@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class SinglePlayer extends PApplet{
   private final GameManager window;
   private static SinglePlayer instance;
+  AIPlayer aiPlayer;
   ArrayList<Sprite> sprites;
   Player player1;
   Controls playerControls;
@@ -29,19 +30,31 @@ public class SinglePlayer extends PApplet{
   }
 
   /**
-   * Initializes all sprites needed for a two players game.
+   * Initializes all sprites needed for a one player game.
    */
   public void init1Player() {
     sprites = new ArrayList<Sprite>();
     player1 = new Player(
         new PVector(window.width / 2, window.height / 2),
         new PVector(50, 1),
+        new PVector(10, 10),
         (minSize + 10),
         0.1F,
         new Color(0, 255, 0),
         window);
     playerControls = new Controls(window, player1, player1Keys);
     sprites.add(player1);
+
+    // Add the AI player
+    aiPlayer = new AIPlayer(
+      new PVector(window.width / 2, window.height / 2),
+      new PVector(50, 1),
+      new PVector(0, 0),
+      (minSize + 10),
+      0.1F,
+      new Color(255, 0, 0),
+      window);
+    sprites.add(aiPlayer);
   }
 
   public void draw() {
@@ -51,6 +64,15 @@ public class SinglePlayer extends PApplet{
 //    } else {
 //      CarModMenu.stopwatch.showTimer(true);
 //    }
+
+    // Move player and AI around the screen.
+    for (Sprite sprite : sprites) {
+      sprite.update();
+      sprite.draw();
+      if (sprite instanceof AIPlayer) {
+        ((AIPlayer) sprite).updateAI(player1, sprites);
+      }
+    }
 
     Controls.playerMovement();
     // Move player around the screen.
