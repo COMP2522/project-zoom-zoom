@@ -200,10 +200,7 @@ public class CarModMenu {
     for (Button aero : aerodynamics) {
       aero.draw();
       aero.update();
-      // If an aero button is clicked, update the player's part to that aerodynamic
-      if (aero.isClicked()) {
-
-      }
+      this.setPlayerAerodynamics(aero);
     }
     // Draw images for each aero
     window.image(aero1image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50);
@@ -298,7 +295,7 @@ public class CarModMenu {
   }
 
   /**
-   * setPlayerChassis, sets the player's chassis part depending one which
+   * setPlayerChassis, sets the player's chassis part depending on which
    * chassis button was clicked.
    *
    * @param chassis button
@@ -343,6 +340,56 @@ public class CarModMenu {
       } else if (buttonClick(chassis4) == 2) {
         // Set player 2 chassis to chassis 4
         System.out.println("right test chassis 4");
+      }
+    }
+  }
+
+  /**
+   * sets the player's aerodynamics part depending on which
+   * aerodynamics button was clicked.
+   *
+   * @param aero button
+   */
+  private void setPlayerAerodynamics(Button aero) {
+    if (aero == aero1) {
+      // Check for left click
+      if (buttonClick(aero1) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 1
+        System.out.println("test aero 1");
+        // Check for right click
+      } else if (buttonClick(aero1) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 1
+        System.out.println("right test aero 1");
+      }
+    } else if (aero == aero2) {
+      // Check for left click
+      if (buttonClick(aero2) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 2
+        System.out.println("test aero 2");
+        // Check for right click
+      } else if (buttonClick(aero2) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 2
+        System.out.println("right test aero 2");
+      }
+    } else if (aero == aero3) {
+      // Check for left click
+      if (buttonClick(aero3) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 3
+        System.out.println("test aero 3");
+        // Check for right click
+      } else if (buttonClick(aero3) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 3
+        System.out.println("right test aero 3");
+      }
+    } else if (aero == aero4) {
+      // Check for left click
+      if (buttonClick(aero4) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 4
+        System.out.println("test aero 4");
+        // Check for right click
+      } else if (buttonClick(aero4) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 4
+        System.out.println("right test aero 4");
       }
     }
   }
