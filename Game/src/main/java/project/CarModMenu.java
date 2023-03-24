@@ -309,7 +309,7 @@ public class CarModMenu {
         // Check for right click
       } else if (buttonClick(chassis1) == 2) {
         // Set player 2 chassis to chassis 1
-        System.out.println("right test chassis 1");
+          System.out.println("right test chassis 1");
       }
     } else if (chassis == chassis2) {
       // Check for left click
@@ -403,7 +403,10 @@ public class CarModMenu {
   private int buttonClick(Button part) {
     if (part.isClicked() && window.mouseButton == PApplet.LEFT) {
       return 1;
-    } else if (part.isClicked() && window.mouseButton == PApplet.RIGHT) {
+      /* Checks if right mouse button was clicked and two player button
+         in main menu was clicked. */
+    } else if (part.isClicked() && window.mouseButton == PApplet.RIGHT
+        && mainMenu.gameType == 2) {
       return 2;
     }
     return 0;
