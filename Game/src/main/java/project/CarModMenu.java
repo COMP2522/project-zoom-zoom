@@ -13,7 +13,6 @@ import processing.core.PVector;
  * @author James Langille
  */
 public class CarModMenu {
-  static Stopwatch stopwatch = Stopwatch.getInstance(SinglePlayer.window);
   private PImage engine1image;
   private PImage engine2image;
   private PImage engine3image;
@@ -26,7 +25,8 @@ public class CarModMenu {
   private PImage aero2image;
   private PImage aero3image;
   private PImage aero4image;
-  private final Window window;
+  private final GameManager window;
+  Stopwatch stopwatch;
   private static CarModMenu instance;
   private MainMenu mainMenu;
   private Button backToMainMenu;
@@ -57,7 +57,7 @@ public class CarModMenu {
    *
    * @param window current window
    */
-  private CarModMenu(Window window) {
+  private CarModMenu(GameManager window) {
     this.window = window;
     mainMenu = MainMenu.getInstance(window);
   }
@@ -68,7 +68,7 @@ public class CarModMenu {
    * @param window window class
    * @return a car mod menu object
    */
-  public static CarModMenu getInstance(Window window) {
+  public static CarModMenu getInstance(GameManager window) {
     if (instance == null) {
       instance = new CarModMenu(window);
     }
@@ -161,6 +161,7 @@ public class CarModMenu {
   }
 
   public void draw() {
+    stopwatch = Stopwatch.getInstance(window);
     window.background(64, 64, 64);
     window.fill(0);
     window.text("Car Modification", window.displayWidth / 2 + 10,window.displayHeight / 10);

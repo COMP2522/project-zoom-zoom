@@ -6,18 +6,18 @@ import java.util.TimerTask;
 import java.util.Timer;
 
 public class Stopwatch {
-  private final Window window;
+  private final GameManager window;
   public long startTime;
   public boolean running = false;
   private static Stopwatch instance;
   private long elapsedTime = 0;
   private Timer timer;
   private int seconds = 0;
-  private Stopwatch(Window window) {
+  private Stopwatch(GameManager window) {
     this.window = window;
   }
 
-  public static Stopwatch getInstance(Window window) {
+  public static Stopwatch getInstance(GameManager window) {
     if (instance == null) {
       instance = new Stopwatch(window);
     }

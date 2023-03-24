@@ -5,12 +5,12 @@ import processing.event.KeyEvent;
 
 
 /**
- * Zoom zoom window class.
- * Example window class from lab 03 to test
- * other classes.
+ * Game manager class to indicate whether the game is running or not
  *
+ * @author Rohil Patel
  */
-public class Window extends PApplet {
+
+public class GameManager extends PApplet {
   MainMenu mainMenu;
   ControlMenu controlMenu;
   CarModMenu carModMenu;
@@ -32,6 +32,13 @@ public class Window extends PApplet {
    * car mod and track menus should happen before game starts
    */
   int menu = 0;
+  private static GameManager instance;
+
+  private boolean gameRunning;
+
+  // Private constructor to prevent instantiation
+  private GameManager() {
+  }
 
   /**
    * Called once at the beginning of the program.
@@ -60,6 +67,7 @@ public class Window extends PApplet {
     }
     if (menu == 1 || menu == 2) {
       Controls.setMovementTrue(keyCode);
+      Controls.shiftGears(keyCode);
     }
   }
 
@@ -101,7 +109,7 @@ public class Window extends PApplet {
         twoPlayers = TwoPlayers.getInstance(this);
         twoPlayers.draw();
       }
-      case 3 -> {
+      case 3 -> { // Control menu
         background(64, 64, 64);
         controlMenu = ControlMenu.getInstance(this);
         stopwatch = Stopwatch.getInstance(this);
@@ -110,7 +118,7 @@ public class Window extends PApplet {
         controlMenu.draw();
         break;
       }
-      case 4 -> {
+      case 4 -> { // Car modification menu
         carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
@@ -121,6 +129,29 @@ public class Window extends PApplet {
     }
   }
 
+  // Get instance method to make sure that there's only ever one instance of the game
+  // Uses singleton design
+  public static GameManager getInstance() {
+    if (instance == null) {
+      instance = new GameManager();
+    }
+    return instance;
+  }
+
+  // Code to initialize game objects and start the game loop
+  public void startGame() {
+    gameRunning = true;
+  }
+
+  // Code to clean up game objects and stop the game loop
+  public void stopGame() {
+    gameRunning = false;
+  }
+
+  public boolean isGameRunning() {
+    return gameRunning;
+  }
+
   /**
    * Main function.
    *
@@ -128,8 +159,7 @@ public class Window extends PApplet {
    */
   public static void main(String[] passedArgs) {
     String[] appletArgs = new String[]{"Zoom Zoom"};
-    Window zooomZoom = new Window();
-    PApplet.runSketch(appletArgs, zooomZoom);
-    // Run background music
+    GameManager zoomZoom = new GameManager();
+    PApplet.runSketch(appletArgs, zoomZoom);
   }
 }

@@ -5,11 +5,9 @@ import processing.core.PVector;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-
-public class ControlMenu extends PApplet {
-  private final Window window;
+public class ControlMenu {
+  private final GameManager window;
   private static ControlMenu instance;
   public Button soundoff;
   public Button soundon;
@@ -23,11 +21,11 @@ public class ControlMenu extends PApplet {
   public Button p2Right;
   private boolean check = true;
 
-  private ControlMenu(Window window) {
+  private ControlMenu(GameManager window) {
     this.window = window;
   }
 
-  public static ControlMenu getInstance(Window window) {
+  public static ControlMenu getInstance(GameManager window) {
     if (instance == null) {
       instance = new ControlMenu(window);
     }
@@ -87,9 +85,9 @@ public class ControlMenu extends PApplet {
     if (soundoff.isClicked()) {
       BGM.stopBGM(false);
       check = true;
-      Window.audio = true;
+      GameManager.audio = true;
     }
-    if (soundon.isClicked() && check && Window.audio) {
+    if (soundon.isClicked() && check && GameManager.audio) {
       BGM.getBGM(true);
       check = false;
     }
