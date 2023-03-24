@@ -188,7 +188,7 @@ public class CarModMenu {
     for (Button chassi : chassis) {
       chassi.draw();
       chassi.update();
-
+      this.setPlayerChassis(chassi);
     }
     // Draw images for each chassis
     window.image(chassis1image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50);
@@ -248,7 +248,7 @@ public class CarModMenu {
   }
 
   /**
-   * setPlayerEngine, sets the player's engine part depending one which
+   * setPlayerEngine, sets the player's engine part depending on which
    * engine button was clicked.
    *
    * @param engine button
@@ -256,44 +256,109 @@ public class CarModMenu {
   private void setPlayerEngine(Button engine) {
     if (engine == engine1) {
       // Check for left click
-      if (engine1.isClicked() && window.mouseButton == PApplet.LEFT) {
+      if (buttonClick(engine1) == 1) {
         // Set player 1 engine to engine 1
         System.out.println("test");
         // Check for right click
-      } else if (engine1.isClicked() && window.mouseButton == PApplet.RIGHT) {
+      } else if (buttonClick(engine1) == 2) {
         // Set player 2 engine to engine 1
         System.out.println("right test");
       }
     } else if (engine == engine2) {
       // Check for left click
-      if (engine2.isClicked() && window.mouseButton == PApplet.LEFT) {
+      if (buttonClick(engine2) == 1) {
         // Set player 1 engine to engine 2
         System.out.println("test 2");
         // Check for right click
-      } else if (engine2.isClicked() && window.mouseButton == PApplet.RIGHT) {
+      } else if (buttonClick(engine2) == 2) {
         // Set player 2 engine to engine 2
         System.out.println("right test 2");
       }
     } else if (engine == engine3) {
       // Check for left click
-      if (engine3.isClicked() && window.mouseButton == PApplet.LEFT) {
+      if (buttonClick(engine3) == 1) {
         // Set player 1 engine to engine 3
         System.out.println("test 3");
         // Check for right click
-      } else if (engine3.isClicked() && window.mouseButton == PApplet.RIGHT) {
+      } else if (buttonClick(engine3) == 2) {
         // Set player 2 engine to engine 3
         System.out.println("right test 3");
       }
     } else if (engine == engine4) {
       // Check for left click
-      if (engine4.isClicked() && window.mouseButton == PApplet.LEFT) {
+      if (buttonClick(engine4) == 1) {
         // Set player 1 engine to engine 4
         System.out.println("test 4");
         // Check for right click
-      } else if (engine4.isClicked() && window.mouseButton == PApplet.RIGHT) {
+      } else if (buttonClick(engine4) == 2) {
         // Set player 2 engine to engine 4
         System.out.println("right test 4");
       }
     }
+  }
+
+  /**
+   * setPlayerChassis, sets the player's chassis part depending one which
+   * chassis button was clicked.
+   *
+   * @param chassis button
+   */
+  private void setPlayerChassis(Button chassis) {
+    if (chassis == chassis1) {
+      // Check for left click
+      if (buttonClick(chassis1) == 1) {
+        // Set player 1 chassis to chassis 1
+        System.out.println("test chassis 1");
+        // Check for right click
+      } else if (buttonClick(chassis1) == 2) {
+        // Set player 2 chassis to chassis 1
+        System.out.println("right test chassis 1");
+      }
+    } else if (chassis == chassis2) {
+      // Check for left click
+      if (buttonClick(chassis2) == 1) {
+        // Set player 1 chassis to chassis 2
+        System.out.println("test chassis 2");
+        // Check for right click
+      } else if (buttonClick(chassis2) == 2) {
+        // Set player 2 chassis to chassis 2
+        System.out.println("right test chassis 2");
+      }
+    } else if (chassis == chassis3) {
+      // Check for left click
+      if (buttonClick(chassis3) == 1) {
+        // Set player 1 chassis to chassis 3
+        System.out.println("test chassis 3");
+        // Check for right click
+      } else if (buttonClick(chassis3) == 2) {
+        // Set player 2 chassis to chassis 3
+        System.out.println("right test chassis 3");
+      }
+    } else if (chassis == chassis4) {
+      // Check for left click
+      if (buttonClick(chassis4) == 1) {
+        // Set player 1 chassis to chassis 4
+        System.out.println("test chassis 4");
+        // Check for right click
+      } else if (buttonClick(chassis4) == 2) {
+        // Set player 2 chassis to chassis 4
+        System.out.println("right test chassis 4");
+      }
+    }
+  }
+
+  /**
+   * mouseClick, helper method that checks if a button was left or right clicked.
+   *
+   * @param part Button that was clicked
+   * @return 1 if left click, 2 if right click, else 0
+   */
+  private int buttonClick(Button part) {
+    if (part.isClicked() && window.mouseButton == PApplet.LEFT) {
+      return 1;
+    } else if (part.isClicked() && window.mouseButton == PApplet.RIGHT) {
+      return 2;
+    }
+    return 0;
   }
 }
