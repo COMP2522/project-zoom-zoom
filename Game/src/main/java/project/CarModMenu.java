@@ -168,7 +168,6 @@ public class CarModMenu {
     // Create text for each car part
     window.textSize(30);
     window.text("Engine", (window.displayWidth / 8), window.displayHeight / 5);
-//    window.text("Brakes", (window.displayWidth / 8) + 300, window.displayHeight / 5);
     window.text("Chassis", (window.displayWidth / 8) + 400, window.displayHeight / 5);
     window.text("Aerodynamics", (window.displayWidth / 8) + 800, window.displayHeight / 5);
     window.text("Gears", (window.displayWidth / 8) + 1200, window.displayHeight / 5);
@@ -177,10 +176,7 @@ public class CarModMenu {
     for (Button engine : engines) {
       engine.draw();
       engine.update();
-      // If an engine button is clicked, update the player's part to that engine
-      if (engine.isClicked()) {
-
-      }
+      this.setPlayerEngine(engine);
     }
     // Draw images for each engine
     window.image(engine1image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 50);
@@ -192,9 +188,7 @@ public class CarModMenu {
     for (Button chassi : chassis) {
       chassi.draw();
       chassi.update();
-      if (chassi.isClicked()) {
 
-      }
     }
     // Draw images for each chassis
     window.image(chassis1image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50);
@@ -250,6 +244,56 @@ public class CarModMenu {
     backToMainMenu.update();
     if (backToMainMenu.isClicked()) {
       window.menu = 0;
+    }
+  }
+
+  /**
+   * setPlayerEngine, sets the player's engine part depending one which
+   * engine button was clicked.
+   *
+   * @param engine button
+   */
+  private void setPlayerEngine(Button engine) {
+    if (engine == engine1) {
+      // Check for left click
+      if (engine1.isClicked() && window.mouseButton == PApplet.LEFT) {
+        // Set player 1 engine to engine 1
+        System.out.println("test");
+        // Check for right click
+      } else if (engine1.isClicked() && window.mouseButton == PApplet.RIGHT) {
+        // Set player 2 engine to engine 1
+        System.out.println("right test");
+      }
+    } else if (engine == engine2) {
+      // Check for left click
+      if (engine2.isClicked() && window.mouseButton == PApplet.LEFT) {
+        // Set player 1 engine to engine 2
+        System.out.println("test 2");
+        // Check for right click
+      } else if (engine2.isClicked() && window.mouseButton == PApplet.RIGHT) {
+        // Set player 2 engine to engine 2
+        System.out.println("right test 2");
+      }
+    } else if (engine == engine3) {
+      // Check for left click
+      if (engine3.isClicked() && window.mouseButton == PApplet.LEFT) {
+        // Set player 1 engine to engine 3
+        System.out.println("test 3");
+        // Check for right click
+      } else if (engine3.isClicked() && window.mouseButton == PApplet.RIGHT) {
+        // Set player 2 engine to engine 3
+        System.out.println("right test 3");
+      }
+    } else if (engine == engine4) {
+      // Check for left click
+      if (engine4.isClicked() && window.mouseButton == PApplet.LEFT) {
+        // Set player 1 engine to engine 4
+        System.out.println("test 4");
+        // Check for right click
+      } else if (engine4.isClicked() && window.mouseButton == PApplet.RIGHT) {
+        // Set player 2 engine to engine 4
+        System.out.println("right test 4");
+      }
     }
   }
 }
