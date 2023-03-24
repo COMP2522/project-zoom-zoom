@@ -48,7 +48,7 @@ public class TwoPlayers extends PApplet {
         0.01F,
         new Color(0, 255, 0),
         window);
-    playerControls = new Controls(window, player1, player2, player1Keys, player2Keys);
+    playerControls = new Controls(player1, player2, player1Keys, player2Keys);
 
     sprites.add(player1);
     sprites.add(player2);

@@ -40,7 +40,7 @@ public class SinglePlayer extends PApplet{
         0.1F,
         new Color(0, 255, 0),
         window);
-    playerControls = new Controls(window, player1, player1Keys);
+    playerControls = new Controls(player1, player1Keys);
     sprites.add(player1);
   }
 
