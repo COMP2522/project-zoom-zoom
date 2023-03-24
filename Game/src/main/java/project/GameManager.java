@@ -69,8 +69,10 @@ public class GameManager extends PApplet {
     if (keyCode == TAB) {
       menu = 0;
     }
-    if (menu == 1 || menu == 2)
+    if (menu == 1 || menu == 2) {
       Controls.setMovementTrue(keyCode);
+      Controls.shiftGears(keyCode);
+    }
   }
 
   /**
