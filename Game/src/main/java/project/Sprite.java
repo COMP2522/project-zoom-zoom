@@ -5,7 +5,7 @@ import processing.core.PVector;
 import java.awt.*;
 
 /**
- * Sprite, creates sprite objects to be used in GameManager, implements
+ * Sprite, creates sprite objects to be used in Window, implements
  * Comparable, Collidable, and Drawable.
  */
 public class Sprite implements Comparable, Collidable, Drawable {
@@ -15,7 +15,7 @@ public class Sprite implements Comparable, Collidable, Drawable {
 
   protected float speed;
   protected Color color;
-  protected GameManager window;
+  protected Window window;
 
   /**
    * Constructor for sprite objects.
@@ -28,7 +28,7 @@ public class Sprite implements Comparable, Collidable, Drawable {
    * @param window the sprite is being displayed
    */
   public Sprite(PVector position, PVector direction, float size, float speed,
-                Color color, GameManager window) {
+                Color color, Window window) {
     this.position = position;
     this.direction = direction;
     this.size = size;
