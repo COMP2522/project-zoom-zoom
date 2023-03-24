@@ -53,6 +53,7 @@ public class Window extends PApplet {
     this.init();
   }
 
+
   /**
    * Initializes all components.
    */
@@ -74,9 +75,7 @@ public class Window extends PApplet {
     background(0, 255, 0);
     trackManager.draw();
     player.draw();
-    if (trackManager.isOnTrack(player.getPosition())) {
-//      System.out.println("Player on track!");
-    }
+    trackManager.isOnTrack(player.getPosition());
   }
 
   /**
