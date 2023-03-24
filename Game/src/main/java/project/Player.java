@@ -16,9 +16,9 @@ public class Player extends Sprite {
   /**
    * The gear ratios for the car's transmission.
    */
-  int GEAR1 = 300;
-  int GEAR2 = 100;
-  int GEAR3 = 30;
+  int GEAR1 = 1000;
+  int GEAR2 = 500;
+  int GEAR3 = 100;
   int GEAR4 = 5;
 
   /**
@@ -167,6 +167,7 @@ public class Player extends Sprite {
   /**
    * Declaring the defaults to all of the car parts
    */
+  PartGears gears = new PartGears(GEAR1, GEAR2, GEAR3, GEAR4);
   PartEngine engine = new PartEngine(POWER, DROPOFF, OPREV, EWEIGHT);
   PartAero aero = new PartAero(DOWNFORCE, ADRAG, AWEIGHT);
   PartChassis chassis = new PartChassis(CWEIGHT, WHEELBASEX, WHEELBASEY);
@@ -176,7 +177,7 @@ public class Player extends Sprite {
                 Color color, GameManager window) {
     super(position, direction, size, speed, color, window);
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
-    gearRatio = PartGears.start();
+    gearRatio = gears.start();
   }
 
 
@@ -196,8 +197,8 @@ public class Player extends Sprite {
     xpos += speed / 10 * Math.cos(direction);
     ypos += speed / 10 * Math.sin(direction);
 //    System.out.println(direction);
-//    System.out.println("speed " + speed);
-//    System.out.println("RPM " + revs);
+    System.out.println("speed " + speed);
+    System.out.println("RPM " + revs);
 
   }
 
@@ -259,10 +260,10 @@ public class Player extends Sprite {
   }
 
   public void shiftUp(){
-    gearRatio = PartGears.shiftUp();
+    gearRatio = gears.shiftUp();
   }
   public void shiftDown(){
-    gearRatio = PartGears.shiftUp();
+    gearRatio = gears.shiftDown();
   }
 
 

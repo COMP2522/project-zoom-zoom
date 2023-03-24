@@ -174,11 +174,11 @@ public class Controls {
     // Controls for player1 gear shifting
     if (keycode == player1controls[4]) {
       // Shift player1 gear up on key press
-//      player1.shiftUp();
+      player1.shiftUp();
       System.out.println("P1shiftup");
     } else if (keycode == player1controls[5]) {
       // Shift player1 gear down on key press
-//      player1.shiftDown();
+      player1.shiftDown();
       System.out.println("P1shiftdown");
     }
     // Check if two player was instantiated for a two player game
@@ -186,11 +186,11 @@ public class Controls {
       // Controls for player2 gear shifting
       if (keycode == player2controls[4]) {
         // Shift player2 gear up on key press
-//        player2.shiftUp();
+        player2.shiftUp();
         System.out.println("P2shiftup");
       } else if (keycode == player2controls[5]) {
         // Shift player2 gear down on key press
-//        player2.shiftDown();
+        player2.shiftDown();
         System.out.println("P2shiftdown");
       }
     }
