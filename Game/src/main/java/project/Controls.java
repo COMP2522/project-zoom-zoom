@@ -140,11 +140,11 @@ public class Controls {
     }
     if (player1left) {
       // handle player1 left control
-      player1.turn(-0.3);
+      player1.turn(-1);
     }
     if (player1right) {
       // handle player1 right control
-      player1.turn(0.3);
+      player1.turn(1);
     }
     if (player2up) {
       // handle player2 up control
@@ -156,11 +156,11 @@ public class Controls {
     }
     if (player2left) {
       // handle player2 left control
-      player2.turn(-0.3);
+      player2.turn(-1);
     }
     if (player2right) {
       // handle player2 right control
-      player2.turn(0.3);
+      player2.turn(1);
     }
   }
 
