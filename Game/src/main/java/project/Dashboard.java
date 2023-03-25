@@ -10,7 +10,7 @@ public class Dashboard implements Drawable {
     int ypos;
 
 
-    public Dashboard(GameManager win, Player p, int x, int y){
+    public Dashboard(GameManager win, Player p, int x, int y) {
         window = win;
         player = p;
         xpos = x;

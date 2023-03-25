@@ -75,12 +75,12 @@ public class MainMenu {
     if (onePlayer.isClicked()) {
       // Change menu to one player game
       gameType = 1;
-      window.menu = 5;
+      window.menu = 4;
     }
     if (twoPlayer.isClicked()) {
       // Change menu to two player game
       gameType = 2;
-      window.menu = 5;
+      window.menu = 4;
     }
     controls.draw();
     controls.update();
