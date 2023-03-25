@@ -54,7 +54,7 @@ public class MainMenu {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     window.textSize(40);
 
-    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 300), 225, 50,
+    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 100), 225, 50,
         "One Player", new Color(52, 152, 235), window);
     twoPlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 600), 225, 50,
         "Two players", new Color(52, 73, 235), window);
@@ -75,12 +75,12 @@ public class MainMenu {
     if (onePlayer.isClicked()) {
       // Change menu to one player game
       gameType = 1;
-      window.menu = 4;
+      window.menu = 5;
     }
     if (twoPlayer.isClicked()) {
       // Change menu to two player game
       gameType = 2;
-      window.menu = 4;
+      window.menu = 5;
     }
     controls.draw();
     controls.update();
