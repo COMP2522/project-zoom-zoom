@@ -168,7 +168,6 @@ public class CarModMenu {
     // Create text for each car part
     window.textSize(30);
     window.text("Engine", (window.displayWidth / 8), window.displayHeight / 5);
-//    window.text("Brakes", (window.displayWidth / 8) + 300, window.displayHeight / 5);
     window.text("Chassis", (window.displayWidth / 8) + 400, window.displayHeight / 5);
     window.text("Aerodynamics", (window.displayWidth / 8) + 800, window.displayHeight / 5);
     window.text("Gears", (window.displayWidth / 8) + 1200, window.displayHeight / 5);
@@ -177,10 +176,7 @@ public class CarModMenu {
     for (Button engine : engines) {
       engine.draw();
       engine.update();
-      // If an engine button is clicked, update the player's part to that engine
-      if (engine.isClicked()) {
-
-      }
+      this.setPlayerEngine(engine);
     }
     // Draw images for each engine
     window.image(engine1image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 50);
@@ -192,9 +188,7 @@ public class CarModMenu {
     for (Button chassi : chassis) {
       chassi.draw();
       chassi.update();
-      if (chassi.isClicked()) {
-
-      }
+      this.setPlayerChassis(chassi);
     }
     // Draw images for each chassis
     window.image(chassis1image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50);
@@ -206,10 +200,7 @@ public class CarModMenu {
     for (Button aero : aerodynamics) {
       aero.draw();
       aero.update();
-      // If an aero button is clicked, update the player's part to that aerodynamic
-      if (aero.isClicked()) {
-
-      }
+      this.setPlayerAerodynamics(aero);
     }
     // Draw images for each aero
     window.image(aero1image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50);
@@ -249,5 +240,173 @@ public class CarModMenu {
     if (backToMainMenu.isClicked()) {
       window.menu = 0;
     }
+  }
+
+  /**
+   * setPlayerEngine, sets the player's engine part depending on which
+   * engine button was clicked.
+   *
+   * @param engine button
+   */
+  private void setPlayerEngine(Button engine) {
+    if (engine == engine1) {
+      // Check for left click
+      if (buttonClick(engine1) == 1) {
+        // Set player 1 engine to engine 1
+        System.out.println("test");
+        // Check for right click
+      } else if (buttonClick(engine1) == 2) {
+        // Set player 2 engine to engine 1
+        System.out.println("right test");
+      }
+    } else if (engine == engine2) {
+      // Check for left click
+      if (buttonClick(engine2) == 1) {
+        // Set player 1 engine to engine 2
+        System.out.println("test 2");
+        // Check for right click
+      } else if (buttonClick(engine2) == 2) {
+        // Set player 2 engine to engine 2
+        System.out.println("right test 2");
+      }
+    } else if (engine == engine3) {
+      // Check for left click
+      if (buttonClick(engine3) == 1) {
+        // Set player 1 engine to engine 3
+        System.out.println("test 3");
+        // Check for right click
+      } else if (buttonClick(engine3) == 2) {
+        // Set player 2 engine to engine 3
+        System.out.println("right test 3");
+      }
+    } else if (engine == engine4) {
+      // Check for left click
+      if (buttonClick(engine4) == 1) {
+        // Set player 1 engine to engine 4
+        System.out.println("test 4");
+        // Check for right click
+      } else if (buttonClick(engine4) == 2) {
+        // Set player 2 engine to engine 4
+        System.out.println("right test 4");
+      }
+    }
+  }
+
+  /**
+   * setPlayerChassis, sets the player's chassis part depending on which
+   * chassis button was clicked.
+   *
+   * @param chassis button
+   */
+  private void setPlayerChassis(Button chassis) {
+    if (chassis == chassis1) {
+      // Check for left click
+      if (buttonClick(chassis1) == 1) {
+        // Set player 1 chassis to chassis 1
+        System.out.println("test chassis 1");
+        // Check for right click
+      } else if (buttonClick(chassis1) == 2) {
+        // Set player 2 chassis to chassis 1
+          System.out.println("right test chassis 1");
+      }
+    } else if (chassis == chassis2) {
+      // Check for left click
+      if (buttonClick(chassis2) == 1) {
+        // Set player 1 chassis to chassis 2
+        System.out.println("test chassis 2");
+        // Check for right click
+      } else if (buttonClick(chassis2) == 2) {
+        // Set player 2 chassis to chassis 2
+        System.out.println("right test chassis 2");
+      }
+    } else if (chassis == chassis3) {
+      // Check for left click
+      if (buttonClick(chassis3) == 1) {
+        // Set player 1 chassis to chassis 3
+        System.out.println("test chassis 3");
+        // Check for right click
+      } else if (buttonClick(chassis3) == 2) {
+        // Set player 2 chassis to chassis 3
+        System.out.println("right test chassis 3");
+      }
+    } else if (chassis == chassis4) {
+      // Check for left click
+      if (buttonClick(chassis4) == 1) {
+        // Set player 1 chassis to chassis 4
+        System.out.println("test chassis 4");
+        // Check for right click
+      } else if (buttonClick(chassis4) == 2) {
+        // Set player 2 chassis to chassis 4
+        System.out.println("right test chassis 4");
+      }
+    }
+  }
+
+  /**
+   * sets the player's aerodynamics part depending on which
+   * aerodynamics button was clicked.
+   *
+   * @param aero button
+   */
+  private void setPlayerAerodynamics(Button aero) {
+    if (aero == aero1) {
+      // Check for left click
+      if (buttonClick(aero1) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 1
+        System.out.println("test aero 1");
+        // Check for right click
+      } else if (buttonClick(aero1) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 1
+        System.out.println("right test aero 1");
+      }
+    } else if (aero == aero2) {
+      // Check for left click
+      if (buttonClick(aero2) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 2
+        System.out.println("test aero 2");
+        // Check for right click
+      } else if (buttonClick(aero2) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 2
+        System.out.println("right test aero 2");
+      }
+    } else if (aero == aero3) {
+      // Check for left click
+      if (buttonClick(aero3) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 3
+        System.out.println("test aero 3");
+        // Check for right click
+      } else if (buttonClick(aero3) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 3
+        System.out.println("right test aero 3");
+      }
+    } else if (aero == aero4) {
+      // Check for left click
+      if (buttonClick(aero4) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 4
+        System.out.println("test aero 4");
+        // Check for right click
+      } else if (buttonClick(aero4) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 4
+        System.out.println("right test aero 4");
+      }
+    }
+  }
+
+  /**
+   * mouseClick, helper method that checks if a button was left or right clicked.
+   *
+   * @param part Button that was clicked
+   * @return 1 if left click, 2 if right click, else 0
+   */
+  private int buttonClick(Button part) {
+    if (part.isClicked() && window.mouseButton == PApplet.LEFT) {
+      return 1;
+      /* Checks if right mouse button was clicked and two player button
+         in main menu was clicked. */
+    } else if (part.isClicked() && window.mouseButton == PApplet.RIGHT
+        && mainMenu.gameType == 2) {
+      return 2;
+    }
+    return 0;
   }
 }
