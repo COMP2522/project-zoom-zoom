@@ -17,7 +17,7 @@ public class MainMenu implements Drawable {
   private Button twoPlayer;
   private Button controls;
   private Button quit;
-  private PImage BGImage;
+  private PImage bgImage;
   private PImage gameTitle;
   private boolean showTitle = true;
   private static final int clock = 5;
@@ -47,6 +47,9 @@ public class MainMenu implements Drawable {
     return instance;
   }
 
+  /**
+   * showTitle, shows the game title every half second.
+   */
   private void showTitle() {
     if (window.frameCount % clock == 0) {
       // Sets to opposite boolean expression every second
@@ -75,7 +78,7 @@ public class MainMenu implements Drawable {
         50, "Quit", new Color(200, 50, 50), window);
 
     // Set up images
-    BGImage = window.loadImage("Game/images/BGImage.png");
+    bgImage = window.loadImage("Game/images/BGImage.png");
     gameTitle = window.loadImage("Game/images/zoomZoom.png");
   }
 
@@ -85,7 +88,7 @@ public class MainMenu implements Drawable {
   @Override
   public void draw() {
     // Draw images
-    window.image(BGImage, 0, 0, window.displayWidth, window.displayHeight);
+    window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
     this.showTitle();
     // Draw buttons
     onePlayer.draw();
