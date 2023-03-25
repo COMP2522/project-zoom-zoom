@@ -106,10 +106,24 @@ public class Player extends Sprite {
 
   //these are the variables working on the car
 
+  @Override
+  public float getSpeed() {
+    return (float)speed;
+  }
+
   /**
    * The current speed of the car.
    */
   double speed = 0;
+
+  /**
+   * current RPM of the car.
+   * @return revs
+   */
+  public double getRevs() {
+    return revs;
+  }
+
   /**
    * The current engine speed (revolutions per minute).
    */
@@ -154,6 +168,15 @@ public class Player extends Sprite {
   int weight;
 
   /**
+   * The current gear number
+   */
+  int currGear = 1;
+
+  public int getCurrGear() {
+    return currGear;
+  }
+
+  /**
    * The maximum amount of speed reduction due to various factors (such as drag).
    */
   int LIMITER = 50;
@@ -176,10 +199,10 @@ public class Player extends Sprite {
 
   @Override
   public void draw() {
-    window.pushStyle();
-    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
-    window.ellipse(xpos, ypos, size, size);
-    window.popStyle();
+      window.pushStyle();
+      window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
+      window.ellipse(xpos, ypos, size, size);
+      window.popStyle();
   }
 
   @Override
@@ -261,10 +284,17 @@ public class Player extends Sprite {
   }
 
   public void shiftUp(){
+    if(currGear < 4){
     gearRatio = gears.shiftUp();
+    currGear++;
+    }
   }
   public void shiftDown(){
-    gearRatio = gears.shiftDown();
+
+    if(currGear > 1){
+      currGear--;
+      gearRatio = gears.shiftDown();
+    }
   }
 
 

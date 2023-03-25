@@ -12,6 +12,7 @@ public class SinglePlayer extends PApplet{
   ArrayList<Sprite> sprites;
   Player player1;
   Controls playerControls;
+  Dashboard dash;
   int minSize = 10;
   int maxSize = 40;
   int[] player1Keys = {87, 83, 65, 68, 20, 16};
@@ -42,6 +43,7 @@ public class SinglePlayer extends PApplet{
         window);
     playerControls = new Controls(window, player1, player1Keys);
     sprites.add(player1);
+    dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
   }
 
   public void draw() {
@@ -57,6 +59,7 @@ public class SinglePlayer extends PApplet{
     for (Sprite sprite : sprites) {
       sprite.update();
       sprite.draw();
+      dash.draw();
     }
   }
 
