@@ -16,8 +16,8 @@ import java.util.ArrayList;
  *
  */
 public class Window extends PApplet {
-  Timer timer;
   TrackManager trackManager;
+  Timer timer;
   Timer timer2;
   MainMenu mainMenu;
   ControlMenu controlMenu;
@@ -62,17 +62,16 @@ public class Window extends PApplet {
    * Initializes all objects.
    */
   public void setup() {
-    trackManager = new TrackManager(this);
   }
 
   /**
    * Initializes all sprites needed for a one player game.
    */
   public void init1Player() {
-    enemies = new ArrayList<Sprite>();
-    sprites = new ArrayList<Sprite>();
     trackManager = new TrackManager(this);
     trackManager.initTrack();
+    enemies = new ArrayList<Sprite>();
+    sprites = new ArrayList<Sprite>();
 
     player1 = new Player(
         new PVector(this.width / 2, this.height / 2),
