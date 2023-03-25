@@ -7,15 +7,17 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SinglePlayer extends PApplet{
-  private final GameManager window;
+  public final GameManager window;
   private static SinglePlayer instance;
   ArrayList<Sprite> sprites;
   Player player1;
   Controls playerControls;
+  Dashboard dash;
+  public Stopwatch stopwatch;
   int minSize = 10;
   int maxSize = 40;
   int[] player1Keys = {87, 83, 65, 68, 20, 16};
-  static boolean timerCheck = false;
+  static boolean timerCheck = true;
 
   private SinglePlayer(GameManager window){
     this.window = window;
@@ -32,6 +34,7 @@ public class SinglePlayer extends PApplet{
    * Initializes all sprites needed for a two players game.
    */
   public void init1Player() {
+    stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Sprite>();
     player1 = new Player(
         new PVector(window.width / 2, window.height / 2),
@@ -42,21 +45,26 @@ public class SinglePlayer extends PApplet{
         window);
     playerControls = new Controls(player1, player1Keys);
     sprites.add(player1);
+    dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
   }
 
   public void draw() {
     window.background(64, 64, 64);
-//    if (!timerCheck) {
-//      CarModMenu.stopwatch.stopTimer();
-//    } else {
-//      CarModMenu.stopwatch.showTimer(true);
-//    }
-
+    if (timerCheck && !stopwatch.getShowTimer()) {
+      stopwatch.restartTimer();
+      timerCheck = false;
+    }
+    if (timerCheck) {
+      stopwatch.setStartTimer(true);
+      timerCheck = false;
+    }
+    stopwatch.startTimer();
     Controls.playerMovement();
     // Move player around the screen.
     for (Sprite sprite : sprites) {
       sprite.update();
       sprite.draw();
+      dash.draw();
     }
   }
 

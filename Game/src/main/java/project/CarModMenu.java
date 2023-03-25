@@ -26,7 +26,6 @@ public class CarModMenu {
   private PImage aero3image;
   private PImage aero4image;
   private final GameManager window;
-  Stopwatch stopwatch;
   private static CarModMenu instance;
   private MainMenu mainMenu;
   private Button backToMainMenu;
@@ -51,6 +50,7 @@ public class CarModMenu {
   private Button gears3;
   private Button gears4;
   private ArrayList<Button> gears = new ArrayList<Button>();
+  private Stopwatch stopwatch;
 
   /**
    * CarModMenu, private constructor to create a singleton of the class.
@@ -161,7 +161,7 @@ public class CarModMenu {
   }
 
   public void draw() {
-    stopwatch = Stopwatch.getInstance(window);
+//    stopwatch = Stopwatch.getInstance(window);
     window.background(64, 64, 64);
     window.fill(0);
     window.text("Car Modification", window.displayWidth / 2 + 10,window.displayHeight / 10);
@@ -226,10 +226,8 @@ public class CarModMenu {
         // Initialize one player game
         SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
         singlePlayer.init1Player();
-        singlePlayer.setTimerCheck(true);
         window.menu = 1;
       } else if (mainMenu.gameType == 2) {
-        stopwatch.resetTimer();
         // Initialize two player game
         TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
         twoPlayers.init2Player();

@@ -16,6 +16,8 @@ public class Controls {
 
   /* Each player needs their own set of boolean variables
    * so each players controls don't get mixed up.
+   * Boolean variables allow key inputs to activate instantly
+   * instead of having a slight delay when holding down the key.
    */
   private static boolean player1up = false;
   private static boolean player1down = false;
@@ -156,11 +158,11 @@ public class Controls {
     }
     if (player1left) {
       // handle player1 left control
-      player1.turn(-0.3);
+      player1.turn(-1);
     }
     if (player1right) {
       // handle player1 right control
-      player1.turn(0.3);
+      player1.turn(1);
     }
     if (player2up) {
       // handle player2 up control
@@ -172,11 +174,11 @@ public class Controls {
     }
     if (player2left) {
       // handle player2 left control
-      player2.turn(-0.3);
+      player2.turn(-1);
     }
     if (player2right) {
       // handle player2 right control
-      player2.turn(0.3);
+      player2.turn(1);
     }
   }
 
@@ -190,11 +192,11 @@ public class Controls {
     // Controls for player1 gear shifting
     if (keycode == player1controls[4]) {
       // Shift player1 gear up on key press
-      // player1.shiftUp();
+      player1.shiftUp();
       System.out.println("P1shiftup");
     } else if (keycode == player1controls[5]) {
       // Shift player1 gear down on key press
-      // player1.shiftDown();
+      player1.shiftDown();
       System.out.println("P1shiftdown");
     }
     // Check if two player was instantiated for a two player game
@@ -202,11 +204,11 @@ public class Controls {
       // Controls for player2 gear shifting
       if (keycode == player2controls[4]) {
         // Shift player2 gear up on key press
-        // player2.shiftUp();
+        player2.shiftUp();
         System.out.println("P2shiftup");
       } else if (keycode == player2controls[5]) {
         // Shift player2 gear down on key press
-        // player2.shiftDown();
+        player2.shiftDown();
         System.out.println("P2shiftdown");
       }
     }
