@@ -1,24 +1,26 @@
 package project;
 
-
-import processing.core.PApplet;
-import processing.core.PVector;
-
 import java.awt.*;
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.core.PVector;
 
 /**
  * MainMenu, menu that appears once the game has been launched.
  *
  * @author James Langille
  */
-public class MainMenu {
+public class MainMenu implements Drawable {
   private final GameManager window;
   private static MainMenu instance;
   private Button onePlayer;
   private Button twoPlayer;
   private Button controls;
   private Button quit;
-  public static SinglePlayer singlePlayer;
+  private PImage BGImage;
+  private PImage gameTitle;
+  private boolean showTitle = true;
+  private static final int clock = 5;
 
   // 1 = 1-Player, 2 = 2-Player
   int gameType = 0;
@@ -45,16 +47,25 @@ public class MainMenu {
     return instance;
   }
 
-  public GameManager getGameManager() {
-    return window;
+  private void showTitle() {
+    if (window.frameCount % clock == 0) {
+      // Sets to opposite boolean expression every second
+      showTitle = !showTitle;
+    }
+    if (showTitle) {
+      window.image(gameTitle, window.displayWidth / 3 - 40, window.displayHeight / 4);
+    }
   }
 
-  // Set up buttons
+  /**
+   * setup, Sets up all objects needed for the main menu.
+   */
   public void setup() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     window.textSize(40);
 
-    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 100), 225, 50,
+    // Set up buttons
+    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 500), 225, 50,
         "One Player", new Color(52, 152, 235), window);
     twoPlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 600), 225, 50,
         "Two players", new Color(52, 73, 235), window);
@@ -62,12 +73,21 @@ public class MainMenu {
         50, "Controls", new Color(104, 52, 235), window);
     quit = new Button(new PVector((float) (window.displayWidth / 2) - 100, 800), 225,
         50, "Quit", new Color(200, 50, 50), window);
+
+    // Set up images
+    BGImage = window.loadImage("Game/images/BGImage.png");
+    gameTitle = window.loadImage("Game/images/zoomZoom.png");
   }
 
+  /**
+   * draw, Draws all objects that are needed for this menu.
+   */
+  @Override
   public void draw() {
-    window.background(64, 64, 64);
-    window.fill(0);
-    window.text("Zoom Zoom", window.displayWidth / 2 + 10,window.displayHeight/4);
+    // Draw images
+    window.image(BGImage, 0, 0, window.displayWidth, window.displayHeight);
+    this.showTitle();
+    // Draw buttons
     onePlayer.draw();
     onePlayer.update();
     twoPlayer.draw();
