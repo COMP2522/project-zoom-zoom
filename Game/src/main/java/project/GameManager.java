@@ -64,6 +64,14 @@ public class GameManager extends PApplet {
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
+      if (singlePlayer != null) {
+        singlePlayer.stopwatch.stopTimer();
+        singlePlayer.setTimerCheck(true);
+      }
+      if (twoPlayers != null) {
+        twoPlayers.stopwatch.stopTimer();
+        twoPlayers.setTimerCheck(true);
+      }
       menu = 0;
     }
     if (menu == 1 || menu == 2) {
