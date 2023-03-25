@@ -1,8 +1,9 @@
-package org.main;
+package project;
 
-import java.awt.Color;
 import processing.core.PApplet;
 import processing.core.PShape;
+
+import java.awt.*;
 
 /** Bezier curves for all tracks in our game. */
 public class TrackPiece extends PApplet {

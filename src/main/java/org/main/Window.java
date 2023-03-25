@@ -1,7 +1,7 @@
 package org.main;
 
 import java.awt.Color;
-import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
@@ -11,7 +11,7 @@ import processing.event.KeyEvent;
  */
 public class Window extends PApplet {
   Player player;
-  TrackManager trackManager;
+  TrackManagerRemoveable trackManager;
 
   /**
    * Checks for user input.
@@ -59,7 +59,7 @@ public class Window extends PApplet {
    */
   public void init() {
     //trackBuilder = new TrackBuilder(this);
-    trackManager = new TrackManager(this);
+    trackManager = new TrackManagerRemoveable(this);
     trackManager.init();
     player = new Player(
             new PVector((float) this.width / 2, (float) this.height / 2),
