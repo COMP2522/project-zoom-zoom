@@ -12,28 +12,19 @@ import java.awt.*;
  * @author James Langille
  */
 public class MainMenu {
-  private final GameManager window;
+  private final Window window;
   private static MainMenu instance;
   private Button onePlayer;
   private Button twoPlayer;
   private Button controls;
   private Button quit;
-  public static SinglePlayer singlePlayer;
 
-  // 1 = 1-Player, 2 = 2-Player
-  int gameType = 0;
-
-  /**
-   * Main menu, private constructor to create a singleton of the class.
-   *
-   * @param window current window
-   */
-  private MainMenu(GameManager window) {
+  private MainMenu(Window window) {
     this.window = window;
   }
 
   /**
-   * getInstance, method that creates a singleton of the class.
+   * Singleton constructor for main menu.
    *
    * @param window window class
    * @return a main menu object
@@ -45,7 +36,7 @@ public class MainMenu {
     return instance;
   }
 
-  public GameManager getGameManager() {
+  public Window getWindow() {
     return window;
   }
 
@@ -73,14 +64,16 @@ public class MainMenu {
     twoPlayer.draw();
     twoPlayer.update();
     if (onePlayer.isClicked()) {
+      // Initialize one player game
+      window.init1Player();
       // Change menu to one player game
-      gameType = 1;
-      window.menu = 4;
+      window.menu = 1;
     }
     if (twoPlayer.isClicked()) {
+      // Initialize two player game
+      window.init2Player();
       // Change menu to two player game
-      gameType = 2;
-      window.menu = 4;
+      window.menu = 2;
     }
     controls.draw();
     controls.update();
