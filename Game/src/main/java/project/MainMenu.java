@@ -12,31 +12,40 @@ import java.awt.*;
  * @author James Langille
  */
 public class MainMenu {
-  private final Window window;
+  private final GameManager window;
   private static MainMenu instance;
   private Button onePlayer;
   private Button twoPlayer;
   private Button controls;
   private Button quit;
+  public static SinglePlayer singlePlayer;
 
-  private MainMenu(Window window) {
+  // 1 = 1-Player, 2 = 2-Player
+  int gameType = 0;
+
+  /**
+   * Main menu, private constructor to create a singleton of the class.
+   *
+   * @param window current window
+   */
+  private MainMenu(GameManager window) {
     this.window = window;
   }
 
   /**
-   * Singleton constructor for main menu.
+   * getInstance, method that creates a singleton of the class.
    *
    * @param window window class
    * @return a main menu object
    */
-  public static MainMenu getInstance(Window window) {
+  public static MainMenu getInstance(GameManager window) {
     if (instance == null) {
       instance = new MainMenu(window);
     }
     return instance;
   }
 
-  public Window getWindow() {
+  public GameManager getGameManager() {
     return window;
   }
 
@@ -45,7 +54,7 @@ public class MainMenu {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     window.textSize(40);
 
-    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 500), 225, 50,
+    onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 300), 225, 50,
         "One Player", new Color(52, 152, 235), window);
     twoPlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 600), 225, 50,
         "Two players", new Color(52, 73, 235), window);
@@ -64,16 +73,14 @@ public class MainMenu {
     twoPlayer.draw();
     twoPlayer.update();
     if (onePlayer.isClicked()) {
-      // Initialize one player game
-      window.init1Player();
       // Change menu to one player game
-      window.menu = 1;
+      gameType = 1;
+      window.menu = 4;
     }
     if (twoPlayer.isClicked()) {
-      // Initialize two player game
-      window.init2Player();
       // Change menu to two player game
-      window.menu = 2;
+      gameType = 2;
+      window.menu = 4;
     }
     controls.draw();
     controls.update();
