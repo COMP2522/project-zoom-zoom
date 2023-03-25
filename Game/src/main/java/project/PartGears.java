@@ -72,7 +72,7 @@ public class PartGears {
      * @return The new gear ratio.
      */
     public static int shiftUp(){
-        if(currGear < 4){
+        if(currGear < 3){
             currGear++;
         }
         return gears[currGear];
