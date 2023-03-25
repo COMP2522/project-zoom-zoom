@@ -17,7 +17,6 @@ public class GameManager extends PApplet {
   SinglePlayer singlePlayer;
   TwoPlayers twoPlayers;
   Stopwatch stopwatch;
-  TrackMenu trackMenu;
   public static boolean audio = true;
   private int check = 1;
 
@@ -113,7 +112,7 @@ public class GameManager extends PApplet {
       case 3 -> { // Control menu
         background(64, 64, 64);
         controlMenu = ControlMenu.getInstance(this);
-        stopwatch = Stopwatch.getInstance(this);
+//        stopwatch = Stopwatch.getInstance(this);
 //        stopwatch.showTimer(true);
         controlMenu.setup();
         controlMenu.draw();
@@ -123,11 +122,6 @@ public class GameManager extends PApplet {
         carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
-      }
-      case 5 -> {
-        trackMenu = TrackMenu.getInstance(this);
-        trackMenu.setUp();
-        trackMenu.draw();
       }
       default -> {
         break;

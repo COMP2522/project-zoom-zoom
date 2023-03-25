@@ -7,11 +7,11 @@ public class PartGears {
     /**
      * An array of gear ratios for the car.
      */
-    int [] gears = new int[4];
+    static int [] gears = new int[4];
     /**
      * The current gear of the car.
      */
-    int currGear = 1;
+    static int currGear = 1;
 
     /**
      * Constructor for PartGears objects.
@@ -63,7 +63,7 @@ public class PartGears {
      * Returns the gear ratio for gear 1.
      * @return The gear ratio.
      */
-    public int start(){
+    public static int start(){
         return gears[0];
     }
 
@@ -71,8 +71,8 @@ public class PartGears {
      * Shifts up to the next gear ratio and returns the new gear ratio.
      * @return The new gear ratio.
      */
-    public int shiftUp(){
-        if(currGear < 3){
+    public static int shiftUp(){
+        if(currGear < 4){
             currGear++;
         }
         return gears[currGear];
