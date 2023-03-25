@@ -17,7 +17,7 @@ public class GameManager extends PApplet {
   SinglePlayer singlePlayer;
   TwoPlayers twoPlayers;
   Stopwatch stopwatch;
-  TrackMenu trackMenu;
+//  TrackMenu trackMenu;
   public static boolean audio = true;
   private int check = 1;
 
@@ -64,6 +64,14 @@ public class GameManager extends PApplet {
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
+      if (singlePlayer != null) {
+        singlePlayer.stopwatch.stopTimer();
+        singlePlayer.setTimerCheck(true);
+      }
+      if (twoPlayers != null) {
+        twoPlayers.stopwatch.stopTimer();
+        twoPlayers.setTimerCheck(true);
+      }
       menu = 0;
     }
     if (menu == 1 || menu == 2) {
@@ -89,7 +97,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-//      BGM.getBGM(true);
+      BGM.getBGM(true);
       audio = false;
       check++;
     }
@@ -125,9 +133,9 @@ public class GameManager extends PApplet {
         carModMenu.draw();
       }
       case 5 -> {
-        trackMenu = TrackMenu.getInstance(this);
-        trackMenu.setUp();
-        trackMenu.draw();
+//        trackMenu = TrackMenu.getInstance(this);
+//        trackMenu.setUp();
+//        trackMenu.draw();
       }
       default -> {
         break;

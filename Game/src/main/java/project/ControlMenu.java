@@ -4,7 +4,6 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class ControlMenu {
   private final GameManager window;

@@ -13,11 +13,12 @@ public class TwoPlayers extends PApplet {
   Controls playerControls;
   Player player1;
   Player player2;
-  static Stopwatch stopwatch;
+  Stopwatch stopwatch;
   int minSize = 10;
   int maxSize = 40;
   int[] player1Keys = {87, 83, 65, 68, 20, 16};
   int[] player2Keys = {73, 75, 74, 76, 59, 47};
+  boolean timerCheck = true;
 
   private TwoPlayers(GameManager window){
     this.window = window;
@@ -31,6 +32,7 @@ public class TwoPlayers extends PApplet {
   }
 
   public void init2Player() {
+    stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Sprite>();
 
     player1 = new Player(
@@ -48,7 +50,7 @@ public class TwoPlayers extends PApplet {
         0.01F,
         new Color(0, 255, 0),
         window);
-    playerControls = new Controls(window, player1, player2, player1Keys, player2Keys);
+    playerControls = new Controls(player1, player2, player1Keys, player2Keys);
 
     sprites.add(player1);
     sprites.add(player2);
@@ -56,12 +58,27 @@ public class TwoPlayers extends PApplet {
 
   public void draw() {
     window.background(255,255,0);
-
+    if (timerCheck && !stopwatch.getShowTimer()) {
+      stopwatch.restartTimer();
+      timerCheck = false;
+    }
+    if (timerCheck) {
+      stopwatch.setStartTimer(true);
+      timerCheck = false;
+    }
+    stopwatch.startTimer();
     // Move player around the screen.
     Controls.playerMovement();
     for (Sprite sprite : sprites) {
       sprite.update();
       sprite.draw();
     }
+  }
+  public boolean getTimerCheck() {
+    return timerCheck;
+  }
+
+  public void setTimerCheck(boolean timerCheck) {
+    this.timerCheck = timerCheck;
   }
 }

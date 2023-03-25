@@ -1,19 +1,17 @@
 package project;
 
-import processing.core.PApplet;
-
-import java.util.TimerTask;
-import java.util.Timer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Stopwatch {
   private final GameManager window;
-  public long startTime;
-  public boolean running = false;
   private static Stopwatch instance;
-  private long elapsedTime = 0;
-  private Timer timer;
-  private int seconds = 0;
+  public boolean startTimer;
+  public boolean showTimer;
+  private long startTime = 0;
+  private long currentTime = 0;
   private Stopwatch(GameManager window) {
+    showTimer = false;
     this.window = window;
   }
 
@@ -24,53 +22,49 @@ public class Stopwatch {
     return instance;
   }
 
-  public void showTimer(boolean check) {
-    if (check) {
-      start();
+  private void showTimer() {
+    if (startTimer) {
+      startTime = System.currentTimeMillis();
+      startTimer = false;
+    }
+    if (showTimer) {
+      currentTime = System.currentTimeMillis() - startTime;
+      SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:SSS");
+      String time = sdf.format(new Date(currentTime));
+      window.text(time, (float) (window.displayWidth - 200), (float) (window.displayWidth / 30));
     } else {
-      stop();
+      SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:SSS");
+      String time = sdf.format(new Date(currentTime));
+      window.text(time, (float) (window.displayWidth - 200), (float) (window.displayHeight / 30));
     }
   }
 
-  public void start() {
-    timer = new java.util.Timer();
-    timer.schedule(new TimerTask() {
-      public void run() {
-        window.text(String.format("%02d", seconds), (float) window.displayWidth / 10,
-            (float) window.displayHeight / 20);
-        seconds++;
-      }
-    }, 0, 1000); // 1000 milliseconds = 1 second
-  }
-
-  public void stop() {
-    if (timer != null) {
-      timer.cancel();
-      timer = null;
-    }
-  }
-
-  public void resetTimer() {
-    startTime = this.window.millis();
+  public void startTimer() {
+    showTimer = true;
+    showTimer();
   }
 
   public void stopTimer() {
-    running = false;
+    showTimer = false;
   }
 
-  public long getStartTime() {
-    return startTime;
+  public void restartTimer() {
+    startTimer = true;
   }
 
-  public void setStartTime(long startTime) {
-    this.startTime = startTime;
+  public void setStartTimer(boolean time) {
+    this.startTimer = time;
   }
 
-  public boolean isRunning() {
-    return running;
+  public boolean getStartTimer() {
+    return !startTimer;
   }
 
-  public void setRunning(boolean running) {
-    this.running = running;
+  public boolean getShowTimer() {
+    return showTimer;
+  }
+
+  public void setShowTimer(boolean showTimer) {
+    this.showTimer = showTimer;
   }
 }
