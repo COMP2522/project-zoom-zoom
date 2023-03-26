@@ -14,10 +14,10 @@ public class CarModMenu implements Drawable {
   // Images
   private PImage bgImage;
   private PImage menuTitleImage;
-  private PImage[] partsTitleImage = new PImage[4];
   private PImage[] engineImages = new PImage[4];
   private PImage[] chassisImages = new PImage[4];
   private PImage[] aerodynamicImages = new PImage[4];
+  private PImage[] partTitleImages = new PImage[4];
   // Buttons
   private Button backToMainMenu;
   private Button startRace;
@@ -25,11 +25,18 @@ public class CarModMenu implements Drawable {
   private Button[] chassis = new Button[4];
   private Button[] aerodynamics = new Button[4];
   private Button[] gears = new Button[4];
+  // Image file names
+  private String[] engineImageNames;
+  private String[] chassisImageNames;
+  private String[] aeroImageNames;
+  private String[] titleImageNames;
   // Other data
   private final GameManager window;
   private static CarModMenu instance;
   private MainMenu mainMenu;
   private Stopwatch stopwatch;
+  // Buffer used to adjust x or y position of button or image
+  private int buffer;
 
   /**
    * CarModMenu, private constructor to create a singleton of the class.
@@ -59,9 +66,7 @@ public class CarModMenu implements Drawable {
    */
   public void setup() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
-
-    // Buffer used to adjust y position of button
-    int buffer = 50;
+    buffer = 50;
     // Instantiate the engine buttons
     for (int i = 0; i < engines.length; i++) {
       engines[i] = new Button(new PVector((window.displayWidth / 8) - 100,
@@ -98,22 +103,23 @@ public class CarModMenu implements Drawable {
         "Main Menu", new Color(52, 152, 235), window);
     startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
         "Start Race!", new Color(0, 255, 0), window);
-
+    // Get image file names
+    FileReader.readFiles("Game/images/");
     // Instantiate images for engine buttons
-    engineImages[0] = window.loadImage("Game/images/engine1.png");
-    engineImages[1] = window.loadImage("Game/images/engine2.png");
-    engineImages[2] = window.loadImage("Game/images/engine3.png");
-    engineImages[3] = window.loadImage("Game/images/engine4.png");
+    engineImageNames = FileReader.engineImages();
+    for (int i = 0; i < engineImages.length; i++) {
+      engineImages[i] = window.loadImage("Game/images/" + engineImageNames[i]);
+    }
     // Instantiate images for chassis buttons
-    chassisImages[0] = window.loadImage("Game/images/chassis1.png");
-    chassisImages[1] = window.loadImage("Game/images/chassis2.png");
-    chassisImages[2] = window.loadImage("Game/images/chassis3.png");
-    chassisImages[3] = window.loadImage("Game/images/chassis4.png");
+    chassisImageNames = FileReader.chassisImages();
+    for (int i = 0; i < chassisImages.length; i++) {
+      chassisImages[i] = window.loadImage("Game/images/" + chassisImageNames[i]);
+    }
     // Instantiate images for aero buttons
-    aerodynamicImages[0] = window.loadImage("Game/images/aero1.png");
-    aerodynamicImages[1] = window.loadImage("Game/images/aero2.png");
-    aerodynamicImages[2] = window.loadImage("Game/images/aero3.png");
-    aerodynamicImages[3] = window.loadImage("Game/images/aero4.png");
+    aeroImageNames = FileReader.aerodynamicsImages();
+    for (int i = 0; i < aerodynamicImages.length; i++) {
+      aerodynamicImages[i] = window.loadImage("Game/images/" + aeroImageNames[i]);
+    }
     /* Instantiate a slightly different background image
      if one player or two player game was selected. */
     if (mainMenu.gameType == 1) {
@@ -121,12 +127,12 @@ public class CarModMenu implements Drawable {
     } else if (mainMenu.gameType == 2) {
       bgImage = window.loadImage("Game/images/BGImage.png");
     }
-    // Instantiate title images
-    menuTitleImage = window.loadImage("Game/images/CarMod.png");
-    partsTitleImage[0] = window.loadImage("Game/images/EngineTitle.png");
-    partsTitleImage[1] = window.loadImage("Game/images/ChassisTitle.png");
-    partsTitleImage[2] = window.loadImage("Game/images/GearTitle.png");
-    partsTitleImage[3] = window.loadImage("Game/images/Aero27.png");
+    // Instantiate part title images
+    titleImageNames = FileReader.carModTitles();
+    for (int i = 0; i < partTitleImages.length; i++) {
+      partTitleImages[i] = window.loadImage("Game/images/" + titleImageNames[i]);
+    }
+    menuTitleImage = window.loadImage("Game/images/CarModTitle.png");
   }
 
   @Override
@@ -137,18 +143,19 @@ public class CarModMenu implements Drawable {
     window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
     // Draw text images
     window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
-    int imgbuffer = -100;
-    for (int i = 0; i < partsTitleImage.length - 1; i ++) {
-      window.image(partsTitleImage[i], (window.displayWidth / 8) + imgbuffer, window.displayHeight / 5);
+    buffer = -100;
+    for (int i = 0; i < partTitleImages.length; i ++) {
+      window.image(partTitleImages[i], (window.displayWidth / 8) + buffer, window.displayHeight / 5);
       if (i == 1) {
-        imgbuffer += 825;
+        // update aero x position
+        buffer = 1125;
+      } else if (i == 2) {
+        // update gear x position
+        buffer = 650;
       } else {
-        imgbuffer += 400;
+        buffer += 400;
       }
     }
-    // Since aerodynamics is a longer word, we adjust the width seperately
-    // I realized i can add on to the if statement above but im too tired ill do it tomorrow
-    window.image(partsTitleImage[3], (window.displayWidth / 8) + 650, window.displayHeight / 5);
 
     // Draw buttons for the engine
     for (Button engine : engines) {
@@ -156,7 +163,7 @@ public class CarModMenu implements Drawable {
       engine.update();
       this.setPlayerEngine(engine);
     }
-    int buffer = 50;
+    buffer = 50;
     // Draw images for each engine
     for (PImage engine : engineImages) {
       window.image(engine, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + buffer);
