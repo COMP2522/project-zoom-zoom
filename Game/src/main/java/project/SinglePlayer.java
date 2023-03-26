@@ -34,6 +34,12 @@ public class SinglePlayer extends PApplet{
    */
   public void init1Player() {
     sprites = new ArrayList<Sprite>();
+    // Create a list of AiNodes
+    ArrayList<AiNode> aiNodes = new ArrayList<>();
+    aiNodes.add(new AiNode(100, 100));
+    aiNodes.add(new AiNode(200, 200));
+    aiNodes.add(new AiNode(300, 300));
+
     player1 = new Player(
         new PVector(window.width / 2, window.height / 2),
         new PVector(50, 1),
@@ -49,11 +55,12 @@ public class SinglePlayer extends PApplet{
     aiPlayer = new AIPlayer(
       new PVector(window.width / 2, window.height / 2),
       new PVector(50, 1),
-      new PVector(0, 0),
+      new PVector(10, 0),
       (minSize + 10),
       0.1F,
       new Color(255, 0, 0),
-      window);
+      window,
+      aiNodes);
     sprites.add(aiPlayer);
   }
 

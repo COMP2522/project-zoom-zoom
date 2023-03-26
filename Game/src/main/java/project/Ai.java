@@ -11,6 +11,20 @@ import java.util.List;
  */
 public class Ai {
 
+  private ArrayList<AiNode> waypoints;
+  private AiNode currentWaypoint;
+  private List<AiNode> currentPath;
+
+  public Ai(){
+    // Initialize the list of waypoints
+    waypoints = new ArrayList<AiNode>();
+    waypoints.add(new AiNode(10, 10));  // Add the first waypoint
+    waypoints.add(new AiNode(20, 20));  // Add the second waypoint
+    // Add more waypoints as needed
+    currentWaypoint = waypoints.get(0); // Set the starting waypoint as the first element
+    currentPath = findPath(new AiNode(0, 0), currentWaypoint, new int[100][100]); // Generate initial path to first waypoint
+  }
+
   // Define the heuristic function for A*
   public static float heuristic(AiNode current, AiNode goal) {
     float dx = Math.abs(current.x - goal.x);
