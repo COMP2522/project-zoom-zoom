@@ -12,6 +12,9 @@ import processing.core.PVector;
  */
 public class CarModMenu implements Drawable {
   // Images
+  private PImage bgImage;
+  private PImage menuTitleImage;
+  private PImage[] partsTitleImage = new PImage[4];
   private PImage[] engineImages = new PImage[4];
   private PImage[] chassisImages = new PImage[4];
   private PImage[] aerodynamicImages = new PImage[4];
@@ -56,12 +59,7 @@ public class CarModMenu implements Drawable {
    */
   public void setup() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
-    window.textSize(40);
 
-    backToMainMenu = new Button(new PVector((float) (window.displayWidth / 2) - 100, 750), 200, 50,
-        "Main Menu", new Color(52, 152, 235), window);
-    startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
-        "Start Race!", new Color(0, 255, 0), window);
     // Buffer used to adjust y position of button
     int buffer = 50;
     // Instantiate the engine buttons
@@ -95,36 +93,62 @@ public class CarModMenu implements Drawable {
           "Gears " + (i + 1), new Color(255, 0, 0), window);
       buffer += 125;
     }
+    // Instantiate other buttons
+    backToMainMenu = new Button(new PVector((float) (window.displayWidth / 2) - 100, 750), 200, 50,
+        "Main Menu", new Color(52, 152, 235), window);
+    startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
+        "Start Race!", new Color(0, 255, 0), window);
 
-    // Set up images for engine buttons
+    // Instantiate images for engine buttons
     engineImages[0] = window.loadImage("Game/images/engine1.png");
     engineImages[1] = window.loadImage("Game/images/engine2.png");
     engineImages[2] = window.loadImage("Game/images/engine3.png");
     engineImages[3] = window.loadImage("Game/images/engine4.png");
-    // Set up images for chassis buttons
+    // Instantiate images for chassis buttons
     chassisImages[0] = window.loadImage("Game/images/chassis1.png");
     chassisImages[1] = window.loadImage("Game/images/chassis2.png");
     chassisImages[2] = window.loadImage("Game/images/chassis3.png");
     chassisImages[3] = window.loadImage("Game/images/chassis4.png");
-    // Set up images for aero buttons
+    // Instantiate images for aero buttons
     aerodynamicImages[0] = window.loadImage("Game/images/aero1.png");
     aerodynamicImages[1] = window.loadImage("Game/images/aero2.png");
     aerodynamicImages[2] = window.loadImage("Game/images/aero3.png");
     aerodynamicImages[3] = window.loadImage("Game/images/aero4.png");
+    /* Instantiate a slightly different background image
+     if one player or two player game was selected. */
+    if (mainMenu.gameType == 1) {
+      bgImage = window.loadImage("Game/images/BGImage1.png");
+    } else if (mainMenu.gameType == 2) {
+      bgImage = window.loadImage("Game/images/BGImage.png");
+    }
+    // Instantiate title images
+    menuTitleImage = window.loadImage("Game/images/CarMod.png");
+    partsTitleImage[0] = window.loadImage("Game/images/EngineTitle.png");
+    partsTitleImage[1] = window.loadImage("Game/images/ChassisTitle.png");
+    partsTitleImage[2] = window.loadImage("Game/images/GearTitle.png");
+    partsTitleImage[3] = window.loadImage("Game/images/Aero27.png");
   }
 
   @Override
   public void draw() {
     // stopwatch = Stopwatch.getInstance(window);
-    window.background(64, 64, 64);
-    window.fill(0);
-    window.text("Car Modification", window.displayWidth / 2 + 10, window.displayHeight / 10);
-    // Create text for each car part
+    // Draw background image
     window.textSize(30);
-    window.text("Engine", (window.displayWidth / 8), window.displayHeight / 5);
-    window.text("Chassis", (window.displayWidth / 8) + 400, window.displayHeight / 5);
-    window.text("Aerodynamics", (window.displayWidth / 8) + 800, window.displayHeight / 5);
-    window.text("Gears", (window.displayWidth / 8) + 1200, window.displayHeight / 5);
+    window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
+    // Draw text images
+    window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
+    int imgbuffer = -100;
+    for (int i = 0; i < partsTitleImage.length - 1; i ++) {
+      window.image(partsTitleImage[i], (window.displayWidth / 8) + imgbuffer, window.displayHeight / 5);
+      if (i == 1) {
+        imgbuffer += 825;
+      } else {
+        imgbuffer += 400;
+      }
+    }
+    // Since aerodynamics is a longer word, we adjust the width seperately
+    // I realized i can add on to the if statement above but im too tired ill do it tomorrow
+    window.image(partsTitleImage[3], (window.displayWidth / 8) + 650, window.displayHeight / 5);
 
     // Draw buttons for the engine
     for (Button engine : engines) {
