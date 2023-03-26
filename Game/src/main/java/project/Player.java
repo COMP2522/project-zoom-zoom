@@ -201,7 +201,7 @@ public class Player extends Sprite {
   public void draw() {
     window.pushStyle();
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
-    window.ellipse(xpos, ypos, size, size);
+    window.ellipse(position.x, position.y, size, size);
     window.popStyle();
   }
 
@@ -210,8 +210,8 @@ public class Player extends Sprite {
     drag();
     grip = TIREGRIP + PartAero.getDownForce() * speed;
     revs = speed * gearRatio;
-    xpos += speed / 10 * Math.cos(direction);
-    ypos += speed / 10 * Math.sin(direction);
+    position.x += speed / 10 * Math.cos(direction);
+    position.y += speed / 10 * Math.sin(direction);
 //    System.out.println(direction);
 //    System.out.println("speed " + speed);
 //    System.out.println("RPM " + revs);
