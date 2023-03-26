@@ -30,26 +30,10 @@ public class CarModMenu {
   private MainMenu mainMenu;
   private Button backToMainMenu;
   private Button startRace;
-  private Button engine1;
-  private Button engine2;
-  private Button engine3;
-  private Button engine4;
-  private ArrayList<Button> engines = new ArrayList<Button>();
-  private Button chassis1;
-  private Button chassis2;
-  private Button chassis3;
-  private Button chassis4;
-  private ArrayList<Button> chassis = new ArrayList<Button>();
-  private Button aero1;
-  private Button aero2;
-  private Button aero3;
-  private Button aero4;
-  private ArrayList<Button> aerodynamics = new ArrayList<Button>();
-  private Button gears1;
-  private Button gears2;
-  private Button gears3;
-  private Button gears4;
-  private ArrayList<Button> gears = new ArrayList<Button>();
+  private Button engines[] = new Button[4];
+  private Button chassis[] = new Button[4];
+  private Button aerodynamics[] = new Button[4];
+  private Button[] gears = new Button[4];
   private Stopwatch stopwatch;
 
   /**
@@ -86,62 +70,39 @@ public class CarModMenu {
         "Main Menu", new Color(52, 152, 235), window);
     startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
         "Start Race!", new Color(0, 255, 0), window);
+    // Buffer used to adjust y position of button
+    int buffer = 50;
     // Instantiate the engine buttons
-    engine1 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 50),
-        200, 100, "Engine 1", new Color(255, 0, 0), window);
-    engine2 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 175),
-        200, 100, "Engine 2", new Color(255, 0, 0), window);
-    engine3 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 300),
-        200, 100, "Engine 3", new Color(255, 0, 0), window);
-    engine4 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 425),
-        200, 100, "Engine 4", new Color(255, 0, 0), window);
-    // Add each engine to the engines arraylist
-    engines.add(engine1);
-    engines.add(engine2);
-    engines.add(engine3);
-    engines.add(engine4);
+    for (int i = 0; i < engines.length; i++) {
+      engines[i] = new Button(new PVector((window.displayWidth / 8) - 100,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "Engine " + (i + 1), new Color(255, 0, 0), window);
+      buffer += 125;
+    }
+    buffer = 50;
     // Instantiate the chassis buttons
-    chassis1 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50),
-        200, 100, "Chassis 1", new Color(255, 0, 0), window);
-    chassis2 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 175),
-        200, 100, "Chassis 2", new Color(255, 0, 0), window);
-    chassis3 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 300),
-        200, 100, "Chassis 3", new Color(255, 0, 0), window);
-    chassis4 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 425),
-        200, 100, "Chassis 4", new Color(255, 0, 0), window);
-    // Add each chassis into the chassis arraylist
-    chassis.add(chassis1);
-    chassis.add(chassis2);
-    chassis.add(chassis3);
-    chassis.add(chassis4);
+    for (int i = 0; i < chassis.length; i++) {
+      chassis[i] = new Button(new PVector((window.displayWidth / 8) + 300,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "Chassis " + (i + 1), new Color(255, 0, 0), window);
+      buffer += 125;
+    }
+    buffer = 50;
     // Instantiate the aerodynamics buttons
-    aero1 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50),
-        200, 100, "Aero 1", new Color(255, 0, 0), window);
-    aero2 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 175),
-        200, 100, "Aero 2", new Color(255, 0, 0), window);
-    aero3 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 300),
-        200, 100, "Aero 3", new Color(255, 0, 0), window);
-    aero4 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 425),
-        200, 100, "Aero 4", new Color(255, 0, 0), window);
-    // Add each aerodynamics into the aerodynamics arraylist
-    aerodynamics.add(aero1);
-    aerodynamics.add(aero2);
-    aerodynamics.add(aero3);
-    aerodynamics.add(aero4);
+    for (int i = 0; i < aerodynamics.length; i++) {
+      aerodynamics[i] = new Button(new PVector((window.displayWidth / 8) + 700,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "Aero " + (i + 1), new Color(255, 0, 0), window);
+      buffer += 125;
+    }
+    buffer = 50;
     // Instantiate the gears buttons
-    gears1 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 50),
-        200, 100, "Gears 1", new Color(255, 0, 0), window);
-    gears2 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 175),
-        200, 100, "Gears 2", new Color(255, 0, 0), window);
-    gears3 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 300),
-        200, 100, "Gears 3", new Color(255, 0, 0), window);
-    gears4 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 425),
-        200, 100, "Gears 4", new Color(255, 0, 0), window);
-    // Add each tires into the tires arraylist
-    gears.add(gears1);
-    gears.add(gears2);
-    gears.add(gears3);
-    gears.add(gears4);
+    for (int i = 0; i < gears.length; i++) {
+      gears[i] = new Button(new PVector((window.displayWidth / 8) + 1100,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "Gears " + (i + 1), new Color(255, 0, 0), window);
+      buffer += 125;
+    }
 
     // Set up images for engine buttons
     engine1image = window.loadImage("Game/images/engine1.png");
@@ -249,43 +210,43 @@ public class CarModMenu {
    * @param engine button
    */
   private void setPlayerEngine(Button engine) {
-    if (engine == engine1) {
+    if (engine == engines[0]) {
       // Check for left click
-      if (buttonClick(engine1) == 1) {
+      if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 1
         System.out.println("test");
         // Check for right click
-      } else if (buttonClick(engine1) == 2) {
+      } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 1
         System.out.println("right test");
       }
-    } else if (engine == engine2) {
+    } else if (engine == engines[1]) {
       // Check for left click
-      if (buttonClick(engine2) == 1) {
+      if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 2
         System.out.println("test 2");
         // Check for right click
-      } else if (buttonClick(engine2) == 2) {
+      } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 2
         System.out.println("right test 2");
       }
-    } else if (engine == engine3) {
+    } else if (engine == engines[2]) {
       // Check for left click
-      if (buttonClick(engine3) == 1) {
+      if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 3
         System.out.println("test 3");
         // Check for right click
-      } else if (buttonClick(engine3) == 2) {
+      } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 3
         System.out.println("right test 3");
       }
-    } else if (engine == engine4) {
+    } else if (engine == engines[3]) {
       // Check for left click
-      if (buttonClick(engine4) == 1) {
+      if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 4
         System.out.println("test 4");
         // Check for right click
-      } else if (buttonClick(engine4) == 2) {
+      } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 4
         System.out.println("right test 4");
       }
@@ -296,46 +257,46 @@ public class CarModMenu {
    * setPlayerChassis, sets the player's chassis part depending on which
    * chassis button was clicked.
    *
-   * @param chassis button
+   * @param chassi button
    */
-  private void setPlayerChassis(Button chassis) {
-    if (chassis == chassis1) {
+  private void setPlayerChassis(Button chassi) {
+    if (chassi == chassis[0]) {
       // Check for left click
-      if (buttonClick(chassis1) == 1) {
+      if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 1
         System.out.println("test chassis 1");
         // Check for right click
-      } else if (buttonClick(chassis1) == 2) {
+      } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 1
           System.out.println("right test chassis 1");
       }
-    } else if (chassis == chassis2) {
+    } else if (chassi == chassis[1]) {
       // Check for left click
-      if (buttonClick(chassis2) == 1) {
+      if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 2
         System.out.println("test chassis 2");
         // Check for right click
-      } else if (buttonClick(chassis2) == 2) {
+      } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 2
         System.out.println("right test chassis 2");
       }
-    } else if (chassis == chassis3) {
+    } else if (chassi == chassis[2]) {
       // Check for left click
-      if (buttonClick(chassis3) == 1) {
+      if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 3
         System.out.println("test chassis 3");
         // Check for right click
-      } else if (buttonClick(chassis3) == 2) {
+      } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 3
         System.out.println("right test chassis 3");
       }
-    } else if (chassis == chassis4) {
+    } else if (chassi == chassis[3]) {
       // Check for left click
-      if (buttonClick(chassis4) == 1) {
+      if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 4
         System.out.println("test chassis 4");
         // Check for right click
-      } else if (buttonClick(chassis4) == 2) {
+      } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 4
         System.out.println("right test chassis 4");
       }
@@ -349,43 +310,43 @@ public class CarModMenu {
    * @param aero button
    */
   private void setPlayerAerodynamics(Button aero) {
-    if (aero == aero1) {
+    if (aero == aerodynamics[0]) {
       // Check for left click
-      if (buttonClick(aero1) == 1) {
+      if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 1
         System.out.println("test aero 1");
         // Check for right click
-      } else if (buttonClick(aero1) == 2) {
+      } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 1
         System.out.println("right test aero 1");
       }
-    } else if (aero == aero2) {
+    } else if (aero == aerodynamics[1]) {
       // Check for left click
-      if (buttonClick(aero2) == 1) {
+      if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 2
         System.out.println("test aero 2");
         // Check for right click
-      } else if (buttonClick(aero2) == 2) {
+      } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 2
         System.out.println("right test aero 2");
       }
-    } else if (aero == aero3) {
+    } else if (aero == aerodynamics[2]) {
       // Check for left click
-      if (buttonClick(aero3) == 1) {
+      if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 3
         System.out.println("test aero 3");
         // Check for right click
-      } else if (buttonClick(aero3) == 2) {
+      } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 3
         System.out.println("right test aero 3");
       }
-    } else if (aero == aero4) {
+    } else if (aero == aerodynamics[3]) {
       // Check for left click
-      if (buttonClick(aero4) == 1) {
+      if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 4
         System.out.println("test aero 4");
         // Check for right click
-      } else if (buttonClick(aero4) == 2) {
+      } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 4
         System.out.println("right test aero 4");
       }
