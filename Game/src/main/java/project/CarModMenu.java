@@ -1,8 +1,6 @@
 package project;
 
 import java.awt.*;
-import java.util.ArrayList;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -12,28 +10,22 @@ import processing.core.PVector;
  *
  * @author James Langille
  */
-public class CarModMenu {
-  private PImage engine1image;
-  private PImage engine2image;
-  private PImage engine3image;
-  private PImage engine4image;
-  private PImage chassis1image;
-  private PImage chassis2image;
-  private PImage chassis3image;
-  private PImage chassis4image;
-  private PImage aero1image;
-  private PImage aero2image;
-  private PImage aero3image;
-  private PImage aero4image;
+public class CarModMenu implements Drawable {
+  // Images
+  private PImage[] engineImages = new PImage[4];
+  private PImage[] chassisImages = new PImage[4];
+  private PImage[] aerodynamicImages = new PImage[4];
+  // Buttons
+  private Button backToMainMenu;
+  private Button startRace;
+  private Button[] engines = new Button[4];
+  private Button[] chassis = new Button[4];
+  private Button[] aerodynamics = new Button[4];
+  private Button[] gears = new Button[4];
+  // Other data
   private final GameManager window;
   private static CarModMenu instance;
   private MainMenu mainMenu;
-  private Button backToMainMenu;
-  private Button startRace;
-  private Button engines[] = new Button[4];
-  private Button chassis[] = new Button[4];
-  private Button aerodynamics[] = new Button[4];
-  private Button[] gears = new Button[4];
   private Stopwatch stopwatch;
 
   /**
@@ -60,7 +52,7 @@ public class CarModMenu {
   }
 
   /**
-   * setup, setup all buttons and text needed for this
+   * setup, setup all buttons, text, and images needed for this menu.
    */
   public void setup() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
@@ -105,27 +97,28 @@ public class CarModMenu {
     }
 
     // Set up images for engine buttons
-    engine1image = window.loadImage("Game/images/engine1.png");
-    engine2image = window.loadImage("Game/images/engine2.png");
-    engine3image = window.loadImage("Game/images/engine3.png");
-    engine4image = window.loadImage("Game/images/engine4.png");
+    engineImages[0] = window.loadImage("Game/images/engine1.png");
+    engineImages[1] = window.loadImage("Game/images/engine2.png");
+    engineImages[2] = window.loadImage("Game/images/engine3.png");
+    engineImages[3] = window.loadImage("Game/images/engine4.png");
     // Set up images for chassis buttons
-    chassis1image = window.loadImage("Game/images/chassis1.png");
-    chassis2image = window.loadImage("Game/images/chassis2.png");
-    chassis3image = window.loadImage("Game/images/chassis3.png");
-    chassis4image = window.loadImage("Game/images/chassis4.png");
+    chassisImages[0] = window.loadImage("Game/images/chassis1.png");
+    chassisImages[1] = window.loadImage("Game/images/chassis2.png");
+    chassisImages[2] = window.loadImage("Game/images/chassis3.png");
+    chassisImages[3] = window.loadImage("Game/images/chassis4.png");
     // Set up images for aero buttons
-    aero1image = window.loadImage("Game/images/aero1.png");
-    aero2image = window.loadImage("Game/images/aero2.png");
-    aero3image = window.loadImage("Game/images/aero3.png");
-    aero4image = window.loadImage("Game/images/aero4.png");
+    aerodynamicImages[0] = window.loadImage("Game/images/aero1.png");
+    aerodynamicImages[1] = window.loadImage("Game/images/aero2.png");
+    aerodynamicImages[2] = window.loadImage("Game/images/aero3.png");
+    aerodynamicImages[3] = window.loadImage("Game/images/aero4.png");
   }
 
+  @Override
   public void draw() {
-//    stopwatch = Stopwatch.getInstance(window);
+    // stopwatch = Stopwatch.getInstance(window);
     window.background(64, 64, 64);
     window.fill(0);
-    window.text("Car Modification", window.displayWidth / 2 + 10,window.displayHeight / 10);
+    window.text("Car Modification", window.displayWidth / 2 + 10, window.displayHeight / 10);
     // Create text for each car part
     window.textSize(30);
     window.text("Engine", (window.displayWidth / 8), window.displayHeight / 5);
@@ -139,11 +132,12 @@ public class CarModMenu {
       engine.update();
       this.setPlayerEngine(engine);
     }
+    int buffer = 50;
     // Draw images for each engine
-    window.image(engine1image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 50);
-    window.image(engine2image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 175);
-    window.image(engine3image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 300);
-    window.image(engine4image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 425);
+    for (PImage engine : engineImages) {
+      window.image(engine, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + buffer);
+      buffer += 125;
+    }
 
     // Draw buttons for the chassis
     for (Button chassi : chassis) {
@@ -151,11 +145,12 @@ public class CarModMenu {
       chassi.update();
       this.setPlayerChassis(chassi);
     }
+    buffer = 50;
     // Draw images for each chassis
-    window.image(chassis1image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50);
-    window.image(chassis2image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 175);
-    window.image(chassis3image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 300);
-    window.image(chassis4image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 425);
+    for (PImage chassis : chassisImages) {
+      window.image(chassis, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + buffer);
+      buffer += 125;
+    }
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
@@ -163,11 +158,12 @@ public class CarModMenu {
       aero.update();
       this.setPlayerAerodynamics(aero);
     }
-    // Draw images for each aero
-    window.image(aero1image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50);
-    window.image(aero2image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 175);
-    window.image(aero3image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 300);
-    window.image(aero4image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 425);
+    buffer = 50;
+    // Draw images for each aerodynamics
+    for (PImage aero : aerodynamicImages) {
+      window.image(aero, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + buffer);
+      buffer += 125;
+    }
 
     // Draw buttons for the tires
     for (Button gear : gears) {
@@ -268,7 +264,7 @@ public class CarModMenu {
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 1
-          System.out.println("right test chassis 1");
+        System.out.println("right test chassis 1");
       }
     } else if (chassi == chassis[1]) {
       // Check for left click
