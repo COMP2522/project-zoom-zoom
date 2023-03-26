@@ -192,6 +192,8 @@ public class Player extends Sprite {
   public Player(PVector position, PVector direction, float size, float speed,
                 Color color, GameManager window) {
     super(position, direction, size, speed, color, window);
+    xpos = position.x;
+    ypos = position.y;
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = gears.start();
   }
@@ -211,7 +213,9 @@ public class Player extends Sprite {
     grip = TIREGRIP + PartAero.getDownForce() * speed;
     revs = speed * gearRatio;
     xpos += speed / 10 * Math.cos(direction);
+    position.x = xpos;
     ypos += speed / 10 * Math.sin(direction);
+    position.y = ypos;
 //    System.out.println(direction);
 //    System.out.println("speed " + speed);
 //    System.out.println("RPM " + revs);
