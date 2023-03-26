@@ -11,17 +11,23 @@ import processing.core.PVector;
  * @author James Langille
  */
 public class MainMenu implements Drawable {
-  private final GameManager window;
-  private static MainMenu instance;
+  // Buttons
   private Button onePlayer;
   private Button twoPlayer;
   private Button controls;
   private Button quit;
+  // Images
   private PImage bgImage;
   private PImage gameTitle;
+  private PImage onePlayerImage;
+  private PImage twoPlayerImage;
+  private PImage controlsImage;
+  private PImage quitImage;
+  // Other data
+  private final GameManager window;
+  private static MainMenu instance;
   private boolean showTitle = true;
   private static final int clock = 5;
-
   // 1 = 1-Player, 2 = 2-Player
   int gameType = 0;
 
@@ -64,22 +70,24 @@ public class MainMenu implements Drawable {
    * setup, Sets up all objects needed for the main menu.
    */
   public void setup() {
-    window.textAlign(PApplet.CENTER, PApplet.CENTER);
-    window.textSize(40);
 
     // Set up buttons
     onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 500), 225, 50,
-        "One Player", new Color(52, 152, 235), window);
+        "", new Color(0, 150, 0), window);
     twoPlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 600), 225, 50,
-        "Two players", new Color(52, 73, 235), window);
-    controls = new Button(new PVector((float) (window.displayWidth / 2) - 100, 700), 225,
-        50, "Controls", new Color(104, 52, 235), window);
-    quit = new Button(new PVector((float) (window.displayWidth / 2) - 100, 800), 225,
-        50, "Quit", new Color(200, 50, 50), window);
+        "", new Color(0, 0, 150), window);
+    controls = new Button(new PVector((float) (window.displayWidth / 2) - 100, 700), 225, 50,
+        "", new Color(104, 52, 235), window);
+    quit = new Button(new PVector((float) (window.displayWidth / 2) - 100, 800), 225, 50,
+        "", new Color(150, 0, 0), window);
 
     // Set up images
     bgImage = window.loadImage("Game/images/BGImage.png");
     gameTitle = window.loadImage("Game/images/zoomZoom.png");
+    onePlayerImage = window.loadImage("Game/images/1Player.png");
+    twoPlayerImage = window.loadImage("Game/images/2Player.png");
+    controlsImage = window.loadImage("Game/images/Controls.png");
+    quitImage = window.loadImage("Game/images/Quit.png");
   }
 
   /**
@@ -90,31 +98,38 @@ public class MainMenu implements Drawable {
     // Draw images
     window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
     this.showTitle();
-    // Draw buttons
+    // Draw 1-Player button and image
     onePlayer.draw();
     onePlayer.update();
-    twoPlayer.draw();
-    twoPlayer.update();
     if (onePlayer.isClicked()) {
       // Change menu to one player game
       gameType = 1;
       window.menu = 4;
     }
+    window.image(onePlayerImage, onePlayer.getPosition().x + 5, onePlayer.getPosition().y + 10);
+    // Draw 2-Player button and image
+    twoPlayer.draw();
+    twoPlayer.update();
     if (twoPlayer.isClicked()) {
       // Change menu to two player game
       gameType = 2;
       window.menu = 4;
     }
+    window.image(twoPlayerImage, twoPlayer.getPosition().x + 5, twoPlayer.getPosition().y + 10);
+    // Draw controls button and image
     controls.draw();
     controls.update();
     if (controls.isClicked()) {
       window.menu = 3;
     }
+    window.image(controlsImage, controls.getPosition().x + 5, controls.getPosition().y + 10);
+    // Draw quit button and image
     quit.draw();
     quit.update();
     if (quit.isClicked()) {
       window.exit();
     }
+    window.image(quitImage, quit.getPosition().x + 60, quit.getPosition().y + 10);
   }
 
 }
