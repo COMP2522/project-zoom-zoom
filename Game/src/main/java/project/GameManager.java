@@ -106,7 +106,8 @@ public class GameManager extends PApplet {
   }
   @Override
   public void mousePressed() {
-    if (mouseX >= 20 && mouseX <= 220 && mouseY >= 60 && mouseY <= 100) {
+    if (mouseX >= this.displayWidth - 380 && mouseX <= this.displayWidth - 180
+        && mouseY >= 500 && mouseY <= 540) {
       isEditing = true;
     } else {
       isEditing = false;
@@ -120,7 +121,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-      BGM.getBGM(true);
+//      BGM.getBGM(true);
       audio = false;
       check++;
     }

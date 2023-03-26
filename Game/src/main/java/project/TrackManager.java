@@ -12,7 +12,7 @@ public class TrackManager {
   final static boolean isOnTesterMode = false;
 
   /** Active window. */
-  private Window window;
+  private GameManager window;
 
   /** Color of the grass. */
   private Color grassColor = new Color(0, 255, 0);
@@ -27,7 +27,7 @@ public class TrackManager {
    *
    * @param window Current window
    */
-  public TrackManager(Window window) {
+  public TrackManager(GameManager window) {
     this.window = window;
   }
 

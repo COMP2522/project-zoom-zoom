@@ -15,6 +15,7 @@ public class CarModMenu implements Drawable {
   private PImage[] engineImages = new PImage[4];
   private PImage[] chassisImages = new PImage[4];
   private PImage[] aerodynamicImages = new PImage[4];
+  private PImage background;
   // Buttons
   private Button backToMainMenu;
   private Button startRace;
@@ -96,6 +97,7 @@ public class CarModMenu implements Drawable {
       buffer += 125;
     }
 
+    background = window.loadImage("Game/images/BGImage.png");
     // Set up images for engine buttons
     engineImages[0] = window.loadImage("Game/images/engine1.png");
     engineImages[1] = window.loadImage("Game/images/engine2.png");
@@ -118,6 +120,7 @@ public class CarModMenu implements Drawable {
     // stopwatch = Stopwatch.getInstance(window);
     window.background(64, 64, 64);
     window.fill(0);
+    window.image(background, 0, 0, window.displayWidth, window.displayHeight);
     window.text("Car Modification", window.displayWidth / 2 + 10, window.displayHeight / 10);
     // Create text for each car part
     window.textSize(30);

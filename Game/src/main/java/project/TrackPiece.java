@@ -26,7 +26,7 @@ public class TrackPiece extends PApplet {
   private PShape road;
 
   /** The window. */
-  private Window window;
+  private GameManager window;
 
   /** Boolean array that mimics the shape. */
   private boolean[][] shapePixels;
@@ -50,7 +50,7 @@ public class TrackPiece extends PApplet {
    */
   public TrackPiece(int closeLeftX, int closeLeftY, int farLeftX, int farLeftY,
                     int farRightX, int farRightY, int closeRightX, int closeRightY,
-                    Window window) {
+                    GameManager window) {
     this.window = window;
 
     // Find smallest X
