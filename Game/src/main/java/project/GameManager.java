@@ -17,7 +17,7 @@ public class GameManager extends PApplet {
   SinglePlayer singlePlayer;
   TwoPlayers twoPlayers;
   Stopwatch stopwatch;
-  TrackMenu trackMenu;
+//  TrackMenu trackMenu;
   public static boolean audio = true;
   private int check = 1;
 
@@ -54,6 +54,9 @@ public class GameManager extends PApplet {
    */
   public void setup() {
   }
+  boolean isEditing = false;
+  String inputText = "";
+  char inputChar;
 
   /**
    * keyPressed, take key event input and update the controls boolean variable to true.
@@ -64,11 +67,31 @@ public class GameManager extends PApplet {
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
+      if (singlePlayer != null) {
+        singlePlayer.stopwatch.stopTimer();
+        singlePlayer.setTimerCheck(true);
+      }
+      if (twoPlayers != null) {
+        twoPlayers.stopwatch.stopTimer();
+        twoPlayers.setTimerCheck(true);
+      }
       menu = 0;
     }
     if (menu == 1 || menu == 2) {
       Controls.setMovementTrue(keyCode);
       Controls.shiftGears(keyCode);
+    }
+    if (isEditing) {
+      if (this.key == this.BACKSPACE) {
+        inputText = inputText.substring(0, this.max(0, inputText.length() - 1));
+      } else if (this.key == this.ENTER) {
+        inputChar = inputText.charAt(0);
+        inputText = "";
+        isEditing = false;
+      } else if (this.textWidth(inputText + this.key) <= 195) {
+        inputText += this.key;
+        inputText = inputText.toUpperCase();
+      }
     }
   }
 
@@ -79,6 +102,14 @@ public class GameManager extends PApplet {
   public void keyReleased() {
     if (menu == 1 || menu == 2) {
       Controls.setMovementFalse(keyCode);
+    }
+  }
+  @Override
+  public void mousePressed() {
+    if (mouseX >= 20 && mouseX <= 220 && mouseY >= 60 && mouseY <= 100) {
+      isEditing = true;
+    } else {
+      isEditing = false;
     }
   }
 
@@ -113,8 +144,6 @@ public class GameManager extends PApplet {
       case 3 -> { // Control menu
         background(64, 64, 64);
         controlMenu = ControlMenu.getInstance(this);
-        stopwatch = Stopwatch.getInstance(this);
-//        stopwatch.showTimer(true);
         controlMenu.setup();
         controlMenu.draw();
         break;
@@ -125,9 +154,9 @@ public class GameManager extends PApplet {
         carModMenu.draw();
       }
       case 5 -> {
-        trackMenu = TrackMenu.getInstance(this);
-        trackMenu.setUp();
-        trackMenu.draw();
+//        trackMenu = TrackMenu.getInstance(this);
+//        trackMenu.setUp();
+//        trackMenu.draw();
       }
       default -> {
         break;
