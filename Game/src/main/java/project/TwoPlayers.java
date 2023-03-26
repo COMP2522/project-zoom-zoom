@@ -74,6 +74,30 @@ public class TwoPlayers extends PApplet {
       sprite.draw();
     }
   }
+  public char getP2Up() {
+    return (char) player2Keys[0];
+  }
+  public char getP2Down() {
+    return (char) player2Keys[1];
+  }
+  public char getP2Left() {
+    return (char) player2Keys[2];
+  }
+  public char getP2Right() {
+    return (char) player2Keys[3];
+  }
+  public char getP1Up() {
+    return (char) player1Keys[0];
+  }
+  public char getP1Down() {
+    return (char) player1Keys[1];
+  }
+  public char getP1Left() {
+    return (char) player1Keys[2];
+  }
+  public char getP1Right() {
+    return (char) player1Keys[3];
+  }
   public boolean getTimerCheck() {
     return timerCheck;
   }
