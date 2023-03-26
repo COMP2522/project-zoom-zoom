@@ -1,6 +1,7 @@
 package project;
 
 import processing.core.PApplet;
+import processing.core.PVector;
 import processing.event.KeyEvent;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ import javax.swing.*;
 
 public class GameManager extends PApplet {
   MainMenu mainMenu;
+  TrackManager trackManager;
   ControlMenu controlMenu;
   CarModMenu carModMenu;
   SinglePlayer singlePlayer;
@@ -55,6 +57,8 @@ public class GameManager extends PApplet {
    * Initializes all objects.
    */
   public void setup() {
+    trackManager = new TrackManager(this);
+    trackManager.initTrack();
   }
   boolean isEditing = false;
   String inputText = "";
@@ -137,11 +141,12 @@ public class GameManager extends PApplet {
       }
       case 1 -> { // 1 Player game
         singlePlayer = SinglePlayer.getInstance(this);
+        trackManager.draw();
         singlePlayer.draw();
       }
       case 2 -> { // 2 Player game
-        background(64, 64, 64);
         twoPlayers = TwoPlayers.getInstance(this);
+        trackManager.draw();
         twoPlayers.draw();
       }
       case 3 -> { // Control menu
@@ -190,6 +195,9 @@ public class GameManager extends PApplet {
     return gameRunning;
   }
 
+  public PVector getStartingPosition(int numberOfPlayers, int playerNumber) {
+    return trackManager.getStartCords(numberOfPlayers, playerNumber);
+  }
 
   /**
    * Main function.
