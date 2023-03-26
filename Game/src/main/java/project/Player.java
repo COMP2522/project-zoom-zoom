@@ -17,15 +17,15 @@ public class Player extends Sprite {
   /**
    * The gear ratios for the car's transmission.
    */
-  int GEAR1 = 1000;
-  int GEAR2 = 500;
-  int GEAR3 = 300;
-  int GEAR4 = 100;
+  int GEAR1 = 700;
+  int GEAR2 = 300;
+  int GEAR3 = 125;
+  int GEAR4 = 80;
 
   /**
    * The maximum power output of the car's engine.
    */
-  double POWER = 5000;
+  double POWER = 7000;
   /**
    * The amount of power dropoff at high revs.
    */
@@ -225,7 +225,7 @@ public class Player extends Sprite {
    */
   public void drag(){
     // Calculate the reduction in speed due to drag
-    speed -= (aero.getDrag() * DRAGFACTOR * speed) / (weight * WFACTOR) / LIMITER;
+    speed -= (aero.getDrag() * DRAGFACTOR * speed * (1 + (revs / 5000))) / (weight * WFACTOR) / LIMITER;
   }
 
   /**
