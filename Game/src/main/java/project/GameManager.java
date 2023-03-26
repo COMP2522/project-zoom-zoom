@@ -3,6 +3,8 @@ package project;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 
+import javax.swing.*;
+
 
 /**
  * Game manager class to indicate whether the game is running or not
@@ -187,6 +189,7 @@ public class GameManager extends PApplet {
   public boolean isGameRunning() {
     return gameRunning;
   }
+
 
   /**
    * Main function.

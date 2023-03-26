@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class SinglePlayer extends PApplet{
   public final GameManager window;
   private static SinglePlayer instance;
+  AIPlayer aiPlayer;
   ArrayList<Sprite> sprites;
   Player player1;
   Controls playerControls;
@@ -31,11 +32,17 @@ public class SinglePlayer extends PApplet{
   }
 
   /**
-   * Initializes all sprites needed for a two players game.
+   * Initializes all sprites needed for a one player game.
    */
   public void init1Player() {
     stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Sprite>();
+    // Create a list of AiNodes
+    ArrayList<AiNode> aiNodes = new ArrayList<>();
+    aiNodes.add(new AiNode(100, 100));
+    aiNodes.add(new AiNode(200, 200));
+    aiNodes.add(new AiNode(300, 300));
+
     player1 = new Player(
         new PVector(window.width / 2, window.height / 2),
         new PVector(50, 1),
@@ -45,6 +52,17 @@ public class SinglePlayer extends PApplet{
         window);
     playerControls = new Controls(player1, player1Keys);
     sprites.add(player1);
+
+    // Add the AI player
+    aiPlayer = new AIPlayer(
+      new PVector(window.width / 2, window.height / 2),
+      new PVector(50, 1),
+      (minSize + 10),
+      0.1F,
+      new Color(255, 0, 0),
+      window,
+      aiNodes);
+    sprites.add(aiPlayer);
     dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
   }
 
