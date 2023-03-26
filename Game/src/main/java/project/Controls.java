@@ -8,8 +8,8 @@ package project;
  * @author James Langille
  */
 public class Controls {
-  private static Player player1;
-  private static Player player2;
+  public static Player player1;
+  public static Player player2;
   // Index 0 is up, 1 is down, 2 is left, 3 is right, 4 is shift gear up, 5 is shift gear down
   private static int[] player1controls;
   private static int[] player2controls;

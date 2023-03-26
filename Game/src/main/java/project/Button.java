@@ -70,7 +70,6 @@ public class Button {
       clicked = false;
       pressed = false;
     }
-
   }
 
   public PVector getPosition() {
@@ -128,5 +127,4 @@ public class Button {
   public void setClicked(boolean clicked) {
     this.clicked = clicked;
   }
-
 }
