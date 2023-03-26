@@ -19,6 +19,7 @@ public class CarModMenu implements Drawable {
   private PImage[] engineImages = new PImage[4];
   private PImage[] chassisImages = new PImage[4];
   private PImage[] aerodynamicImages = new PImage[4];
+  private PImage background;
   private PImage[] partTitleImages = new PImage[4];
   // Buttons
   private Button backToMainMenu;
@@ -100,6 +101,23 @@ public class CarModMenu implements Drawable {
           "Gear " + (i + 1), new Color(255, 0, 0), window);
       buffer += 125;
     }
+
+    background = window.loadImage("Game/images/BGImage.png");
+    // Set up images for engine buttons
+    engineImages[0] = window.loadImage("Game/images/engine1.png");
+    engineImages[1] = window.loadImage("Game/images/engine2.png");
+    engineImages[2] = window.loadImage("Game/images/engine3.png");
+    engineImages[3] = window.loadImage("Game/images/engine4.png");
+    // Set up images for chassis buttons
+    chassisImages[0] = window.loadImage("Game/images/chassis1.png");
+    chassisImages[1] = window.loadImage("Game/images/chassis2.png");
+    chassisImages[2] = window.loadImage("Game/images/chassis3.png");
+    chassisImages[3] = window.loadImage("Game/images/chassis4.png");
+    // Set up images for aero buttons
+    aerodynamicImages[0] = window.loadImage("Game/images/aero1.png");
+    aerodynamicImages[1] = window.loadImage("Game/images/aero2.png");
+    aerodynamicImages[2] = window.loadImage("Game/images/aero3.png");
+    aerodynamicImages[3] = window.loadImage("Game/images/aero4.png");
     // Instantiate other buttons
     backToMainMenu = new Button(new PVector((window.displayWidth / 2) - 100, 750), 200, 50,
         "", new Color(0, 0, 150), window);
@@ -143,6 +161,11 @@ public class CarModMenu implements Drawable {
   @Override
   public void draw() {
     // stopwatch = Stopwatch.getInstance(window);
+    window.background(64, 64, 64);
+    window.fill(0);
+    window.image(background, 0, 0, window.displayWidth, window.displayHeight);
+    window.text("Car Modification", window.displayWidth / 2 + 10, window.displayHeight / 10);
+    // Create text for each car part
     // Draw background image
     window.textSize(30);
     window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);

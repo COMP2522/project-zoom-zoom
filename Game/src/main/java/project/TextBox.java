@@ -2,6 +2,8 @@ package project;
 
 import org.w3c.dom.Text;
 
+import static processing.core.PConstants.CENTER;
+
 public class TextBox {
   private final GameManager window;
   private static TextBox instance;
@@ -19,17 +21,17 @@ public class TextBox {
   public void draw() {
     window.textAlign(window.LEFT, window.TOP);
     window.textSize(20);
-    window.text("Enter text:", 20, 20);
     if (window.isEditing) {
       window.fill(200);
-      window.rect(20, 60, 200, 40);
+      window.rect(window.displayWidth - 380, 500, 200, 40);
       window.fill(0);
-      window.text(window.inputText, 25, 65, 195, 35);
+      window.text(window.inputText, window.displayWidth - 375, 505, 195, 35);
     } else {
       window.fill(200);
-      window.rect(20, 60, 200, 40);
+//      window.rect(20, 60, 200, 40);
+      window.rect(window.displayWidth - 380, 500, 200, 40);
       window.fill(150);
-      window.text("Click to edit", 25, 65, 195, 35);
+      window.text("Click to edit", window.displayWidth - 375, 505, 195, 35);
     }
   }
 }
