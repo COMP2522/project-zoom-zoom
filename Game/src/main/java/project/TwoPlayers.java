@@ -36,7 +36,6 @@ public class TwoPlayers extends PApplet {
     player1 = new Player(
         new PVector(window.width / 2, window.height / 2),
         new PVector(50, 1),
-        new PVector(10, 10),
         (minSize + 10),
         0.01F,
         new Color(0, 255, 0),
@@ -45,7 +44,6 @@ public class TwoPlayers extends PApplet {
     player2 = new Player(
         new PVector(window.width / 2, window.height / 2),
         new PVector(500, 1),
-        new PVector(10, 10),
         (minSize + 10),
         0.01F,
         new Color(0, 255, 0),

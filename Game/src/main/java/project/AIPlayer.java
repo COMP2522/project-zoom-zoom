@@ -10,9 +10,9 @@ public class AIPlayer extends Sprite {
   private AiNode currentTarget;
   private List<AiNode> path;
   private ArrayList<AiNode> aiNodes;
-  public AIPlayer(PVector position, PVector direction, PVector velocity, float size, float speed,
+  public AIPlayer(PVector position, PVector direction, float size, float speed,
                   Color color, GameManager window, ArrayList<AiNode> aiNodes) {
-    super(position, direction, velocity, size, speed, color, window);
+    super(position, direction, size, speed, color, window);
     this.aiNodes = aiNodes;
   }
 
@@ -48,15 +48,6 @@ public class AIPlayer extends Sprite {
     // Calculate the desired acceleration of this AI player towards the target player
     PVector desiredAcceleration = targetDirection.mult(speedDifference);
 
-    // Apply the desired acceleration to this AI player's velocity
-    velocity.add(desiredAcceleration);
-
-    // Limit the maximum speed of this AI player
-    float maxSpeed = 5.0f;
-    velocity.limit(maxSpeed);
-
-    // Update this AI player's position
-    position.add(velocity);
   }
 
   private AiNode getNearestNode(PVector position) {

@@ -110,15 +110,3 @@ public class Ai {
     return null;
   }
 }
-
-// Implement the A* algorithm in the AIPlayer class to determine the optimal path for the AI driver to take around the track.
-// The algorithm should use the Collidable and Drawable interfaces to check for collisions and draw the AI driver's sprite on the screen.
-//
-// Create a new instance of the AIPlayer class in the SinglePlayer or TwoPlayers class
-// (depending on which mode you want the AI to be active in).
-//
-// Update the GameManager class to handle the AI player in the game loop. This includes updating the AI player's position based on its calculated path,
-// checking for collisions with other objects on the track, and updating the game state (e.g., lap times, position in the race) accordingly.
-//
-// Optionally, you can also add a menu to the game to allow players to select different AI drivers with varying levels
-// of skill or different car configurations (using the CarModMenu class).
