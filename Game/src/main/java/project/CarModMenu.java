@@ -1,8 +1,6 @@
 package project;
 
 import java.awt.*;
-import java.util.ArrayList;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -12,45 +10,36 @@ import processing.core.PVector;
  *
  * @author James Langille
  */
-public class CarModMenu {
-  private PImage engine1image;
-  private PImage engine2image;
-  private PImage engine3image;
-  private PImage engine4image;
-  private PImage chassis1image;
-  private PImage chassis2image;
-  private PImage chassis3image;
-  private PImage chassis4image;
-  private PImage aero1image;
-  private PImage aero2image;
-  private PImage aero3image;
-  private PImage aero4image;
-  private final GameManager window;
-  Stopwatch stopwatch;
-  private static CarModMenu instance;
-  private MainMenu mainMenu;
+public class CarModMenu implements Drawable {
+  // Images
+  private PImage bgImage;
+  private PImage menuTitleImage;
+  private PImage startRaceImage;
+  private PImage mainMenuImage;
+  private PImage[] engineImages = new PImage[4];
+  private PImage[] chassisImages = new PImage[4];
+  private PImage[] aerodynamicImages = new PImage[4];
+  private PImage background;
+  private PImage[] partTitleImages = new PImage[4];
+  // Buttons
   private Button backToMainMenu;
   private Button startRace;
-  private Button engine1;
-  private Button engine2;
-  private Button engine3;
-  private Button engine4;
-  private ArrayList<Button> engines = new ArrayList<Button>();
-  private Button chassis1;
-  private Button chassis2;
-  private Button chassis3;
-  private Button chassis4;
-  private ArrayList<Button> chassis = new ArrayList<Button>();
-  private Button aero1;
-  private Button aero2;
-  private Button aero3;
-  private Button aero4;
-  private ArrayList<Button> aerodynamics = new ArrayList<Button>();
-  private Button gears1;
-  private Button gears2;
-  private Button gears3;
-  private Button gears4;
-  private ArrayList<Button> gears = new ArrayList<Button>();
+  private Button[] engines = new Button[4];
+  private Button[] chassis = new Button[4];
+  private Button[] aerodynamics = new Button[4];
+  private Button[] gears = new Button[4];
+  // Image file names
+  private String[] engineImageNames;
+  private String[] chassisImageNames;
+  private String[] aeroImageNames;
+  private String[] titleImageNames;
+  // Other data
+  private final GameManager window;
+  private static CarModMenu instance;
+  private MainMenu mainMenu;
+  private Stopwatch stopwatch;
+  // Buffer used to adjust x or y position of button or image
+  private int buffer;
 
   /**
    * CarModMenu, private constructor to create a singleton of the class.
@@ -76,146 +65,162 @@ public class CarModMenu {
   }
 
   /**
-   * setup, setup all buttons and text needed for this
+   * setup, setup all buttons, text, and images needed for this menu.
    */
   public void setup() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
-    window.textSize(40);
-
-    backToMainMenu = new Button(new PVector((float) (window.displayWidth / 2) - 100, 750), 200, 50,
-        "Main Menu", new Color(52, 152, 235), window);
-    startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
-        "Start Race!", new Color(0, 255, 0), window);
+    buffer = 50;
     // Instantiate the engine buttons
-    engine1 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 50),
-        200, 100, "Engine 1", new Color(255, 0, 0), window);
-    engine2 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 175),
-        200, 100, "Engine 2", new Color(255, 0, 0), window);
-    engine3 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 300),
-        200, 100, "Engine 3", new Color(255, 0, 0), window);
-    engine4 = new Button(new PVector((window.displayWidth / 8) - 100, (window.displayHeight / 5) + 425),
-        200, 100, "Engine 4", new Color(255, 0, 0), window);
-    // Add each engine to the engines arraylist
-    engines.add(engine1);
-    engines.add(engine2);
-    engines.add(engine3);
-    engines.add(engine4);
+    for (int i = 0; i < engines.length; i++) {
+      engines[i] = new Button(new PVector((window.displayWidth / 8) - 100,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "", new Color(255, 0, 0), window);
+      buffer += 125;
+    }
+    buffer = 50;
     // Instantiate the chassis buttons
-    chassis1 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50),
-        200, 100, "Chassis 1", new Color(255, 0, 0), window);
-    chassis2 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 175),
-        200, 100, "Chassis 2", new Color(255, 0, 0), window);
-    chassis3 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 300),
-        200, 100, "Chassis 3", new Color(255, 0, 0), window);
-    chassis4 = new Button(new PVector((window.displayWidth / 8) + 300, (window.displayHeight / 5) + 425),
-        200, 100, "Chassis 4", new Color(255, 0, 0), window);
-    // Add each chassis into the chassis arraylist
-    chassis.add(chassis1);
-    chassis.add(chassis2);
-    chassis.add(chassis3);
-    chassis.add(chassis4);
+    for (int i = 0; i < chassis.length; i++) {
+      chassis[i] = new Button(new PVector((window.displayWidth / 8) + 300,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "", new Color(255, 0, 0), window);
+      buffer += 125;
+    }
+    buffer = 50;
     // Instantiate the aerodynamics buttons
-    aero1 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50),
-        200, 100, "Aero 1", new Color(255, 0, 0), window);
-    aero2 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 175),
-        200, 100, "Aero 2", new Color(255, 0, 0), window);
-    aero3 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 300),
-        200, 100, "Aero 3", new Color(255, 0, 0), window);
-    aero4 = new Button(new PVector((window.displayWidth / 8) + 700, (window.displayHeight / 5) + 425),
-        200, 100, "Aero 4", new Color(255, 0, 0), window);
-    // Add each aerodynamics into the aerodynamics arraylist
-    aerodynamics.add(aero1);
-    aerodynamics.add(aero2);
-    aerodynamics.add(aero3);
-    aerodynamics.add(aero4);
+    for (int i = 0; i < aerodynamics.length; i++) {
+      aerodynamics[i] = new Button(new PVector((window.displayWidth / 8) + 700,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "", new Color(255, 0, 0), window);
+      buffer += 125;
+    }
+    buffer = 50;
     // Instantiate the gears buttons
-    gears1 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 50),
-        200, 100, "Gears 1", new Color(255, 0, 0), window);
-    gears2 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 175),
-        200, 100, "Gears 2", new Color(255, 0, 0), window);
-    gears3 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 300),
-        200, 100, "Gears 3", new Color(255, 0, 0), window);
-    gears4 = new Button(new PVector((window.displayWidth / 8) + 1100, (window.displayHeight / 5) + 425),
-        200, 100, "Gears 4", new Color(255, 0, 0), window);
-    // Add each tires into the tires arraylist
-    gears.add(gears1);
-    gears.add(gears2);
-    gears.add(gears3);
-    gears.add(gears4);
+    for (int i = 0; i < gears.length; i++) {
+      gears[i] = new Button(new PVector((window.displayWidth / 8) + 1100,
+          (window.displayHeight / 5) + buffer), 200, 100,
+          "Gear " + (i + 1), new Color(255, 0, 0), window);
+      buffer += 125;
+    }
 
+    background = window.loadImage("Game/images/BGImage.png");
     // Set up images for engine buttons
-    engine1image = window.loadImage("Game/images/engine1.png");
-    engine2image = window.loadImage("Game/images/engine2.png");
-    engine3image = window.loadImage("Game/images/engine3.png");
-    engine4image = window.loadImage("Game/images/engine4.png");
+    engineImages[0] = window.loadImage("Game/images/engine1.png");
+    engineImages[1] = window.loadImage("Game/images/engine2.png");
+    engineImages[2] = window.loadImage("Game/images/engine3.png");
+    engineImages[3] = window.loadImage("Game/images/engine4.png");
     // Set up images for chassis buttons
-    chassis1image = window.loadImage("Game/images/chassis1.png");
-    chassis2image = window.loadImage("Game/images/chassis2.png");
-    chassis3image = window.loadImage("Game/images/chassis3.png");
-    chassis4image = window.loadImage("Game/images/chassis4.png");
+    chassisImages[0] = window.loadImage("Game/images/chassis1.png");
+    chassisImages[1] = window.loadImage("Game/images/chassis2.png");
+    chassisImages[2] = window.loadImage("Game/images/chassis3.png");
+    chassisImages[3] = window.loadImage("Game/images/chassis4.png");
     // Set up images for aero buttons
-    aero1image = window.loadImage("Game/images/aero1.png");
-    aero2image = window.loadImage("Game/images/aero2.png");
-    aero3image = window.loadImage("Game/images/aero3.png");
-    aero4image = window.loadImage("Game/images/aero4.png");
+    aerodynamicImages[0] = window.loadImage("Game/images/aero1.png");
+    aerodynamicImages[1] = window.loadImage("Game/images/aero2.png");
+    aerodynamicImages[2] = window.loadImage("Game/images/aero3.png");
+    aerodynamicImages[3] = window.loadImage("Game/images/aero4.png");
+    // Instantiate other buttons
+    backToMainMenu = new Button(new PVector((window.displayWidth / 2) - 100, 750), 200, 50,
+        "", new Color(0, 0, 150), window);
+    startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
+        "", new Color(0, 150, 0), window);
+    // Get image file names
+    FileReader.readFiles("Game/images/");
+    // Instantiate images for engine buttons
+    engineImageNames = FileReader.engineImages();
+    for (int i = 0; i < engineImages.length; i++) {
+      engineImages[i] = window.loadImage("Game/images/" + engineImageNames[i]);
+    }
+    // Instantiate images for chassis buttons
+    chassisImageNames = FileReader.chassisImages();
+    for (int i = 0; i < chassisImages.length; i++) {
+      chassisImages[i] = window.loadImage("Game/images/" + chassisImageNames[i]);
+    }
+    // Instantiate images for aero buttons
+    aeroImageNames = FileReader.aerodynamicsImages();
+    for (int i = 0; i < aerodynamicImages.length; i++) {
+      aerodynamicImages[i] = window.loadImage("Game/images/" + aeroImageNames[i]);
+    }
+    /* Instantiate a slightly different background image
+     if one player or two player game was selected. */
+    if (mainMenu.gameType == 1) {
+      bgImage = window.loadImage("Game/images/BGImage2.png");
+    } else if (mainMenu.gameType == 2) {
+      bgImage = window.loadImage("Game/images/BGImage.png");
+    }
+    // Instantiate part title images
+    titleImageNames = FileReader.carModTitles();
+    for (int i = 0; i < partTitleImages.length; i++) {
+      partTitleImages[i] = window.loadImage("Game/images/" + titleImageNames[i]);
+    }
+    // Instantiate other images
+    menuTitleImage = window.loadImage("Game/images/CarModTitle.png");
+    startRaceImage = window.loadImage("Game/images/StartRace.png");
+    mainMenuImage = window.loadImage("Game/images/MainMenu.png");
   }
 
+  @Override
   public void draw() {
-    stopwatch = Stopwatch.getInstance(window);
+    // stopwatch = Stopwatch.getInstance(window);
     window.background(64, 64, 64);
     window.fill(0);
-    window.text("Car Modification", window.displayWidth / 2 + 10,window.displayHeight / 10);
+    window.image(background, 0, 0, window.displayWidth, window.displayHeight);
+    window.text("Car Modification", window.displayWidth / 2 + 10, window.displayHeight / 10);
     // Create text for each car part
+    // Draw background image
     window.textSize(30);
-    window.text("Engine", (window.displayWidth / 8), window.displayHeight / 5);
-//    window.text("Brakes", (window.displayWidth / 8) + 300, window.displayHeight / 5);
-    window.text("Chassis", (window.displayWidth / 8) + 400, window.displayHeight / 5);
-    window.text("Aerodynamics", (window.displayWidth / 8) + 800, window.displayHeight / 5);
-    window.text("Gears", (window.displayWidth / 8) + 1200, window.displayHeight / 5);
+    window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
+    buffer = -100;
+    for (int i = 0; i < partTitleImages.length; i ++) {
+      window.image(partTitleImages[i], (window.displayWidth / 8) + buffer, window.displayHeight / 5);
+      if (i == 1) {
+        // update aero x position
+        buffer = 1125;
+      } else if (i == 2) {
+        // update gear x position
+        buffer = 650;
+      } else {
+        buffer += 400;
+      }
+    }
 
     // Draw buttons for the engine
     for (Button engine : engines) {
       engine.draw();
       engine.update();
-      // If an engine button is clicked, update the player's part to that engine
-      if (engine.isClicked()) {
-
-      }
+      this.setPlayerEngine(engine);
     }
+    buffer = 50;
     // Draw images for each engine
-    window.image(engine1image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 50);
-    window.image(engine2image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 175);
-    window.image(engine3image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 300);
-    window.image(engine4image, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + 425);
+    for (PImage engine : engineImages) {
+      window.image(engine, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + buffer);
+      buffer += 125;
+    }
 
     // Draw buttons for the chassis
     for (Button chassi : chassis) {
       chassi.draw();
       chassi.update();
-      if (chassi.isClicked()) {
-
-      }
+      this.setPlayerChassis(chassi);
     }
+    buffer = 50;
     // Draw images for each chassis
-    window.image(chassis1image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 50);
-    window.image(chassis2image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 175);
-    window.image(chassis3image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 300);
-    window.image(chassis4image, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + 425);
+    for (PImage chassis : chassisImages) {
+      window.image(chassis, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + buffer);
+      buffer += 125;
+    }
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
       aero.draw();
       aero.update();
-      // If an aero button is clicked, update the player's part to that aerodynamic
-      if (aero.isClicked()) {
-
-      }
+      this.setPlayerAerodynamics(aero);
     }
-    // Draw images for each aero
-    window.image(aero1image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 50);
-    window.image(aero2image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 175);
-    window.image(aero3image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 300);
-    window.image(aero4image, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + 425);
+    buffer = 50;
+    // Draw images for each aerodynamics
+    for (PImage aero : aerodynamicImages) {
+      window.image(aero, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + buffer);
+      buffer += 125;
+    }
 
     // Draw buttons for the tires
     for (Button gear : gears) {
@@ -235,10 +240,8 @@ public class CarModMenu {
         // Initialize one player game
         SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
         singlePlayer.init1Player();
-        singlePlayer.setTimerCheck(true);
         window.menu = 1;
       } else if (mainMenu.gameType == 2) {
-        stopwatch.resetTimer();
         // Initialize two player game
         TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
         twoPlayers.init2Player();
@@ -251,5 +254,178 @@ public class CarModMenu {
     if (backToMainMenu.isClicked()) {
       window.menu = 0;
     }
+    // Draw text images
+    window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
+    window.image(startRaceImage, window.displayWidth - 220, 760);
+    window.image(mainMenuImage, (window.displayWidth / 2) - 90, 760);
+  }
+
+
+  /**
+   * setPlayerEngine, sets the player's engine part depending on which
+   * engine button was clicked.
+   *
+   * @param engine button
+   */
+  private void setPlayerEngine(Button engine) {
+    if (engine == engines[0]) {
+      // Check for left click
+      if (buttonClick(engine) == 1) {
+        // Set player 1 engine to engine 1
+        System.out.println("test");
+        // Check for right click
+      } else if (buttonClick(engine) == 2) {
+        // Set player 2 engine to engine 1
+        System.out.println("right test");
+      }
+    } else if (engine == engines[1]) {
+      // Check for left click
+      if (buttonClick(engine) == 1) {
+        // Set player 1 engine to engine 2
+        System.out.println("test 2");
+        // Check for right click
+      } else if (buttonClick(engine) == 2) {
+        // Set player 2 engine to engine 2
+        System.out.println("right test 2");
+      }
+    } else if (engine == engines[2]) {
+      // Check for left click
+      if (buttonClick(engine) == 1) {
+        // Set player 1 engine to engine 3
+        System.out.println("test 3");
+        // Check for right click
+      } else if (buttonClick(engine) == 2) {
+        // Set player 2 engine to engine 3
+        System.out.println("right test 3");
+      }
+    } else if (engine == engines[3]) {
+      // Check for left click
+      if (buttonClick(engine) == 1) {
+        // Set player 1 engine to engine 4
+        System.out.println("test 4");
+        // Check for right click
+      } else if (buttonClick(engine) == 2) {
+        // Set player 2 engine to engine 4
+        System.out.println("right test 4");
+      }
+    }
+  }
+
+  /**
+   * setPlayerChassis, sets the player's chassis part depending on which
+   * chassis button was clicked.
+   *
+   * @param chassi button
+   */
+  private void setPlayerChassis(Button chassi) {
+    if (chassi == chassis[0]) {
+      // Check for left click
+      if (buttonClick(chassi) == 1) {
+        // Set player 1 chassis to chassis 1
+        System.out.println("test chassis 1");
+        // Check for right click
+      } else if (buttonClick(chassi) == 2) {
+        // Set player 2 chassis to chassis 1
+        System.out.println("right test chassis 1");
+      }
+    } else if (chassi == chassis[1]) {
+      // Check for left click
+      if (buttonClick(chassi) == 1) {
+        // Set player 1 chassis to chassis 2
+        System.out.println("test chassis 2");
+        // Check for right click
+      } else if (buttonClick(chassi) == 2) {
+        // Set player 2 chassis to chassis 2
+        System.out.println("right test chassis 2");
+      }
+    } else if (chassi == chassis[2]) {
+      // Check for left click
+      if (buttonClick(chassi) == 1) {
+        // Set player 1 chassis to chassis 3
+        System.out.println("test chassis 3");
+        // Check for right click
+      } else if (buttonClick(chassi) == 2) {
+        // Set player 2 chassis to chassis 3
+        System.out.println("right test chassis 3");
+      }
+    } else if (chassi == chassis[3]) {
+      // Check for left click
+      if (buttonClick(chassi) == 1) {
+        // Set player 1 chassis to chassis 4
+        System.out.println("test chassis 4");
+        // Check for right click
+      } else if (buttonClick(chassi) == 2) {
+        // Set player 2 chassis to chassis 4
+        System.out.println("right test chassis 4");
+      }
+    }
+  }
+
+  /**
+   * sets the player's aerodynamics part depending on which
+   * aerodynamics button was clicked.
+   *
+   * @param aero button
+   */
+  private void setPlayerAerodynamics(Button aero) {
+    if (aero == aerodynamics[0]) {
+      // Check for left click
+      if (buttonClick(aero) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 1
+        System.out.println("test aero 1");
+        // Check for right click
+      } else if (buttonClick(aero) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 1
+        System.out.println("right test aero 1");
+      }
+    } else if (aero == aerodynamics[1]) {
+      // Check for left click
+      if (buttonClick(aero) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 2
+        System.out.println("test aero 2");
+        // Check for right click
+      } else if (buttonClick(aero) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 2
+        System.out.println("right test aero 2");
+      }
+    } else if (aero == aerodynamics[2]) {
+      // Check for left click
+      if (buttonClick(aero) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 3
+        System.out.println("test aero 3");
+        // Check for right click
+      } else if (buttonClick(aero) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 3
+        System.out.println("right test aero 3");
+      }
+    } else if (aero == aerodynamics[3]) {
+      // Check for left click
+      if (buttonClick(aero) == 1) {
+        // Set player 1 aerodynamics to aerodynamics 4
+        System.out.println("test aero 4");
+        // Check for right click
+      } else if (buttonClick(aero) == 2) {
+        // Set player 2 aerodynamics to aerodynamics 4
+        System.out.println("right test aero 4");
+      }
+    }
+  }
+
+  /**
+   * mouseClick, helper method that checks if a button was left or right clicked.
+   *
+   * @param part Button that was clicked
+   * @return 1 if left click, 2 if right click, else 0
+   */
+  private int buttonClick(Button part) {
+    if (part.isClicked() && window.mouseButton == PApplet.LEFT) {
+      return 1;
+      /* Checks if right mouse button was clicked and two player button
+         in main menu was clicked. */
+    } else if (part.isClicked() && window.mouseButton == PApplet.RIGHT
+        && mainMenu.gameType == 2) {
+      return 2;
+    }
+    return 0;
   }
 }

@@ -58,7 +58,8 @@ public class Button {
    */
   public void update() {
     // Check if mouse left button has been pressed
-    if (window.mousePressed && window.mouseButton == PApplet.LEFT && !pressed) {
+    if (window.mousePressed && (window.mouseButton == PApplet.LEFT
+        || window.mouseButton == PApplet.RIGHT) && !pressed) {
       pressed = true;
       // Check if mouse click is in button dimensions
       if (window.mouseX >= position.x && window.mouseX <= position.x + width
@@ -69,7 +70,6 @@ public class Button {
       clicked = false;
       pressed = false;
     }
-
   }
 
   public PVector getPosition() {
@@ -127,5 +127,4 @@ public class Button {
   public void setClicked(boolean clicked) {
     this.clicked = clicked;
   }
-
 }
