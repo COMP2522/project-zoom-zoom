@@ -199,10 +199,10 @@ public class Player extends Sprite {
 
   @Override
   public void draw() {
-      window.pushStyle();
-      window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
-      window.ellipse(xpos, ypos, size, size);
-      window.popStyle();
+    window.pushStyle();
+    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
+    window.ellipse(xpos, ypos, size, size);
+    window.popStyle();
   }
 
   @Override
@@ -241,7 +241,7 @@ public class Player extends Sprite {
   public void acc(){
     // Calculate the proportionate acceleration based on engine power, revs, weight, and other factors
     double prpacc = engine.getPower() / (Math.abs(revs - engine.getOpRevs()) * engine.getDropoff())
-            / (weight * WFACTOR) / (1 + CAMBER);
+        / (weight * WFACTOR) / (1 + CAMBER);
     // Cap the acceleration
     if (prpacc > MAXACC) prpacc = MAXACC;
     // Increase the car's speed based on the proportionate acceleration
@@ -285,8 +285,8 @@ public class Player extends Sprite {
 
   public void shiftUp(){
     if(currGear < 4){
-    gearRatio = gears.shiftUp();
-    currGear++;
+      gearRatio = gears.shiftUp();
+      currGear++;
     }
   }
   public void shiftDown(){
