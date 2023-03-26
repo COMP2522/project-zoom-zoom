@@ -68,6 +68,19 @@ public class SinglePlayer extends PApplet{
     }
   }
 
+  public char getUp() {
+    return (char) player1Keys[0];
+  }
+  public char getDown() {
+    return (char) player1Keys[1];
+  }
+  public char getLeft() {
+    return (char) player1Keys[2];
+  }
+  public char getRight() {
+    return (char) player1Keys[3];
+  }
+
   public boolean isTimerCheck() {
     return timerCheck;
   }
