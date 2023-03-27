@@ -26,7 +26,7 @@ public class CarModMenuImages implements Drawable {
   private MainMenu mainMenu;
   private static CarModMenuImages instance;
   private GameManager window;
-  // Buffer used to adjust x or y position of button or image
+  // Buffer used to adjust x or y position of image
   private int buffer;
 
   /**
@@ -39,6 +39,11 @@ public class CarModMenuImages implements Drawable {
     this.mainMenu = MainMenu.getInstance(window);
   }
 
+  /**
+   * getInstance, gets one object of class.
+   * @param window of screen
+   * @return singleton object of class
+   */
   public static CarModMenuImages getInstance(GameManager window) {
     if (instance == null) {
       instance = new CarModMenuImages(window);
