@@ -54,6 +54,7 @@ public class GameManager extends PApplet {
    */
   public void settings() {
     size(displayWidth, displayHeight);
+    this.fullScreen();
   }
 
   /**

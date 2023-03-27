@@ -32,6 +32,7 @@ public class Stopwatch {
       currentTime = System.currentTimeMillis() - startTime;
       SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:SSS");
       String time = sdf.format(new Date(currentTime));
+      window.fill(255,255,255);
       window.text(time, (float) (window.displayWidth - 200), (float) (window.displayWidth / 30));
     } else {
       SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:SSS");
