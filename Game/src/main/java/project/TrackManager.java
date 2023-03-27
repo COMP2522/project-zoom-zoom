@@ -59,12 +59,6 @@ public class TrackManager implements Drawable {
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
     }
-    if (isOnTesterMode) { // Shows X - Y Coordinates
-      window.fill(0, 0, 255);
-      window.ellipse(15, 15, 10, 10);
-      window.fill(255, 0, 0);
-      window.ellipse(630, 345, 10, 10);
-    }
   }
 
   public boolean isOnTrack(int xCord, int yCord) {
