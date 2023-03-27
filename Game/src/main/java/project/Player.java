@@ -188,6 +188,21 @@ public class Player extends Sprite {
   PartAero aero = new PartAero(DOWNFORCE, ADRAG, AWEIGHT);
   PartChassis chassis = new PartChassis(CWEIGHT, WHEELBASEX, WHEELBASEY);
 
+  public PartGears getGears() {
+    return gears;
+  }
+
+  public PartEngine getEngine() {
+    return engine;
+  }
+
+  public PartAero getAero() {
+    return aero;
+  }
+
+  public PartChassis getChassis() {
+    return chassis;
+  }
 
   public Player(PVector position, PVector direction, float size, float speed,
                 Color color, GameManager window) {

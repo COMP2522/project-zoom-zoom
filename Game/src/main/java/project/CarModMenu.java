@@ -278,39 +278,47 @@ public class CarModMenu implements Drawable {
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 1
         System.out.println("test");
+        player1.getEngine().setEngine(7000, 0.6, 3000, 1000);
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 1
+        player2.getEngine().setEngine(7000, 0.6, 3000, 1000);
         System.out.println("right test");
       }
     } else if (engine == engines[1]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 2
+        player1.getEngine().setEngine(9000, 0.7, 5000, 1500);
         System.out.println("test 2");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 2
+        player2.getEngine().setEngine(9000, 0.7, 5000, 1500);
         System.out.println("right test 2");
       }
     } else if (engine == engines[2]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 3
+        player1.getEngine().setEngine(4000, 0.3, 2000, 500);
         System.out.println("test 3");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 3
+        player2.getEngine().setEngine(4000, 0.3, 2000, 500);
         System.out.println("right test 3");
       }
     } else if (engine == engines[3]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 4
+        player1.getEngine().setEngine(12000, 1, 4000, 2000);
         System.out.println("test 4");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 4
+        player2.getEngine().setEngine(12000, 1, 4000, 2000);
         System.out.println("right test 4");
       }
     }
