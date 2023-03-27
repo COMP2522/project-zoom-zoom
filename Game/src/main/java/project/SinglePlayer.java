@@ -53,7 +53,7 @@ public class SinglePlayer extends PApplet{
 
     // Add the AI player
     bot = new Bot(
-      new PVector(window.width / 2, window.height / 2),
+      window.getStartingPosition(1, 1),
       new PVector(50, 1),
       (minSize + 10),
       0.1F,
