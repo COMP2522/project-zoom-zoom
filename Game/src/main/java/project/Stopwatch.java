@@ -23,6 +23,7 @@ public class Stopwatch {
   }
 
   private void showTimer() {
+    window.textSize(40);
     if (startTimer) {
       startTime = System.currentTimeMillis();
       startTimer = false;
