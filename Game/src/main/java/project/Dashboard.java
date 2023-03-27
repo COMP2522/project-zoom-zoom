@@ -21,7 +21,7 @@ public class Dashboard implements Drawable {
     public void draw() {
         window.textSize(40);
         Thread speedometer = new Thread(() -> {
-            window.text(String.format("%d km/h", (int)player.getSpeed() * 5), (float) (window.displayWidth - 200), (float) (window.displayWidth / 30) + 60);
+            window.text(String.format("%d km/h", (int)(player.getSpeed() * 3)), (float) (window.displayWidth - 200), (float) (window.displayWidth / 30) + 60);
         });
 
         Thread revometer = new Thread(() -> {

@@ -289,12 +289,12 @@ public class CarModMenu implements Drawable {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 2
-        player1.getEngine().setEngine(9000, 0.7, 5000, 1500);
+        player1.getEngine().setEngine(9000, 0.7, 5000, 2000);
         System.out.println("test 2");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 2
-        player2.getEngine().setEngine(9000, 0.7, 5000, 1500);
+        player2.getEngine().setEngine(9000, 0.7, 5000, 2000);
         System.out.println("right test 2");
       }
     } else if (engine == engines[2]) {
@@ -313,12 +313,12 @@ public class CarModMenu implements Drawable {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 4
-        player1.getEngine().setEngine(12000, 1, 4000, 2000);
+        player1.getEngine().setEngine(12000, 1, 4000, 2500);
         System.out.println("test 4");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 4
-        player2.getEngine().setEngine(12000, 1, 4000, 2000);
+        player2.getEngine().setEngine(12000, 1, 4000, 2500);
         System.out.println("right test 4");
       }
     }
@@ -335,40 +335,48 @@ public class CarModMenu implements Drawable {
       // Check for left click
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 1
+        player1.getChassis().setChassis(2000, 1,1);
         System.out.println("test chassis 1");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 1
+        player2.getChassis().setChassis(2000, 1,1);
         System.out.println("right test chassis 1");
       }
     } else if (chassi == chassis[1]) {
       // Check for left click
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 2
+        player1.getChassis().setChassis(1500, 1,1);
         System.out.println("test chassis 2");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 2
+        player1.getChassis().setChassis(1500, 1,1);
         System.out.println("right test chassis 2");
       }
     } else if (chassi == chassis[2]) {
       // Check for left click
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 3
+        player1.getChassis().setChassis(1000, 1,1);
         System.out.println("test chassis 3");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 3
+        player2.getChassis().setChassis(1000, 1,1);
         System.out.println("right test chassis 3");
       }
     } else if (chassi == chassis[3]) {
       // Check for left click
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 4
+        player1.getChassis().setChassis(500, 1,1);
         System.out.println("test chassis 4");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 4
+        player1.getChassis().setChassis(500, 1,1);
         System.out.println("right test chassis 4");
       }
     }
@@ -385,40 +393,48 @@ public class CarModMenu implements Drawable {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 1
+        player1.getAero().setAero(30, 15, 500);
         System.out.println("test aero 1");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 1
+        player2.getAero().setAero(30, 15, 500);
         System.out.println("right test aero 1");
       }
     } else if (aero == aerodynamics[1]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 2
+        player1.getAero().setAero(40, 20, 300);
         System.out.println("test aero 2");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 2
+        player2.getAero().setAero(40, 20, 300);
         System.out.println("right test aero 2");
       }
     } else if (aero == aerodynamics[2]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 3
+        player1.getAero().setAero(10, 5, 300);
         System.out.println("test aero 3");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 3
+        player2.getAero().setAero(10, 5, 300);
         System.out.println("right test aero 3");
       }
     } else if (aero == aerodynamics[3]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 4
+        player1.getAero().setAero(0, 0, 0);
         System.out.println("test aero 4");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 4
+        player2.getAero().setAero(0, 0, 0);
         System.out.println("right test aero 4");
       }
     }
