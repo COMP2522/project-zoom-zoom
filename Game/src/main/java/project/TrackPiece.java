@@ -30,6 +30,15 @@ public class TrackPiece extends PApplet {
   /** This segment's shape object. */
   private PShape road;
 
+  /** This segment's shape object for the border. */
+  private PShape border;
+
+  /** Width of the border. */
+  private final int borderWidth = 20;
+
+  /** Color of the border. */
+  private final Color borderColor = new Color(255, 0, 0);
+
   /** The gameManager. */
   private GameManager gameManager;
 
@@ -111,6 +120,20 @@ public class TrackPiece extends PApplet {
     road.vertex((farRightX - smallestX), (farRightY - smallestY));
     road.vertex((closeRightX - smallestX), (closeRightY - smallestY));
     road.endShape();
+
+
+    // Setup drawable shape object for the border.
+    border = gameManager.createShape();
+    border.beginShape();
+    border.stroke(borderColor.getRGB());
+    border.strokeWeight(borderWidth);
+
+    // Add the border around the road.
+    border.vertex((closeLeftX - smallestX) - borderWidth/2, (closeLeftY - smallestY) - borderWidth/2);
+    border.vertex((farLeftX - smallestX) - borderWidth/2, (farLeftY - smallestY) - borderWidth/2);
+    border.vertex((farRightX - smallestX) + borderWidth/2, (farRightY - smallestY) + borderWidth/2);
+    border.vertex((closeRightX - smallestX) + borderWidth/2, (closeRightY - smallestY) + borderWidth/2);
+    border.endShape();
 
   }
 
@@ -294,6 +317,7 @@ public class TrackPiece extends PApplet {
     }
     gameManager.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
     gameManager.shape(road, smallestX, smallestY);
+    gameManager.shape(border, smallestX, smallestY);
   }
 
   /** Prints the shape array to visualize. */
@@ -331,4 +355,33 @@ public class TrackPiece extends PApplet {
       System.out.println();
     }
   }
+
+  public boolean isColliding(float x, float y, float radius) {
+    // Check if the player's car is outside the bounds of the track
+    if (x - radius < smallestX || x + radius > largestX || y - radius < smallestY || y + radius > largestY) {
+      return true;
+    }
+
+    // Check if the player's car is inside the border of the track
+    int px = (int) (x - smallestX);
+    int py = (int) (y - smallestY);
+    int pr = (int) radius;
+    for (int i = px - pr; i <= px + pr; i++) {
+      for (int j = py - pr; j <= py + pr; j++) {
+        if (i < 0 || i >= arrayWidth || j < 0 || j >= arrayHeight) {
+          continue;
+        }
+        if (shapePixels[i][j] == false) {
+          float dx = i + smallestX - x;
+          float dy = j + smallestY - y;
+          if (dx * dx + dy * dy < radius * radius) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
 }

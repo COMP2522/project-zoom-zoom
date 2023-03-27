@@ -1,5 +1,6 @@
 package project;
 
+import processing.core.PConstants;
 import processing.core.PVector;
 
 import java.awt.*;
@@ -208,7 +209,7 @@ public class Player extends Sprite {
   }
 
   @Override
-  public void update(){
+  public void update() {
     drag();
     grip = TIREGRIP + PartAero.getDownForce() * speed;
     revs = speed * gearRatio;
