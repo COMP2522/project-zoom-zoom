@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class SinglePlayer extends PApplet{
   public final GameManager window;
   private static SinglePlayer instance;
-  AIPlayer aiPlayer;
+  Bot bot;
   ArrayList<Sprite> sprites;
   Player player1;
   Controls playerControls;
@@ -37,11 +37,6 @@ public class SinglePlayer extends PApplet{
   public void init1Player() {
     stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Sprite>();
-    // Create a list of AiNodes
-    ArrayList<AiNode> aiNodes = new ArrayList<>();
-    aiNodes.add(new AiNode(100, 100));
-    aiNodes.add(new AiNode(200, 200));
-    aiNodes.add(new AiNode(300, 300));
 
     player1 = new Player(
         new PVector(window.width / 2, window.height / 2),
@@ -53,16 +48,25 @@ public class SinglePlayer extends PApplet{
     playerControls = new Controls(player1, player1Keys);
     sprites.add(player1);
 
+    ArrayList<PVector> waypoints = new ArrayList<>();
+    waypoints.add(new PVector(window.width / 2, window.height / 2));
+    waypoints.add(new PVector(50, 1));
+    waypoints.add(new PVector(60, 1));
+    waypoints.add(new PVector(70, 10));
+    waypoints.add(new PVector(80, 1));
+    waypoints.add(new PVector(90, 1));
+
+
     // Add the AI player
-    aiPlayer = new AIPlayer(
+    bot = new Bot(
       new PVector(window.width / 2, window.height / 2),
       new PVector(50, 1),
       (minSize + 10),
       0.1F,
       new Color(255, 0, 0),
       window,
-      aiNodes);
-    sprites.add(aiPlayer);
+      waypoints);
+    sprites.add(bot);
     dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
   }
 
@@ -82,6 +86,11 @@ public class SinglePlayer extends PApplet{
     for (Sprite sprite : sprites) {
       sprite.update();
       sprite.draw();
+      if (sprite instanceof Bot) {
+        bot = (Bot) sprite;
+        bot.update();
+        bot.draw();
+      }
       dash.draw();
     }
   }
