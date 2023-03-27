@@ -6,8 +6,11 @@ import processing.core.PVector;
 
 import java.awt.*;
 
-/** Bezier curves for all tracks in our game. */
-public class TrackPiece extends PApplet {
+/** Bezier curves for all tracks in our game.
+ *
+ * @author MaxwellV
+ */
+public class TrackPiece extends PApplet implements Drawable {
   /** Booleans that toggle System outs. */
   boolean fillPrint = false;
   boolean linePrint = false;
@@ -17,6 +20,7 @@ public class TrackPiece extends PApplet {
 
   /** Color of the road. */
   private Color roadColor = new Color(76, 76, 76);
+
 
   /** Stores the largest and smallest of each coordinate. */
   private int smallestX;
@@ -115,6 +119,7 @@ public class TrackPiece extends PApplet {
     road = gameManager.createShape();
     road.beginShape();
     road.fill(roadColor.getRed(), roadColor.getGreen(), roadColor.getBlue());
+    road.stroke(roadColor.getRed(), roadColor.getGreen(), roadColor.getBlue());
     road.vertex((closeLeftX - smallestX), (closeLeftY - smallestY));
     road.vertex((farLeftX - smallestX), (farLeftY - smallestY));
     road.vertex((farRightX - smallestX), (farRightY - smallestY));

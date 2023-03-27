@@ -21,14 +21,17 @@ public class Dashboard implements Drawable {
     public void draw() {
         window.textSize(40);
         Thread speedometer = new Thread(() -> {
-            window.text(String.format("%d km/h", (int)(player.getSpeed() * 3)), (float) (window.displayWidth - 200), (float) (window.displayWidth / 30) + 60);
+            window.fill(255,255,255);
+            window.text(String.format("%d km/h", (int)player.getSpeed() * 5), (float) (window.displayWidth - 200), (float) (window.displayWidth / 30) + 60);
         });
 
         Thread revometer = new Thread(() -> {
+            window.fill(255,255,255);
             window.text(String.format("%d RPM", (int)player.getRevs()), (float) (window.displayWidth - 200), (float) (window.displayWidth / 30) + 100);
         });
 
         Thread gearshow = new Thread(() -> {
+            window.fill(255,255,255);
             window.text(String.format("Gear %d", player.getCurrGear()), (float) (window.displayWidth - 200), (float) (window.displayWidth / 30) + 140);
         });
 

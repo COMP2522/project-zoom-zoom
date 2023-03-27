@@ -1,18 +1,24 @@
 package project;
 
+import processing.core.PImage;
 import processing.core.PVector;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-/** Manages the track segments. */
-public class TrackManager {
+/** Manages the track segments.
+ *
+ * @author MaxwellV
+ */
+public class TrackManager implements Drawable {
 
   /** Enables testing mode */
   final static boolean isOnTesterMode = false;
 
   /** Active window. */
   private GameManager window;
+
+  private PImage grassImage;
 
   /** Color of the grass. */
   private Color grassColor = new Color(0, 132, 0);
@@ -38,6 +44,8 @@ public class TrackManager {
     tracks.add(new TrackPiece(180, 680, 40, 540, 140, 540, 180, 580, window)); // Bottom -> Left
     tracks.add(new TrackPiece(40, 540, 40, 180, 140, 180, 140, 540, window)); // Left
     tracks.add(new TrackPiece(40, 180, 180, 40, 180, 140, 140, 180, window)); // Left -> Top
+
+    grassImage = window.loadImage("Game/images/trackGrass4.png");
   }
 
   public PVector getStartCords(int numberOfPlayers, int playerNumber) {
@@ -46,8 +54,8 @@ public class TrackManager {
 
   /** Draws to screen. */
   public void draw() {
-    window.background(grassColor.getRGB(), grassColor.getGreen(),
-            grassColor.getBlue());
+//    window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
+    window.image(grassImage, 0, 0, window.displayWidth, window.displayHeight);
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
     }
