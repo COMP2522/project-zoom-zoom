@@ -1,6 +1,7 @@
 package project;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 import java.awt.*;
@@ -39,7 +40,7 @@ public class SinglePlayer extends PApplet{
     sprites = new ArrayList<Sprite>();
 
     player1 = new Player(
-        new PVector(window.width / 2, window.height / 2),
+        window.getStartingPosition(1, 1),
         new PVector(50, 1),
         (minSize + 10),
         0.1F,
@@ -71,7 +72,6 @@ public class SinglePlayer extends PApplet{
   }
 
   public void draw() {
-    window.background(64, 64, 64);
     if (timerCheck && !stopwatch.getShowTimer()) {
       stopwatch.restartTimer();
       timerCheck = false;

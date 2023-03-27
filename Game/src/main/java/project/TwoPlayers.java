@@ -36,7 +36,7 @@ public class TwoPlayers extends PApplet {
     sprites = new ArrayList<Sprite>();
 
     player1 = new Player(
-        new PVector(window.width / 2, window.height / 2),
+        window.getStartingPosition(2, 1),
         new PVector(50, 1),
         (minSize + 10),
         0.01F,
@@ -44,7 +44,7 @@ public class TwoPlayers extends PApplet {
         window);
 
     player2 = new Player(
-        new PVector(window.width / 2, window.height / 2),
+        window.getStartingPosition(2, 2),
         new PVector(500, 1),
         (minSize + 10),
         0.01F,
@@ -57,7 +57,6 @@ public class TwoPlayers extends PApplet {
   }
 
   public void draw() {
-    window.background(255,255,0);
     if (timerCheck && !stopwatch.getShowTimer()) {
       stopwatch.restartTimer();
       timerCheck = false;

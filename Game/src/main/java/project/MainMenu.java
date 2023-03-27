@@ -104,7 +104,7 @@ public class MainMenu implements Drawable {
     if (onePlayer.isClicked()) {
       // Change menu to one player game
       gameType = 1;
-      window.menu = 4;
+      window.menu = 5;
     }
     window.image(onePlayerImage, onePlayer.getPosition().x + 5, onePlayer.getPosition().y + 10);
     // Draw 2-Player button and image
@@ -113,7 +113,7 @@ public class MainMenu implements Drawable {
     if (twoPlayer.isClicked()) {
       // Change menu to two player game
       gameType = 2;
-      window.menu = 4;
+      window.menu = 5;
     }
     window.image(twoPlayerImage, twoPlayer.getPosition().x + 5, twoPlayer.getPosition().y + 10);
     // Draw controls button and image

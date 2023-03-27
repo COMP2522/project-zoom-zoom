@@ -2,6 +2,7 @@ package project;
 
 import processing.core.PApplet;
 import processing.core.PShape;
+import processing.core.PVector;
 
 import java.awt.*;
 
@@ -10,8 +11,9 @@ public class TrackPiece extends PApplet {
   /** Booleans that toggle System outs. */
   boolean fillPrint = false;
   boolean linePrint = false;
+  boolean printStartLocation = false;
   boolean printHits = false;
-  boolean printArray = TrackManager.isOnTesterMode;
+  boolean printArray = false;
 
   /** Color of the road. */
   private Color roadColor = new Color(76, 76, 76);
@@ -22,11 +24,14 @@ public class TrackPiece extends PApplet {
   private int smallestY;
   private int largestY;
 
+  PVector cordStartLeft;
+  PVector cordStartRight;
+
   /** This segment's shape object. */
   private PShape road;
 
-  /** The window. */
-  private GameManager window;
+  /** The gameManager. */
+  private GameManager gameManager;
 
   /** Boolean array that mimics the shape. */
   private boolean[][] shapePixels;
@@ -46,12 +51,20 @@ public class TrackPiece extends PApplet {
    * @param farRightY Y cord for corner of far right side
    * @param closeRightX X cord for corner of close right side
    * @param closeRightY Y cord for corner of close right side
-   * @param window Window to display
+   * @param gameManager gameManager, link to the display
    */
   public TrackPiece(int closeLeftX, int closeLeftY, int farLeftX, int farLeftY,
                     int farRightX, int farRightY, int closeRightX, int closeRightY,
-                    GameManager window) {
-    this.window = window;
+                    GameManager gameManager) {
+    this.gameManager = gameManager;
+
+    cordStartLeft = new PVector(closeLeftX, closeLeftY);
+    cordStartRight = new PVector(closeRightX, closeRightY);
+
+    if (printStartLocation) {
+      System.out.print("Close left: " + (int) cordStartLeft.x + ", " + (int) cordStartLeft.y);
+      System.out.println("  \t\tClose right: " + (int) cordStartRight.x + ", " + (int) cordStartRight.y);
+    }
 
     // Find smallest X
     smallestX = Math.min(closeLeftX, farLeftX);
@@ -90,7 +103,7 @@ public class TrackPiece extends PApplet {
     fillArray();
 
     // Setup drawable shape object.
-    road = window.createShape();
+    road = gameManager.createShape();
     road.beginShape();
     road.fill(roadColor.getRed(), roadColor.getGreen(), roadColor.getBlue());
     road.vertex((closeLeftX - smallestX), (closeLeftY - smallestY));
@@ -99,6 +112,26 @@ public class TrackPiece extends PApplet {
     road.vertex((closeRightX - smallestX), (closeRightY - smallestY));
     road.endShape();
 
+  }
+
+  /** Get the starting location
+   *
+   * @param numberOfPlayers Numbers of players
+   * @param playerNumber Either 1 or 2
+   * @return Starting position of the relevant player
+   */
+  public PVector getStartCord(int numberOfPlayers, int playerNumber) {
+    if (numberOfPlayers == 1) {
+      int averageX = (int) ((cordStartLeft.x + cordStartRight.x) / 2);
+      int averageY = (int) ((cordStartLeft.y + cordStartRight.y) / 2);
+      return new PVector(averageX * playerNumber, averageY * playerNumber);
+    } else {
+      if (playerNumber == 1) {
+        return cordStartLeft;
+      } else {
+        return cordStartRight;
+      }
+    }
   }
 
   /** Fills line created by addSlopeLines. */
@@ -255,15 +288,12 @@ public class TrackPiece extends PApplet {
    * Draw each frame.
    */
   public void draw() {
-    if (!TrackManager.isOnTesterMode) {
-      window.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
-      window.shape(road, smallestX, smallestY);
-    } else {
-      window.fill(255, 255, 255);
-      window.rect(smallestX, smallestY, segmentWidth, segmentHeight);
-      window.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
-      window.shape(road, smallestX, smallestY);
+    if (TrackManager.isOnTesterMode) {
+      gameManager.fill(255, 255, 255);
+      gameManager.rect(smallestX, smallestY, segmentWidth, segmentHeight);
     }
+    gameManager.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
+    gameManager.shape(road, smallestX, smallestY);
   }
 
   /** Prints the shape array to visualize. */

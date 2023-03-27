@@ -38,18 +38,18 @@ public class Dashboard implements Drawable {
         });
 
         speedometer.start();
-        revometer.start();
-        gearshow.start();
         try {
             speedometer.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        revometer.start();
         try {
             revometer.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        gearshow.start();
         try {
             gearshow.join();
         } catch (InterruptedException e) {
