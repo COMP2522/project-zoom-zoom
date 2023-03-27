@@ -9,7 +9,7 @@ import processing.core.PVector;
  *
  * @author James Langille
  */
-public class Button {
+public class Button implements Drawable {
   private PVector position;
   private float width;
   private float height;
@@ -42,6 +42,7 @@ public class Button {
   /**
    * Draw the buttons onto the screen.
    */
+  @Override
   public void draw() {
     // Create and fill in colour for button shape
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
