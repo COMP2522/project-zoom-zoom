@@ -12,15 +12,7 @@ import processing.core.PVector;
  */
 public class CarModMenu implements Drawable {
   // Images
-  private PImage bgImage;
-  private PImage menuTitleImage;
-  private PImage startRaceImage;
-  private PImage mainMenuImage;
-  private PImage[] engineImages = new PImage[4];
-  private PImage[] chassisImages = new PImage[4];
-  private PImage[] aerodynamicImages = new PImage[4];
-  private PImage background;
-  private PImage[] partTitleImages = new PImage[4];
+  private CarModMenuImages carModMenuImages;
   // Buttons
   private Button backToMainMenu;
   private Button startRace;
@@ -28,16 +20,10 @@ public class CarModMenu implements Drawable {
   private Button[] chassis = new Button[4];
   private Button[] aerodynamics = new Button[4];
   private Button[] gears = new Button[4];
-  // Image file names
-  private String[] engineImageNames;
-  private String[] chassisImageNames;
-  private String[] aeroImageNames;
-  private String[] titleImageNames;
   // Other data
   private final GameManager window;
   private static CarModMenu instance;
   private MainMenu mainMenu;
-  private Stopwatch stopwatch;
   // Buffer used to adjust x or y position of button or image
   private int buffer;
   // Player objects
@@ -54,6 +40,7 @@ public class CarModMenu implements Drawable {
     player1 = p1;
     player2 = p2;
     mainMenu = MainMenu.getInstance(window);
+    carModMenuImages = CarModMenuImages.getInstance(window);
   }
 
   /**
@@ -102,103 +89,31 @@ public class CarModMenu implements Drawable {
     // Instantiate the gears buttons
     for (int i = 0; i < gears.length; i++) {
       gears[i] = new Button(new PVector((window.displayWidth / 8) + 1100,
-          (window.displayHeight / 5) + buffer), 200, 100,
+          (window.displayHeight / 5) + buffer), 200, 50,
           "Gear " + (i + 1), new Color(255, 0, 0), window);
       buffer += 125;
     }
 
-    background = window.loadImage("Game/images/BGImage.png");
-    // Set up images for engine buttons
-    engineImages[0] = window.loadImage("Game/images/engine1.png");
-    engineImages[1] = window.loadImage("Game/images/engine2.png");
-    engineImages[2] = window.loadImage("Game/images/engine3.png");
-    engineImages[3] = window.loadImage("Game/images/engine4.png");
-    // Set up images for chassis buttons
-    chassisImages[0] = window.loadImage("Game/images/chassis1.png");
-    chassisImages[1] = window.loadImage("Game/images/chassis2.png");
-    chassisImages[2] = window.loadImage("Game/images/chassis3.png");
-    chassisImages[3] = window.loadImage("Game/images/chassis4.png");
-    // Set up images for aero buttons
-    aerodynamicImages[0] = window.loadImage("Game/images/aero1.png");
-    aerodynamicImages[1] = window.loadImage("Game/images/aero2.png");
-    aerodynamicImages[2] = window.loadImage("Game/images/aero3.png");
-    aerodynamicImages[3] = window.loadImage("Game/images/aero4.png");
     // Instantiate other buttons
     backToMainMenu = new Button(new PVector((window.displayWidth / 2) - 100, 750), 200, 50,
         "", new Color(0, 0, 150), window);
     startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
         "", new Color(0, 150, 0), window);
-    // Get image file names
-    FileReader.readFiles("Game/images/");
-    // Instantiate images for engine buttons
-    engineImageNames = FileReader.engineImages();
-    for (int i = 0; i < engineImages.length; i++) {
-      engineImages[i] = window.loadImage("Game/images/" + engineImageNames[i]);
-    }
-    // Instantiate images for chassis buttons
-    chassisImageNames = FileReader.chassisImages();
-    for (int i = 0; i < chassisImages.length; i++) {
-      chassisImages[i] = window.loadImage("Game/images/" + chassisImageNames[i]);
-    }
-    // Instantiate images for aero buttons
-    aeroImageNames = FileReader.aerodynamicsImages();
-    for (int i = 0; i < aerodynamicImages.length; i++) {
-      aerodynamicImages[i] = window.loadImage("Game/images/" + aeroImageNames[i]);
-    }
-    /* Instantiate a slightly different background image
-     if one player or two player game was selected. */
-    if (mainMenu.gameType == 1) {
-      bgImage = window.loadImage("Game/images/BGImage2.png");
-    } else if (mainMenu.gameType == 2) {
-      bgImage = window.loadImage("Game/images/BGImage.png");
-    }
-    // Instantiate part title images
-    titleImageNames = FileReader.carModTitles();
-    for (int i = 0; i < partTitleImages.length; i++) {
-      partTitleImages[i] = window.loadImage("Game/images/" + titleImageNames[i]);
-    }
-    // Instantiate other images
-    menuTitleImage = window.loadImage("Game/images/CarModTitle.png");
-    startRaceImage = window.loadImage("Game/images/StartRace.png");
-    mainMenuImage = window.loadImage("Game/images/MainMenu.png");
+    carModMenuImages.setup();
   }
 
   @Override
   public void draw() {
     // stopwatch = Stopwatch.getInstance(window);
-    window.background(64, 64, 64);
-    window.fill(0);
-    window.image(background, 0, 0, window.displayWidth, window.displayHeight);
-    window.text("Car Modification", window.displayWidth / 2 + 10, window.displayHeight / 10);
-    // Create text for each car part
     // Draw background image
+    carModMenuImages.drawBackground();
     window.textSize(30);
-    window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
-    buffer = -100;
-    for (int i = 0; i < partTitleImages.length; i ++) {
-      window.image(partTitleImages[i], (window.displayWidth / 8) + buffer, window.displayHeight / 5);
-      if (i == 1) {
-        // update aero x position
-        buffer = 1125;
-      } else if (i == 2) {
-        // update gear x position
-        buffer = 650;
-      } else {
-        buffer += 400;
-      }
-    }
 
     // Draw buttons for the engine
     for (Button engine : engines) {
       engine.draw();
       engine.update();
       this.setPlayerEngine(engine);
-    }
-    buffer = 50;
-    // Draw images for each engine
-    for (PImage engine : engineImages) {
-      window.image(engine, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + buffer);
-      buffer += 125;
     }
 
     // Draw buttons for the chassis
@@ -207,24 +122,12 @@ public class CarModMenu implements Drawable {
       chassi.update();
       this.setPlayerChassis(chassi);
     }
-    buffer = 50;
-    // Draw images for each chassis
-    for (PImage chassis : chassisImages) {
-      window.image(chassis, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + buffer);
-      buffer += 125;
-    }
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
       aero.draw();
       aero.update();
       this.setPlayerAerodynamics(aero);
-    }
-    buffer = 50;
-    // Draw images for each aerodynamics
-    for (PImage aero : aerodynamicImages) {
-      window.image(aero, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + buffer);
-      buffer += 125;
     }
 
     // Draw buttons for the tires
@@ -259,10 +162,8 @@ public class CarModMenu implements Drawable {
     if (backToMainMenu.isClicked()) {
       window.menu = 0;
     }
-    // Draw text images
-    window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
-    window.image(startRaceImage, window.displayWidth - 220, 760);
-    window.image(mainMenuImage, (window.displayWidth / 2) - 90, 760);
+    // Draw all images for this class
+    carModMenuImages.draw();
   }
 
 
@@ -277,49 +178,49 @@ public class CarModMenu implements Drawable {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 1
-        System.out.println("test");
+        System.out.println("p1 e1");
         player1.getEngine().setEngine(7000, 0.6, 3000, 1000);
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 1
         player2.getEngine().setEngine(7000, 0.6, 3000, 1000);
-        System.out.println("right test");
+        System.out.println("p2 e1");
       }
     } else if (engine == engines[1]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 2
         player1.getEngine().setEngine(9000, 0.7, 5000, 2000);
-        System.out.println("test 2");
+        System.out.println("p1 e2");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 2
         player2.getEngine().setEngine(9000, 0.7, 5000, 2000);
-        System.out.println("right test 2");
+        System.out.println("p1 e2");
       }
     } else if (engine == engines[2]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 3
         player1.getEngine().setEngine(4000, 0.3, 2000, 500);
-        System.out.println("test 3");
+        System.out.println("p1 e3");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 3
         player2.getEngine().setEngine(4000, 0.3, 2000, 500);
-        System.out.println("right test 3");
+        System.out.println("p2 e3");
       }
     } else if (engine == engines[3]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 4
         player1.getEngine().setEngine(12000, 1, 4000, 2500);
-        System.out.println("test 4");
+        System.out.println("p1 e4");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 4
         player2.getEngine().setEngine(12000, 1, 4000, 2500);
-        System.out.println("right test 4");
+        System.out.println("p2 e4");
       }
     }
   }
@@ -336,48 +237,48 @@ public class CarModMenu implements Drawable {
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 1
         player1.getChassis().setChassis(2000, 1,1);
-        System.out.println("test chassis 1");
+        System.out.println("p1 c1");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 1
         player2.getChassis().setChassis(2000, 1,1);
-        System.out.println("right test chassis 1");
+        System.out.println("p2 c1");
       }
     } else if (chassi == chassis[1]) {
       // Check for left click
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 2
         player1.getChassis().setChassis(1500, 1,1);
-        System.out.println("test chassis 2");
+        System.out.println("p1 c2");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 2
         player1.getChassis().setChassis(1500, 1,1);
-        System.out.println("right test chassis 2");
+        System.out.println("p2 c2");
       }
     } else if (chassi == chassis[2]) {
       // Check for left click
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 3
         player1.getChassis().setChassis(1000, 1,1);
-        System.out.println("test chassis 3");
+        System.out.println("p1 c3");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 3
         player2.getChassis().setChassis(1000, 1,1);
-        System.out.println("right test chassis 3");
+        System.out.println("p2 c3");
       }
     } else if (chassi == chassis[3]) {
       // Check for left click
       if (buttonClick(chassi) == 1) {
         // Set player 1 chassis to chassis 4
         player1.getChassis().setChassis(500, 1,1);
-        System.out.println("test chassis 4");
+        System.out.println("p1 c4");
         // Check for right click
       } else if (buttonClick(chassi) == 2) {
         // Set player 2 chassis to chassis 4
         player1.getChassis().setChassis(500, 1,1);
-        System.out.println("right test chassis 4");
+        System.out.println("p2 c4");
       }
     }
   }
@@ -394,48 +295,48 @@ public class CarModMenu implements Drawable {
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 1
         player1.getAero().setAero(30, 15, 500);
-        System.out.println("test aero 1");
+        System.out.println("p1 a1");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 1
         player2.getAero().setAero(30, 15, 500);
-        System.out.println("right test aero 1");
+        System.out.println("p2 a1");
       }
     } else if (aero == aerodynamics[1]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 2
         player1.getAero().setAero(40, 20, 300);
-        System.out.println("test aero 2");
+        System.out.println("p1 a2");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 2
         player2.getAero().setAero(40, 20, 300);
-        System.out.println("right test aero 2");
+        System.out.println("p2 a2");
       }
     } else if (aero == aerodynamics[2]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 3
         player1.getAero().setAero(10, 5, 300);
-        System.out.println("test aero 3");
+        System.out.println("p1 a3");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 3
         player2.getAero().setAero(10, 5, 300);
-        System.out.println("right test aero 3");
+        System.out.println("p2 a3");
       }
     } else if (aero == aerodynamics[3]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 4
         player1.getAero().setAero(0, 0, 0);
-        System.out.println("test aero 4");
+        System.out.println("p1 a4");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 4
         player2.getAero().setAero(0, 0, 0);
-        System.out.println("right test aero 4");
+        System.out.println("p2 a4");
       }
     }
   }
