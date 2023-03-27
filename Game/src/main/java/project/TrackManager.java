@@ -15,7 +15,7 @@ public class TrackManager {
   private GameManager window;
 
   /** Color of the grass. */
-  private Color grassColor = new Color(0, 255, 0);
+  private Color grassColor = new Color(0, 132, 0);
 
   /** Contain all track segments. */
   private ArrayList<TrackPiece> tracks = new ArrayList<TrackPiece>();
