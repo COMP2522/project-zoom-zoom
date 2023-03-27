@@ -35,17 +35,10 @@ public class SinglePlayer extends PApplet{
   /**
    * Initializes all sprites needed for a one player game.
    */
-  public void init1Player() {
+  public void init1Player(Player p1) {
     stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Sprite>();
-
-    player1 = new Player(
-        window.getStartingPosition(1, 1),
-        new PVector(50, 1),
-        (minSize + 10),
-        0.1F,
-        new Color(0, 255, 0),
-        window);
+    player1 = p1;
     playerControls = new Controls(player1, player1Keys);
     sprites.add(player1);
 

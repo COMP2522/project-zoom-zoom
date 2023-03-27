@@ -31,25 +31,11 @@ public class TwoPlayers extends PApplet {
     return instance;
   }
 
-  public void init2Player() {
+  public void init2Player(Player p1, Player p2) {
     stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Sprite>();
-
-    player1 = new Player(
-        window.getStartingPosition(2, 1),
-        new PVector(50, 1),
-        (minSize + 10),
-        0.01F,
-        new Color(0, 255, 0),
-        window);
-
-    player2 = new Player(
-        window.getStartingPosition(2, 2),
-        new PVector(500, 1),
-        (minSize + 10),
-        0.01F,
-        new Color(0, 255, 0),
-        window);
+    player1 = p1;
+    player2 = p2;
     playerControls = new Controls(player1, player2, player1Keys, player2Keys);
 
     sprites.add(player1);

@@ -35,6 +35,12 @@ public class PartEngine {
         weight = w;
     }
 
+    public void setEngine(double p, double droff, int oprev, int w){
+        power = p;
+        dropoff = droff;
+        opRevs = oprev;
+        weight = w;
+    }
     /**
      * Sets the engine power of the car.
      * @param power The new engine power.

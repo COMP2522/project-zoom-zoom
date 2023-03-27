@@ -40,14 +40,19 @@ public class CarModMenu implements Drawable {
   private Stopwatch stopwatch;
   // Buffer used to adjust x or y position of button or image
   private int buffer;
+  // Player objects
+  Player player1;
+  Player player2;
 
   /**
    * CarModMenu, private constructor to create a singleton of the class.
    *
    * @param window current window
    */
-  private CarModMenu(GameManager window) {
+  private CarModMenu(GameManager window, Player p1, Player p2) {
     this.window = window;
+    player1 = p1;
+    player2 = p2;
     mainMenu = MainMenu.getInstance(window);
   }
 
@@ -57,9 +62,9 @@ public class CarModMenu implements Drawable {
    * @param window window class
    * @return a car mod menu object
    */
-  public static CarModMenu getInstance(GameManager window) {
+  public static CarModMenu getInstance(GameManager window, Player p1, Player p2) {
     if (instance == null) {
-      instance = new CarModMenu(window);
+      instance = new CarModMenu(window, p1, p2);
     }
     return instance;
   }
@@ -239,12 +244,12 @@ public class CarModMenu implements Drawable {
       if (mainMenu.gameType == 1) {
         // Initialize one player game
         SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
-        singlePlayer.init1Player();
+        singlePlayer.init1Player(player1);
         window.menu = 1;
       } else if (mainMenu.gameType == 2) {
         // Initialize two player game
         TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
-        twoPlayers.init2Player();
+        twoPlayers.init2Player(player1, player2);
         window.menu = 2;
       }
     }

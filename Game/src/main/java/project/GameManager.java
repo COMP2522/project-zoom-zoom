@@ -5,6 +5,7 @@ import processing.core.PVector;
 import processing.event.KeyEvent;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 /**
@@ -24,6 +25,9 @@ public class GameManager extends PApplet {
   TrackMenu trackMenu;
   public static boolean audio = true;
   private int check = 1;
+
+  Player player1;
+  Player player2;
 
   /*
    * 0. Main menu
@@ -59,6 +63,14 @@ public class GameManager extends PApplet {
   public void setup() {
     trackManager = new TrackManager(this);
     trackManager.initTrack();
+
+    player1 = new Player(
+            getStartingPosition(1, 1),
+            new PVector(50, 1),
+            (20),
+            0.1F,
+            new Color(0, 255, 0),
+            this);
   }
   boolean isEditing = false;
   String inputText = "";
@@ -157,7 +169,7 @@ public class GameManager extends PApplet {
         break;
       }
       case 4 -> { // Car modification menu
-        carModMenu = CarModMenu.getInstance(this);
+        carModMenu = CarModMenu.getInstance(this, player1, player2);
         carModMenu.setup();
         carModMenu.draw();
       }
