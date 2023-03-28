@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class CarModMenuButtons implements Drawable {
   private Button backToMainMenu;
   private Button startRace;
+  private Button saveCarBuild;
   private EngineButton[] engines = new EngineButton[4];
   private ChassisButton[] chassis = new ChassisButton[4];
   private AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
@@ -114,6 +115,8 @@ public class CarModMenuButtons implements Drawable {
    * setUpOtherButtons, sets up all other buttons needed for CarModMenu.
    */
   public void setupOtherButtons() {
+    saveCarBuild = new Button(new PVector((window.displayWidth / 8) - 100, 750), 200, 50,
+        "Save build", new Color(104, 52, 235), window);
     backToMainMenu = new Button(new PVector((window.displayWidth / 8) + 300, 750), 200, 50,
         "", new Color(0, 0, 150), window);
     startRace = new Button(new PVector((window.displayWidth / 8) + 700, 750), 200, 50,
@@ -175,6 +178,15 @@ public class CarModMenuButtons implements Drawable {
     backToMainMenu.click();
     if (backToMainMenu.isLeftClicked()) {
       window.menu = 0;
+    }
+    saveCarBuild.draw();
+    saveCarBuild.click();
+    if (saveCarBuild.isLeftClicked()) {
+      // Save player1's car parts to database
+      System.out.println("Player 1 build saved");
+    } else if (saveCarBuild.isRightClicked()) {
+      // Save player2's car parts to database
+      System.out.println("Player 2 build saved");
     }
   }
 
