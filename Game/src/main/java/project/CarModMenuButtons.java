@@ -129,34 +129,34 @@ public class CarModMenuButtons implements Drawable {
     // Draw buttons for the engine
     for (Button engine : engines) {
       engine.draw();
-      engine.update();
+      engine.click();
       setPlayerEngine(engine);
     }
 
     // Draw buttons for the chassis
     for (Button chassi : chassis) {
       chassi.draw();
-      chassi.update();
+      chassi.click();
       setPlayerChassis(chassi);
     }
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
       aero.draw();
-      aero.update();
+      aero.click();
       setPlayerAerodynamics(aero);
     }
 
     // Draw buttons for the tires
     for (Button gear : gears) {
       gear.draw();
-      gear.update();
+      gear.click();
       setPlayerGears(gear);
     }
 
     // Draw start race button
     startRace.draw();
-    startRace.update();
+    startRace.click();
     if (startRace.isClicked()) {
       if (window.gameType == 1) {
         // Initialize one player game
@@ -172,7 +172,7 @@ public class CarModMenuButtons implements Drawable {
     }
     // Draw the back to main menu button
     backToMainMenu.draw();
-    backToMainMenu.update();
+    backToMainMenu.click();
     if (backToMainMenu.isClicked()) {
       window.menu = 0;
     }

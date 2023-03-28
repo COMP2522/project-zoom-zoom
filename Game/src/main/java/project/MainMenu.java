@@ -98,7 +98,7 @@ public class MainMenu implements Drawable {
     this.showTitle();
     // Draw 1-Player button and image
     onePlayer.draw();
-    onePlayer.update();
+    onePlayer.click();
     if (onePlayer.isClicked()) {
       // Change menu to one player game
       window.gameType = 1;
@@ -107,7 +107,7 @@ public class MainMenu implements Drawable {
     window.image(onePlayerImage, onePlayer.getPosition().x + 5, onePlayer.getPosition().y + 10);
     // Draw 2-Player button and image
     twoPlayer.draw();
-    twoPlayer.update();
+    twoPlayer.click();
     if (twoPlayer.isClicked()) {
       // Change menu to two player game
       window.gameType = 2;
@@ -116,14 +116,14 @@ public class MainMenu implements Drawable {
     window.image(twoPlayerImage, twoPlayer.getPosition().x + 5, twoPlayer.getPosition().y + 10);
     // Draw controls button and image
     controls.draw();
-    controls.update();
+    controls.click();
     if (controls.isClicked()) {
       window.menu = 3;
     }
     window.image(controlsImage, controls.getPosition().x + 5, controls.getPosition().y + 10);
     // Draw quit button and image
     quit.draw();
-    quit.update();
+    quit.click();
     if (quit.isClicked()) {
       window.exit();
     }
