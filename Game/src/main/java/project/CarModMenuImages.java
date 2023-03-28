@@ -72,9 +72,9 @@ public class CarModMenuImages implements Drawable {
     }
     /* Instantiate a slightly different background image
      if one player or two player game was selected. */
-    if (mainMenu.gameType == 1) {
+    if (window.gameType == 1) {
       bgImage = window.loadImage("Game/images/BGImage2.png");
-    } else if (mainMenu.gameType == 2) {
+    } else if (window.gameType == 2) {
       bgImage = window.loadImage("Game/images/BGImage.png");
     }
     // Instantiate part title images

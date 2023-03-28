@@ -160,12 +160,12 @@ public class CarModMenuButtons implements Drawable {
     startRace.draw();
     startRace.update();
     if (startRace.isClicked()) {
-      if (mainMenu.gameType == 1) {
+      if (window.gameType == 1) {
         // Initialize one player game
         SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
         singlePlayer.init1Player(GameManager.player1);
         window.menu = 1;
-      } else if (mainMenu.gameType == 2) {
+      } else if (window.gameType == 2) {
         // Initialize two player game
         TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
         twoPlayers.init2Player(GameManager.player1, GameManager.player2);
@@ -348,7 +348,7 @@ public class CarModMenuButtons implements Drawable {
       /* Checks if right mouse button was clicked and two player button
          in main menu was clicked. */
     } else if (part.isClicked() && window.mouseButton == PApplet.RIGHT
-        && mainMenu.gameType == 2) {
+        && window.gameType == 2) {
       return 2;
     }
     return 0;

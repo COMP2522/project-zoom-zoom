@@ -37,6 +37,8 @@ public class GameManager extends PApplet {
    * 5. Track Menu
    */
   int menu = 0;
+  // 1 = 1-Player, 2 = 2-Player
+  int gameType = 0;
   private static GameManager instance;
 
   private boolean gameRunning;

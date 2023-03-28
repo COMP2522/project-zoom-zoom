@@ -28,8 +28,6 @@ public class MainMenu implements Drawable {
   private static MainMenu instance;
   private boolean showTitle = true;
   private static final int clock = 5;
-  // 1 = 1-Player, 2 = 2-Player
-  int gameType = 0;
 
   /**
    * Main menu, private constructor to create a singleton of the class.
@@ -103,7 +101,7 @@ public class MainMenu implements Drawable {
     onePlayer.update();
     if (onePlayer.isClicked()) {
       // Change menu to one player game
-      gameType = 1;
+      window.gameType = 1;
       window.menu = 5;
     }
     window.image(onePlayerImage, onePlayer.getPosition().x + 5, onePlayer.getPosition().y + 10);
@@ -112,7 +110,7 @@ public class MainMenu implements Drawable {
     twoPlayer.update();
     if (twoPlayer.isClicked()) {
       // Change menu to two player game
-      gameType = 2;
+      window.gameType = 2;
       window.menu = 5;
     }
     window.image(twoPlayerImage, twoPlayer.getPosition().x + 5, twoPlayer.getPosition().y + 10);
