@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * CarModMenuButtons, handles all buttons needed for CarModMenu.
@@ -78,15 +79,15 @@ public class CarModMenuButtons implements Drawable {
     // Instantiate the gears buttons
     for (int i = 0; i < gears.length; i++) {
       gears[i] = new Button(new PVector((window.displayWidth / 8) + 1100,
-          (window.displayHeight / 5) + buffer), 200, 50,
+          (window.displayHeight / 5) + buffer), 200, 100,
           "Gear " + (i + 1), new Color(255, 0, 0), window);
       buffer += 125;
     }
 
     // Instantiate other buttons
-    backToMainMenu = new Button(new PVector((window.displayWidth / 2) - 100, 750), 200, 50,
+    backToMainMenu = new Button(new PVector((window.displayWidth / 8) + 300, 750), 200, 50,
         "", new Color(0, 0, 150), window);
-    startRace = new Button(new PVector(window.displayWidth - 225, 750), 200, 50,
+    startRace = new Button(new PVector((window.displayWidth / 8) + 700, 750), 200, 50,
         "", new Color(0, 150, 0), window);
   }
 
@@ -100,27 +101,28 @@ public class CarModMenuButtons implements Drawable {
     for (Button engine : engines) {
       engine.draw();
       engine.update();
-      this.setPlayerEngine(engine);
+      setPlayerEngine(engine);
     }
 
     // Draw buttons for the chassis
     for (Button chassi : chassis) {
       chassi.draw();
       chassi.update();
-      this.setPlayerChassis(chassi);
+      setPlayerChassis(chassi);
     }
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
       aero.draw();
       aero.update();
-      this.setPlayerAerodynamics(aero);
+      setPlayerAerodynamics(aero);
     }
 
     // Draw buttons for the tires
     for (Button gear : gears) {
       gear.draw();
       gear.update();
+      setPlayerGears(gear);
     }
 
     // Draw start race button
@@ -211,56 +213,18 @@ public class CarModMenuButtons implements Drawable {
    * @param chassi button
    */
   private void setPlayerChassis(Button chassi) {
-    if (chassi == chassis[0]) {
-      // Check for left click
-      if (buttonClick(chassi) == 1) {
-        // Set player 1 chassis to chassis 1
-        CarModMenu.player1.getChassis().setChassis(2000, 1,1);
-        System.out.println("p1 c1");
-        // Check for right click
-      } else if (buttonClick(chassi) == 2) {
-        // Set player 2 chassis to chassis 1
-        CarModMenu.player2.getChassis().setChassis(2000, 1,1);
-        System.out.println("p2 c1");
-      }
-    } else if (chassi == chassis[1]) {
-      // Check for left click
-      if (buttonClick(chassi) == 1) {
-        // Set player 1 chassis to chassis 2
-        CarModMenu.player1.getChassis().setChassis(1500, 1,1);
-        System.out.println("p1 c2");
-        // Check for right click
-      } else if (buttonClick(chassi) == 2) {
-        // Set player 2 chassis to chassis 2
-        CarModMenu.player2.getChassis().setChassis(1500, 1,1);
-        System.out.println("p2 c2");
-      }
-    } else if (chassi == chassis[2]) {
-      // Check for left click
-      if (buttonClick(chassi) == 1) {
-        // Set player 1 chassis to chassis 3
-        CarModMenu.player1.getChassis().setChassis(1000, 1,1);
-        System.out.println("p1 c3");
-        // Check for right click
-      } else if (buttonClick(chassi) == 2) {
-        // Set player 2 chassis to chassis 3
-        CarModMenu.player2.getChassis().setChassis(1000, 1,1);
-        System.out.println("p2 c3");
-      }
-    } else if (chassi == chassis[3]) {
-      // Check for left click
-      if (buttonClick(chassi) == 1) {
-        // Set player 1 chassis to chassis 4
-        CarModMenu.player1.getChassis().setChassis(500, 1,1);
-        System.out.println("p1 c4");
-        // Check for right click
-      } else if (buttonClick(chassi) == 2) {
-        // Set player 2 chassis to chassis 4
-        CarModMenu.player2.getChassis().setChassis(500, 1,1);
-        System.out.println("p2 c4");
-      }
+    int chassisIndex = Arrays.asList(chassis).indexOf(chassi);
+    int clickType = buttonClick(chassi);
+
+    if (clickType == 1) {
+      CarModMenu.player1.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
+      System.out.println("p1 c" + (chassisIndex + 1));
+    } else if (clickType == 2) {
+      CarModMenu.player2.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
+      System.out.println("p2 c" + (chassisIndex + 1));
     }
   }
+
 
   /**
    * sets the player's aerodynamics part depending on which
@@ -319,6 +283,26 @@ public class CarModMenuButtons implements Drawable {
       }
     }
   }
+
+  /**
+   * setPlayerGears, sets the players gears based on the text box
+   * and which button was clicked.
+   * @param gear button
+   */
+  public void setPlayerGears(Button gear) {
+    int gearsIndex = Arrays.asList(gears).indexOf(gear);
+    int clickType = buttonClick(gear);
+
+    if (clickType == 1) {
+      // Set player1 gear1
+      System.out.println("p1 g" + (gearsIndex + 1) + ": " + window.inputVal);
+    } else if (clickType == 2) {
+      // Set player2 gear1
+      System.out.println("p2 g" + (gearsIndex + 1) + ": " + window.inputVal);
+    }
+  }
+
+
 
   /**
    * mouseClick, helper method that checks if a button was left or right clicked.
