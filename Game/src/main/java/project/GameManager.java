@@ -25,8 +25,8 @@ public class GameManager extends PApplet {
   public static boolean audio = true;
   private int check = 1;
 
-  Player player1;
-  Player player2;
+  static Player player1;
+  static Player player2;
 
   /*
    * 0. Main menu
@@ -68,6 +68,13 @@ public class GameManager extends PApplet {
             0.1F,
             new Color(0, 255, 0),
             this);
+    player2 = new Player(
+        getStartingPosition(2, 2),
+        new PVector(50, 1),
+        (20),
+        0.1F,
+        new Color(0, 255, 247),
+        this);
   }
   boolean isEditing = false;
   String inputText = "";
