@@ -18,7 +18,7 @@ public class TrackManager implements Drawable {
   /** Active window. */
   private GameManager window;
 
-  private PImage grassImage;
+  //private PImage grassImage;
 
   /** Color of the grass. */
   private Color grassColor = new Color(0, 132, 0);
@@ -45,7 +45,7 @@ public class TrackManager implements Drawable {
     tracks.add(new TrackPiece(40, 540, 40, 180, 140, 180, 140, 540, window)); // Left
     tracks.add(new TrackPiece(40, 180, 180, 40, 180, 140, 140, 180, window)); // Left -> Top
 
-    grassImage = window.loadImage("Game/images/trackGrass4.png");
+    //grassImage = window.loadImage("Game/images/trackGrass4.png");
   }
 
   public PVector getStartCords(int numberOfPlayers, int playerNumber) {
@@ -55,7 +55,7 @@ public class TrackManager implements Drawable {
   /** Draws to screen. */
   public void draw() {
 //    window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
-    window.image(grassImage, 0, 0, window.displayWidth, window.displayHeight);
+    //window.image(grassImage, 0, 0, window.displayWidth, window.displayHeight);
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
     }
