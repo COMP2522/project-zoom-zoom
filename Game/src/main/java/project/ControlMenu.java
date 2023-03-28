@@ -176,37 +176,37 @@ public class ControlMenu {
 //    Twop1Right.update();
 //    Twop1Right.draw();
 //    textBox.draw();
-    if (soundoff.isClicked()) {
+    if (soundoff.isLeftClicked()) {
       BGM.stopBGM(false);
       check = true;
       GameManager.audio = true;
     }
-    if (soundon.isClicked() && check && GameManager.audio) {
+    if (soundon.isLeftClicked() && check && GameManager.audio) {
       BGM.getBGM(true);
       check = false;
     }
-    if (p1Go.isClicked()) {
+    if (p1Go.isLeftClicked()) {
       Controls.setUp(Controls.player1, window.inputChar);
     }
-    if (p1Stop.isClicked()) {
+    if (p1Stop.isLeftClicked()) {
       Controls.setDown(Controls.player1, window.inputChar);
     }
-    if (p1Left.isClicked()) {
+    if (p1Left.isLeftClicked()) {
       Controls.setLeft(Controls.player1, window.inputChar);
     }
-    if (p1Right.isClicked()) {
+    if (p1Right.isLeftClicked()) {
       Controls.setRight(Controls.player1, window.inputChar);
     }
-    if (Twop2Go.isClicked()) {
+    if (Twop2Go.isLeftClicked()) {
       Controls.setUp(Controls.player2, window.inputChar);
     }
-    if (Twop2Stop.isClicked()) {
+    if (Twop2Stop.isLeftClicked()) {
       Controls.setDown(Controls.player2, window.inputChar);
     }
-    if (Twop2Left.isClicked()) {
+    if (Twop2Left.isLeftClicked()) {
       Controls.setLeft(Controls.player2, window.inputChar);
     }
-    if (Twop2Right.isClicked()) {
+    if (Twop2Right.isLeftClicked()) {
       Controls.setRight(Controls.player2, window.inputChar);
     }
 //    if (Twop1Go.isClicked()) {

@@ -55,7 +55,7 @@ public class TrackMenu {
     track2.draw();
     track3.click();
     track3.draw();
-    if (track1.isClicked()) {
+    if (track1.isLeftClicked()) {
       window.menu = 4;
     }
   }

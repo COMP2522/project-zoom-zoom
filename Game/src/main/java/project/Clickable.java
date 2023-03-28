@@ -1,7 +1,5 @@
 package project;
 
-import processing.core.PApplet;
-
 /**
  * Clickable, interface for buttons to handle mouse click events.
  *
@@ -10,5 +8,4 @@ import processing.core.PApplet;
 public interface Clickable {
 
   void click();
-
 }

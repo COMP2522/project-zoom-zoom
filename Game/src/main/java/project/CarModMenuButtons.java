@@ -157,7 +157,7 @@ public class CarModMenuButtons implements Drawable {
     // Draw start race button
     startRace.draw();
     startRace.click();
-    if (startRace.isClicked()) {
+    if (startRace.isLeftClicked()) {
       if (window.gameType == 1) {
         // Initialize one player game
         SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
@@ -173,7 +173,7 @@ public class CarModMenuButtons implements Drawable {
     // Draw the back to main menu button
     backToMainMenu.draw();
     backToMainMenu.click();
-    if (backToMainMenu.isClicked()) {
+    if (backToMainMenu.isLeftClicked()) {
       window.menu = 0;
     }
   }
@@ -244,12 +244,11 @@ public class CarModMenuButtons implements Drawable {
    */
   private void setPlayerChassis(Button chassi) {
     int chassisIndex = Arrays.asList(chassis).indexOf(chassi);
-    int clickType = buttonClick(chassi);
 
-    if (clickType == 1) {
+    if (chassi.isLeftClicked()) {
       GameManager.player1.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
       System.out.println("p1 c" + (chassisIndex + 1));
-    } else if (clickType == 2) {
+    } else if (chassi.isRightClicked()) {
       GameManager.player2.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
       System.out.println("p2 c" + (chassisIndex + 1));
     }
@@ -321,12 +320,11 @@ public class CarModMenuButtons implements Drawable {
    */
   public void setPlayerGears(Button gear) {
     int gearsIndex = Arrays.asList(gears).indexOf(gear);
-    int clickType = buttonClick(gear);
 
-    if (clickType == 1) {
+    if (gear.isLeftClicked()) {
       // Set player1 gear1
       System.out.println("p1 g" + (gearsIndex + 1) + ": " + window.inputVal);
-    } else if (clickType == 2) {
+    } else if (gear.isRightClicked()) {
       // Set player2 gear1
       System.out.println("p2 g" + (gearsIndex + 1) + ": " + window.inputVal);
     }
@@ -341,12 +339,11 @@ public class CarModMenuButtons implements Drawable {
    * @return 1 if left click, 2 if right click, else 0
    */
   private int buttonClick(Button part) {
-    if (part.isClicked() && window.mouseButton == PApplet.LEFT) {
+    if (part.isLeftClicked()) {
       return 1;
       /* Checks if right mouse button was clicked and two player button
          in main menu was clicked. */
-    } else if (part.isClicked() && window.mouseButton == PApplet.RIGHT
-        && window.gameType == 2) {
+    } else if (part.isRightClicked()) {
       return 2;
     }
     return 0;

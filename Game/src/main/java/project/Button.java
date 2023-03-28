@@ -15,7 +15,8 @@ public class Button implements Drawable, Clickable {
   private float height;
   private Color color;
   private String title;
-  private boolean clicked = false;
+  private boolean leftClicked = false;
+  private boolean rightClicked = false;
   private GameManager window;
 
   /**
@@ -60,10 +61,10 @@ public class Button implements Drawable, Clickable {
     if (mouseWithinDimensions()) {
       // Left click can happen in any menu
       if (leftClick) {
-        clicked = true;
+        leftClicked = true;
         // Right click can only happen in 2-Player mode
       } else if (rightClick && window.gameType == 2) {
-        clicked = true;
+        rightClicked = true;
       }
     }
   }
@@ -110,7 +111,11 @@ public class Button implements Drawable, Clickable {
     this.color = color;
   }
 
-  public boolean isClicked() {
-    return clicked;
+  public boolean isLeftClicked() {
+    return leftClicked;
+  }
+
+  public boolean isRightClicked() {
+    return rightClicked;
   }
 }
