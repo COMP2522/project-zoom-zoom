@@ -27,7 +27,7 @@ public class Button implements Drawable {
    * @param height of button
    * @param title text of button
    * @param color of button
-   * @param window screen
+   * @param window of game
    */
   public Button(PVector position, float width, float height,
                 String title, Color color, GameManager window) {
