@@ -138,7 +138,7 @@ public class CarModMenuImages implements Drawable {
 
     // Draw text images
     window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
-    window.image(startRaceImage, window.displayWidth - 220, 760);
-    window.image(mainMenuImage, (window.displayWidth / 2) - 90, 760);
+    window.image(startRaceImage, (window.displayWidth / 8) + 705, 760);
+    window.image(mainMenuImage, (window.displayWidth / 8) + 305, 760);
   }
 }
