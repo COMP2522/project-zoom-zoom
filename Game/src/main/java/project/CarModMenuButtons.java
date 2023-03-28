@@ -12,16 +12,17 @@ import java.util.Arrays;
 public class CarModMenuButtons implements Drawable {
   private Button backToMainMenu;
   private Button startRace;
-  protected Button[] engines = new Button[4];
-  protected Button[] chassis = new Button[4];
-  protected Button[] aerodynamics = new Button[4];
-  protected Button[] gears = new Button[4];
+  private EngineButton[] engines = new EngineButton[4];
+  private ChassisButton[] chassis = new ChassisButton[4];
+  private AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
+  private GearButton[] gears = new GearButton[4];
   // Other data
   private MainMenu mainMenu;
   private GameManager window;
   private static CarModMenuButtons instance;
   // Buffer used to adjust x or y position of button
   private int buffer;
+  private PVector position;
 
   /**
    * CarModMenuButtons, private constructor for class using singleton design.
@@ -50,22 +51,22 @@ public class CarModMenuButtons implements Drawable {
    * setup, instantiates all buttons needed for CarModMenu class.
    */
   public void setup() {
-    setUpEngineButtons();
-    setUpChassisButtons();
-    setUpAerodynamicsButtons();
-    setUpGearButtons();
-    setUpOtherButtons();
+    setupEngineButtons();
+    setupChassisButtons();
+    setupAerodynamicsButtons();
+    setupGearButtons();
+    setupOtherButtons();
   }
 
   /**
    * setUpEngineButtons, sets up the engine buttons needed for CarModMenu.
    */
-  public void setUpEngineButtons() {
+  public void setupEngineButtons() {
     buffer = 50;
     for (int i = 0; i < engines.length; i++) {
-      engines[i] = new Button(new PVector((window.displayWidth / 8) - 100,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "", new Color(255, 0, 0), window);
+      position = new PVector((window.displayWidth / 8) - 100,
+          (window.displayHeight / 5) + buffer);
+      engines[i] = new EngineButton(position, "", window);
       buffer += 125;
     }
   }
@@ -73,12 +74,12 @@ public class CarModMenuButtons implements Drawable {
   /**
    * setUpChassisButtons, sets up the chassis buttons needed for CarModMenu.
    */
-  public void setUpChassisButtons() {
+  public void setupChassisButtons() {
     buffer = 50;
     for (int i = 0; i < chassis.length; i++) {
-      chassis[i] = new Button(new PVector((window.displayWidth / 8) + 300,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "", new Color(255, 0, 0), window);
+      position = new PVector((window.displayWidth / 8) + 300,
+          (window.displayHeight / 5) + buffer);
+      chassis[i] = new ChassisButton(position, "", window);
       buffer += 125;
     }
   }
@@ -87,12 +88,12 @@ public class CarModMenuButtons implements Drawable {
    * setUpAerodynamicsButtons, sets up all aero buttons needed
    * for CarModMenu.
    */
-  public void setUpAerodynamicsButtons() {
+  public void setupAerodynamicsButtons() {
     buffer = 50;
     for (int i = 0; i < aerodynamics.length; i++) {
-      aerodynamics[i] = new Button(new PVector((window.displayWidth / 8) + 700,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "", new Color(255, 0, 0), window);
+      position = new PVector((window.displayWidth / 8) + 700,
+          (window.displayHeight / 5) + buffer);
+      aerodynamics[i] = new AerodynamicsButton(position, "", window);
       buffer += 125;
     }
   }
@@ -100,13 +101,13 @@ public class CarModMenuButtons implements Drawable {
   /**
    * setUpGearButtons, sets up all gear buttons needed for CarModMenu.
    */
-  public void setUpGearButtons() {
+  public void setupGearButtons() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     buffer = 50;
     for (int i = 0; i < gears.length; i++) {
-      gears[i] = new Button(new PVector((window.displayWidth / 8) + 1100,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "Gear " + (i + 1), new Color(255, 0, 0), window);
+      position = new PVector((window.displayWidth / 8) + 1100,
+          (window.displayHeight / 5) + buffer);
+      gears[i] = new GearButton(position, "Gear " + (i + 1), window);
       buffer += 125;
     }
   }
@@ -114,7 +115,7 @@ public class CarModMenuButtons implements Drawable {
   /**
    * setUpOtherButtons, sets up all other buttons needed for CarModMenu.
    */
-  public void setUpOtherButtons() {
+  public void setupOtherButtons() {
     backToMainMenu = new Button(new PVector((window.displayWidth / 8) + 300, 750), 200, 50,
         "", new Color(0, 0, 150), window);
     startRace = new Button(new PVector((window.displayWidth / 8) + 700, 750), 200, 50,
