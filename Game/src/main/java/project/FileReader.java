@@ -1,6 +1,7 @@
 package project;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * ReadFiles, class used to read files from folders to increase
@@ -12,8 +13,6 @@ public class FileReader {
 
   private static File directory;
   private static File[] files;
-  private static String[] fileNames;
-
 
   /**
    * readFiles, reads the files from the folder name into
@@ -24,7 +23,6 @@ public class FileReader {
   public static void readFiles(String folderName) {
     directory = new File(folderName);
     files = directory.listFiles();
-    fileNames = new String[files.length];
   }
 
   /**
@@ -34,14 +32,11 @@ public class FileReader {
    * @return list of engine image file names
    */
   public static String[] engineImages() {
-    int i = 0;
-    for (int j = 0; j < files.length; j++) {
-      if (files[j].getName().contains("engine")) {
-        fileNames[i] = files[j].getName();
-        i++;
-      }
-    }
-    return fileNames;
+    return Arrays.stream(files)
+        .map(File::getName)
+        .filter(name ->
+            name.contains("engine"))
+        .toArray(String[]::new);
   }
 
   /**
@@ -51,14 +46,11 @@ public class FileReader {
    * @return list of chassis image file names
    */
   public static String[] chassisImages() {
-    int i = 0;
-    for (int j = 0; j < files.length; j++) {
-      if (files[j].getName().contains("chassis")) {
-        fileNames[i] = files[j].getName();
-        i++;
-      }
-    }
-    return fileNames;
+    return Arrays.stream(files)
+        .map(File::getName)
+        .filter(name ->
+            name.contains("chassis"))
+        .toArray(String[]::new);
   }
 
   /**
@@ -68,14 +60,11 @@ public class FileReader {
    * @return list of aerodynamics image file names
    */
   public static String[] aerodynamicsImages() {
-    int i = 0;
-    for (int j = 0; j < files.length; j++) {
-      if (files[j].getName().contains("aero")) {
-        fileNames[i] = files[j].getName();
-        i++;
-      }
-    }
-    return fileNames;
+    return Arrays.stream(files)
+        .map(File::getName)
+        .filter(name ->
+            name.contains("aero"))
+        .toArray(String[]::new);
   }
 
   /**
@@ -84,16 +73,10 @@ public class FileReader {
    * @return list of title image file names
    */
   public static String[] carModTitles() {
-    int i = 0;
-    for (int j = 0; j < files.length; j++) {
-      if (files[j].getName().contains("partTitle")) {
-        fileNames[i] = files[j].getName();
-        i++;
-      }
-    }
-    return fileNames;
+    return Arrays.stream(files)
+        .map(File::getName)
+        .filter(name ->
+            name.contains("partTitle"))
+        .toArray(String[]::new);
   }
-
-
-
 }

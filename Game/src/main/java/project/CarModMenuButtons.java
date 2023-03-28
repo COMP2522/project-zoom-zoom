@@ -12,16 +12,17 @@ import java.util.Arrays;
 public class CarModMenuButtons implements Drawable {
   private Button backToMainMenu;
   private Button startRace;
-  protected Button[] engines = new Button[4];
-  protected Button[] chassis = new Button[4];
-  protected Button[] aerodynamics = new Button[4];
-  protected Button[] gears = new Button[4];
+  private EngineButton[] engines = new EngineButton[4];
+  private ChassisButton[] chassis = new ChassisButton[4];
+  private AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
+  private GearButton[] gears = new GearButton[4];
   // Other data
   private MainMenu mainMenu;
   private GameManager window;
   private static CarModMenuButtons instance;
   // Buffer used to adjust x or y position of button
   private int buffer;
+  private PVector position;
 
   /**
    * CarModMenuButtons, private constructor for class using singleton design.
@@ -50,41 +51,71 @@ public class CarModMenuButtons implements Drawable {
    * setup, instantiates all buttons needed for CarModMenu class.
    */
   public void setup() {
+    setupEngineButtons();
+    setupChassisButtons();
+    setupAerodynamicsButtons();
+    setupGearButtons();
+    setupOtherButtons();
+  }
+
+  /**
+   * setUpEngineButtons, sets up the engine buttons needed for CarModMenu.
+   */
+  public void setupEngineButtons() {
+    buffer = 50;
+    for (int i = 0; i < engines.length; i++) {
+      position = new PVector((window.displayWidth / 8) - 100,
+          (window.displayHeight / 5) + buffer);
+      engines[i] = new EngineButton(position, "", window);
+      buffer += 125;
+    }
+  }
+
+  /**
+   * setUpChassisButtons, sets up the chassis buttons needed for CarModMenu.
+   */
+  public void setupChassisButtons() {
+    buffer = 50;
+    for (int i = 0; i < chassis.length; i++) {
+      position = new PVector((window.displayWidth / 8) + 300,
+          (window.displayHeight / 5) + buffer);
+      chassis[i] = new ChassisButton(position, "", window);
+      buffer += 125;
+    }
+  }
+
+  /**
+   * setUpAerodynamicsButtons, sets up all aero buttons needed
+   * for CarModMenu.
+   */
+  public void setupAerodynamicsButtons() {
+    buffer = 50;
+    for (int i = 0; i < aerodynamics.length; i++) {
+      position = new PVector((window.displayWidth / 8) + 700,
+          (window.displayHeight / 5) + buffer);
+      aerodynamics[i] = new AerodynamicsButton(position, "", window);
+      buffer += 125;
+    }
+  }
+
+  /**
+   * setUpGearButtons, sets up all gear buttons needed for CarModMenu.
+   */
+  public void setupGearButtons() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     buffer = 50;
-    // Instantiate the engine buttons
-    for (int i = 0; i < engines.length; i++) {
-      engines[i] = new Button(new PVector((window.displayWidth / 8) - 100,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "", new Color(255, 0, 0), window);
-      buffer += 125;
-    }
-    buffer = 50;
-    // Instantiate the chassis buttons
-    for (int i = 0; i < chassis.length; i++) {
-      chassis[i] = new Button(new PVector((window.displayWidth / 8) + 300,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "", new Color(255, 0, 0), window);
-      buffer += 125;
-    }
-    buffer = 50;
-    // Instantiate the aerodynamics buttons
-    for (int i = 0; i < aerodynamics.length; i++) {
-      aerodynamics[i] = new Button(new PVector((window.displayWidth / 8) + 700,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "", new Color(255, 0, 0), window);
-      buffer += 125;
-    }
-    buffer = 50;
-    // Instantiate the gears buttons
     for (int i = 0; i < gears.length; i++) {
-      gears[i] = new Button(new PVector((window.displayWidth / 8) + 1100,
-          (window.displayHeight / 5) + buffer), 200, 100,
-          "Gear " + (i + 1), new Color(255, 0, 0), window);
+      position = new PVector((window.displayWidth / 8) + 1100,
+          (window.displayHeight / 5) + buffer);
+      gears[i] = new GearButton(position, "Gear " + (i + 1), window);
       buffer += 125;
     }
+  }
 
-    // Instantiate other buttons
+  /**
+   * setUpOtherButtons, sets up all other buttons needed for CarModMenu.
+   */
+  public void setupOtherButtons() {
     backToMainMenu = new Button(new PVector((window.displayWidth / 8) + 300, 750), 200, 50,
         "", new Color(0, 0, 150), window);
     startRace = new Button(new PVector((window.displayWidth / 8) + 700, 750), 200, 50,
@@ -132,12 +163,12 @@ public class CarModMenuButtons implements Drawable {
       if (mainMenu.gameType == 1) {
         // Initialize one player game
         SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
-        singlePlayer.init1Player(CarModMenu.player1);
+        singlePlayer.init1Player(GameManager.player1);
         window.menu = 1;
       } else if (mainMenu.gameType == 2) {
         // Initialize two player game
         TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
-        twoPlayers.init2Player(CarModMenu.player1, CarModMenu.player2);
+        twoPlayers.init2Player(GameManager.player1, GameManager.player2);
         window.menu = 2;
       }
     }
@@ -148,6 +179,7 @@ public class CarModMenuButtons implements Drawable {
       window.menu = 0;
     }
   }
+
   /**
    * setPlayerEngine, sets the player's engine part depending on which
    * engine button was clicked.
@@ -160,47 +192,47 @@ public class CarModMenuButtons implements Drawable {
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 1
         System.out.println("p1 e1");
-        CarModMenu.player1.getEngine().setEngine(7000, 0.6, 3000, 1000);
+        GameManager.player1.getEngine().setEngine(7000, 0.6, 3000, 1000);
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 1
-        CarModMenu.player2.getEngine().setEngine(7000, 0.6, 3000, 1000);
+        GameManager.player2.getEngine().setEngine(7000, 0.6, 3000, 1000);
         System.out.println("p2 e1");
       }
     } else if (engine == engines[1]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 2
-        CarModMenu.player1.getEngine().setEngine(9000, 0.7, 5000, 2000);
+        GameManager.player1.getEngine().setEngine(9000, 0.7, 5000, 2000);
         System.out.println("p1 e2");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 2
-        CarModMenu.player2.getEngine().setEngine(9000, 0.7, 5000, 2000);
+        GameManager.player2.getEngine().setEngine(9000, 0.7, 5000, 2000);
         System.out.println("p1 e2");
       }
     } else if (engine == engines[2]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 3
-        CarModMenu.player1.getEngine().setEngine(4000, 0.3, 2000, 500);
+        GameManager.player1.getEngine().setEngine(4000, 0.3, 2000, 500);
         System.out.println("p1 e3");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 3
-        CarModMenu.player2.getEngine().setEngine(4000, 0.3, 2000, 500);
+        GameManager.player2.getEngine().setEngine(4000, 0.3, 2000, 500);
         System.out.println("p2 e3");
       }
     } else if (engine == engines[3]) {
       // Check for left click
       if (buttonClick(engine) == 1) {
         // Set player 1 engine to engine 4
-        CarModMenu.player1.getEngine().setEngine(12000, 1, 4000, 2500);
+        GameManager.player1.getEngine().setEngine(12000, 1, 4000, 2500);
         System.out.println("p1 e4");
         // Check for right click
       } else if (buttonClick(engine) == 2) {
         // Set player 2 engine to engine 4
-        CarModMenu.player2.getEngine().setEngine(12000, 1, 4000, 2500);
+        GameManager.player2.getEngine().setEngine(12000, 1, 4000, 2500);
         System.out.println("p2 e4");
       }
     }
@@ -217,10 +249,10 @@ public class CarModMenuButtons implements Drawable {
     int clickType = buttonClick(chassi);
 
     if (clickType == 1) {
-      CarModMenu.player1.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
+      GameManager.player1.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
       System.out.println("p1 c" + (chassisIndex + 1));
     } else if (clickType == 2) {
-      CarModMenu.player2.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
+      GameManager.player2.getChassis().setChassis(2500 - 500 * chassisIndex, 1, 1);
       System.out.println("p2 c" + (chassisIndex + 1));
     }
   }
@@ -237,48 +269,48 @@ public class CarModMenuButtons implements Drawable {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 1
-        CarModMenu.player1.getAero().setAero(30, 15, 500);
+        GameManager.player1.getAero().setAero(30, 15, 500);
         System.out.println("p1 a1");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 1
-        CarModMenu.player2.getAero().setAero(30, 15, 500);
+        GameManager.player2.getAero().setAero(30, 15, 500);
         System.out.println("p2 a1");
       }
     } else if (aero == aerodynamics[1]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 2
-        CarModMenu.player1.getAero().setAero(40, 20, 300);
+        GameManager.player1.getAero().setAero(40, 20, 300);
         System.out.println("p1 a2");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 2
-        CarModMenu.player2.getAero().setAero(40, 20, 300);
+        GameManager.player2.getAero().setAero(40, 20, 300);
         System.out.println("p2 a2");
       }
     } else if (aero == aerodynamics[2]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 3
-        CarModMenu.player1.getAero().setAero(10, 5, 300);
+        GameManager.player1.getAero().setAero(10, 5, 300);
         System.out.println("p1 a3");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 3
-        CarModMenu.player2.getAero().setAero(10, 5, 300);
+        GameManager.player2.getAero().setAero(10, 5, 300);
         System.out.println("p2 a3");
       }
     } else if (aero == aerodynamics[3]) {
       // Check for left click
       if (buttonClick(aero) == 1) {
         // Set player 1 aerodynamics to aerodynamics 4
-        CarModMenu.player1.getAero().setAero(0, 0, 0);
+        GameManager.player1.getAero().setAero(0, 0, 0);
         System.out.println("p1 a4");
         // Check for right click
       } else if (buttonClick(aero) == 2) {
         // Set player 2 aerodynamics to aerodynamics 4
-        CarModMenu.player2.getAero().setAero(0, 0, 0);
+        GameManager.player2.getAero().setAero(0, 0, 0);
         System.out.println("p2 a4");
       }
     }

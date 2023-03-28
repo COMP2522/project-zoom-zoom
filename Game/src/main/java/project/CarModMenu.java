@@ -17,18 +17,13 @@ public class CarModMenu implements Drawable {
   // Other data
   private GameManager window;
   private static CarModMenu instance;
-  // Player objects
-  static Player player1;
-  static Player player2;
 
   /**
    * CarModMenu, private constructor to create a singleton of the class.
    *
    * @param window current window
    */
-  private CarModMenu(GameManager window, Player p1, Player p2) {
-    player1 = p1;
-    player2 = p2;
+  private CarModMenu(GameManager window) {
     this.window = window;
     carModMenuImages = CarModMenuImages.getInstance(window);
     carModMenuButtons = CarModMenuButtons.getInstance(window);
@@ -40,9 +35,9 @@ public class CarModMenu implements Drawable {
    * @param window window class
    * @return a car mod menu object
    */
-  public static CarModMenu getInstance(GameManager window, Player p1, Player p2) {
+  public static CarModMenu getInstance(GameManager window) {
     if (instance == null) {
-      instance = new CarModMenu(window, p1, p2);
+      instance = new CarModMenu(window);
     }
     return instance;
   }
