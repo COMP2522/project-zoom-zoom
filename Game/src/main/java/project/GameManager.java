@@ -197,7 +197,7 @@ public class GameManager extends PApplet {
         break;
       }
       case 4 -> { // Car modification menu
-        carModMenu = CarModMenu.getInstance(this, player1, player2);
+        carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
       }
