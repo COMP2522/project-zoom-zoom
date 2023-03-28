@@ -1,37 +1,49 @@
 package project;
 
-import org.w3c.dom.Text;
+import processing.core.PVector;
 
-import static processing.core.PConstants.CENTER;
-
-public class TextBox {
+public class TextBox implements Drawable {
+  private PVector position;
+  private float width;
+  private float height;
+  public String text = "";
   private final GameManager window;
-  private static TextBox instance;
-  private TextBox(GameManager window) {
+  public TextBox(PVector position, float width, float height, GameManager window) {
+    this.position = position;
+    this.width = width;
+    this.height = height;
     this.window = window;
   }
 
-  public static TextBox getInstance(GameManager window) {
-    if (instance == null) {
-      instance = new TextBox(window);
-    }
-    return instance;
-  }
-
+  /**
+   * draw, draws the textbox.
+   */
+  @Override
   public void draw() {
     window.textAlign(window.LEFT, window.TOP);
     window.textSize(20);
     if (window.isEditing) {
       window.fill(200);
-      window.rect(window.displayWidth - 380, 500, 200, 40);
+      window.rect(position.x, position.y, width, height);
       window.fill(0);
-      window.text(window.inputText, window.displayWidth - 375, 505, 195, 35);
+      window.text(window.inputText, position.x, position.y, width, height);
     } else {
       window.fill(200);
-//      window.rect(20, 60, 200, 40);
-      window.rect(window.displayWidth - 380, 500, 200, 40);
+      window.rect(position.x, position.y, width, height);
       window.fill(150);
-      window.text("Click to edit", window.displayWidth - 375, 505, 195, 35);
+      window.text("Click to edit", position.x, position.y, width, height);
+    }
+  }
+
+  /**
+   * textBoxClicked, checks if the mouse clicked within the area of the text box.
+   */
+  public void textBoxClicked() {
+    if (window.mouseX >= position.x && window.mouseX <= position.x + width
+        && window.mouseY >= position.y && window.mouseY <= position.y + height) {
+      window.isEditing = true;
+    } else {
+      window.isEditing = false;
     }
   }
 }
