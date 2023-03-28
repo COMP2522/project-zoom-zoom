@@ -1,5 +1,7 @@
 package project;
 
+import processing.core.PVector;
+
 /**
  * CarModMenu, menu that allows users to change the parts to their cars.
  *
@@ -10,7 +12,10 @@ public class CarModMenu implements Drawable {
   private CarModMenuImages carModMenuImages;
   // Buttons
   private CarModMenuButtons carModMenuButtons;
+  // Text boxes
+  protected TextBox gearInput;
   // Other data
+  private GameManager window;
   private static CarModMenu instance;
   // Player objects
   static Player player1;
@@ -24,6 +29,7 @@ public class CarModMenu implements Drawable {
   private CarModMenu(GameManager window, Player p1, Player p2) {
     player1 = p1;
     player2 = p2;
+    this.window = window;
     carModMenuImages = CarModMenuImages.getInstance(window);
     carModMenuButtons = CarModMenuButtons.getInstance(window);
   }
@@ -47,6 +53,8 @@ public class CarModMenu implements Drawable {
   public void setup() {
     carModMenuButtons.setup();
     carModMenuImages.setup();
+    gearInput = new TextBox(new PVector((window.displayWidth / 8) + 1100,
+        (window.displayHeight / 5) + 500), 200, 40, window);
   }
 
   /**
@@ -56,6 +64,7 @@ public class CarModMenu implements Drawable {
   public void draw() {
     carModMenuImages.drawBackground();
     carModMenuButtons.draw();
+    gearInput.draw();
     carModMenuImages.draw();
   }
 }
