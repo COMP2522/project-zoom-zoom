@@ -17,7 +17,6 @@ public class CarModMenuButtons implements Drawable {
   private AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
   private GearButton[] gears = new GearButton[4];
   // Other data
-  private MainMenu mainMenu;
   private GameManager window;
   private static CarModMenuButtons instance;
   // Buffer used to adjust x or y position of button
@@ -31,7 +30,6 @@ public class CarModMenuButtons implements Drawable {
    */
   private CarModMenuButtons(GameManager window) {
     this.window = window;
-    this.mainMenu = MainMenu.getInstance(window);
   }
 
   /**

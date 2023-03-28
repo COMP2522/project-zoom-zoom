@@ -22,8 +22,7 @@ public class CarModMenuImages implements Drawable {
   private String[] chassisImageNames;
   private String[] aeroImageNames;
   private String[] titleImageNames;
-  // Menu/Manager objects
-  private MainMenu mainMenu;
+  // Manager objects
   private static CarModMenuImages instance;
   private GameManager window;
   // Buffer used to adjust x or y position of image
@@ -36,7 +35,6 @@ public class CarModMenuImages implements Drawable {
    */
   private CarModMenuImages(GameManager window) {
     this.window = window;
-    this.mainMenu = MainMenu.getInstance(window);
   }
 
   /**
