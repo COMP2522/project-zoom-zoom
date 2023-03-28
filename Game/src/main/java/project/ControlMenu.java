@@ -9,7 +9,7 @@ import java.awt.*;
 public class ControlMenu {
   private final GameManager window;
   private static ControlMenu instance;
-  private TextBox textBox;
+  protected TextBox textBox;
   private PImage background;
   private PImage soundOn;
   private PImage soundOff;
@@ -83,7 +83,7 @@ public class ControlMenu {
     p2left = window.loadImage("Game/images/p2Left.png");
     p2right = window.loadImage("Game/images/p2Right.png");
     setting = window.loadImage("Game/images/Setting.png");
-    textBox = TextBox.getInstance(window);
+    textBox = new TextBox(new PVector(500, 500), 200, 40, window);
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     soundoff = new Button(new PVector((float) (window.displayWidth / 20) + 100, 900), 50,
         50, "", new Color(0, 150, 0), window);
