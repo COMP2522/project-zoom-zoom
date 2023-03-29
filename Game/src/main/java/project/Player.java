@@ -27,6 +27,7 @@ public class Player extends Sprite {
    * The maximum power output of the car's engine.
    */
   double POWER = 7000;
+
   /**
    * The amount of power dropoff at high revs.
    */
@@ -83,8 +84,6 @@ public class Player extends Sprite {
   public void setCAMBER(int CAMBER) {
     this.CAMBER = CAMBER;
   }
-
-
 
   /**
    * The amount of braking force applied to the car.
