@@ -13,7 +13,6 @@ public class CarModMenuButtons implements Drawable {
   private Button backToMainMenu;
   private Button startRace;
   private Button saveCarBuild;
-  private EngineButton[] engines = new EngineButton[4];
   private ChassisButton[] chassis = new ChassisButton[4];
   private AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
   private GearButton[] gears = new GearButton[4];
@@ -53,24 +52,11 @@ public class CarModMenuButtons implements Drawable {
    * setup, instantiates all buttons needed for CarModMenu class.
    */
   public void setup() {
-    setupEngineButtons();
+    EngineButton.setupEngineButtons();
     setupChassisButtons();
     setupAerodynamicsButtons();
     setupGearButtons();
     setupOtherButtons();
-  }
-
-  /**
-   * setUpEngineButtons, sets up the engine buttons needed for CarModMenu.
-   */
-  public void setupEngineButtons() {
-    buffer = 50;
-    for (int i = 0; i < engines.length; i++) {
-      position = new PVector((window.displayWidth / 8) - 100,
-          (window.displayHeight / 5) + buffer);
-      engines[i] = new EngineButton(position, "", window);
-      buffer += 125;
-    }
   }
 
   /**
@@ -132,19 +118,7 @@ public class CarModMenuButtons implements Drawable {
   @Override
   public void draw() {
     window.textSize(30);
-    // Draw buttons for the engine
-    for (Button engine : engines) {
-      engine.draw();
-      engine.click();
-      setPlayerEngine(engine);
-    }
-
-    // Draw buttons for the chassis
-    for (Button chassi : chassis) {
-      chassi.draw();
-      chassi.click();
-      setPlayerChassis(chassi);
-    }
+    EngineButton.drawEngines();
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
@@ -190,24 +164,6 @@ public class CarModMenuButtons implements Drawable {
     } else if (saveCarBuild.isRightClicked()) {
       // Save player2's car parts to database
       System.out.println("Player 2 build saved");
-    }
-  }
-
-  /**
-   * setPlayerEngine, sets the player's engine part depending on which
-   * engine button was clicked.
-   *
-   * @param engine button
-   */
-  private void setPlayerEngine(Button engine) {
-    int engineIndex = Arrays.asList(engines).indexOf(engine);
-
-    if (engine.isLeftClicked()) {
-      player1.getEngine().setEngine(PartEngine.engineParts[engineIndex]);
-      System.out.println("p1 e" + engineIndex);
-    } else if (engine.isRightClicked()) {
-      player2.getEngine().setEngine(PartEngine.engineParts[engineIndex]);
-      System.out.println("p2 e" + engineIndex);
     }
   }
 
