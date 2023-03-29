@@ -9,14 +9,14 @@ import processing.core.PVector;
  *
  * @author James Langille
  */
-public class Button {
+public class Button implements Drawable, Clickable {
   private PVector position;
   private float width;
   private float height;
   private Color color;
   private String title;
-  private boolean pressed = false;
-  private boolean clicked = false;
+  private boolean leftClicked = false;
+  private boolean rightClicked = false;
   private GameManager window;
 
   /**
@@ -27,7 +27,7 @@ public class Button {
    * @param height of button
    * @param title text of button
    * @param color of button
-   * @param window screen
+   * @param window of game
    */
   public Button(PVector position, float width, float height,
                 String title, Color color, GameManager window) {
@@ -42,6 +42,7 @@ public class Button {
   /**
    * Draw the buttons onto the screen.
    */
+  @Override
   public void draw() {
     // Create and fill in colour for button shape
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
@@ -53,23 +54,29 @@ public class Button {
     window.text(title, position.x + (width / 2), position.y + (height / 2));
   }
 
-  /**
-   * Update the button's boolean status if they were clicked.
-   */
-  public void update() {
-    // Check if mouse left button has been pressed
-    if (window.mousePressed && (window.mouseButton == PApplet.LEFT
-        || window.mouseButton == PApplet.RIGHT) && !pressed) {
-      pressed = true;
-      // Check if mouse click is in button dimensions
-      if (window.mouseX >= position.x && window.mouseX <= position.x + width
-          && window.mouseY >= position.y && window.mouseY <= position.y + height) {
-        clicked = true;
+  @Override
+  public void click() {
+    boolean leftClick = window.mousePressed && window.mouseButton == PApplet.LEFT;
+    boolean rightClick = window.mousePressed && window.mouseButton == PApplet.RIGHT;
+    if (mouseWithinDimensions()) {
+      // Left click can happen in any menu
+      if (leftClick) {
+        leftClicked = true;
+        // Right click can only happen in 2-Player mode
+      } else if (rightClick && window.gameType == 2) {
+        rightClicked = true;
       }
-    } else {
-      clicked = false;
-      pressed = false;
     }
+  }
+
+  /**
+   * mouseWithinDimensions, checks if the mouse is in the button's dimensions.
+   *
+   * @return true if mouse is within dimensions, else false
+   */
+  public boolean mouseWithinDimensions() {
+    return window.mouseX >= position.x && window.mouseX <= position.x + width
+        && window.mouseY >= position.y && window.mouseY <= position.y + height;
   }
 
   public PVector getPosition() {
@@ -104,27 +111,11 @@ public class Button {
     this.color = color;
   }
 
-  public String getTitle() {
-    return title;
+  public boolean isLeftClicked() {
+    return leftClicked;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public boolean isPressed() {
-    return pressed;
-  }
-
-  public void setPressed(boolean pressed) {
-    this.pressed = pressed;
-  }
-
-  public boolean isClicked() {
-    return clicked;
-  }
-
-  public void setClicked(boolean clicked) {
-    this.clicked = clicked;
+  public boolean isRightClicked() {
+    return rightClicked;
   }
 }

@@ -4,7 +4,6 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
-import javax.swing.*;
 import java.awt.*;
 
 
@@ -28,8 +27,8 @@ public class GameManager extends PApplet {
   public static boolean audio = true;
   private int check = 1;
 
-  Player player1;
-  Player player2;
+  static Player player1;
+  static Player player2;
 
   /*
    * 0. Main menu
@@ -37,12 +36,11 @@ public class GameManager extends PApplet {
    * 2. 2 player game
    * 3. Control Menu
    * 4. Car Mod Menu
-   * more values will come when menus are implemented.
-   * TODO
-   *  track menu
-   * car mod and track menus should happen before game starts
+   * 5. Track Menu
    */
   int menu = 0;
+  // 1 = 1-Player, 2 = 2-Player
+  int gameType = 0;
   private static GameManager instance;
 
   private boolean gameRunning;
@@ -75,9 +73,17 @@ public class GameManager extends PApplet {
             0.1F,
             new Color(0, 255, 0),
             this);
+    player2 = new Player(
+        getStartingPosition(2, 2),
+        new PVector(50, 1),
+        (20),
+        0.1F,
+        new Color(0, 255, 247),
+        this);
   }
   boolean isEditing = false;
   String inputText = "";
+  int inputVal;
   char inputChar;
 
   /**
@@ -106,7 +112,8 @@ public class GameManager extends PApplet {
       Controls.setMovementTrue(keyCode);
       Controls.shiftGears(keyCode);
     }
-    if (isEditing) {
+    // Scuffed handling for textbox in control menu
+    if (isEditing && menu == 3) {
       if (this.key == this.BACKSPACE) {
         inputText = inputText.substring(0, this.max(0, inputText.length() - 1));
       } else if (this.key == this.ENTER) {
@@ -116,6 +123,28 @@ public class GameManager extends PApplet {
       } else if (this.textWidth(inputText + this.key) <= 195) {
         inputText += this.key;
         inputText = inputText.toUpperCase();
+      }
+      // Scuffed handling for textbox in car mod menu
+    } else if (isEditing && menu == 4) {
+      if (this.key >= '0' && this.key <= '9' || this.key == this.ENTER || this.key == this.BACKSPACE) {
+        if (this.key == this.BACKSPACE) {
+          inputText = inputText.substring(0, this.max(0, inputText.length() - 1));
+        } else if (this.key == this.ENTER) {
+          inputVal = Integer.parseInt(inputText);
+          // Lock input max to 1000 and min to 10
+          if (inputVal > 1000) {
+            inputVal = 1000;
+          }
+          if (inputVal < 10) {
+            inputVal = 10;
+          }
+          System.out.println(inputVal);
+          inputText = "";
+          isEditing = false;
+        } else if (this.textWidth(inputText + this.key) <= 195) {
+          inputText += this.key;
+          inputText = inputText.toUpperCase();
+        }
       }
     }
   }
@@ -131,11 +160,11 @@ public class GameManager extends PApplet {
   }
   @Override
   public void mousePressed() {
-    if (mouseX >= this.displayWidth - 380 && mouseX <= this.displayWidth - 180
-        && mouseY >= 500 && mouseY <= 540) {
-      isEditing = true;
-    } else {
-      isEditing = false;
+    if (menu == 3) {
+      controlMenu.textBox.textBoxClicked();
+    }
+    if (menu == 4) {
+      carModMenu.gearInput.textBoxClicked();
     }
   }
 
@@ -176,7 +205,7 @@ public class GameManager extends PApplet {
         break;
       }
       case 4 -> { // Car modification menu
-        carModMenu = CarModMenu.getInstance(this, player1, player2);
+        carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
       }

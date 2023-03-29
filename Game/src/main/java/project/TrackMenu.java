@@ -109,15 +109,14 @@ public class TrackMenu {
     if (showTitle) {
       window.image(title, (float) (window.displayWidth / 2) - 200,window.displayHeight/4);
     }
-    track1.update();
+    track1.click();
     track1.draw();
     window.image(track1Font,(float) (window.displayWidth / 2) - 500, 500);
-    track2.update();
+    track2.click();
     track2.draw();
-    track3.update();
+    track3.click();
     track3.draw();
-    // Only if track1 is clicked, move on to carmode window since other tracks are unavailable
-    if (track1.isClicked()) {
+    if (track1.isLeftClicked()) {
       window.menu = 4;
     }
   }

@@ -9,7 +9,7 @@ import java.awt.*;
 public class ControlMenu {
   private final GameManager window;
   private static ControlMenu instance;
-  private TextBox textBox;
+  protected TextBox textBox;
   private PImage background;
   private PImage soundOn;
   private PImage soundOff;
@@ -83,7 +83,7 @@ public class ControlMenu {
     p2left = window.loadImage("Game/images/p2Left.png");
     p2right = window.loadImage("Game/images/p2Right.png");
     setting = window.loadImage("Game/images/Setting.png");
-    textBox = TextBox.getInstance(window);
+    textBox = new TextBox(new PVector(500, 500), 200, 40, window);
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     soundoff = new Button(new PVector((float) (window.displayWidth / 20) + 100, 900), 50,
         50, "", new Color(0, 150, 0), window);
@@ -123,25 +123,25 @@ public class ControlMenu {
     window.image(setting, (float) window.displayWidth / 2 - 150, (float) window.displayHeight / 20);
 
 //    window.text("KEY SETTING", (float) window.displayWidth / 2 + 10, (float) window.displayHeight / 20);
-    soundoff.update();
+    soundoff.click();
     soundoff.draw();
     soundon.draw();
-    soundon.update();
-    p1Go.update();
+    soundon.click();
+    p1Go.click();
     p1Go.draw();
-    p1Stop.update();
+    p1Stop.click();
     p1Stop.draw();
-    p1Left.update();
+    p1Left.click();
     p1Left.draw();
-    p1Right.update();
+    p1Right.click();
     p1Right.draw();
-    Twop2Go.update();
+    Twop2Go.click();
     Twop2Go.draw();
-    Twop2Stop.update();
+    Twop2Stop.click();
     Twop2Stop.draw();
-    Twop2Left.update();
+    Twop2Left.click();
     Twop2Left.draw();
-    Twop2Right.update();
+    Twop2Right.click();
     Twop2Right.draw();
     textBox.draw();
     window.image(soundOn, (float) (window.displayWidth / 20), 900);
@@ -176,37 +176,37 @@ public class ControlMenu {
 //    Twop1Right.update();
 //    Twop1Right.draw();
 //    textBox.draw();
-    if (soundoff.isClicked()) {
+    if (soundoff.isLeftClicked()) {
       BGM.stopBGM(false);
       check = true;
       GameManager.audio = true;
     }
-    if (soundon.isClicked() && check && GameManager.audio) {
+    if (soundon.isLeftClicked() && check && GameManager.audio) {
       BGM.getBGM(true);
       check = false;
     }
-    if (p1Go.isClicked()) {
+    if (p1Go.isLeftClicked()) {
       Controls.setUp(Controls.player1, window.inputChar);
     }
-    if (p1Stop.isClicked()) {
+    if (p1Stop.isLeftClicked()) {
       Controls.setDown(Controls.player1, window.inputChar);
     }
-    if (p1Left.isClicked()) {
+    if (p1Left.isLeftClicked()) {
       Controls.setLeft(Controls.player1, window.inputChar);
     }
-    if (p1Right.isClicked()) {
+    if (p1Right.isLeftClicked()) {
       Controls.setRight(Controls.player1, window.inputChar);
     }
-    if (Twop2Go.isClicked()) {
+    if (Twop2Go.isLeftClicked()) {
       Controls.setUp(Controls.player2, window.inputChar);
     }
-    if (Twop2Stop.isClicked()) {
+    if (Twop2Stop.isLeftClicked()) {
       Controls.setDown(Controls.player2, window.inputChar);
     }
-    if (Twop2Left.isClicked()) {
+    if (Twop2Left.isLeftClicked()) {
       Controls.setLeft(Controls.player2, window.inputChar);
     }
-    if (Twop2Right.isClicked()) {
+    if (Twop2Right.isLeftClicked()) {
       Controls.setRight(Controls.player2, window.inputChar);
     }
 //    if (Twop1Go.isClicked()) {

@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
 
+import javax.sound.midi.Track;
 import java.awt.*;
 
 /** Bezier curves for all tracks in our game.
@@ -12,11 +13,7 @@ import java.awt.*;
  */
 public class TrackPiece extends PApplet implements Drawable {
   /** Booleans that toggle System outs. */
-  boolean fillPrint = false;
-  boolean linePrint = false;
-  boolean printStartLocation = false;
-  boolean printHits = false;
-  boolean printArray = false;
+  private boolean arrayPrintOverride = false;
 
   /** Color of the road. */
   private Color roadColor = new Color(76, 76, 76);
@@ -74,11 +71,6 @@ public class TrackPiece extends PApplet implements Drawable {
     cordStartLeft = new PVector(closeLeftX, closeLeftY);
     cordStartRight = new PVector(closeRightX, closeRightY);
 
-    if (printStartLocation) {
-      System.out.print("Close left: " + (int) cordStartLeft.x + ", " + (int) cordStartLeft.y);
-      System.out.println("  \t\tClose right: " + (int) cordStartRight.x + ", " + (int) cordStartRight.y);
-    }
-
     // Find smallest X
     smallestX = Math.min(closeLeftX, farLeftX);
     smallestX = Math.min(smallestX, closeRightX);
@@ -127,7 +119,7 @@ public class TrackPiece extends PApplet implements Drawable {
     road.endShape();
 
 
-    // Setup drawable shape object for the border.
+    //Setup drawable shape object for the border.
     border = gameManager.createShape();
     border.beginShape();
 //    border.stroke(borderColor.getRGB());
@@ -164,40 +156,30 @@ public class TrackPiece extends PApplet implements Drawable {
 
   /** Fills line created by addSlopeLines. */
   public void fillArray() {
-    // Testing prints
-    if (fillPrint && TrackManager.isOnTesterMode) {
-      System.out.println("\nFill array called\nOriginal Print:");
-      printPixels();
-    }
     int activePixels = 0;
 
-    // Runs
+    // Runs each column
     for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
       activePixels = 0;
       boolean currentFill = false;
+      // Checks how many lines are in this column
       for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
         if (shapePixels[wTimer][hTimer] == true) {
           activePixels++;
         }
       }
+      // If there is a gap in the segment, fills until other is reached
       if (activePixels % 2 == 0) {
         for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+          // If the newly reached segment is true, toggle fill mode
           if (shapePixels[wTimer][hTimer] == true) {
             currentFill = !currentFill;
-          }
-          if (fillPrint && TrackManager.isOnTesterMode) {
-            System.out.print("(" + wTimer + ", " + hTimer + ")  ");
           }
           if (currentFill == true) {
             shapePixels[wTimer][hTimer] = true;
           }
         }
       }
-    }
-    if (fillPrint && TrackManager.isOnTesterMode) {
-      System.out.println("\n\nAfter Fill:");
-      printPixels();
-      System.out.print("\n");
     }
   }
 
@@ -209,39 +191,19 @@ public class TrackPiece extends PApplet implements Drawable {
     int placeY;
     float slope;
 
-    // Print call profile (Name & Parameters)
-    if (linePrint && TrackManager.isOnTesterMode) {
-      System.out.println("addSlopeLine(" + x1 + ", " + y1 + ", " + x2 + ", " + y2 + ")");
-    }
-
     // Resolve corner case slopes (Same X and/or Y)
     if (y1 == y2 && x1 == x2) { // Same cords
-        if (linePrint && TrackManager.isOnTesterMode) {
-          System.out.println("Same cords");
-        }
         shapePixels[x2][y2] = true;
         return;
-
       } else if (y1 == y2) { // Same Y = Horizontal line
-        if (linePrint && TrackManager.isOnTesterMode) {
-          System.out.println("Same y cords");
-        }
         for (int timer = Math.min(x1, x2); timer < Math.max(x1, x2); timer++) {
           shapePixels[timer][y2] = true;
         }
         return;
 
       } else if (x1 == x2) { // Same X = Vertical Line
-        if (linePrint && TrackManager.isOnTesterMode) {
-          System.out.println("Same x cords");
-        }
         for (int timer = Math.min(y1, y2); timer < Math.max(y1, y2); timer++) {
           shapePixels[x2][timer] = true;
-        }
-        printPixels(); // Labels columns
-        if (linePrint && TrackManager.isOnTesterMode) {
-          System.out.print("\nCord1:" + x1 + "," + y1);
-          System.out.print("\tCord2:" + x2 + "," + y2 + "\n");
         }
         return;
       }
@@ -261,25 +223,11 @@ public class TrackPiece extends PApplet implements Drawable {
 
     // Get slope for future calculations
     slope = (y2 - y1) / (x2 - x1);
-    if (linePrint && TrackManager.isOnTesterMode) {
-      System.out.println(slope + "\t\tRise:" + (y2 - y1) + "\tRun:" + (x2 - x1)
-              + "\tLX:" + x2 + "\tLY:" + y2 + "\tSX:" + x1 + "\tSY:" + x1);
-    }
 
     // Set y for each X between x1 & x2
     for (int timer = firstX; timer <= secondX; timer++) {
       placeY = (int) (firstY + (slope * (timer - firstX)));
-      if (linePrint && !TrackManager.isOnTesterMode) {
-        System.out.println(timer + ", " + placeY + "\tsY: " + firstY + "\tSlope Travel: " + slope * (timer - firstX) + "\tSlope: " + slope);
-      }
       shapePixels[placeY][timer] = true;
-    }
-
-    // Print Cords and array
-    if (linePrint && TrackManager.isOnTesterMode) {
-      System.out.println("\nCord1: " + firstX + ", " + firstY + "\t\tCord2: " + secondX + ", " + secondY);
-      printPixels();
-      System.out.println("Cord1: " + firstX + ", " + firstY + "\t\tCord2: " + secondX + ", " + secondY);
     }
   }
 
@@ -292,21 +240,16 @@ public class TrackPiece extends PApplet implements Drawable {
    */
   public boolean isOnTrack(int xCord, int yCord) {
     if ((smallestX <= xCord && xCord <= smallestX + segmentWidth) && (smallestY <= yCord && yCord <= smallestY + segmentHeight)) {
-      System.out.print("Touched Box\t");
+      if (TrackManager.isOnTesterMode)
+        System.out.print("Touched Box\t");
 
       if (shapePixels[xCord - smallestX][yCord - smallestY] == true ) {
-        if (printHits && TrackManager.isOnTesterMode) /* Output touch info */ {
-          System.out.print("\tActual\t");
-          System.out.print("X: " + smallestX + "<" + xCord + "<" + largestX);
-          System.out.println("\t\tY: " + smallestY + "<" + yCord + "<" + largestY);
-        }
+        if (TrackManager.isOnTesterMode)
+          System.out.println("\t Actual");
         return true;
       } else {
-        if (printHits && TrackManager.isOnTesterMode) {
-          System.out.print("Not Actual");
-          System.out.print("X: " + smallestX + "<" + xCord + "<" + largestX);
-          System.out.println("\t\tY: " + smallestY + "<" + yCord + "<" + largestY);
-        }
+        if (TrackManager.isOnTesterMode)
+          System.out.println("\tNot Actual");
       }
     }
     return false;
@@ -316,22 +259,18 @@ public class TrackPiece extends PApplet implements Drawable {
    * Draw each frame.
    */
   public void draw() {
-    if (TrackManager.isOnTesterMode) {
+    if (TrackManager.isOnTesterMode) { // Show general track hitboxes
       gameManager.fill(255, 255, 255);
       gameManager.rect(smallestX, smallestY, segmentWidth, segmentHeight);
     }
     gameManager.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
     gameManager.shape(road, smallestX, smallestY);
-    gameManager.shape(border, smallestX, smallestY);
+//    gameManager.shape(border, smallestX, smallestY);
   }
 
   /** Prints the shape array to visualize. */
   public void printPixels() {
-    if (printArray) {
-      boolean printInfo = false;
-      if (printInfo) {
-        System.out.println("printPixels Called");
-      }
+    if (arrayPrintOverride && TrackManager.isOnTesterMode) { // Prints boolean array shapes
 
       int row = 0;
       // Testing pixels that prints '-' as false, 'X' as true
