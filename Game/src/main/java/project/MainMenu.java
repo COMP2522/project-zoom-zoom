@@ -134,9 +134,9 @@ public class MainMenu implements Drawable {
       window.exit();
     }
     window.image(quitImage, quit.getPosition().x + 60, quit.getPosition().y + 10);
-    ranking.update();
+    ranking.click();
     ranking.draw();
-    if (ranking.isClicked()) {
+    if (ranking.isLeftClicked()) {
       window.menu = 6;
     }
   }
