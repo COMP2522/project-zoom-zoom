@@ -17,7 +17,7 @@ public class Button implements Drawable, Clickable {
   private String title;
   private boolean leftClicked = false;
   private boolean rightClicked = false;
-  private GameManager window;
+  protected static GameManager window;
 
   /**
    * Constructor to create a button object.
@@ -36,7 +36,26 @@ public class Button implements Drawable, Clickable {
     this.height = height;
     this.title = title;
     this.color = color;
-    this.window = window;
+    Button.window = window;
+  }
+
+  /**
+   * Constructor to create a button object with no color.
+   *
+   * @param position of button on window
+   * @param width of button
+   * @param height of button
+   * @param title text of button
+   * @param window of game
+   */
+  public Button(PVector position, float width, float height,
+                String title, GameManager window) {
+    this.position = position;
+    this.width = width;
+    this.height = height;
+    this.title = title;
+    this.color = null;
+    Button.window = window;
   }
 
   /**
@@ -45,11 +64,12 @@ public class Button implements Drawable, Clickable {
   @Override
   public void draw() {
     // Create and fill in colour for button shape
-    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
+    if (color != null) {
+      window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
+    }
     window.rect(position.x, position.y, width, height);
 
     // Create and fill in colour for text
-    window.fill(0);
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
     window.text(title, position.x + (width / 2), position.y + (height / 8));
   }
