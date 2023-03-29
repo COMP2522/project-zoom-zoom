@@ -242,7 +242,7 @@ public class Player extends Sprite {
   @Override
   public void update() {
     drag();
-    grip = TIREGRIP + PartAero.getDownForce() * speed;
+    grip = TIREGRIP + this.aero.getDownForce() * speed;
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
     position.x = xpos;
