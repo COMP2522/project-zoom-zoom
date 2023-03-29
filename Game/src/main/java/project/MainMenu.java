@@ -16,6 +16,7 @@ public class MainMenu implements Drawable {
   private Button twoPlayer;
   private Button controls;
   private Button quit;
+  private Button ranking;
   // Images
   private PImage bgImage;
   private PImage gameTitle;
@@ -23,6 +24,7 @@ public class MainMenu implements Drawable {
   private PImage twoPlayerImage;
   private PImage controlsImage;
   private PImage quitImage;
+  private PImage scoreboard;
   // Other data
   private final GameManager window;
   private static MainMenu instance;
@@ -78,6 +80,8 @@ public class MainMenu implements Drawable {
         "", new Color(104, 52, 235), window);
     quit = new Button(new PVector((float) (window.displayWidth / 2) - 100, 800), 225, 50,
         "", new Color(150, 0, 0), window);
+    ranking = new Button(new PVector((float) (window.displayWidth / 20) + 100, 825), 50,
+        50, "", new Color(150, 0, 0), window);
 
     // Set up images
     bgImage = window.loadImage("Game/images/BGImage.png");
@@ -86,6 +90,7 @@ public class MainMenu implements Drawable {
     twoPlayerImage = window.loadImage("Game/images/2Player.png");
     controlsImage = window.loadImage("Game/images/Controls.png");
     quitImage = window.loadImage("Game/images/Quit.png");
+//    scoreboard = window.loadImage("Game/images/Ranking.jpg");
   }
 
   /**
@@ -95,6 +100,7 @@ public class MainMenu implements Drawable {
   public void draw() {
     // Draw images
     window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
+//    window.image(scoreboard, 0, 0, (float) (window.displayWidth / 20) + 100, 825);
     this.showTitle();
     // Draw 1-Player button and image
     onePlayer.draw();
@@ -128,6 +134,11 @@ public class MainMenu implements Drawable {
       window.exit();
     }
     window.image(quitImage, quit.getPosition().x + 60, quit.getPosition().y + 10);
+    ranking.update();
+    ranking.draw();
+    if (ranking.isClicked()) {
+      window.menu = 6;
+    }
   }
 
 }

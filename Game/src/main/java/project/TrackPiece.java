@@ -38,7 +38,7 @@ public class TrackPiece extends PApplet implements Drawable {
   private final int borderWidth = 20;
 
   /** Color of the border. */
-  private final Color borderColor = new Color(255, 0, 0);
+//  private final Color borderColor = new Color(255, 0, 0);
 
   /** The gameManager. */
   private GameManager gameManager;
@@ -122,7 +122,7 @@ public class TrackPiece extends PApplet implements Drawable {
     //Setup drawable shape object for the border.
     border = gameManager.createShape();
     border.beginShape();
-    border.stroke(borderColor.getRGB());
+//    border.stroke(borderColor.getRGB());
     border.strokeWeight(borderWidth);
 
     // Add the border around the road.

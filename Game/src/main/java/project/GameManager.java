@@ -22,6 +22,8 @@ public class GameManager extends PApplet {
   TwoPlayers twoPlayers;
   Stopwatch stopwatch;
   TrackMenu trackMenu;
+  MongoDB mongoDB;
+  Ranking ranking;
   public static boolean audio = true;
   private int check = 1;
 
@@ -60,6 +62,7 @@ public class GameManager extends PApplet {
    * Initializes all objects.
    */
   public void setup() {
+    mongoDB = MongoDB.getInstance();
     trackManager = new TrackManager(this);
     trackManager.initTrack();
 
@@ -92,6 +95,9 @@ public class GameManager extends PApplet {
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
+      if (mongoDB != null && singlePlayer != null) {
+        mongoDB.put("time", singlePlayer.stopwatch.currentTime);
+      }
       if (singlePlayer != null) {
         singlePlayer.stopwatch.stopTimer();
         singlePlayer.setTimerCheck(true);
@@ -207,6 +213,11 @@ public class GameManager extends PApplet {
         trackMenu = TrackMenu.getInstance(this);
         trackMenu.setUp();
         trackMenu.draw();
+      }
+      case 6 -> {
+        ranking = Ranking.getInstance(this);
+        ranking.setUp();
+        ranking.draw();
       }
       default -> {
         break;
