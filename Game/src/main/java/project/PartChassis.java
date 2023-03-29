@@ -4,6 +4,11 @@ package project;
  * Represents the chassis part of a car, which affects weight and wheelbase.
  */
 public class PartChassis {
+  private static PartChassis chassis1 = new PartChassis(2000, 1, 1);
+  private static PartChassis chassis2 = new PartChassis(1500, 1, 1);
+  private static PartChassis chassis3 = new PartChassis(1000, 1, 1);
+  private static PartChassis chassis4 = new PartChassis(500, 1, 1);
+  public static PartChassis[] chassisParts = {chassis1, chassis2, chassis3, chassis4};
   /**
    * The weight of the car's chassis.
    */
@@ -29,10 +34,10 @@ public class PartChassis {
     wheelBaseY = wby;
   }
 
-  public void setChassis(int w, int wbx, int wby){
-    weight = w;
-    wheelBaseX = wbx;
-    wheelBaseY = wby;
+  public void setChassis(PartChassis chassis){
+    weight = chassis.weight;
+    wheelBaseX = chassis.wheelBaseX;
+    wheelBaseY = chassis.wheelBaseY;
   }
 
   /**
