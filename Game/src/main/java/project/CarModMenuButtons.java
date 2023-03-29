@@ -13,7 +13,6 @@ public class CarModMenuButtons implements Drawable {
   private Button backToMainMenu;
   private Button startRace;
   private Button saveCarBuild;
-  private ChassisButton[] chassis = new ChassisButton[4];
   private AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
   private GearButton[] gears = new GearButton[4];
   // Other data
@@ -53,23 +52,10 @@ public class CarModMenuButtons implements Drawable {
    */
   public void setup() {
     EngineButton.setupEngineButtons();
-    setupChassisButtons();
+    ChassisButton.setUpChassisButtons();
     setupAerodynamicsButtons();
     setupGearButtons();
     setupOtherButtons();
-  }
-
-  /**
-   * setUpChassisButtons, sets up the chassis buttons needed for CarModMenu.
-   */
-  public void setupChassisButtons() {
-    buffer = 50;
-    for (int i = 0; i < chassis.length; i++) {
-      position = new PVector((window.displayWidth / 8) + 300,
-          (window.displayHeight / 5) + buffer);
-      chassis[i] = new ChassisButton(position, "", window);
-      buffer += 125;
-    }
   }
 
   /**
@@ -119,6 +105,7 @@ public class CarModMenuButtons implements Drawable {
   public void draw() {
     window.textSize(30);
     EngineButton.drawEngines();
+    ChassisButton.drawChassis();
 
     // Draw buttons for the aerodynamics
     for (Button aero : aerodynamics) {
@@ -164,24 +151,6 @@ public class CarModMenuButtons implements Drawable {
     } else if (saveCarBuild.isRightClicked()) {
       // Save player2's car parts to database
       System.out.println("Player 2 build saved");
-    }
-  }
-
-  /**
-   * setPlayerChassis, sets the player's chassis part depending on which
-   * chassis button was clicked.
-   *
-   * @param chassi button
-   */
-  private void setPlayerChassis(Button chassi) {
-    int chassisIndex = Arrays.asList(chassis).indexOf(chassi);
-
-    if (chassi.isLeftClicked()) {
-      player1.getChassis().setChassis(PartChassis.chassisParts[chassisIndex]);
-      System.out.println("p1 c" + (chassisIndex + 1));
-    } else if (chassi.isRightClicked()) {
-      player2.getChassis().setChassis(PartChassis.chassisParts[chassisIndex]);
-      System.out.println("p2 c" + (chassisIndex + 1));
     }
   }
 
