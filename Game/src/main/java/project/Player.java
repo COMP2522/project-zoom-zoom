@@ -249,12 +249,14 @@ public class Player extends Sprite {
   @Override
   public void update() {
     drag();
+    onTrack();
     grip = TIREGRIP + PartAero.getDownForce() * speed;
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
     position.x = xpos;
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
     position.y = ypos;
+
 //    System.out.println(direction);
 //    System.out.println("speed " + speed);
 //    System.out.println("RPM " + revs);
@@ -342,7 +344,7 @@ public class Player extends Sprite {
 
   private void onTrack(){
     if(!track.isOnTrack((int)xpos, (int)ypos)){
-      speed -= OFF_TRACK;
+      if (speed > OFF_TRACK) speed -= OFF_TRACK;
       System.out  .println("off track");
     }
   }

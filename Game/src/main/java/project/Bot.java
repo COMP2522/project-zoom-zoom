@@ -23,7 +23,7 @@ public class Bot extends Player {
 
   public Bot(PVector position, PVector direction, float size, float speed,
              Color color, GameManager window, ArrayList<PVector> waypoints) {
-    super(position, direction, size, speed, color, window, trackManager);
+    super(position, direction, size, speed, color, window, new TrackManager(window));
     this.position = position;
     this.direction = direction;
     this.steeringAngle = 0;
