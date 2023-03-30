@@ -1,9 +1,7 @@
 package project;
 
-import processing.core.PVector;
-
-import java.awt.*;
 import java.util.Arrays;
+import processing.core.PVector;
 
 /**
  * AerodynamicsButton, button subclass designated for aerodynamics parts.
@@ -52,6 +50,8 @@ public class AerodynamicsButton extends Button {
    */
   public static void drawAerodynamics() {
     for (Button aero : aerodynamics) {
+      window.noStroke();
+      window.fill(0, 0);
       aero.draw();
       aero.click();
       setPlayerAerodynamics(aero);

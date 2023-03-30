@@ -31,7 +31,7 @@ public class ChassisButton extends Button {
   /**
    * setUpChassisButtons, sets up the chassis buttons needed for CarModMenu.
    */
-  public static void setUpChassisButtons() {
+  public static void setupChassisButtons() {
     int buffer = 50;
     int x = (window.displayWidth / 8) + 300;
     int y;
@@ -49,6 +49,8 @@ public class ChassisButton extends Button {
    */
   public static void drawChassis() {
     for (Button chassi : chassis) {
+      window.noStroke();
+      window.fill(0, 0);
       chassi.draw();
       chassi.click();
       setPlayerChassis(chassi);
