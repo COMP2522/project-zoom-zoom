@@ -72,14 +72,14 @@ public class GameManager extends PApplet {
             (20),
             0.1F,
             new Color(0, 255, 0),
-            this);
+            this, trackManager);
     player2 = new Player(
         getStartingPosition(2, 2),
         new PVector(50, 1),
         (20),
         0.1F,
         new Color(0, 255, 247),
-        this);
+        this, trackManager);
   }
   boolean isEditing = false;
   String inputText = "";

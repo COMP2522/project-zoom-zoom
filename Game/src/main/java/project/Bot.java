@@ -19,10 +19,11 @@ public class Bot extends Player {
   private float frameRate;
   private ArrayList<PVector> waypoints;
   private int currentWaypointIndex;
+  private TrackManager trackManager;
 
   public Bot(PVector position, PVector direction, float size, float speed,
              Color color, GameManager window, ArrayList<PVector> waypoints) {
-    super(position, direction, size, speed, color, window);
+    super(position, direction, size, speed, color, window, trackManager);
     this.position = position;
     this.direction = direction;
     this.steeringAngle = 0;
@@ -60,7 +61,7 @@ public class Bot extends Player {
     // update the bot's position
     super.update();
   }
-  
+
   public void setVelocity(PVector velocity) {
     this.velocity = velocity;
   }

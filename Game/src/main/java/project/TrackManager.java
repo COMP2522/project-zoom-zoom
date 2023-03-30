@@ -69,7 +69,7 @@ public class TrackManager implements Drawable {
     return onTrackCheck(Math.round(cords.x), Math.round(cords.y));
   }
 
-  private boolean onTrackCheck(int xCord, int yCord) {
+  public boolean onTrackCheck(int xCord, int yCord) {
     for (TrackPiece eachPiece : tracks) {
       if (eachPiece.isOnTrack(xCord, yCord)) {
         return true;

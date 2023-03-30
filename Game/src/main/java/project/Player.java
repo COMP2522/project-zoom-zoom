@@ -11,6 +11,8 @@ import java.awt.*;
  */
 public class Player extends Sprite {
 
+  TrackManager track;
+
 
   //This sets the default options for the car
 
@@ -186,6 +188,11 @@ public class Player extends Sprite {
   int POSITION_LIMITER = 10;
 
   /**
+   * Penalty for going off track
+   */
+  int OFF_TRACK = 10;
+
+  /**
    * Declaring the defaults to all of the car parts
    */
   PartGears gears = new PartGears(GEAR1, GEAR2, GEAR3, GEAR4);
@@ -210,12 +217,13 @@ public class Player extends Sprite {
   }
 
   public Player(PVector position, PVector direction, float size, float speed,
-                Color color, GameManager window) {
+                Color color, GameManager window, TrackManager trackManager) {
     super(position, direction, size, speed, color, window);
     xpos = position.x;
     ypos = position.y;
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = gears.start();
+    track = trackManager;
   }
 
 
@@ -332,5 +340,10 @@ public class Player extends Sprite {
     }
   }
 
-
+  private void onTrack(){
+    if(!track.isOnTrack((int)xpos, (int)ypos)){
+      speed -= OFF_TRACK;
+      System.out  .println("off track");
+    }
+  }
 }
