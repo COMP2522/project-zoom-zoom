@@ -52,38 +52,10 @@ public class CarModMenuButtons implements Drawable {
    */
   public void setup() {
     EngineButton.setupEngineButtons();
-    ChassisButton.setUpChassisButtons();
-    setupAerodynamicsButtons();
-    setupGearButtons();
+    ChassisButton.setupChassisButtons();
+    AerodynamicsButton.setupAerodynamicsButtons();
+    GearButton.setupGearButtons();
     setupOtherButtons();
-  }
-
-  /**
-   * setUpAerodynamicsButtons, sets up all aero buttons needed
-   * for CarModMenu.
-   */
-  public void setupAerodynamicsButtons() {
-    buffer = 50;
-    for (int i = 0; i < aerodynamics.length; i++) {
-      position = new PVector((window.displayWidth / 8) + 700,
-          (window.displayHeight / 5) + buffer);
-      aerodynamics[i] = new AerodynamicsButton(position, "", window);
-      buffer += 125;
-    }
-  }
-
-  /**
-   * setUpGearButtons, sets up all gear buttons needed for CarModMenu.
-   */
-  public void setupGearButtons() {
-    window.textAlign(PApplet.CENTER, PApplet.CENTER);
-    buffer = 50;
-    for (int i = 0; i < gears.length; i++) {
-      position = new PVector((window.displayWidth / 8) + 1100,
-          (window.displayHeight / 5) + buffer);
-      gears[i] = new GearButton(position, "Gear " + (i + 1), window);
-      buffer += 125;
-    }
   }
 
   /**
@@ -106,20 +78,8 @@ public class CarModMenuButtons implements Drawable {
     window.textSize(30);
     EngineButton.drawEngines();
     ChassisButton.drawChassis();
-
-    // Draw buttons for the aerodynamics
-    for (Button aero : aerodynamics) {
-      aero.draw();
-      aero.click();
-      setPlayerAerodynamics(aero);
-    }
-
-    // Draw buttons for the tires
-    for (Button gear : gears) {
-      gear.draw();
-      gear.click();
-      setPlayerGears(gear);
-    }
+    AerodynamicsButton.drawAerodynamics();
+    GearButton.drawGears();
 
     // Draw start race button
     startRace.draw();
@@ -151,41 +111,6 @@ public class CarModMenuButtons implements Drawable {
     } else if (saveCarBuild.isRightClicked()) {
       // Save player2's car parts to database
       System.out.println("Player 2 build saved");
-    }
-  }
-
-  /**
-   * sets the player's aerodynamics part depending on which
-   * aerodynamics button was clicked.
-   *
-   * @param aero button
-   */
-  private void setPlayerAerodynamics(Button aero) {
-    int aeroIndex = Arrays.asList(aerodynamics).indexOf(aero);
-
-    if (aero.isLeftClicked()) {
-      player1.getAero().setAero(PartAero.aeroParts[aeroIndex]);
-      System.out.println("p1 a" + (aeroIndex + 1));
-    } else if (aero.isRightClicked()) {
-      player2.getAero().setAero(PartAero.aeroParts[aeroIndex]);
-      System.out.println("p2 a" + (aeroIndex + 1));
-    }
-  }
-
-  /**
-   * setPlayerGears, sets the players gears based on the text box
-   * and which button was clicked.
-   * @param gear button
-   */
-  public void setPlayerGears(Button gear) {
-    int gearsIndex = Arrays.asList(gears).indexOf(gear);
-
-    if (gear.isLeftClicked()) {
-      // Set player1 gear1
-      System.out.println("p1 g" + (gearsIndex + 1) + ": " + window.inputVal);
-    } else if (gear.isRightClicked()) {
-      // Set player2 gear1
-      System.out.println("p2 g" + (gearsIndex + 1) + ": " + window.inputVal);
     }
   }
 }
