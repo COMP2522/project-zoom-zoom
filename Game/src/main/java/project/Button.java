@@ -71,6 +71,7 @@ public class Button implements Drawable, Clickable {
 
     // Create and fill in colour for text
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
+    window.fill(0);
     window.text(title, position.x + (width / 2), position.y + (height / 8));
   }
 
