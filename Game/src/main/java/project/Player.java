@@ -11,6 +11,8 @@ import java.awt.*;
  */
 public class Player extends Sprite {
 
+  Stopwatch time;
+
 
   //This sets the default options for the car
 
@@ -175,6 +177,12 @@ public class Player extends Sprite {
     return currGear;
   }
 
+  boolean lapFlag = false;
+
+  boolean start = false;
+
+  long oldTime = 0;
+
   /**
    * The maximum amount of speed reduction due to various factors (such as drag).
    */
@@ -184,6 +192,16 @@ public class Player extends Sprite {
    * Limits the amount the speed value changes the x and y position
    */
   int POSITION_LIMITER = 10;
+
+  /**
+   * How much is the cars speed reduced by each frame off track
+   */
+  double OFF_TRACK_PENALTY = 0.8;
+
+  /**
+   * The slowest the grass will slow you down to
+   */
+  int MIN_GRASS_SPEED = 10;
 
   /**
    * Declaring the defaults to all of the car parts
@@ -210,12 +228,13 @@ public class Player extends Sprite {
   }
 
   public Player(PVector position, PVector direction, float size, float speed,
-                Color color, GameManager window) {
+                Color color, GameManager window, Stopwatch timer) {
     super(position, direction, size, speed, color, window);
     xpos = position.x;
     ypos = position.y;
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = gears.start();
+    time = timer;
   }
 
 
@@ -240,17 +259,14 @@ public class Player extends Sprite {
    */
   @Override
   public void update() {
+    lap();
     drag();
+    onTrack();
+    if (speed < 0) speed = 0;
     grip = TIREGRIP + PartAero.getDownForce() * speed;
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
-    position.x = xpos;
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
-    position.y = ypos;
-//    System.out.println(direction);
-//    System.out.println("speed " + speed);
-//    System.out.println("RPM " + revs);
-
   }
 
   /**
@@ -332,5 +348,32 @@ public class Player extends Sprite {
     }
   }
 
+  /**
+   * Checks if the car is within the bounds of the track
+   */
+  public void onTrack(){
+    if ((xpos > 1240 || xpos < 40 || ypos > 680 || ypos < 40 || (xpos > 175 && xpos < 1090 && ypos > 170 && ypos < 530)) && (speed > MIN_GRASS_SPEED)){
+      speed -= OFF_TRACK_PENALTY;
+
+    }
+  }
+
+  public void lap(){
+
+    if(xpos > 300 && xpos < 350 && ypos < 250){
+      if(!start){
+        start = true;
+        oldTime = time.getCurrentTime();
+      }
+      else if(lapFlag){
+        long curTime = time.getCurrentTime();
+        System.out.println((curTime - oldTime) / 1000f + "secs");
+        oldTime = curTime;
+        lapFlag = false;}
+    }
+    if(xpos > 300 && xpos < 350 && ypos > 450){
+      lapFlag = true;
+    }
+  }
 
 }

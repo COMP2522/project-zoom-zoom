@@ -65,6 +65,7 @@ public class GameManager extends PApplet {
     mongoDB = MongoDB.getInstance();
     trackManager = new TrackManager(this);
     trackManager.initTrack();
+    stopwatch = Stopwatch.getInstance(this);
 
     player1 = new Player(
             getStartingPosition(1, 1),
@@ -72,14 +73,14 @@ public class GameManager extends PApplet {
             (20),
             0.1F,
             new Color(0, 255, 0),
-            this);
+            this, stopwatch);
     player2 = new Player(
         getStartingPosition(2, 2),
         new PVector(50, 1),
         (20),
         0.1F,
         new Color(0, 255, 247),
-        this);
+        this, stopwatch);
   }
   boolean isEditing = false;
   String inputText = "";

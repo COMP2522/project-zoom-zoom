@@ -9,6 +9,7 @@ import static java.lang.Math.PI;
 import static processing.core.PApplet.constrain;
 
 public class Bot extends Player {
+  private static final Stopwatch stop = null;
   private PVector position;
   private PVector direction;
   private PVector velocity;
@@ -20,9 +21,10 @@ public class Bot extends Player {
   private ArrayList<PVector> waypoints;
   private int currentWaypointIndex;
 
+
   public Bot(PVector position, PVector direction, float size, float speed,
              Color color, GameManager window, ArrayList<PVector> waypoints) {
-    super(position, direction, size, speed, color, window);
+    super(position, direction, size, speed, color, window, stop);
     this.position = position;
     this.direction = direction;
     this.steeringAngle = 0;
@@ -58,7 +60,7 @@ public class Bot extends Player {
     setVelocity(velocity);
 
     // update the bot's position
-    super.update();
+    //super.update();
   }
   
   public void setVelocity(PVector velocity) {

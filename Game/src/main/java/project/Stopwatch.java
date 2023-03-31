@@ -35,6 +35,10 @@ public class Stopwatch {
    */
   private long startTime = 0;
 
+  public long getCurrentTime() {
+    return currentTime;
+  }
+
   /*
    *The current time of the timer in milliseconds.
    */
