@@ -47,7 +47,7 @@ public class GearButton extends Button {
     for (int i = 0; i < gears.length; i++) {
       y = (window.displayHeight / 5) + buffer;
       position = new PVector(x, y);
-      gears[i] = new GearButton(position, "Gear " + (i + 1), window);
+      gears[i] = new GearButton(position, "", window);
       buffer += 125;
     }
   }
