@@ -203,6 +203,10 @@ public class Player extends Sprite {
    */
   int MIN_GRASS_SPEED = 10;
 
+  int NUM_OF_LAPS = 10;
+
+  int laps = 0;
+
   /**
    * Declaring the defaults to all of the car parts
    */
@@ -354,7 +358,6 @@ public class Player extends Sprite {
   public void onTrack(){
     if ((xpos > 1240 || xpos < 40 || ypos > 680 || ypos < 40 || (xpos > 175 && xpos < 1090 && ypos > 170 && ypos < 530)) && (speed > MIN_GRASS_SPEED)){
       speed -= OFF_TRACK_PENALTY;
-
     }
   }
 
@@ -369,7 +372,12 @@ public class Player extends Sprite {
         long curTime = time.getCurrentTime();
         System.out.println((curTime - oldTime) / 1000f + "secs");
         oldTime = curTime;
-        lapFlag = false;}
+        lapFlag = false;
+        laps++;
+        if(laps == NUM_OF_LAPS){
+          //TODO: END GAME CALLS HERE
+        }
+      }
     }
     if(xpos > 300 && xpos < 350 && ypos > 450){
       lapFlag = true;

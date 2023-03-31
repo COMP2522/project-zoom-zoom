@@ -26,16 +26,19 @@ public class TrackManager implements Drawable {
   /** Contain all track segments. */
   private ArrayList<TrackPiece> tracks = new ArrayList<TrackPiece>();
 
+  PImage trackImg;
+
   /** Track Manager constructor.
    *
    * @param window Current window
    */
   public TrackManager(GameManager window) {
     this.window = window;
+    trackImg = window.loadImage("Game/images/Track2.png");
   }
 
   /** Initializes track manager. */
-  public void initTrack() {
+  public void initTrack1() {
     tracks.add(new TrackPiece(180, 40, 1100, 40, 1100, 140, 180, 140, window)); // Top Straight
     tracks.add(new TrackPiece(1100, 40, 1240, 180, 1140, 180, 1100, 140, window)); // Top -> Right
     tracks.add(new TrackPiece(1240, 180, 1240, 540, 1140, 540, 1140, 180, window)); // Right
@@ -49,13 +52,13 @@ public class TrackManager implements Drawable {
   }
 
   public PVector getStartCords(int numberOfPlayers, int playerNumber) {
-    return tracks.get(0).getStartCord(numberOfPlayers, playerNumber);
+    return new PVector(50, 50);
   }
 
   /** Draws to screen. */
   public void draw() {
 //    window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
-    //window.image(grassImage, 0, 0, window.displayWidth, window.displayHeight);
+    window.image(trackImg, 0, 0, window.displayWidth, window.displayHeight);
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
     }
@@ -76,5 +79,9 @@ public class TrackManager implements Drawable {
       }
     }
     return false;
+  }
+
+  public void initTrack2() {
+    trackImg = window.loadImage("Game/images/Track2.png");
   }
 }

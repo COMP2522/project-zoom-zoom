@@ -64,7 +64,6 @@ public class GameManager extends PApplet {
   public void setup() {
     mongoDB = MongoDB.getInstance();
     trackManager = new TrackManager(this);
-    trackManager.initTrack();
     stopwatch = Stopwatch.getInstance(this);
 
     player1 = new Player(
@@ -176,7 +175,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-//      BGM.getBGM(true);
+      BGM.getBGM(true);
       audio = false;
       check++;
     }
@@ -209,6 +208,7 @@ public class GameManager extends PApplet {
         carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
+        trackManager.initTrack1();
       }
       case 5 -> {
         trackMenu = TrackMenu.getInstance(this);
@@ -219,6 +219,12 @@ public class GameManager extends PApplet {
         ranking = Ranking.getInstance(this);
         ranking.setUp();
         ranking.draw();
+      }
+      case 7 -> {
+        carModMenu = CarModMenu.getInstance(this);
+        carModMenu.setup();
+        carModMenu.draw();
+        trackManager.initTrack2();
       }
       default -> {
         break;
