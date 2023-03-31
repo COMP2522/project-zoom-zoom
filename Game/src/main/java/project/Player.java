@@ -210,6 +210,10 @@ public class Player extends Sprite {
     return aero;
   }
 
+  public void setAero(PartAero aero) {
+    this.aero = aero;
+  }
+
   public PartChassis getChassis() {
     return chassis;
   }
@@ -340,6 +344,4 @@ public class Player extends Sprite {
       gearRatio = gears.shiftDown();
     }
   }
-
-
 }
