@@ -20,6 +20,10 @@ public class GearButton extends Button {
   private static GearButton[] gears = new GearButton[4];
   private static Player player1 = GameManager.player1;
   private static Player player2 = GameManager.player2;
+  private static int buffer;
+  private static int x;
+  private static int y;
+
 
   /**
    * Constructor to create a gear button object.
@@ -37,9 +41,8 @@ public class GearButton extends Button {
    */
   public static void setupGearButtons() {
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
-    int buffer = 50;
-    int x = (window.displayWidth / 8) + 1100;
-    int y;
+    buffer = 50;
+    x = (window.displayWidth / 8) + 1100;
     PVector position;
     for (int i = 0; i < gears.length; i++) {
       y = (window.displayHeight / 5) + buffer;
@@ -57,6 +60,11 @@ public class GearButton extends Button {
       gear.draw();
       gear.click();
       setPlayerGears(gear);
+      showPlayer1Gears();
+      // Only show Player 2 gears in 2 Player mode
+      if (window.gameType == 2) {
+        showPlayer2Gears();
+      }
     }
   }
 
@@ -74,6 +82,34 @@ public class GearButton extends Button {
     } else if (gear.isRightClicked()) {
       // Set player2 gear1
       System.out.println("p2 g" + (gearsIndex + 1) + ": " + window.inputVal);
+    }
+  }
+
+  /**
+   * showPlayer1Gears, shows all gear ratios for player 1.
+   */
+  public static void showPlayer1Gears() {
+    buffer = 100;
+    x = (window.displayWidth / 8) + 1150;
+    for (int i = 0; i < gears.length; i++) {
+      y = (window.displayHeight / 5) + buffer;
+      window.textSize(20);
+      window.text("P1: " + player1.getGears().getGear(i), x, y);
+      buffer += 125;
+    }
+  }
+
+  /**
+   * showPlayer2Gears, shows all gear ratios for player 2.
+   */
+  public static void showPlayer2Gears() {
+    buffer = 100;
+    x = (window.displayWidth / 8) + 1250;
+    for (int i = 0; i < gears.length; i++) {
+      y = (window.displayHeight / 5) + buffer;
+      window.textSize(20);
+      window.text("P2: " + player2.getGears().getGear(i), x, y);
+      buffer += 125;
     }
   }
 }
