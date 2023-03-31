@@ -53,7 +53,7 @@ public class DisplayEngineStats implements Drawable {
    */
   private void engineStats(PartEngine engine, int ypos) {
     window.textSize(20);
-    window.fill(0);
+    window.fill(0,0,0);
     int x = (window.displayWidth / 8) + 100;
     int y = (window.displayHeight / 5) + ypos;
     window.text("Power: " + (int) engine.getPower(), x, y);
