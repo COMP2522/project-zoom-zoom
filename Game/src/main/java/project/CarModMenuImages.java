@@ -12,7 +12,12 @@ public class CarModMenuImages implements Drawable {
   private PImage bgImage;
   private PImage menuTitleImage;
   private PImage startRaceImage;
+  private PImage saveBuild;
   private PImage mainMenuImage;
+  private PImage gear1;
+  private PImage gear2;
+  private PImage gear3;
+  private PImage gear4;
   private PImage[] engineImages = new PImage[4];
   private PImage[] chassisImages = new PImage[4];
   private PImage[] aerodynamicImages = new PImage[4];
@@ -84,6 +89,11 @@ public class CarModMenuImages implements Drawable {
     menuTitleImage = window.loadImage("Game/images/CarModTitle.png");
     startRaceImage = window.loadImage("Game/images/StartRace.png");
     mainMenuImage = window.loadImage("Game/images/MainMenu.png");
+    saveBuild = window.loadImage("Game/images/SaveBuild.png");
+    gear1 = window.loadImage("Game/images/Gear1.png");
+    gear2 = window.loadImage("Game/images/Gear2.png");
+    gear3 = window.loadImage("Game/images/Gear3.png");
+    gear4 = window.loadImage("Game/images/Gear4.png");
   }
 
   /**
@@ -138,5 +148,10 @@ public class CarModMenuImages implements Drawable {
     window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
     window.image(startRaceImage, (window.displayWidth / 8) + 705, 760);
     window.image(mainMenuImage, (window.displayWidth / 8) + 305, 760);
+    window.image(saveBuild, (window.displayWidth / 8) - 100, 760);
+    window.image(gear1, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 50);
+    window.image(gear2, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 175);
+    window.image(gear3, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 300);
+    window.image(gear4, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 425);
   }
 }
