@@ -214,6 +214,10 @@ public class Player extends Sprite {
     return chassis;
   }
 
+  public void setChassis(PartChassis chassis) {
+    this.chassis = chassis;
+  }
+
   public Player(PVector position, PVector direction, float size, float speed,
                 Color color, GameManager window) {
     super(position, direction, size, speed, color, window);

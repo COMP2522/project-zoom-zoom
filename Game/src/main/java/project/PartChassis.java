@@ -34,12 +34,6 @@ public class PartChassis {
     wheelBaseY = wby;
   }
 
-  public void setChassis(PartChassis chassis){
-    weight = chassis.weight;
-    wheelBaseX = chassis.wheelBaseX;
-    wheelBaseY = chassis.wheelBaseY;
-  }
-
   /**
    * Returns the weight of the car's chassis.
    * @return The weight.
