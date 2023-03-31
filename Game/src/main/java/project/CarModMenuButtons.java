@@ -13,8 +13,6 @@ public class CarModMenuButtons implements Drawable {
   private Button backToMainMenu;
   private Button startRace;
   private Button saveCarBuild;
-  private AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
-  private GearButton[] gears = new GearButton[4];
   // Other data
   private GameManager window;
   private static CarModMenuButtons instance;
