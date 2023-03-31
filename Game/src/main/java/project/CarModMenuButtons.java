@@ -61,7 +61,7 @@ public class CarModMenuButtons implements Drawable {
    */
   public void setupOtherButtons() {
     saveCarBuild = new Button(new PVector((window.displayWidth / 8) - 100, 750), 200, 50,
-        "Save build", new Color(104, 52, 235), window);
+        "", new Color(104, 52, 235), window);
     backToMainMenu = new Button(new PVector((window.displayWidth / 8) + 300, 750), 200, 50,
         "", new Color(0, 0, 150), window);
     startRace = new Button(new PVector((window.displayWidth / 8) + 700, 750), 200, 50,
