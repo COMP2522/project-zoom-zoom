@@ -39,10 +39,12 @@ public class DisplayEngineStats implements Drawable {
    */
   @Override
   public void draw() {
-    engineStats(PartEngine.engine1, 50);
-    engineStats(PartEngine.engine2, 175);
-    engineStats(PartEngine.engine3, 300);
-    engineStats(PartEngine.engine4, 425);
+    int length = PartEngine.engineParts.length;
+    int y = 50;
+    for (int i = 0; i < length; i++) {
+      engineStats(PartEngine.engineParts[i], y);
+      y += 125;
+    }
   }
 
   /**
