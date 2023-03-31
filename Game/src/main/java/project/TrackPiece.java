@@ -136,21 +136,14 @@ public class TrackPiece extends PApplet implements Drawable {
 
   /** Get the starting location
    *
-   * @param numberOfPlayers Numbers of players
    * @param playerNumber Either 1 or 2
    * @return Starting position of the relevant player
    */
-  public PVector getStartCord(int numberOfPlayers, int playerNumber) {
-    if (numberOfPlayers == 1) {
-      int averageX = (int) ((cordStartLeft.x + cordStartRight.x) / 2);
-      int averageY = (int) ((cordStartLeft.y + cordStartRight.y) / 2);
-      return new PVector(averageX * playerNumber, averageY * playerNumber);
+  public PVector getStartCord(int playerNumber) {
+    if (playerNumber == 1) {
+      return cordStartLeft;
     } else {
-      if (playerNumber == 1) {
-        return cordStartLeft;
-      } else {
-        return cordStartRight;
-      }
+      return cordStartRight;
     }
   }
 

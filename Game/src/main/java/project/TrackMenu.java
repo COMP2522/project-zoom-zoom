@@ -14,6 +14,8 @@ import java.awt.*;
  */
 public class TrackMenu {
 
+  private TrackManager trackManager;
+
   /**
    * The GameManager object that creates and manages the game window
    */
@@ -62,6 +64,7 @@ public class TrackMenu {
    */
   private TrackMenu(GameManager gameManager) {
     this.window = gameManager;
+    trackManager = window.getTrackManager();
   }
 
   /**
@@ -111,12 +114,22 @@ public class TrackMenu {
     }
     track1.click();
     track1.draw();
-    window.image(track1Font,(float) (window.displayWidth / 2) - 500, 500);
+    window.image(track1Font, (float) (window.displayWidth / 2) - 500, 500);
     track2.click();
     track2.draw();
+//    window.image(track2Font, (float) (window.displayWidth / 2) - 500, 500);
     track3.click();
     track3.draw();
     if (track1.isLeftClicked()) {
+      trackManager.clearTrack();
+      trackManager.initTrack("Track 1");
+      window.startRace();
+      window.menu = 4;
+    }
+    if (track2.isLeftClicked()) {
+      trackManager.clearTrack();
+      trackManager.initTrack("Track 2");
+      window.startRace();
       window.menu = 4;
     }
   }

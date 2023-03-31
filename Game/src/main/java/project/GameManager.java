@@ -57,6 +57,10 @@ public class GameManager extends PApplet {
     this.fullScreen();
   }
 
+  public TrackManager getTrackManager() {
+    return trackManager;
+  }
+
   /**
    * Called once at the beginning of the program.
    * Initializes all objects.
@@ -64,23 +68,44 @@ public class GameManager extends PApplet {
   public void setup() {
     mongoDB = MongoDB.getInstance();
     trackManager = new TrackManager(this);
-    trackManager.initTrack();
 
     player1 = new Player(
-            getStartingPosition(1, 1),
+            new PVector(100, 100), // Default location, overridden during startRace
             new PVector(50, 1),
             (20),
             0.1F,
             new Color(0, 255, 0),
             this);
     player2 = new Player(
-        getStartingPosition(2, 2),
+        new PVector(100, 100), // Default location, overridden during startRace
         new PVector(50, 1),
         (20),
         0.1F,
         new Color(0, 255, 247),
         this);
   }
+
+  public void startRace() {
+    //startCountDown();  // Initialize countdown before race begins
+    if (player1 != null) {
+      player1.position = this.getStartingPosition(1);
+      player1.xpos = this.getStartingPosition(1).x;
+      player1.ypos = this.getStartingPosition(1).y;
+    }
+    if (player2 != null) {
+      player2.position = this.getStartingPosition(2);
+      player2.xpos = this.getStartingPosition(2).x;
+      player2.ypos = this.getStartingPosition(2).y;
+    }
+
+    // IDK how the bot will be initialized, but if it matches the direct players, the following should work
+    /*if (botPlayer != null) {
+      botPlayer.position = this.getStartingPosition(2);
+      botPlayer.xpos = this.getStartingPosition(2).x;
+      botPlayer.ypos = this.getStartingPosition(2).y;
+    }*/
+  }
+
   boolean isEditing = false;
   String inputText = "";
   int inputVal;
@@ -248,8 +273,8 @@ public class GameManager extends PApplet {
     return gameRunning;
   }
 
-  public PVector getStartingPosition(int numberOfPlayers, int playerNumber) {
-    return trackManager.getStartCords(numberOfPlayers, playerNumber);
+  public PVector getStartingPosition(int playerNumber) {
+    return trackManager.getStartCords(playerNumber);
   }
 
   /**

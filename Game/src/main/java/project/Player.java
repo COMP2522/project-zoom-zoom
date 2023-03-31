@@ -11,6 +11,7 @@ import java.awt.*;
  */
 public class Player extends Sprite {
 
+  private TrackManager trackManager;
 
   //This sets the default options for the car
 
@@ -228,6 +229,7 @@ public class Player extends Sprite {
     ypos = position.y;
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = gears.start();
+    trackManager = window.getTrackManager();
   }
 
 
@@ -259,6 +261,8 @@ public class Player extends Sprite {
     position.x = xpos;
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
     position.y = ypos;
+    if (trackManager.isOnTrack(position))
+      System.out.println("On Track");
 //    System.out.println(direction);
 //    System.out.println("speed " + speed);
 //    System.out.println("RPM " + revs);
