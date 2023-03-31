@@ -18,7 +18,7 @@ public class TrackManager implements Drawable {
   /** Active window. */
   private GameManager window;
 
-  //private PImage grassImage;
+  private PImage grassImage;
 
   /** Color of the grass. */
   private Color grassColor = new Color(0, 132, 0);
@@ -35,27 +35,37 @@ public class TrackManager implements Drawable {
   }
 
   /** Initializes track manager. */
-  public void initTrack() {
-    tracks.add(new TrackPiece(180, 40, 1100, 40, 1100, 140, 180, 140, window)); // Top Straight
-    tracks.add(new TrackPiece(1100, 40, 1240, 180, 1140, 180, 1100, 140, window)); // Top -> Right
-    tracks.add(new TrackPiece(1240, 180, 1240, 540, 1140, 540, 1140, 180, window)); // Right
-    tracks.add(new TrackPiece(1240, 540, 1100, 680, 1100, 580, 1140, 540, window)); // Right -> Bottom
-    tracks.add(new TrackPiece(1100, 680, 180, 680, 180, 580, 1100, 580, window)); // Bottom Straight
-    tracks.add(new TrackPiece(180, 680, 40, 540, 140, 540, 180, 580, window)); // Bottom -> Left
-    tracks.add(new TrackPiece(40, 540, 40, 180, 140, 180, 140, 540, window)); // Left
-    tracks.add(new TrackPiece(40, 180, 180, 40, 180, 140, 140, 180, window)); // Left -> Top
+  public void initTrack(String input) {
+    if (input == "Track 1") {
+      tracks.add(new TrackPiece(180, 40, 1100, 40, 1100, 140, 180, 140, window)); // Top Straight
+      tracks.add(new TrackPiece(1100, 40, 1240, 180, 1140, 180, 1100, 140, window)); // Top -> Right
+      tracks.add(new TrackPiece(1240, 180, 1240, 540, 1140, 540, 1140, 180, window)); // Right
+      tracks.add(new TrackPiece(1240, 540, 1100, 680, 1100, 580, 1140, 540, window)); // Right -> Bottom
+      tracks.add(new TrackPiece(1100, 680, 180, 680, 180, 580, 1100, 580, window)); // Bottom Straight
+      tracks.add(new TrackPiece(180, 680, 40, 540, 140, 540, 180, 580, window)); // Bottom -> Left
+      tracks.add(new TrackPiece(40, 540, 40, 180, 140, 180, 140, 540, window)); // Left
+      tracks.add(new TrackPiece(40, 180, 180, 40, 180, 140, 140, 180, window)); // Left -> Top
+    } else {
+      tracks.add(new TrackPiece(40, 540, 40, 180, 140, 180, 140, 540, window)); // Left
+      tracks.add(new TrackPiece(40, 180, 180, 40, 180, 140, 140, 180, window)); // Left -> Top
+    }
 
-    //grassImage = window.loadImage("Game/images/trackGrass4.png");
+    grassImage = window.loadImage("Game/images/trackGrass4.png");
+    int pixelModifier = 100;   // Default BG Image Dimensions: 600 x 400.
+    grassImage.width = window.displayWidth / pixelModifier;
+    grassImage.height = window.displayHeight / pixelModifier;
+    window.image(grassImage, 0, 0);
   }
 
-  public PVector getStartCords(int numberOfPlayers, int playerNumber) {
-    return tracks.get(0).getStartCord(numberOfPlayers, playerNumber);
+  public PVector getStartCords(int playerNumber) {
+    return tracks.get(0).getStartCord(playerNumber);
   }
 
   /** Draws to screen. */
   public void draw() {
-//    window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
-    //window.image(grassImage, 0, 0, window.displayWidth, window.displayHeight);
+    // Flat color option kept because BG Image causing lag on some computers
+    //window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
+    window.image(grassImage, 0, 0, window.displayWidth, window.displayHeight);
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
     }
@@ -67,6 +77,10 @@ public class TrackManager implements Drawable {
 
   public boolean isOnTrack(PVector cords) {
     return onTrackCheck(Math.round(cords.x), Math.round(cords.y));
+  }
+
+  public void clearTrack() {
+    tracks.clear();
   }
 
   private boolean onTrackCheck(int xCord, int yCord) {
