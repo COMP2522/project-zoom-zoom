@@ -202,6 +202,10 @@ public class Player extends Sprite {
     return engine;
   }
 
+  public void setEngine(PartEngine engine) {
+    this.engine = engine;
+  }
+
   public PartAero getAero() {
     return aero;
   }

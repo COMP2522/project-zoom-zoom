@@ -42,12 +42,6 @@ public class PartEngine {
         weight = w;
     }
 
-    public void setEngine(PartEngine engine) {
-        power = engine.getPower();
-        dropoff = engine.getDropoff();
-        opRevs = engine.getOpRevs();
-        weight = engine.getWeight();
-    }
     /**
      * Sets the engine power of the car.
      * @param power The new engine power.
