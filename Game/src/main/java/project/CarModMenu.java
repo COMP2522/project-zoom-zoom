@@ -17,6 +17,9 @@ public class CarModMenu implements Drawable {
   // Other data
   private GameManager window;
   private static CarModMenu instance;
+  private DisplayEngineStats engineStats;
+  private DisplayChassisStats chassisStats;
+  private DisplayAerodynamicStats aerodynamicStats;
 
   /**
    * CarModMenu, private constructor to create a singleton of the class.
@@ -27,6 +30,9 @@ public class CarModMenu implements Drawable {
     this.window = window;
     carModMenuImages = CarModMenuImages.getInstance(window);
     carModMenuButtons = CarModMenuButtons.getInstance(window);
+    engineStats = DisplayEngineStats.getInstance(window);
+    chassisStats = DisplayChassisStats.getInstance(window);
+    aerodynamicStats = DisplayAerodynamicStats.getInstance(window);
   }
 
   /**
@@ -49,7 +55,7 @@ public class CarModMenu implements Drawable {
     carModMenuButtons.setup();
     carModMenuImages.setup();
     gearInput = new TextBox(new PVector((window.displayWidth / 8) + 1100,
-        (window.displayHeight / 5) + 550), 200, 40, window);
+        (window.displayHeight / 5) + 575), 200, 50, window);
   }
 
   /**
@@ -61,5 +67,8 @@ public class CarModMenu implements Drawable {
     carModMenuButtons.draw();
     gearInput.draw();
     carModMenuImages.draw();
+    engineStats.draw();
+    chassisStats.draw();
+    aerodynamicStats.draw();
   }
 }

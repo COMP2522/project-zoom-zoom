@@ -62,6 +62,16 @@ public class PartGears {
     }
 
     /**
+     * Gets the gear ratio for gear i.
+     *
+     * @param i int value from 0 to 3
+     * @return gear i ratio.
+     */
+    public int getGear(int i) {
+        return gears[i];
+    }
+
+    /**
      * Returns the gear ratio for gear 1.
      * @return The gear ratio.
      */

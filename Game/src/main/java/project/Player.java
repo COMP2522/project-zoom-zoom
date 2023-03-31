@@ -201,12 +201,24 @@ public class Player extends Sprite {
     return engine;
   }
 
+  public void setEngine(PartEngine engine) {
+    this.engine = engine;
+  }
+
   public PartAero getAero() {
     return aero;
   }
 
+  public void setAero(PartAero aero) {
+    this.aero = aero;
+  }
+
   public PartChassis getChassis() {
     return chassis;
+  }
+
+  public void setChassis(PartChassis chassis) {
+    this.chassis = chassis;
   }
 
   public Player(PVector position, PVector direction, float size, float speed,
@@ -241,7 +253,7 @@ public class Player extends Sprite {
   @Override
   public void update() {
     drag();
-    grip = TIREGRIP + PartAero.getDownForce() * speed;
+    grip = TIREGRIP + this.aero.getDownForce() * speed;
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
     position.x = xpos;
@@ -331,6 +343,4 @@ public class Player extends Sprite {
       gearRatio = gears.shiftDown();
     }
   }
-
-
 }

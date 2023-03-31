@@ -4,6 +4,13 @@ package project;
  * Represents the engine part of a car, which affects power, dropoff, and weight.
  */
 public class PartEngine {
+    // Object instances
+    public static PartEngine engine1 = new PartEngine(7000, 0.6, 3000, 1000);
+    public static PartEngine engine2 = new PartEngine(9000, 0.7, 5000, 2000);
+    public static PartEngine engine3 = new PartEngine(4000, 0.3, 2000, 500);
+    public static PartEngine engine4 = new PartEngine(12000, 1, 4000, 2500);
+    // Store each instance in an array
+    public static PartEngine[] engineParts = {engine1, engine2, engine3, engine4};
     /**
      * The engine power of the car.
      */
@@ -35,12 +42,6 @@ public class PartEngine {
         weight = w;
     }
 
-    public void setEngine(double p, double droff, int oprev, int w){
-        power = p;
-        dropoff = droff;
-        opRevs = oprev;
-        weight = w;
-    }
     /**
      * Sets the engine power of the car.
      * @param power The new engine power.
