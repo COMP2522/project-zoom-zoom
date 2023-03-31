@@ -100,8 +100,8 @@ public class EngineButton extends Button {
   }
 
   /**
-   * drawPlayer1Indicator, draws a circle next to an engine button
-   *  to show player 1's current engine.
+   * drawPlayer2Indicator, draws a circle next to an engine button
+   *  to show player 2's current engine.
    */
   private static void drawPlayer2Indicator() {
     int x = (window.displayWidth / 8) + 90;
