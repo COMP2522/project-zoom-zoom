@@ -16,6 +16,11 @@ public class EngineButton extends Button {
   private static EngineButton[] engines = new EngineButton[4];
   private static Player player1 = GameManager.player1;
   private static Player player2 = GameManager.player2;
+  private static int x = (window.displayWidth / 8) - 100;
+  private static int y;
+  private static int engineLength = PartEngine.engineParts.length;
+  // Buffer used to adjust x or y position of button
+  private static int buffer;
 
   /**
    * Constructor to create an engine button object.
@@ -33,9 +38,7 @@ public class EngineButton extends Button {
    */
   public static void setupEngineButtons() {
     // Buffer used to adjust x or y position of button
-    int buffer = 50;
-    float x = (window.displayWidth / 8) - 100;
-    float y;
+    buffer = 50;
     PVector position;
     for (int i = 0; i < engines.length; i++) {
       y = (window.displayHeight / 5) + buffer;
@@ -52,6 +55,10 @@ public class EngineButton extends Button {
       engine.draw();
       engine.click();
       setPlayerEngine(engine);
+      drawPlayer1Indicator();
+      if (window.gameType == 2) {
+        drawPlayer2Indicator();
+      }
     }
   }
 
@@ -65,11 +72,44 @@ public class EngineButton extends Button {
     int engineIndex = Arrays.asList(engines).indexOf(engine);
 
     if (engine.isLeftClicked()) {
-      player1.getEngine().setEngine(PartEngine.engineParts[engineIndex]);
+      player1.setEngine(PartEngine.engineParts[engineIndex]);
       System.out.println("p1 e" + engineIndex);
     } else if (engine.isRightClicked()) {
-      player2.getEngine().setEngine(PartEngine.engineParts[engineIndex]);
+      player2.setEngine(PartEngine.engineParts[engineIndex]);
       System.out.println("p2 e" + engineIndex);
+    }
+  }
+
+  /**
+   * drawPlayer1Indicator, draws a circle next to an engine button
+   *  to show player 1's current engine.
+   */
+  private static void drawPlayer1Indicator() {
+    buffer = 50;
+    for (int i = 0; i < engineLength; i++) {
+      y = (window.displayHeight / 5) + buffer;
+      if (player1.getEngine().equals(PartEngine.engineParts[i])) {
+        window.fill(0, 255, 0);
+        window.ellipse(x, y, 20, 20);
+      }
+      buffer += 125;
+    }
+  }
+
+  /**
+   * drawPlayer1Indicator, draws a circle next to an engine button
+   *  to show player 1's current engine.
+   */
+  private static void drawPlayer2Indicator() {
+    int x = (window.displayWidth / 8) + 90;
+    buffer = 150;
+    for (int i = 0; i < engineLength; i++) {
+      int y = (window.displayHeight / 5) + buffer;
+      if (player2.getEngine().equals(PartEngine.engineParts[i])) {
+        window.fill(0, 255, 247);
+        window.ellipse(x, y, 20, 20);
+      }
+      buffer += 125;
     }
   }
 }
