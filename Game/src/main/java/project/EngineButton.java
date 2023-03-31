@@ -48,6 +48,9 @@ public class EngineButton extends Button {
     }
   }
 
+  /**
+   * drawEngines, draws all engine buttons in a static way.
+   */
   public static void drawEngines() {
     for (Button engine : engines) {
       window.noStroke();
