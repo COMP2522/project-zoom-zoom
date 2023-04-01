@@ -125,41 +125,6 @@ public class TrackPiece extends PApplet implements Drawable {
     int xPosition = smallerX + (x2 - x1) / 3 * playerNum;
     int yPosition = smallerY + (y2 - y1) / 3 * playerNum;
     return new PVector(xPosition, yPosition);
-    /*int xPosition;
-    int yPosition;
-
-    if (x1 == x2) {
-      xPosition = x2;
-      yPosition = (y2 + y1) / 3 * playerNum;
-    } else if (y1 == y2) {
-      xPosition = ((x1 + x2) / 3) * playerNum;
-      yPosition = y2;
-    } else {
-
-      int firstX;
-      int firstY;
-      int secondX;
-
-      if (x1 < x2) {
-        firstX = x1;
-        firstY = y1;
-        secondX = x2;
-      } else {
-        secondX = x1;
-        firstX = x2;
-        firstY = y2;
-      }
-
-      float slope = (y2 - y1) / (x2 - x1);
-
-      xPosition = ((secondX - firstX) / 3) * playerNum;
-      yPosition = (int) (firstY + (slope * xPosition));
-    }
-    PVector output = new PVector(xPosition, yPosition);
-    if (output == null) {
-      System.out.print("TrackPiece.findStartCords == null");
-    }
-    return output;*/
   }
 
   /** Fills line area outlined by addSlopeLines. */
@@ -221,8 +186,10 @@ public class TrackPiece extends PApplet implements Drawable {
       firstX = x1;
       firstY = y1;
       secondX = x2;
+      secondY = y2;
     } else {
       secondX = x1;
+      secondY = y1;
       firstX = x2;
       firstY = y2;
     }

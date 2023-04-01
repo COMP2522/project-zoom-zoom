@@ -14,7 +14,6 @@ import java.awt.*;
  */
 
 public class GameManager extends PApplet {
-
   private MainMenu mainMenu;
   TrackManager trackManager;
   ControlMenu controlMenu;
@@ -99,28 +98,15 @@ public class GameManager extends PApplet {
   public void startRace() {
     //startCountDown();  // Initialize countdown before race begins
     if (player1 != null) {
-
-      PVector replacement = trackManager.getStartCords(1);
-      System.out.print(player1.position + "\t" + replacement);
-      player1.position = replacement;
-
+      player1.position = trackManager.getStartCords(1);
       player1.xpos = player1.position.x;
       player1.ypos = player1.position.y;
-      System.out.println("\t" + player1.position);
     }
     if (player2 != null) {
-      PVector replacement = trackManager.getStartCords(2);
-      if (replacement == null) {
-        System.out.println("GameManager.startRace(2) == null\t");
-      }
-      player2.position = replacement;
-      if (player2.position == null) {
-        System.out.println("GameManager player2.position == null");
-      }
-
-    player2.xpos = player2.position.x;
-    player2.ypos = player2.position.y;
-  }
+      player2.position = trackManager.getStartCords(2);
+      player2.xpos = player2.position.x;
+      player2.ypos = player2.position.y;
+    }
 
     // IDK how the bot will be initialized, but if it matches the direct players, the following should work
     /*if (botPlayer != null) {

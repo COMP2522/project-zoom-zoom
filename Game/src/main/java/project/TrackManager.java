@@ -3,10 +3,7 @@ package project;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.Color;
 import java.util.ArrayList;
 
 /** Manages the track segments.
@@ -91,10 +88,6 @@ public class TrackManager implements Drawable {
   }
 
   public PVector getStartCords(int playerNumber) {
-    PVector give = tracks.get(0).getStartCord(playerNumber);
-    if (give == null) {
-      System.out.println("TrackManager.getStartCords == Null");
-    }
     return tracks.get(0).getStartCord(playerNumber);
   }
 
