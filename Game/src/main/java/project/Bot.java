@@ -21,8 +21,8 @@ public class Bot extends Player {
   private int currentWaypointIndex;
 
   public Bot(PVector position, PVector direction, float size, float speed,
-             Color color, GameManager window, ArrayList<PVector> waypoints) {
-    super(position, direction, size, speed, color, window);
+             Color color, GameManager window, ArrayList<PVector> waypoints, String playerNum) {
+    super(position, direction, size, speed, color, window, playerNum);
     this.position = position;
     this.direction = direction;
     this.steeringAngle = 0;
