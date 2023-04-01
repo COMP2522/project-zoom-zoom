@@ -88,6 +88,13 @@ public class TrackManager implements Drawable {
         window.rect(100, 800, 100, -550);
         window.popStyle();
         break;
+      case 3:
+        window.pushStyle();
+        window.stroke(roadCol.getRed(), roadCol.getGreen(), roadCol.getBlue());
+        window.fill(roadCol.getRed(), roadCol.getGreen(), roadCol.getBlue());
+        window.rect(100, 100, 700, 150);
+
+        window.popStyle();
     }
   }
 

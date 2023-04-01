@@ -407,7 +407,7 @@ public class Player extends Sprite {
         }
       }
     }
-    if(xpos > 300 && xpos < 350 && ypos > 450){
+    if(xpos > 400 && xpos < 450 && ypos > 500){
       lapFlag = true;
     }
   }
