@@ -1,28 +1,31 @@
 package project;
 
-import processing.core.PApplet;
-
 import java.util.ArrayList;
+import processing.core.PConstants;
+import processing.core.PImage;
 
 /**
- * It contains methods for initializing and running the game, as well as accessing player controls and timer settings.
+ * It contains methods for initializing and running the game,
+ * as well as accessing player controls and timer settings.
  */
 public class TwoPlayers {
   /**
-   * The window field represents the GameManager object that this game mode is running in.
+   * The window field represents the GameManager object
+   * that this game mode is running in.
    */
   private final GameManager window;
 
   /**
-   * The instance field is used for the Singleton design pattern, ensuring that only one instance
-   * of this class is created.
+   * The instance field is used for the Singleton design pattern,
+   * ensuring that only one instance of this class is created.
    */
   private static TwoPlayers instance;
 
   /**
-   * The sprites field is an ArrayList of Sprite objects that are drawn on the screen during the game.
+   * The sprites field is an ArrayList of car
+   * objects that are drawn on the screen during the game.
    */
-  ArrayList<Sprite> sprites;
+  ArrayList<Car> cars;
 
   /**
    * The playerControls field is a Controls object that handles player movement controls.
@@ -35,9 +38,19 @@ public class TwoPlayers {
   Player player1;
 
   /**
+   * Image used for player 1.
+   */
+  PImage player1Car;
+
+  /**
    * The player2 fields represent the Player two object in the game.
    */
   Player player2;
+
+  /**
+   * Image used for player 2.
+   */
+  PImage player2Car;
 
   /**
    * The stopwatch field represents a Stopwatch object used to keep track of game time.
@@ -55,30 +68,37 @@ public class TwoPlayers {
   int maxSize = 40;
 
   /**
-   * The player1 Keys instance variable represents the array of key codes for controlling the human player.
+   * The player1 Keys instance variable represents
+   * the array of key codes for controlling the first player.
    */
   int[] player1Keys = {87, 83, 65, 68, 20, 16};
 
   /**
-   * The player1 Keys instance variable represents the array of key codes for controlling the human player.
+   * The player1 Keys instance variable represents
+   * the array of key codes for controlling the second player.
    */
   int[] player2Keys = {73, 75, 74, 76, 59, 47};
 
   /**
-   * The timerCheck field is a boolean value that represents whether or not the game timer is currently active.
+   * The timerCheck field is a boolean value that represents
+   * whether or not the game timer is currently active.
    */
   boolean timerCheck = true;
 
   /**
-   * The constructor for TwoPlayers class is private to ensure that only one instance of this class can be created.
+   * The constructor for TwoPlayers class is private
+   * to ensure that only one instance of this class can be created.
+   *
    * @param window - The GameManager object that this game mode is running in.
    */
-  private TwoPlayers(GameManager window){
+  private TwoPlayers(GameManager window) {
     this.window = window;
   }
 
   /**
-   * The getInstance method returns the instance of the TwoPlayers class, creating it if it doesn't exist.
+   * The getInstance method returns the instance
+   * of the TwoPlayers class, creating it if it doesn't exist.
+   *
    * @param window - The GameManager object that this game mode is running in.
    * @return The instance of the TwoPlayers class.
    */
@@ -91,22 +111,25 @@ public class TwoPlayers {
 
   /**
    * The init2Player method initializes the game with two Player objects.
+   *
    * @param p1 - The first Player object.
    * @param p2 - The second Player object.
    */
   public void init2Player(Player p1, Player p2) {
     stopwatch = Stopwatch.getInstance(window);
-    sprites = new ArrayList<Sprite>();
+    cars = new ArrayList<Car>();
     player1 = p1;
     player2 = p2;
+    player1Car = window.loadImage("Game/images/Player1Car.png");
+    player2Car = window.loadImage("Game/images/Player2Car.png");
     playerControls = new Controls(player1, player2, player1Keys, player2Keys);
-
-    sprites.add(player1);
-    sprites.add(player2);
+    cars.add(player1);
+    cars.add(player2);
   }
 
   /**
-   * The draw method is called continuously during the game and updates the game state and draws sprites on the screen.
+   * The draw method is called continuously during the game
+   * and updates the game state and draws sprites on the screen.
    */
   public void draw() {
     if (timerCheck && stopwatch.getShowTimer()) {
@@ -120,10 +143,36 @@ public class TwoPlayers {
     stopwatch.startTimer();
     // Move player around the screen.
     Controls.playerMovement();
-    for (Sprite sprite : sprites) {
+    for (Car sprite : cars) {
       sprite.update();
       sprite.draw();
+      drawP1Car();
+      drawP2Car();
     }
+  }
+
+  /**
+   * drawP1Car, draws and rotates the image on top of the rectangle.
+   */
+  public void drawP1Car() {
+    window.pushMatrix();
+    window.translate((player1.position.x + Car.WIDTH) / 2, (player1.position.y + Car.HEIGHT) / 2);
+    window.imageMode(PConstants.CENTER);
+    window.rotate((float) player1.direction);
+    window.image(player1Car, (float) 0, (float) 12.5);
+    window.popMatrix();
+  }
+
+  /**
+   * drawP2Car, draws and rotates the image on top of the rectangle.
+   */
+  public void drawP2Car() {
+    window.pushMatrix();
+    window.translate((player2.position.x + Car.WIDTH) / 2, (player2.position.y + Car.HEIGHT) / 2);
+    window.imageMode(PConstants.CENTER);
+    window.rotate((float) player2.direction);
+    window.image(player2Car, (float) 0, (float) 10);
+    window.popMatrix();
   }
 
   /**
@@ -196,15 +245,6 @@ public class TwoPlayers {
    */
   public char getP1Right() {
     return (char) player1Keys[3];
-  }
-
-  /**
-   * Returns a boolean indicating whether the timer is currently active or not.
-   *
-   * @return true if the timer is currently active, false otherwise
-   */
-  public boolean getTimerCheck() {
-    return timerCheck;
   }
 
   /**
