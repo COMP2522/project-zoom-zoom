@@ -14,6 +14,8 @@ import java.awt.*;
  */
 public class TrackMenu {
 
+  private TrackManager trackManager;
+
   /**
    * The GameManager object that creates and manages the game window
    */
@@ -62,6 +64,7 @@ public class TrackMenu {
    */
   private TrackMenu(GameManager gameManager) {
     this.window = gameManager;
+    trackManager = window.getTrackManager();
   }
 
   /**
@@ -85,6 +88,8 @@ public class TrackMenu {
     bg = window.loadImage("Game/images/BGImage2.png");
     title = window.loadImage("Game/images/Select Track.png");
     track1Font = window.loadImage("Game/images/Track1.png");
+//    track2Font = window.loadImage("Game/images/Track2.png");
+//    track3Font = window.loadImage("Game/images/Track3.png");
     window.textSize(40);
     track1 = new Button(new PVector((float) (window.displayWidth / 2) - 525, 490), 300,
         80, "", new Color(104, 52, 235), window);
@@ -111,12 +116,29 @@ public class TrackMenu {
     }
     track1.click();
     track1.draw();
-    window.image(track1Font,(float) (window.displayWidth / 2) - 500, 500);
+    window.image(track1Font, (float) (window.displayWidth / 2) - 500, 500);
     track2.click();
     track2.draw();
+    //window.image(track2Font, (float) (window.displayWidth / 2 - 500 / 2), 500);
     track3.click();
     track3.draw();
+    //window.image(track3Font, (float) (window.displayWidth / 2) - 250, 500);
     if (track1.isLeftClicked()) {
+      trackManager.clearTrack();
+      trackManager.initTrack("Track 1");
+      window.startRace();
+      window.menu = 4;
+    }
+    if (track2.isLeftClicked()) {
+      trackManager.clearTrack();
+      trackManager.initTrack("Track 2");
+      window.startRace();
+      window.menu = 4;
+    }
+    if (track3.isLeftClicked()) {
+      trackManager.clearTrack();
+      trackManager.initTrack("Track 3");
+      window.startRace();
       window.menu = 4;
     }
   }

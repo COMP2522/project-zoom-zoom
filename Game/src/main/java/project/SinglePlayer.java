@@ -116,13 +116,13 @@ public class SinglePlayer {
 
     // Add the AI player
     bot = new Bot(
-      window.getStartingPosition(1, 1),
+      window.getStartingPosition(1),
       new PVector(50, 1),
       (minSize + 10),
       0.1F,
       new Color(255, 0, 0),
       window,
-      waypoints);
+      waypoints, "B");
     sprites.add(bot);
     dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
   }
