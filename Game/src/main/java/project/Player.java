@@ -183,6 +183,12 @@ public class Player extends Sprite {
 
   long oldTime = 0;
 
+  public void setTrack(int track) {
+    this.track = track;
+  }
+
+  int track = 0;
+
   /**
    * The maximum amount of speed reduction due to various factors (such as drag).
    */
@@ -356,14 +362,36 @@ public class Player extends Sprite {
    * Checks if the car is within the bounds of the track
    */
   public void onTrack(){
-    if ((xpos > 1240 || xpos < 40 || ypos > 680 || ypos < 40 || (xpos > 175 && xpos < 1090 && ypos > 170 && ypos < 530)) && (speed > MIN_GRASS_SPEED)){
-      speed -= OFF_TRACK_PENALTY;
+    switch (track) {
+      case 1:
+        if ((
+                xpos > 1300
+                || xpos < 100
+                || ypos > 800
+                || ypos < 100
+                || (xpos > 300 && xpos < 1100 && ypos > 300 && ypos < 600))
+                && (speed > MIN_GRASS_SPEED)) {
+          speed -= OFF_TRACK_PENALTY;
+        }
+        break;
+      case 2:
+        if (
+                (xpos > 1250
+                || xpos < 100
+                || ypos > 900
+                || ypos < 100
+                || (xpos > 200 && xpos < 1100 && ypos > 250 && ypos < 500 )
+                || (xpos > 200 && xpos < 800 && ypos > 250 && ypos < 700)
+                || (xpos > 950 && ypos > 600))
+                && speed > MIN_GRASS_SPEED){
+          speed -= OFF_TRACK_PENALTY;
+        }
     }
   }
 
   public void lap(){
 
-    if(xpos > 300 && xpos < 350 && ypos < 250){
+    if(xpos > 300 && xpos < 350 && ypos < 350){
       if(!start){
         start = true;
         oldTime = time.getCurrentTime();

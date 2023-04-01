@@ -208,7 +208,9 @@ public class GameManager extends PApplet {
         carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
-        trackManager.initTrack1();
+        trackManager.setTrackChoice(1);
+        player1.setTrack(1);
+        player2.setTrack(1);
       }
       case 5 -> {
         trackMenu = TrackMenu.getInstance(this);
@@ -224,7 +226,17 @@ public class GameManager extends PApplet {
         carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
-        trackManager.initTrack2();
+        trackManager.setTrackChoice(2);
+        player1.setTrack(2);
+        player2.setTrack(2);
+      }
+      case 8 -> {
+        carModMenu = CarModMenu.getInstance(this);
+        carModMenu.setup();
+        carModMenu.draw();
+        trackManager. setTrackChoice(3);
+        player1.setTrack(3);
+        player2.setTrack(3);
       }
       default -> {
         break;

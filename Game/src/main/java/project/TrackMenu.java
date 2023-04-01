@@ -122,5 +122,8 @@ public class TrackMenu {
     if (track2.isLeftClicked()){
       window.menu = 7;
     }
+    if(track3.isLeftClicked()){
+      window.menu = 8;
+    }
   }
 }
