@@ -4,11 +4,8 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
-import java.awt.*;
-
-
 /**
- * Game manager class to indicate whether the game is running or not
+ * Game manager class to indicate whether the game is running or not.
  *
  * @author Rohil Patel
  */
@@ -20,7 +17,6 @@ public class GameManager extends PApplet {
   CarModMenu carModMenu;
   SinglePlayer singlePlayer;
   TwoPlayers twoPlayers;
-  Stopwatch stopwatch;
   TrackMenu trackMenu;
   MongoDB mongoDB;
   Ranking ranking;
@@ -69,16 +65,12 @@ public class GameManager extends PApplet {
     player1 = new Player(
             getStartingPosition(1, 1),
             new PVector(50, 1),
-            (20),
             0.1F,
-            new Color(0, 255, 0),
             this);
     player2 = new Player(
         getStartingPosition(2, 2),
         new PVector(50, 1),
-        (20),
         0.1F,
-        new Color(0, 255, 247),
         this);
   }
   boolean isEditing = false;
@@ -185,7 +177,6 @@ public class GameManager extends PApplet {
         mainMenu = MainMenu.getInstance(this);
         mainMenu.setup();
         mainMenu.draw();
-        break;
       }
       case 1 -> { // 1 Player game
         singlePlayer = SinglePlayer.getInstance(this);
@@ -202,7 +193,6 @@ public class GameManager extends PApplet {
         controlMenu = ControlMenu.getInstance(this);
         controlMenu.setup();
         controlMenu.draw();
-        break;
       }
       case 4 -> { // Car modification menu
         carModMenu = CarModMenu.getInstance(this);
