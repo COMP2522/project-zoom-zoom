@@ -14,7 +14,7 @@ import java.awt.*;
  */
 
 public class GameManager extends PApplet {
-  MainMenu mainMenu;
+  private MainMenu mainMenu;
   TrackManager trackManager;
   ControlMenu controlMenu;
   CarModMenu carModMenu;
@@ -23,6 +23,7 @@ public class GameManager extends PApplet {
   Stopwatch stopwatch;
   TrackMenu trackMenu;
   MongoDB mongoDB;
+  final static boolean MongoEnabled = false;
   Ranking ranking;
   public static boolean audio = true;
   private int check = 1;
@@ -45,6 +46,9 @@ public class GameManager extends PApplet {
 
   private boolean gameRunning;
 
+  private int displayWidthCustom;
+  private int displayHeightCustom;
+
   // Private constructor to prevent instantiation
   private GameManager() {
   }
@@ -53,7 +57,10 @@ public class GameManager extends PApplet {
    * Called once at the beginning of the program.
    */
   public void settings() {
-    size(displayWidth, displayHeight);
+    displayWidthCustom = displayWidth;
+    displayHeightCustom = displayHeight;
+
+    size(displayWidthCustom, displayHeightCustom);
     this.fullScreen();
   }
 
@@ -66,7 +73,9 @@ public class GameManager extends PApplet {
    * Initializes all objects.
    */
   public void setup() {
-    mongoDB = MongoDB.getInstance();
+    if (MongoEnabled) {
+      mongoDB = MongoDB.getInstance();
+    }
     trackManager = new TrackManager(this);
 
     player1 = new Player(
@@ -75,27 +84,28 @@ public class GameManager extends PApplet {
             (20),
             0.1F,
             new Color(0, 255, 0),
-            this);
+            this, "1");
     player2 = new Player(
-        new PVector(100, 100), // Default location, overridden during startRace
-        new PVector(50, 1),
-        (20),
-        0.1F,
-        new Color(0, 255, 247),
-        this);
+            new PVector(100, 100), // Default location, overridden during startRace
+            new PVector(50, 1),
+            (20),
+            0.1F,
+            new Color(0, 255, 247),
+            this, "2");
+
   }
 
   public void startRace() {
     //startCountDown();  // Initialize countdown before race begins
     if (player1 != null) {
-      player1.position = this.getStartingPosition(1);
-      player1.xpos = this.getStartingPosition(1).x;
-      player1.ypos = this.getStartingPosition(1).y;
+      player1.position = trackManager.getStartCords(1);
+      player1.xpos = player1.position.x;
+      player1.ypos = player1.position.y;
     }
     if (player2 != null) {
-      player2.position = this.getStartingPosition(2);
-      player2.xpos = this.getStartingPosition(2).x;
-      player2.ypos = this.getStartingPosition(2).y;
+      player2.position = trackManager.getStartCords(2);
+      player2.xpos = player2.position.x;
+      player2.ypos = player2.position.y;
     }
 
     // IDK how the bot will be initialized, but if it matches the direct players, the following should work
@@ -120,7 +130,7 @@ public class GameManager extends PApplet {
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
-      if (mongoDB != null && singlePlayer != null) {
+      if (mongoDB != null && singlePlayer != null && MongoEnabled) {
         mongoDB.put("time", singlePlayer.stopwatch.currentTime);
       }
       if (singlePlayer != null) {
@@ -275,6 +285,14 @@ public class GameManager extends PApplet {
 
   public PVector getStartingPosition(int playerNumber) {
     return trackManager.getStartCords(playerNumber);
+  }
+
+  public int getDisplayWidthCustom() {
+    return displayWidthCustom;
+  }
+
+  public int getDisplayHeightCustom() {
+    return displayHeightCustom;
   }
 
   /**

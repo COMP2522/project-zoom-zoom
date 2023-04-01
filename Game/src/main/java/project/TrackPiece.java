@@ -4,14 +4,14 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
 
-import javax.sound.midi.Track;
-import java.awt.*;
+import java.awt.Color;
 
 /** Bezier curves for all tracks in our game.
  *
  * @author MaxwellV
  */
 public class TrackPiece extends PApplet implements Drawable {
+
   /** Booleans that toggle System outs. */
   private boolean arrayPrintOverride = false;
 
@@ -19,26 +19,22 @@ public class TrackPiece extends PApplet implements Drawable {
   private Color roadColor = new Color(76, 76, 76);
 
 
-  /** Stores the largest and smallest of each coordinate. */
+  /** Closest point to X = 0. */
   private int smallestX;
+  /** Furthest point from X = 0. */
   private int largestX;
+  /** Closest point to Y = 0. */
   private int smallestY;
+  /** Furthest point from Y = 0. */
   private int largestY;
 
-  PVector cordStartLeft;
-  PVector cordStartRight;
+  /** Player1's starting locations. */
+  private PVector cordStart1;
+  /** Player2's starting location. */
+  private PVector cordStart2;
 
-  /** This segment's shape object. */
+  /** This segment's shape object, that is drawn to the screen. */
   private PShape road;
-
-  /** This segment's shape object for the border. */
-  private PShape border;
-
-  /** Width of the border. */
-  private final int borderWidth = 20;
-
-  /** Color of the border. */
-//  private final Color borderColor = new Color(255, 0, 0);
 
   /** The gameManager. */
   private GameManager gameManager;
@@ -46,9 +42,14 @@ public class TrackPiece extends PApplet implements Drawable {
   /** Boolean array that mimics the shape. */
   private boolean[][] shapePixels;
 
+  /** Width of this shape. */
   private int segmentWidth;
+  /** Height of this shape. */
   private int segmentHeight;
+
+  /** Width +1 to account for index 0. */
   private int arrayWidth;
+  /** Height +1 to account for index 0. */
   private int arrayHeight;
 
   /** Constructor for a track piece.
@@ -68,30 +69,15 @@ public class TrackPiece extends PApplet implements Drawable {
                     GameManager gameManager) {
     this.gameManager = gameManager;
 
-    cordStartLeft = new PVector(closeLeftX, closeLeftY);
-    cordStartRight = new PVector(closeRightX, closeRightY);
+    cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 1);
+    cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 2);
 
-    // Find smallest X
-    smallestX = Math.min(closeLeftX, farLeftX);
-    smallestX = Math.min(smallestX, closeRightX);
-    smallestX = Math.min(smallestX, farRightX);
 
-    // Find largest X
-    largestX = Math.max(closeLeftX, farLeftX);
-    largestX = Math.max(largestX, closeRightX);
-    largestX = Math.max(largestX, farRightX);
+    smallestX = Math.min(Math.min(closeLeftX, farLeftX), Math.min(farRightX, closeRightX));
+    smallestY = Math.min(Math.min(closeLeftY, farLeftY), Math.min(farRightY, closeRightY));
+    largestX = Math.max(Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
+    largestY = Math.max(Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
 
-    // Find smallest Y
-    smallestY = Math.min(closeLeftY, farLeftY);
-    smallestY = Math.min(smallestY, closeRightY);
-    smallestY = Math.min(smallestY, farRightY);
-
-    // Find largest Y
-    largestY = Math.max(closeLeftY, farLeftY);
-    largestY = Math.max(largestY, closeRightY);
-    largestY = Math.max(largestY, farRightY);
-
-    // Add 1 to account for index 0 in arrays
     segmentWidth = largestX - smallestX;
     segmentHeight = largestY - smallestY;
     arrayWidth = segmentWidth + 1;
@@ -117,21 +103,6 @@ public class TrackPiece extends PApplet implements Drawable {
     road.vertex((farRightX - smallestX), (farRightY - smallestY));
     road.vertex((closeRightX - smallestX), (closeRightY - smallestY));
     road.endShape();
-
-
-    //Setup drawable shape object for the border.
-    border = gameManager.createShape();
-    border.beginShape();
-//    border.stroke(borderColor.getRGB());
-    border.strokeWeight(borderWidth);
-
-    // Add the border around the road.
-    border.vertex((closeLeftX - smallestX) - borderWidth/2, (closeLeftY - smallestY) - borderWidth/2);
-    border.vertex((farLeftX - smallestX) - borderWidth/2, (farLeftY - smallestY) - borderWidth/2);
-    border.vertex((farRightX - smallestX) + borderWidth/2, (farRightY - smallestY) + borderWidth/2);
-    border.vertex((closeRightX - smallestX) + borderWidth/2, (closeRightY - smallestY) + borderWidth/2);
-    border.endShape();
-
   }
 
   /** Get the starting location
@@ -141,13 +112,22 @@ public class TrackPiece extends PApplet implements Drawable {
    */
   public PVector getStartCord(int playerNumber) {
     if (playerNumber == 1) {
-      return cordStartLeft;
+      return cordStart1;
     } else {
-      return cordStartRight;
+      return cordStart2;
     }
   }
 
-  /** Fills line created by addSlopeLines. */
+  /** Uses averages calc to find starting position. */
+  private PVector calculateStartCords(int x1, int y1, int x2, int y2, int playerNum) {
+    int smallerX = Math.min(x1, x2);
+    int smallerY = Math.min(y1, y2);
+    int xPosition = smallerX + (x2 - x1) / 3 * playerNum;
+    int yPosition = smallerY + (y2 - y1) / 3 * playerNum;
+    return new PVector(xPosition, yPosition);
+  }
+
+  /** Fills line area outlined by addSlopeLines. */
   public void fillArray() {
     int activePixels = 0;
 
@@ -224,47 +204,35 @@ public class TrackPiece extends PApplet implements Drawable {
     }
   }
 
-  /** Check is coordinate is on the track.
-   *  Uses int for X and Y coordinates
+  /** Add this piece's array to the track manager's array.
    *
-   * @param xCord X Cord to check
-   * @param yCord Y Cord to check
-   * @return True if cords are on track, false if not
+   * @param inputArray Array to add this pieces cords to
+   * @param inputWidth Width of the inputted array
+   * @param inputHeight Height of the inputted array
+   * @return Modified input array, this array added.
    */
-  public boolean isOnTrack(int xCord, int yCord) {
-    if ((smallestX <= xCord && xCord <= smallestX + segmentWidth) && (smallestY <= yCord && yCord <= smallestY + segmentHeight)) {
-      if (TrackManager.isOnTesterMode)
-        System.out.print("Touched Box\t");
-
-      if (shapePixels[xCord - smallestX][yCord - smallestY] == true ) {
-        if (TrackManager.isOnTesterMode)
-          System.out.println("\t Actual");
-        return true;
-      } else {
-        if (TrackManager.isOnTesterMode)
-          System.out.println("\tNot Actual");
+  public boolean[][] addPixels(boolean[][] inputArray, int inputWidth, int inputHeight) {
+    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
+      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+        if (shapePixels[wTimer][hTimer] == true) { // If piece array
+//          if (inputArray[wTimer + smallestX][hTimer + smallestY] == false) { // Avoid overriding manager array
+            inputArray[wTimer + smallestX][hTimer + smallestY] = shapePixels[wTimer][hTimer];
+//          }
+        }
       }
     }
-    return false;
+    return inputArray;
   }
 
-  /**
-   * Draw each frame.
-   */
+  /** Draw each frame. */
   public void draw() {
-    if (TrackManager.isOnTesterMode) { // Show general track hitboxes
-      gameManager.fill(255, 255, 255);
-      gameManager.rect(smallestX, smallestY, segmentWidth, segmentHeight);
-    }
     gameManager.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
     gameManager.shape(road, smallestX, smallestY);
-//    gameManager.shape(border, smallestX, smallestY);
   }
 
-  /** Prints the shape array to visualize. */
+  /** Prints the shape array to assist visualize. */
   public void printPixels() {
     if (arrayPrintOverride && TrackManager.isOnTesterMode) { // Prints boolean array shapes
-
       int row = 0;
       // Testing pixels that prints '-' as false, 'X' as true
       System.out.print("  ");
@@ -291,34 +259,6 @@ public class TrackPiece extends PApplet implements Drawable {
       }
       System.out.println();
     }
-  }
-
-  public boolean isColliding(float x, float y, float radius) {
-    // Check if the player's car is outside the bounds of the track
-    if (x - radius < smallestX || x + radius > largestX || y - radius < smallestY || y + radius > largestY) {
-      return true;
-    }
-
-    // Check if the player's car is inside the border of the track
-    int px = (int) (x - smallestX);
-    int py = (int) (y - smallestY);
-    int pr = (int) radius;
-    for (int i = px - pr; i <= px + pr; i++) {
-      for (int j = py - pr; j <= py + pr; j++) {
-        if (i < 0 || i >= arrayWidth || j < 0 || j >= arrayHeight) {
-          continue;
-        }
-        if (shapePixels[i][j] == false) {
-          float dx = i + smallestX - x;
-          float dy = j + smallestY - y;
-          if (dx * dx + dy * dy < radius * radius) {
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
   }
 
 }
