@@ -1,7 +1,7 @@
 package project;
 
 import java.awt.*;
-import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
 
@@ -70,7 +70,8 @@ public class MainMenu implements Drawable {
    * setup, Sets up all objects needed for the main menu.
    */
   public void setup() {
-
+    window.imageMode(PConstants.CORNER);
+    window.rectMode(PConstants.CORNER);
     // Set up buttons
     onePlayer = new Button(new PVector((float) (window.displayWidth / 2) - 100, 500), 225, 50,
         "", new Color(0, 150, 0), window);
