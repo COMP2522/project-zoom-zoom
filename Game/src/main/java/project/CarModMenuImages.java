@@ -16,6 +16,10 @@ public class CarModMenuImages implements Drawable {
   private PImage mainMenuImage;
   private static CarModMenuImages instance;
   protected static GameManager window;
+  private static final int clock = 5;
+  private boolean showTitle = true;
+  private static int x;
+  private static int y;
 
   /**
    * CarModMenuImages, private constructor for class using singleton design.
@@ -80,9 +84,28 @@ public class CarModMenuImages implements Drawable {
     GearImages.drawGearImages();
     PartTitleImages.drawPartTitleImages();
     // Draw text images
-    window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
-    window.image(startRaceImage, (window.displayWidth / 8) + 705, 760);
-    window.image(mainMenuImage, (window.displayWidth / 8) + 305, 760);
-    window.image(saveBuild, (window.displayWidth / 8) - 100, 760);
+    showTitle();
+    x = (window.displayWidth / 8) - 100;
+    y = 760;
+    window.image(saveBuild, x, y);
+    x = (window.displayWidth / 8) + 305;
+    window.image(mainMenuImage, x, y);
+    x = (window.displayWidth / 8) + 705;
+    window.image(startRaceImage, x, y);
+  }
+
+  /**
+   * showTitle, shows the menu title every half second.
+   */
+  private void showTitle() {
+    x = window.displayWidth / 4 + 75;
+    y = window.displayHeight / 10;
+    if (window.frameCount % clock == 0) {
+      // Sets to opposite boolean expression every second
+      showTitle = !showTitle;
+    }
+    if (showTitle) {
+      window.image(menuTitleImage, x, y);
+    }
   }
 }
