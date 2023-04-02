@@ -14,24 +14,12 @@ public class CarModMenuImages implements Drawable {
   private PImage startRaceImage;
   private PImage saveBuild;
   private PImage mainMenuImage;
-  private PImage gear1;
-  private PImage gear2;
-  private PImage gear3;
-  private PImage gear4;
-  private PImage[] engineImages = new PImage[4];
-  private PImage[] chassisImages = new PImage[4];
-  private PImage[] aerodynamicImages = new PImage[4];
-  private PImage[] partTitleImages = new PImage[4];
-  // Image file names
-  private String[] engineImageNames;
-  private String[] chassisImageNames;
-  private String[] aeroImageNames;
-  private String[] titleImageNames;
-  // Manager objects
   private static CarModMenuImages instance;
-  private GameManager window;
-  // Buffer used to adjust x or y position of image
-  private int buffer;
+  protected static GameManager window;
+  private static final int clock = 5;
+  private boolean showTitle = true;
+  private static int x;
+  private static int y;
 
   /**
    * CarModMenuImages, private constructor for class using singleton design.
@@ -54,25 +42,10 @@ public class CarModMenuImages implements Drawable {
     return instance;
   }
 
-
+  /**
+   * setup, sets up all images needed for the car mod menu.
+   */
   public void setup() {
-    // Get image file names
-    FileReader.readFiles("Game/images/");
-    // Instantiate images for engine buttons
-    engineImageNames = FileReader.engineImages();
-    for (int i = 0; i < engineImages.length; i++) {
-      engineImages[i] = window.loadImage("Game/images/" + engineImageNames[i]);
-    }
-    // Instantiate images for chassis buttons
-    chassisImageNames = FileReader.chassisImages();
-    for (int i = 0; i < chassisImages.length; i++) {
-      chassisImages[i] = window.loadImage("Game/images/" + chassisImageNames[i]);
-    }
-    // Instantiate images for aero buttons
-    aeroImageNames = FileReader.aerodynamicsImages();
-    for (int i = 0; i < aerodynamicImages.length; i++) {
-      aerodynamicImages[i] = window.loadImage("Game/images/" + aeroImageNames[i]);
-    }
     /* Instantiate a slightly different background image
      if one player or two player game was selected. */
     if (window.gameType == 1) {
@@ -80,20 +53,16 @@ public class CarModMenuImages implements Drawable {
     } else if (window.gameType == 2) {
       bgImage = window.loadImage("Game/images/BGImage.png");
     }
-    // Instantiate part title images
-    titleImageNames = FileReader.carModTitles();
-    for (int i = 0; i < partTitleImages.length; i++) {
-      partTitleImages[i] = window.loadImage("Game/images/" + titleImageNames[i]);
-    }
+    EngineImages.setupEngineImages();
+    ChassisImages.setupChassisImages();
+    AerodynamicsImages.setupAeroImages();
+    GearImages.setupGearImages();
+    PartTitleImages.setupPartTitleImages();
     // Instantiate other images
     menuTitleImage = window.loadImage("Game/images/CarModTitle.png");
     startRaceImage = window.loadImage("Game/images/StartRace.png");
     mainMenuImage = window.loadImage("Game/images/MainMenu.png");
     saveBuild = window.loadImage("Game/images/SaveBuild.png");
-    gear1 = window.loadImage("Game/images/Gear1.png");
-    gear2 = window.loadImage("Game/images/Gear2.png");
-    gear3 = window.loadImage("Game/images/Gear3.png");
-    gear4 = window.loadImage("Game/images/Gear4.png");
   }
 
   /**
@@ -101,21 +70,7 @@ public class CarModMenuImages implements Drawable {
    * any other objects are drawn.
    */
   public void drawBackground() {
-    // Draw background image
     window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
-    buffer = -100;
-    for (int i = 0; i < partTitleImages.length; i ++) {
-      window.image(partTitleImages[i], (window.displayWidth / 8) + buffer, window.displayHeight / 5);
-      if (i == 1) {
-        // update aero x position
-        buffer = 1125;
-      } else if (i == 2) {
-        // update gear x position
-        buffer = 650;
-      } else {
-        buffer += 400;
-      }
-    }
   }
 
   /**
@@ -123,35 +78,34 @@ public class CarModMenuImages implements Drawable {
    */
   @Override
   public void draw() {
-    buffer = 50;
-    // Draw images for each engine
-    for (PImage engine : engineImages) {
-      window.image(engine, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + buffer);
-      buffer += 125;
-    }
-
-    buffer = 50;
-    // Draw images for each chassis
-    for (PImage chassis : chassisImages) {
-      window.image(chassis, (window.displayWidth / 8) + 300, (window.displayHeight / 5) + buffer);
-      buffer += 125;
-    }
-
-    buffer = 50;
-    // Draw images for each aerodynamics
-    for (PImage aero : aerodynamicImages) {
-      window.image(aero, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + buffer);
-      buffer += 125;
-    }
-
+    EngineImages.drawEngineImages();
+    ChassisImages.drawChassisImages();
+    AerodynamicsImages.drawAeroImages();
+    GearImages.drawGearImages();
+    PartTitleImages.drawPartTitleImages();
     // Draw text images
-    window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
-    window.image(startRaceImage, (window.displayWidth / 8) + 705, 760);
-    window.image(mainMenuImage, (window.displayWidth / 8) + 305, 760);
-    window.image(saveBuild, (window.displayWidth / 8) - 100, 760);
-    window.image(gear1, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 50);
-    window.image(gear2, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 175);
-    window.image(gear3, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 300);
-    window.image(gear4, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 425);
+    showTitle();
+    x = (window.displayWidth / 8) - 100;
+    y = 760;
+    window.image(saveBuild, x, y);
+    x = (window.displayWidth / 8) + 305;
+    window.image(mainMenuImage, x, y);
+    x = (window.displayWidth / 8) + 705;
+    window.image(startRaceImage, x, y);
+  }
+
+  /**
+   * showTitle, shows the menu title every half second.
+   */
+  private void showTitle() {
+    x = window.displayWidth / 4 + 75;
+    y = window.displayHeight / 10;
+    if (window.frameCount % clock == 0) {
+      // Sets to opposite boolean expression every second
+      showTitle = !showTitle;
+    }
+    if (showTitle) {
+      window.image(menuTitleImage, x, y);
+    }
   }
 }

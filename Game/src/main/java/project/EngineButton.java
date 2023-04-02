@@ -12,8 +12,9 @@ public class EngineButton extends Button {
   /** Constants for engine button. */
   private static final float WIDTH = 200;
   private static final float HEIGHT = 100;
+  private static final int ENGINE_AMOUNT = 4;
   /** Other data. */
-  private static EngineButton[] engines = new EngineButton[4];
+  private static EngineButton[] engines = new EngineButton[ENGINE_AMOUNT];
   private static Player player1 = GameManager.player1;
   private static Player player2 = GameManager.player2;
   private static int x = (window.displayWidth / 8) - 100;
@@ -26,11 +27,10 @@ public class EngineButton extends Button {
    * Constructor to create an engine button object.
    *
    * @param position of button on window
-   * @param text  of button
    * @param window of game
    */
-  public EngineButton(PVector position, String text, GameManager window) {
-    super(position, WIDTH, HEIGHT, text, window);
+  public EngineButton(PVector position, GameManager window) {
+    super(position, WIDTH, HEIGHT, window);
   }
 
   /**
@@ -43,7 +43,7 @@ public class EngineButton extends Button {
     for (int i = 0; i < engines.length; i++) {
       y = (window.displayHeight / 5) + buffer;
       position = new PVector(x, y);
-      engines[i] = new EngineButton(position, "", window);
+      engines[i] = new EngineButton(position, window);
       buffer += 125;
     }
   }
@@ -73,13 +73,10 @@ public class EngineButton extends Button {
    */
   private static void setPlayerEngine(Button engine) {
     int engineIndex = Arrays.asList(engines).indexOf(engine);
-
     if (engine.isLeftClicked()) {
       player1.setEngine(PartEngine.engineParts[engineIndex]);
-      System.out.println("p1 e" + engineIndex);
     } else if (engine.isRightClicked()) {
       player2.setEngine(PartEngine.engineParts[engineIndex]);
-      System.out.println("p2 e" + engineIndex);
     }
   }
 
@@ -104,10 +101,10 @@ public class EngineButton extends Button {
    *  to show player 2's current engine.
    */
   private static void drawPlayer2Indicator() {
-    int x = (window.displayWidth / 8) + 90;
+    x = (window.displayWidth / 8) + 90;
     buffer = 150;
     for (int i = 0; i < engineLength; i++) {
-      int y = (window.displayHeight / 5) + buffer;
+      y = (window.displayHeight / 5) + buffer;
       if (player2.getEngine().equals(PartEngine.engineParts[i])) {
         window.fill(0, 255, 247);
         window.ellipse(x, y, 20, 20);

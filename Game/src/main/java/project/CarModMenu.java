@@ -54,8 +54,11 @@ public class CarModMenu implements Drawable {
   public void setup() {
     carModMenuButtons.setup();
     carModMenuImages.setup();
-    gearInput = new TextBox(new PVector((window.displayWidth / 8) + 1100,
-        (window.displayHeight / 5) + 575), 200, 50, window);
+    int x = (window.displayWidth / 8) + 1100;
+    int y = (window.displayHeight / 5) + 575;
+    int width = 200;
+    int height = 50;
+    gearInput = new TextBox(new PVector(x, y), width, height, window);
   }
 
   /**

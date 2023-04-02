@@ -54,7 +54,8 @@ public class DisplayEngineStats implements Drawable {
    * @param ypos of screen
    */
   private void engineStats(PartEngine engine, int ypos) {
-    window.textSize(20);
+    int medium = 20;
+    window.textSize(medium);
     window.fill(0,0,0);
     int x = (window.displayWidth / 8) + 100;
     int y = (window.displayHeight / 5) + ypos;

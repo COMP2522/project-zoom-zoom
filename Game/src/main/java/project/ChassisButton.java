@@ -12,8 +12,9 @@ public class ChassisButton extends Button {
   /** Constants for chassis button. */
   private static final float WIDTH = 200;
   private static final float HEIGHT = 100;
+  private static final int CHASSIS_AMOUNT = 4;
   /** Other data. */
-  private static ChassisButton[] chassis = new ChassisButton[4];
+  private static ChassisButton[] chassis = new ChassisButton[CHASSIS_AMOUNT];
   private static Player player1 = GameManager.player1;
   private static Player player2 = GameManager.player2;
   private static int x = (window.displayWidth / 8) + 300;
@@ -26,11 +27,10 @@ public class ChassisButton extends Button {
    * Constructor to create a chassis button object.
    *
    * @param position of button on window
-   * @param title    text of button
    * @param window   of game
    */
-  public ChassisButton(PVector position, String title, GameManager window) {
-    super(position, WIDTH, HEIGHT, title, window);
+  public ChassisButton(PVector position, GameManager window) {
+    super(position, WIDTH, HEIGHT, window);
   }
 
   /**
@@ -42,7 +42,7 @@ public class ChassisButton extends Button {
     for (int i = 0; i < chassis.length; i++) {
       y = (window.displayHeight / 5) + buffer;
       position = new PVector(x, y);
-      chassis[i] = new ChassisButton(position, "", window);
+      chassis[i] = new ChassisButton(position, window);
       buffer += 125;
     }
   }
@@ -72,13 +72,10 @@ public class ChassisButton extends Button {
    */
   private static void setPlayerChassis(Button chassi) {
     int chassisIndex = Arrays.asList(chassis).indexOf(chassi);
-
     if (chassi.isLeftClicked()) {
       player1.setChassis(PartChassis.chassisParts[chassisIndex]);
-      System.out.println("p1 c" + (chassisIndex + 1));
     } else if (chassi.isRightClicked()) {
       player2.setChassis(PartChassis.chassisParts[chassisIndex]);
-      System.out.println("p2 c" + (chassisIndex + 1));
     }
   }
 
