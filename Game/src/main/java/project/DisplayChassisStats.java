@@ -54,7 +54,8 @@ public class DisplayChassisStats implements Drawable {
    * @param ypos of screen
    */
   private void chassisStats(PartChassis chassis, int ypos) {
-    window.textSize(20);
+    int medium = 20;
+    window.textSize(medium);
     window.fill(0);
     int x = (window.displayWidth / 8) + 500;
     int y = (window.displayHeight / 5) + ypos;
