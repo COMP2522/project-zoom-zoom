@@ -19,10 +19,8 @@ public class CarModMenuImages implements Drawable {
   private PImage gear2;
   private PImage gear3;
   private PImage gear4;
-  private PImage[] aerodynamicImages = new PImage[IMAGE_AMOUNT];
   private PImage[] partTitleImages = new PImage[IMAGE_AMOUNT];
   // Image file names
-  private String[] aeroImageNames;
   private String[] titleImageNames;
   // Manager objects
   private static CarModMenuImages instance;
@@ -55,11 +53,7 @@ public class CarModMenuImages implements Drawable {
   public void setup() {
     EngineImages.setupEngineImages();
     ChassisImages.setupChassisImages();
-    // Instantiate images for aero buttons
-    aeroImageNames = FileReader.aerodynamicsImages();
-    for (int i = 0; i < aerodynamicImages.length; i++) {
-      aerodynamicImages[i] = window.loadImage("Game/images/" + aeroImageNames[i]);
-    }
+    AerodynamicsImages.setupAeroImages();
     /* Instantiate a slightly different background image
      if one player or two player game was selected. */
     if (window.gameType == 1) {
@@ -112,13 +106,7 @@ public class CarModMenuImages implements Drawable {
   public void draw() {
     EngineImages.drawEngineImages();
     ChassisImages.drawChassisImages();
-
-    buffer = 50;
-    // Draw images for each aerodynamics
-    for (PImage aero : aerodynamicImages) {
-      window.image(aero, (window.displayWidth / 8) + 700, (window.displayHeight / 5) + buffer);
-      buffer += 125;
-    }
+    AerodynamicsImages.drawAeroImages();
 
     // Draw text images
     window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
