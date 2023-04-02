@@ -1,10 +1,9 @@
 package project;
 
-import processing.core.PApplet;
-import processing.core.PVector;
-
 import java.awt.*;
 import java.util.Arrays;
+import processing.core.PApplet;
+import processing.core.PVector;
 
 /**
  * CarModMenuButtons, handles all buttons needed for CarModMenu.
@@ -16,9 +15,6 @@ public class CarModMenuButtons implements Drawable {
   // Other data
   private GameManager window;
   private static CarModMenuButtons instance;
-  // Buffer used to adjust x or y position of button
-  private int buffer;
-  private PVector position;
   // Player objects
   private Player player1 = GameManager.player1;
   private Player player2 = GameManager.player2;
@@ -60,12 +56,15 @@ public class CarModMenuButtons implements Drawable {
    * setUpOtherButtons, sets up all other buttons needed for CarModMenu.
    */
   public void setupOtherButtons() {
-    saveCarBuild = new Button(new PVector((window.displayWidth / 8) - 100, 750), 200, 50,
-        "", new Color(104, 52, 235), window);
-    backToMainMenu = new Button(new PVector((window.displayWidth / 8) + 300, 750), 200, 50,
-        "", new Color(0, 0, 150), window);
-    startRace = new Button(new PVector((window.displayWidth / 8) + 700, 750), 200, 50,
-        "", new Color(0, 150, 0), window);
+    int x = (window.displayWidth / 8) - 100;
+    int y = 750;
+    int width = 200;
+    int height = 50;
+    saveCarBuild = new Button(new PVector(x, y), width, height, Button.PURPLE, window);
+    x += 400;
+    backToMainMenu = new Button(new PVector(x, y), width, height, Button.BLUE, window);
+    x += 400;
+    startRace = new Button(new PVector(x, y), width, height, Button.GREEN, window);
   }
 
   /**
@@ -73,15 +72,29 @@ public class CarModMenuButtons implements Drawable {
    */
   @Override
   public void draw() {
-    window.textSize(30);
     EngineButton.drawEngines();
     ChassisButton.drawChassis();
     AerodynamicsButton.drawAerodynamics();
     GearButton.drawGears();
-
     // Draw start race button
     startRace.draw();
     startRace.click();
+    startRace();
+    // Draw the back to main menu button
+    backToMainMenu.draw();
+    backToMainMenu.click();
+    if (backToMainMenu.isLeftClicked()) {
+      window.menu = 0;
+    }
+    saveCarBuild.draw();
+    saveCarBuild.click();
+    saveCarBuild();
+  }
+
+  /**
+   * startRace, helper function that starts the race once the button is clicked.
+   */
+  private void startRace() {
     if (startRace.isLeftClicked()) {
       if (window.gameType == 1) {
         // Initialize one player game
@@ -95,14 +108,13 @@ public class CarModMenuButtons implements Drawable {
         window.menu = 2;
       }
     }
-    // Draw the back to main menu button
-    backToMainMenu.draw();
-    backToMainMenu.click();
-    if (backToMainMenu.isLeftClicked()) {
-      window.menu = 0;
-    }
-    saveCarBuild.draw();
-    saveCarBuild.click();
+  }
+
+  /**
+   * saveCarBuild, saves the player's car build to the database once
+   * the button is left or right clicked.
+   */
+  private void saveCarBuild() {
     if (saveCarBuild.isLeftClicked()) {
       // Save player1's car parts to database
       System.out.println("Player 1 build saved");

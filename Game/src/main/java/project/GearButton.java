@@ -1,10 +1,9 @@
 package project;
 
-import processing.core.PApplet;
-import processing.core.PVector;
-
 import java.awt.*;
 import java.util.Arrays;
+import processing.core.PApplet;
+import processing.core.PVector;
 
 /**
  * GearButton, button subclass designated for gear parts.
@@ -15,39 +14,36 @@ public class GearButton extends Button {
   /** Constants for gear button. */
   private static final float WIDTH = 200;
   private static final float HEIGHT = 100;
-  private static final Color COLOR = new Color(255, 0, 0);
+  private static final int GEAR_AMOUNT = 4;
   /** Other data. */
-  private static GearButton[] gears = new GearButton[4];
+  private static GearButton[] gears = new GearButton[GEAR_AMOUNT];
   private static Player player1 = GameManager.player1;
   private static Player player2 = GameManager.player2;
   private static int buffer;
   private static int x;
   private static int y;
 
-
   /**
    * Constructor to create a gear button object.
    *
    * @param position of button on window
-   * @param title    text of button
    * @param window   of game
    */
-  public GearButton(PVector position, String title, GameManager window) {
-    super(position, WIDTH, HEIGHT, title, COLOR, window);
+  public GearButton(PVector position, GameManager window) {
+    super(position, WIDTH, HEIGHT, Button.RED, window);
   }
 
   /**
    * setupGearButtons, sets up all gear buttons needed for CarModMenu.
    */
   public static void setupGearButtons() {
-    window.textAlign(PApplet.CENTER, PApplet.CENTER);
     buffer = 50;
     x = (window.displayWidth / 8) + 1100;
     PVector position;
     for (int i = 0; i < gears.length; i++) {
       y = (window.displayHeight / 5) + buffer;
       position = new PVector(x, y);
-      gears[i] = new GearButton(position, "", window);
+      gears[i] = new GearButton(position, window);
       buffer += 125;
     }
   }
@@ -71,11 +67,11 @@ public class GearButton extends Button {
   /**
    * setPlayerGears, sets the players gears based on the text box
    * and which button was clicked.
+   *
    * @param gear button
    */
   public static void setPlayerGears(Button gear) {
     int gearsIndex = Arrays.asList(gears).indexOf(gear);
-
     if (gear.isLeftClicked()) {
       // Set player1 gear1
       System.out.println("p1 g" + (gearsIndex + 1) + ": " + window.inputVal);
@@ -89,6 +85,7 @@ public class GearButton extends Button {
    * showPlayer1Gears, shows all gear ratios for player 1.
    */
   public static void showPlayer1Gears() {
+    window.textAlign(PApplet.CENTER, PApplet.CENTER);
     buffer = 100;
     x = (window.displayWidth / 8) + 1150;
     for (int i = 0; i < gears.length; i++) {
