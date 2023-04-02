@@ -8,7 +8,7 @@ import java.util.Random;
 import static java.lang.Math.PI;
 import static processing.core.PApplet.constrain;
 
-public class Bot extends Player {
+public class Bot extends Car {
   private PVector position;
   private PVector direction;
   private PVector velocity;
@@ -20,9 +20,9 @@ public class Bot extends Player {
   private ArrayList<PVector> waypoints;
   private int currentWaypointIndex;
 
-  public Bot(PVector position, PVector direction, float size, float speed,
-             Color color, GameManager window, ArrayList<PVector> waypoints, String playerNum) {
-    super(position, direction, size, speed, color, window, playerNum);
+  public Bot(PVector position, PVector direction, float speed,
+             Color color, GameManager window, ArrayList<PVector> waypoints, String b) {
+    super(position, direction, speed, color, window);
     this.position = position;
     this.direction = direction;
     this.steeringAngle = 0;
@@ -38,7 +38,7 @@ public class Bot extends Player {
   @Override
   public void update() {
     // check if we have reached the current waypoint
-    if (position.dist(waypoints.get(currentWaypointIndex)) < size) {
+    if (position.dist(waypoints.get(currentWaypointIndex)) < WIDTH) {
       // if we have, increment to the next waypoint
       currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.size();
     }

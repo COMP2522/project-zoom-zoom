@@ -1,15 +1,14 @@
 package project;
 
+import processing.core.PConstants;
 import processing.core.PVector;
 
 import java.awt.*;
 
-
-
 /**
  * Player, creates a player sprite to be controlled by the user.
  */
-public class Player extends Sprite {
+public class Player extends Car {
 
   private String playerNum;
   private TrackManager trackManager;
@@ -109,13 +108,13 @@ public class Player extends Sprite {
 
   @Override
   public float getSpeed() {
-    return (float)speed;
+    return speed;
   }
 
   /**
    * The current speed of the car.
    */
-  double speed = 0;
+  float speed = 0;
 
   /**
    * current RPM of the car.
@@ -223,9 +222,9 @@ public class Player extends Sprite {
     this.chassis = chassis;
   }
 
-  public Player(PVector position, PVector direction, float size, float speed,
-                Color color, GameManager window, String playerNum) {
-    super(position, direction, size, speed, color, window);
+  public Player(PVector position, PVector direction, float speed,
+                GameManager window, String playerNum) {
+    super(position, direction, speed, window);
     xpos = position.x;
     ypos = position.y;
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
@@ -233,14 +232,15 @@ public class Player extends Sprite {
     this.playerNum = playerNum;
     trackManager = window.getTrackManager();
   }
-
-
   @Override
   public void draw() {
-    window.pushStyle();
-    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
-    window.ellipse(xpos, ypos, size, size);
-    window.popStyle();
+    window.pushMatrix();
+    window.translate((position.x + WIDTH) / 2, (position.y + HEIGHT) / 2);
+    window.rotate((float) direction);
+    window.rectMode(PConstants.CENTER);
+    window.fill(0, 0);
+    window.rect(0, 0, WIDTH, HEIGHT);
+    window.popMatrix();
     onTrack();
   }
 

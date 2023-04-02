@@ -80,11 +80,11 @@ public class TrackManager implements Drawable {
 
 //    printPixels();
 
-    grassImage = window.loadImage("Game/images/trackGrass4.png");
-    int pixelModifier = 100;   // Default BG Image Dimensions: 600 x 400.
-    grassImage.width = window.getDisplayWidthCustom() / pixelModifier;
-    grassImage.height = window.getDisplayHeightCustom() / pixelModifier;
-    window.image(grassImage, 0, 0);
+//    grassImage = window.loadImage("Game/images/trackGrass4.png");
+//    int pixelModifier = 100;   // Default BG Image Dimensions: 600 x 400.
+//    grassImage.width = window.getDisplayWidthCustom() / pixelModifier;
+//    grassImage.height = window.getDisplayHeightCustom() / pixelModifier;
+//    window.image(grassImage, 0, 0);
   }
 
   public PVector getStartCords(int playerNumber) {
@@ -96,8 +96,8 @@ public class TrackManager implements Drawable {
    */
   public void draw() {
     // Flat color option kept because BG Image causing lag on some computers
-    //window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
-    window.image(grassImage, 0, 0, window.getDisplayWidthCustom(), window.getDisplayHeightCustom());
+    window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
+//    window.image(grassImage, 0, 0, window.getDisplayWidthCustom(), window.getDisplayHeightCustom());
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
     }
