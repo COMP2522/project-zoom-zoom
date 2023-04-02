@@ -3,8 +3,6 @@ package project;
 import processing.core.PConstants;
 import processing.core.PVector;
 
-import java.awt.*;
-
 /**
  * MainMenuButtons, sets up and draws all buttons needed
  * for the main menu.
@@ -12,11 +10,11 @@ import java.awt.*;
  * @author James Langille
  */
 public class MainMenuButtons {
-  private static Button onePlayer;
-  private static Button twoPlayer;
-  private static Button ranking;
-  private static Button controls;
-  private static Button quit;
+  protected static Button onePlayer;
+  protected static Button twoPlayer;
+  protected static Button ranking;
+  protected static Button controls;
+  protected static Button quit;
   /** Other data. */
   private static GameManager window = MainMenu.window;
   private static int x = (window.displayWidth / 2) - 100;
@@ -45,27 +43,19 @@ public class MainMenuButtons {
    * drawButtons, draws all buttons for the main menu.
    */
   public static void drawButtons() {
-    onePlayer.draw();
-    onePlayer.click();
-    handleOnePlayerClick();
-    twoPlayer.draw();
-    twoPlayer.click();
-    handleTwoPlayerClick();
-    ranking.click();
-    ranking.draw();
-    handleRankingClick();
-    controls.draw();
-    controls.click();
-    handleControlClick();
-    quit.draw();
-    quit.click();
-    handleQuitClick();
+    onePlayerButton();
+    twoPlayerButton();
+    rankingButton();
+    controlButton();
+    quitButton();
   }
 
   /**
-   * handleOnePlayerClick, helper method when one player button is clicked.
+   * onePlayerButton, helper method that handles the one player button.
    */
-  private static void handleOnePlayerClick() {
+  private static void onePlayerButton() {
+    onePlayer.draw();
+    onePlayer.click();
     if (onePlayer.isLeftClicked()) {
       // Change menu to one player game
       window.gameType = 1;
@@ -74,9 +64,11 @@ public class MainMenuButtons {
   }
 
   /**
-   * handleTwoPlayerClick, helper method when two player button is clicked.
+   * twoPlayerButton, helper method that handles the two player button.
    */
-  private static void handleTwoPlayerClick() {
+  private static void twoPlayerButton() {
+    twoPlayer.draw();
+    twoPlayer.click();
     if (twoPlayer.isLeftClicked()) {
       // Change menu to two player game
       window.gameType = 2;
@@ -85,29 +77,35 @@ public class MainMenuButtons {
   }
 
   /**
-   * handleRankingClick, helper method when ranking button is clicked.
+   * rankingButton, helper method that handles the ranking button.
    */
-  private static void handleRankingClick() {
+  private static void rankingButton() {
+    ranking.draw();
+    ranking.click();
     if (ranking.isLeftClicked()) {
       window.menu = 6;
     }
   }
 
   /**
-   * handleControlClick, helper method when control button is clicked.
+   * controlButton, helper method that handles the control button.
    */
-  private static void handleControlClick() {
+  private static void controlButton() {
+    controls.draw();
+    controls.click();
     if (controls.isLeftClicked()) {
       window.menu = 3;
     }
   }
 
   /**
-   * handleQuitClick, helper method when quit button is clicked.
+   * quitButton, helper method that handles the quit button.
    */
-  private static void handleQuitClick() {
-    if (controls.isLeftClicked()) {
-      window.menu = 3;
+  private static void quitButton() {
+    quit.draw();
+    quit.click();
+    if (quit.isLeftClicked()) {
+      window.exit();
     }
   }
 }
