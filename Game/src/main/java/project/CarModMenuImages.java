@@ -14,22 +14,21 @@ public class CarModMenuImages implements Drawable {
   private PImage startRaceImage;
   private PImage saveBuild;
   private PImage mainMenuImage;
+  protected static final int IMAGE_AMOUNT = 4;
   private PImage gear1;
   private PImage gear2;
   private PImage gear3;
   private PImage gear4;
-  private PImage[] engineImages = new PImage[4];
-  private PImage[] chassisImages = new PImage[4];
-  private PImage[] aerodynamicImages = new PImage[4];
-  private PImage[] partTitleImages = new PImage[4];
+  private PImage[] chassisImages = new PImage[IMAGE_AMOUNT];
+  private PImage[] aerodynamicImages = new PImage[IMAGE_AMOUNT];
+  private PImage[] partTitleImages = new PImage[IMAGE_AMOUNT];
   // Image file names
-  private String[] engineImageNames;
   private String[] chassisImageNames;
   private String[] aeroImageNames;
   private String[] titleImageNames;
   // Manager objects
   private static CarModMenuImages instance;
-  private GameManager window;
+  protected static GameManager window;
   // Buffer used to adjust x or y position of image
   private int buffer;
 
@@ -56,13 +55,7 @@ public class CarModMenuImages implements Drawable {
 
 
   public void setup() {
-    // Get image file names
-    FileReader.readFiles("Game/images/");
-    // Instantiate images for engine buttons
-    engineImageNames = FileReader.engineImages();
-    for (int i = 0; i < engineImages.length; i++) {
-      engineImages[i] = window.loadImage("Game/images/" + engineImageNames[i]);
-    }
+    EngineImages.setupEngineImages();
     // Instantiate images for chassis buttons
     chassisImageNames = FileReader.chassisImages();
     for (int i = 0; i < chassisImages.length; i++) {
@@ -104,18 +97,18 @@ public class CarModMenuImages implements Drawable {
     // Draw background image
     window.image(bgImage, 0, 0, window.displayWidth, window.displayHeight);
     buffer = -100;
-    for (int i = 0; i < partTitleImages.length; i ++) {
-      window.image(partTitleImages[i], (window.displayWidth / 8) + buffer, window.displayHeight / 5);
-      if (i == 1) {
-        // update aero x position
-        buffer = 1125;
-      } else if (i == 2) {
-        // update gear x position
-        buffer = 650;
-      } else {
-        buffer += 400;
-      }
-    }
+//    for (int i = 0; i < partTitleImages.length; i++) {
+//      window.image(partTitleImages[i], (window.displayWidth / 8) + buffer, window.displayHeight / 5);
+//      if (i == 1) {
+//        // update aero x position
+//        buffer = 1125;
+//      } else if (i == 2) {
+//        // update gear x position
+//        buffer = 650;
+//      } else {
+//        buffer += 400;
+//      }
+//    }
   }
 
   /**
@@ -123,12 +116,7 @@ public class CarModMenuImages implements Drawable {
    */
   @Override
   public void draw() {
-    buffer = 50;
-    // Draw images for each engine
-    for (PImage engine : engineImages) {
-      window.image(engine, (window.displayWidth / 8) - 100, (window.displayHeight / 5) + buffer);
-      buffer += 125;
-    }
+    EngineImages.drawEngineImages();
 
     buffer = 50;
     // Draw images for each chassis
