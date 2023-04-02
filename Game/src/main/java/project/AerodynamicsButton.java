@@ -12,8 +12,10 @@ public class AerodynamicsButton extends Button {
   /** Constants for aerodynamics button. */
   private static final float WIDTH = 200;
   private static final float HEIGHT = 100;
+  private static final int AERO_AMOUNT = 4;
   /** Other data. */
-  private static AerodynamicsButton[] aerodynamics = new AerodynamicsButton[4];
+  private static AerodynamicsButton[] aerodynamics =
+      new AerodynamicsButton[AERO_AMOUNT];
   private static Player player1 = GameManager.player1;
   private static Player player2 = GameManager.player2;
   private static int x = (window.displayWidth / 8) + 700;
@@ -26,11 +28,10 @@ public class AerodynamicsButton extends Button {
    * Constructor to create an aerodynamics button object.
    *
    * @param position of button on window
-   * @param title    text of button
    * @param window   of game
    */
-  public AerodynamicsButton(PVector position, String title, GameManager window) {
-    super(position, WIDTH, HEIGHT, title, window);
+  public AerodynamicsButton(PVector position, GameManager window) {
+    super(position, WIDTH, HEIGHT, window);
   }
 
   /**
@@ -43,7 +44,7 @@ public class AerodynamicsButton extends Button {
     for (int i = 0; i < aerodynamics.length; i++) {
       y = (window.displayHeight / 5) + buffer;
       position = new PVector(x, y);
-      aerodynamics[i] = new AerodynamicsButton(position, "", window);
+      aerodynamics[i] = new AerodynamicsButton(position, window);
       buffer += 125;
     }
   }
@@ -73,13 +74,10 @@ public class AerodynamicsButton extends Button {
    */
   private static void setPlayerAerodynamics(Button aero) {
     int aeroIndex = Arrays.asList(aerodynamics).indexOf(aero);
-
     if (aero.isLeftClicked()) {
       player1.setAero(PartAero.aeroParts[aeroIndex]);
-      System.out.println("p1 a" + (aeroIndex + 1));
     } else if (aero.isRightClicked()) {
       player2.setAero(PartAero.aeroParts[aeroIndex]);
-      System.out.println("p2 a" + (aeroIndex + 1));
     }
   }
 
