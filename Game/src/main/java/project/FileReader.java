@@ -26,57 +26,15 @@ public class FileReader {
   }
 
   /**
-   * engineImages, get all files from images folders
-   *  containing images of engines
+   * getImage, get all files from images folders for the parameter.
    *
+   * @param image specified image
    * @return list of engine image file names
    */
-  public static String[] engineImages() {
+  public static String[] getImageFilePath(String image) {
     return Arrays.stream(files)
         .map(File::getName)
-        .filter(name ->
-            name.contains("engine"))
-        .toArray(String[]::new);
-  }
-
-  /**
-   * chassisImages, get all files from images folders
-   *  containing images of chassis
-   *
-   * @return list of chassis image file names
-   */
-  public static String[] chassisImages() {
-    return Arrays.stream(files)
-        .map(File::getName)
-        .filter(name ->
-            name.contains("chassis"))
-        .toArray(String[]::new);
-  }
-
-  /**
-   * aerodynamicsImages, get all files from images folders
-   *  containing images of aerodynamics
-   *
-   * @return list of aerodynamics image file names
-   */
-  public static String[] aerodynamicsImages() {
-    return Arrays.stream(files)
-        .map(File::getName)
-        .filter(name ->
-            name.contains("aero"))
-        .toArray(String[]::new);
-  }
-
-  /**
-   * carModTitles, get all files from images folder
-   *  containing titles used in CarModMenu
-   * @return list of title image file names
-   */
-  public static String[] carModTitles() {
-    return Arrays.stream(files)
-        .map(File::getName)
-        .filter(name ->
-            name.contains("partTitle"))
+        .filter(name -> name.contains(image))
         .toArray(String[]::new);
   }
 }

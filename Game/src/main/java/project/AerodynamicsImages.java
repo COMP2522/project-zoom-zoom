@@ -21,8 +21,8 @@ public class AerodynamicsImages {
   public static void setupAeroImages() {
     FileReader.readFiles("Game/images/");
     // Put file paths of aero images
-    aeroImageFilePaths = FileReader.aerodynamicsImages();
-    for (int i = 0; i < aerodynamicImages.length; i++) {
+    aeroImageFilePaths = FileReader.getImageFilePath("aero");
+    for (int i = 0; i < IMAGE_AMOUNT; i++) {
       aerodynamicImages[i] = window.loadImage("Game/images/" + aeroImageFilePaths[i]);
     }
   }

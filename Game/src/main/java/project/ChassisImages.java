@@ -20,7 +20,7 @@ public class ChassisImages {
   public static void setupChassisImages() {
     FileReader.readFiles("Game/images/");
     // Put file paths of chassis images
-    chassisImageFilePaths = FileReader.chassisImages();
+    chassisImageFilePaths = FileReader.getImageFilePath("chassis");
     // Set up images
     for (int i = 0; i < IMAGE_AMOUNT; i++) {
       chassisImages[i] = window.loadImage("Game/images/" + chassisImageFilePaths[i]);
