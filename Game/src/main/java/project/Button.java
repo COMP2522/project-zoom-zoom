@@ -23,7 +23,7 @@ public class Button implements Drawable, Clickable {
   protected static final Color BLUE = new Color(0, 0, 150);
   protected static final Color GREEN = new Color(0, 150, 0);
   protected static final Color PURPLE = new Color(104, 52, 235);
-  protected static final Color YELLOW = new Color(255, 255, 0);
+  protected static final Color YELLOW = new Color(204, 204, 0);
 
   /**
    * Constructor to create a button object.
