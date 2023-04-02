@@ -32,7 +32,7 @@ public class MainMenuButtons {
     y = 400;
     twoPlayer = new Button(new PVector(x, y), WIDTH, HEIGHT, Button.BLUE, window);
     y = 500;
-    ranking = new Button(new PVector(x, y), WIDTH, HEIGHT, "Ranking", Button.YELLOW, window);
+    ranking = new Button(new PVector(x, y), WIDTH, HEIGHT, Button.YELLOW, window);
     y = 600;
     controls = new Button(new PVector(x, y), WIDTH, HEIGHT, Button.PURPLE, window);
     y = 700;
