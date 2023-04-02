@@ -21,7 +21,7 @@ public class Bot extends Car {
   private int currentWaypointIndex;
 
   public Bot(PVector position, PVector direction, float speed,
-             Color color, GameManager window, ArrayList<PVector> waypoints) {
+             Color color, GameManager window, ArrayList<PVector> waypoints, String b) {
     super(position, direction, speed, color, window);
     this.position = position;
     this.direction = direction;

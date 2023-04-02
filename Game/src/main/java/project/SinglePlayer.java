@@ -108,7 +108,7 @@ public class SinglePlayer {
     sprites = new ArrayList<Car>();
     player1 = p1;
     playerControls = new Controls(player1, player1Keys);
-    sprites.add(player1);
+//    sprites.add(player1);
     player1Car = window.loadImage("Game/images/Player1Car.png");
 
     ArrayList<PVector> waypoints = new ArrayList<>();
@@ -121,12 +121,12 @@ public class SinglePlayer {
 
     // Add the AI player
     bot = new Bot(
-      window.getStartingPosition(1, 1),
+      window.getStartingPosition(1),
         new PVector(50, 1),
       0.1F,
         new Color(255, 0, 0),
       window,
-      waypoints);
+      waypoints, "B");
     sprites.add(bot);
     dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
   }
@@ -146,14 +146,14 @@ public class SinglePlayer {
     stopwatch.startTimer();
     Controls.playerMovement();
     // Move player around the screen.
+    player1.draw();
+    player1.update();
+    drawImage();
     for (Car sprite : sprites) {
-      sprite.update();
-      sprite.draw();
-      drawImage();
       if (sprite instanceof Bot) {
         bot = (Bot) sprite;
-        bot.update();
         bot.draw();
+        bot.update();
       }
       dash.draw();
     }

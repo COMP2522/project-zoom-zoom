@@ -10,6 +10,9 @@ import java.awt.*;
  */
 public class Player extends Car {
 
+  private String playerNum;
+  private TrackManager trackManager;
+
   //This sets the default options for the car
 
   /**
@@ -220,12 +223,14 @@ public class Player extends Car {
   }
 
   public Player(PVector position, PVector direction, float speed,
-                GameManager window) {
+                GameManager window, String playerNum) {
     super(position, direction, speed, window);
     xpos = position.x;
     ypos = position.y;
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = gears.start();
+    this.playerNum = playerNum;
+    trackManager = window.getTrackManager();
   }
   @Override
   public void draw() {
@@ -236,6 +241,13 @@ public class Player extends Car {
     window.fill(0, 0);
     window.rect(0, 0, WIDTH, HEIGHT);
     window.popMatrix();
+    onTrack();
+  }
+
+  public void onTrack() {
+    if (!trackManager.isOnTrack(position)) {
+      System.out.println(playerNum + "\tOff track penalty");
+    }
   }
 
   /**
@@ -258,11 +270,11 @@ public class Player extends Car {
     position.x = xpos;
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
     position.y = ypos;
-//    System.out.println(direction);
-//    System.out.println("speed " + speed);
-//    System.out.println("RPM " + revs);
-
+    if (trackManager.isOnTrack(position))
+      System.out.println("\tOn Track");
   }
+
+
 
   /**
    * Calculates the effect of drag on the car's speed.
