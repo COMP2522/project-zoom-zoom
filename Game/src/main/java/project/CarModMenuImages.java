@@ -54,6 +54,7 @@ public class CarModMenuImages implements Drawable {
     EngineImages.setupEngineImages();
     ChassisImages.setupChassisImages();
     AerodynamicsImages.setupAeroImages();
+    GearImages.setupGearImages();
     /* Instantiate a slightly different background image
      if one player or two player game was selected. */
     if (window.gameType == 1) {
@@ -62,19 +63,15 @@ public class CarModMenuImages implements Drawable {
       bgImage = window.loadImage("Game/images/BGImage.png");
     }
     // Instantiate part title images
-    titleImageNames = FileReader.carModTitles();
-    for (int i = 0; i < partTitleImages.length; i++) {
-      partTitleImages[i] = window.loadImage("Game/images/" + titleImageNames[i]);
-    }
+//    titleImageNames = FileReader.carModTitles();
+//    for (int i = 0; i < partTitleImages.length; i++) {
+//      partTitleImages[i] = window.loadImage("Game/images/" + titleImageNames[i]);
+//    }
     // Instantiate other images
     menuTitleImage = window.loadImage("Game/images/CarModTitle.png");
     startRaceImage = window.loadImage("Game/images/StartRace.png");
     mainMenuImage = window.loadImage("Game/images/MainMenu.png");
     saveBuild = window.loadImage("Game/images/SaveBuild.png");
-    gear1 = window.loadImage("Game/images/Gear1.png");
-    gear2 = window.loadImage("Game/images/Gear2.png");
-    gear3 = window.loadImage("Game/images/Gear3.png");
-    gear4 = window.loadImage("Game/images/Gear4.png");
   }
 
   /**
@@ -107,15 +104,12 @@ public class CarModMenuImages implements Drawable {
     EngineImages.drawEngineImages();
     ChassisImages.drawChassisImages();
     AerodynamicsImages.drawAeroImages();
+    GearImages.drawGearImages();
 
     // Draw text images
     window.image(menuTitleImage, window.displayWidth / 4 + 75, window.displayHeight / 10);
     window.image(startRaceImage, (window.displayWidth / 8) + 705, 760);
     window.image(mainMenuImage, (window.displayWidth / 8) + 305, 760);
     window.image(saveBuild, (window.displayWidth / 8) - 100, 760);
-    window.image(gear1, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 50);
-    window.image(gear2, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 175);
-    window.image(gear3, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 300);
-    window.image(gear4, (window.displayWidth / 8) + 1140, (window.displayHeight / 5) + 425);
   }
 }
