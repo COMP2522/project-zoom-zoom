@@ -190,6 +190,8 @@ public class Player extends Car {
 
   long oldTime = 0;
 
+  float bestTime = 1000000;
+
   public void setTrack(int track) {
     this.track = track;
   }
@@ -210,7 +212,7 @@ public class Player extends Car {
 
   private static final double OFF_TRACK_PENALTY = 0.8;
 
-  private static final int NUM_OF_LAPS = 10;
+  private static final int NUM_OF_LAPS = 2;
 
 
 
@@ -261,7 +263,6 @@ public class Player extends Car {
     trackManager = window.getTrackManager();
     time = timer;
   }
-  int size = 20;
   @Override
   public void draw() {
 //    window.pushStyle();
@@ -275,7 +276,14 @@ public class Player extends Car {
     window.fill(0, 0);
     window.rect(0, 0, WIDTH, HEIGHT);
     window.popMatrix();
+    if(laps == NUM_OF_LAPS){
+      window.pushStyle();
+      window.fill(255,255,255);
+      window.textSize(100);
+      window.text(bestTime, window.displayWidth / 2, window.displayHeight / 2);
+      window.popStyle();
 
+    }
 
   }
 
@@ -331,6 +339,14 @@ public class Player extends Car {
                         && speed > MIN_GRASS_SPEED){
           speed -= OFF_TRACK_PENALTY;
         }
+      case 3:
+//        if((xpos > 1200
+//                || xpos < 100
+//                || ypos > 800
+//                || ypos < 100)
+//          ||(xpos > 750 && xpos < )
+//        )
+
     }
   }
 
@@ -343,13 +359,14 @@ public class Player extends Car {
       }
       else if(lapFlag){
         long curTime = time.getCurrentTime();
-        System.out.println((curTime - oldTime) / 1000f + "secs");
+        float thisTime = (curTime - oldTime) / 1000f;
+        if (thisTime < bestTime){
+          bestTime = thisTime;
+        }
+        System.out.println(thisTime + "secs");
         oldTime = curTime;
         lapFlag = false;
         laps++;
-        if(laps == NUM_OF_LAPS){
-          //TODO: END GAME CALLS HERE
-        }
       }
     }
     if(xpos > 400 && xpos < 450 && ypos > 500){

@@ -264,7 +264,7 @@ public class GameManager extends PApplet {
         carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
-        trackManager. setTrackChoice(3);
+        trackManager.setTrackChoice(3);
         player1.setTrack(3);
         player2.setTrack(3);
       }

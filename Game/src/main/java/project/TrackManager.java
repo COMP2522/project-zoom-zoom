@@ -81,8 +81,18 @@ public class TrackManager implements Drawable {
         window.pushStyle();
         window.stroke(roadCol.getRed(), roadCol.getGreen(), roadCol.getBlue());
         window.fill(roadCol.getRed(), roadCol.getGreen(), roadCol.getBlue());
-        window.rect(100, 100, 700, 150);
-
+        window.rect(100, 100, 600, 150);
+        window.rect(550, 250, 150, 200);
+        window.rect(600, 350, 300, 100);
+        window.rect(900, 450, 100, -250);
+        window.rect(900, 200, 300, -100);
+        window.rect(1100, 200, 100, 600);
+        window.rect(1100, 650, -300, 150);
+        window.rect(900, 650, -400, 50);
+        window.rect(500, 650, -300, 150);
+        window.rect(200, 800, -100, -550);
+        window.fill(255,235,205);
+        window.rect(1050, 250, 25, 200);
         window.popStyle();
     }
   }
