@@ -43,11 +43,11 @@ public class MongoDB {
         .build();
     MongoClient mongoClient = MongoClients.create(settings);
     database = mongoClient.getDatabase("Zoom-Zoom");
+    document = new Document();;
   }
 
   public void putEngine(String key1, double value1, String key2, double value2,
                   String key3, int value3, String key4, int value4) {
-    document = new Document();
     document.append(key1, value1);
     document.append(key2, value2);
     document.append(key3, value3);
@@ -72,7 +72,7 @@ public class MongoDB {
   public void put(String key, long value) {
     Document documentTime = new Document();
     documentTime.append(key, value);
-    new Thread(() -> database.getCollection("Time").insertOne(document)).start();
+    new Thread(() -> database.getCollection("Time").insertOne(documentTime)).start();
   }
 
   public List<Document> queryTop5() {
