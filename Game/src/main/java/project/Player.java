@@ -10,8 +10,10 @@ import java.awt.*;
  */
 public class Player extends Car {
 
+
   private String playerNum;
   private TrackManager trackManager;
+  Stopwatch time;
 
   //This sets the default options for the car
 
@@ -163,6 +165,11 @@ public class Player extends Car {
   float ypos = 500;
 
   /**
+   * Number of laps completed
+   */
+  int laps = 0;
+
+  /**
    * The total weight of the car.
    */
   int weight;
@@ -176,6 +183,19 @@ public class Player extends Car {
     return currGear;
   }
 
+
+  boolean lapFlag = false;
+
+  boolean start = false;
+
+  long oldTime = 0;
+
+  public void setTrack(int track) {
+    this.track = track;
+  }
+
+  int track = 0;
+
   /**
    * The maximum amount of speed reduction due to various factors (such as drag).
    */
@@ -184,7 +204,15 @@ public class Player extends Car {
   /**
    * Limits the amount the speed value changes the x and y position
    */
-  int POSITION_LIMITER = 10;
+  private static final int POSITION_LIMITER = 10;
+
+  private static final int MIN_GRASS_SPEED = 10;
+
+  private static final double OFF_TRACK_PENALTY = 0.8;
+
+  private static final int NUM_OF_LAPS = 10;
+
+
 
   /**
    * Declaring the defaults to all of the car parts
@@ -223,7 +251,7 @@ public class Player extends Car {
   }
 
   public Player(PVector position, PVector direction, float speed,
-                GameManager window, String playerNum) {
+                GameManager window, String playerNum, Stopwatch timer) {
     super(position, direction, speed, window);
     xpos = position.x;
     ypos = position.y;
@@ -231,23 +259,18 @@ public class Player extends Car {
     gearRatio = gears.start();
     this.playerNum = playerNum;
     trackManager = window.getTrackManager();
+    time = timer;
   }
   @Override
   public void draw() {
     window.pushMatrix();
     window.translate((position.x + WIDTH) / 2, (position.y + HEIGHT) / 2);
     window.rotate((float) direction);
-    window.rectMode(PConstants.CENTER);
+    window.rectMode(PConstants.CORNER);
     window.fill(0, 0);
     window.rect(0, 0, WIDTH, HEIGHT);
     window.popMatrix();
-    onTrack();
-  }
 
-  public void onTrack() {
-    if (!trackManager.isOnTrack(position)) {
-      System.out.println(playerNum + "\tOff track penalty");
-    }
   }
 
   /**
@@ -263,16 +286,73 @@ public class Player extends Car {
    */
   @Override
   public void update() {
+    lap();
     drag();
+    onTrack();
+    if (speed < 0) speed = 0;
     grip = TIREGRIP + this.aero.getDownForce() * speed;
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
-    position.x = xpos;
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
-    position.y = ypos;
-    if (trackManager.isOnTrack(position))
-      System.out.println("\tOn Track");
+
+
   }
+
+  /**
+   * Checks if the car is within the bounds of the track
+   */
+  public void onTrack(){
+    switch (track) {
+      case 1:
+        if ((
+                xpos > 1300
+                        || xpos < 100
+                        || ypos > 800
+                        || ypos < 100
+                        || (xpos > 300 && xpos < 1100 && ypos > 300 && ypos < 600))
+                && (speed > MIN_GRASS_SPEED)) {
+          speed -= OFF_TRACK_PENALTY;
+        }
+        break;
+      case 2:
+        if (
+                (xpos > 1250
+                        || xpos < 100
+                        || ypos > 900
+                        || ypos < 100
+                        || (xpos > 200 && xpos < 1100 && ypos > 250 && ypos < 500 )
+                        || (xpos > 200 && xpos < 800 && ypos > 250 && ypos < 700)
+                        || (xpos > 950 && ypos > 600))
+                        && speed > MIN_GRASS_SPEED){
+          speed -= OFF_TRACK_PENALTY;
+        }
+    }
+  }
+
+  public void lap(){
+
+    if(xpos > 300 && xpos < 350 && ypos < 350){
+      if(!start){
+        start = true;
+        oldTime = time.getCurrentTime();
+      }
+      else if(lapFlag){
+        long curTime = time.getCurrentTime();
+        System.out.println((curTime - oldTime) / 1000f + "secs");
+        oldTime = curTime;
+        lapFlag = false;
+        laps++;
+        if(laps == NUM_OF_LAPS){
+          //TODO: END GAME CALLS HERE
+        }
+      }
+    }
+    if(xpos > 400 && xpos < 450 && ypos > 500){
+      lapFlag = true;
+    }
+  }
+
+
 
 
 
