@@ -300,8 +300,6 @@ public class Player extends Car {
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
-    System.out.println(xpos);
-    System.out.println(ypos);
 
   }
 

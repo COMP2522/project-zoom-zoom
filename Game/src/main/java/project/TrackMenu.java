@@ -66,7 +66,7 @@ public class TrackMenu {
    */
   private TrackMenu(GameManager gameManager) {
     this.window = gameManager;
-    trackManager = window.getTrackManager();
+    TrackManager trackManager = window.getTrackManager();
     halfWindowSize = window.displayWidth / 2.0f;
   }
 
@@ -102,12 +102,6 @@ public class TrackMenu {
     track3 = new Button(new PVector(halfWindowSize + 325, 490), buttonWidth,
         buttonHeight, "", Button.PURPLE, window);
     window.textSize(40);
-    track1 = new Button(new PVector(halfWindowSize - 525, 490), 300,
-            80, "", new Color(104, 52, 235), window);
-    track2 = new Button(new PVector(halfWindowSize - 125, 490), 300,
-            80, "", new Color(64,64,64), window);
-    track3 = new Button(new PVector(halfWindowSize + 325, 490), 300,
-            80, "", new Color(64,64,64), window);
   }
 
   /**
