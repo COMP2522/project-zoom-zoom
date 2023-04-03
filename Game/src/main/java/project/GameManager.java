@@ -85,10 +85,9 @@ public class GameManager extends PApplet {
             this, "1",
             stopwatch);
     player2 = new Player(
-            new PVector(100, 100), // Default location, overridden during startRace
+            new PVector(300, 200), // Default location, overridden during startRace
             new PVector(50, 1),
             0.1F,
-            this, "2");
             this, "2",
             stopwatch);
   }
