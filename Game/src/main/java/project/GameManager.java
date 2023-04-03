@@ -21,7 +21,6 @@ public class GameManager extends PApplet {
   TrackMenu trackMenu;
   MongoDB mongoDB;
   Bgm bgm;
-  final static boolean MongoEnabled = false;
   Ranking ranking;
   public static boolean audio = true;
   private int check = 1;
@@ -71,13 +70,9 @@ public class GameManager extends PApplet {
    */
   public void setup() {
     bgm = Bgm.getInstance();
-    mongoDB = MongoDB.getInstance();
     stopwatch = Stopwatch.getInstance(this);
-    if (MongoEnabled) {
-      mongoDB = MongoDB.getInstance();
-    }
     trackManager = new TrackManager(this);
-
+    mongoDB = MongoDB.getInstance();
     player1 = new Player(
             new PVector(300, 200), // Default location, overridden during startRace
             new PVector(50, 1),
@@ -127,17 +122,7 @@ public class GameManager extends PApplet {
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
-      if (mongoDB != null && singlePlayer != null && MongoEnabled) {
-        mongoDB.put("time", singlePlayer.stopwatch.currentTime);
-      }
-      if (singlePlayer != null && singlePlayer.stopwatch != null) {
-        singlePlayer.stopwatch.stopTimer();
-        singlePlayer.setTimerCheck(true);
-      }
-      if (twoPlayers != null && twoPlayers.stopwatch != null) {
-        twoPlayers.stopwatch.stopTimer();
-        twoPlayers.setTimerCheck(true);
-      }
+      timerCheck();
       menu = 0;
     }
     if (menu == 1 || menu == 2) {
@@ -178,6 +163,20 @@ public class GameManager extends PApplet {
           inputText = inputText.toUpperCase();
         }
       }
+    }
+  }
+
+  public void timerCheck() {
+    if (singlePlayer != null) {
+      mongoDB.put("time", singlePlayer.stopwatch.currentTime);
+    }
+    if (singlePlayer != null && singlePlayer.stopwatch != null) {
+      singlePlayer.stopwatch.stopTimer();
+      singlePlayer.setTimerCheck(true);
+    }
+    if (twoPlayers != null && twoPlayers.stopwatch != null) {
+      twoPlayers.stopwatch.stopTimer();
+      twoPlayers.setTimerCheck(true);
     }
   }
 
