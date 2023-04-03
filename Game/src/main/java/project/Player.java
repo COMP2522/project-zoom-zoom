@@ -212,7 +212,7 @@ public class Player extends Car {
 
   private static final double OFF_TRACK_PENALTY = 0.8;
 
-  private static final int NUM_OF_LAPS = 2;
+  private static final int NUM_OF_LAPS = 10;
 
 
 
