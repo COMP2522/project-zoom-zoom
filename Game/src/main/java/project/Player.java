@@ -199,7 +199,7 @@ public class Player extends Car {
   /**
    * Limits the amount the speed value changes the x and y position
    */
-  private static final int POSITION_LIMITER = 10;
+  private static final int POSITION_LIMITER = 8;
 
   private static final int MIN_GRASS_SPEED = 10;
 
