@@ -142,7 +142,7 @@ public class GameManager extends PApplet {
         inputText = inputText.toUpperCase();
       }
       // Scuffed handling for textbox in car mod menu
-    } else if (isEditing && menu == 4) {
+    } else if (isEditing && (menu == 4 || menu == 7 || menu == 8)) {
       if (this.key >= '0' && this.key <= '9' || this.key == this.ENTER || this.key == this.BACKSPACE) {
         if (this.key == this.BACKSPACE) {
           inputText = inputText.substring(0, this.max(0, inputText.length() - 1));

@@ -404,14 +404,14 @@ public class Player extends Car {
 
   public void turn(int dir){
     double turnAmt = CAMBER * dir;
-    if (speed != 0) {
+    if (speed > 1) {
       drifting = false;
       double momentum = weight * speed;
-      if (Math.abs(turnAmt) * momentum > grip) {
         turnAmt /= momentum * 0.15 / grip;
-        //System.out.println((momentum * Math.abs(turnAmt))  + " " + grip);
-        drifting = true;
-      }
+        if(Math.abs(turnAmt) > 0.1){
+          turnAmt = CAMBER * dir;
+        }
+
       direction += turnAmt;
     }
   }

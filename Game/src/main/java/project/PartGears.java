@@ -7,8 +7,8 @@ public class PartGears {
 
     private static int gear1 = 800;
     private static int gear2 = 300;
-    private static int gear3 = 125;
-    private static int gear4 = 80;
+    private static int gear3 = 150;
+    private static int gear4 = 100;
     /**
      * An array of gear ratios for the car.
      */
