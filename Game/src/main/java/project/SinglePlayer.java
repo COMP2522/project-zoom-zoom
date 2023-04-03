@@ -165,6 +165,7 @@ public class SinglePlayer implements Countdownable {
           bot.update();
         }
         dash.draw();
+        window.text("Laps " + player1.laps + "/ " + 10, window.displayWidth/2, 50);
       }
     }
   }

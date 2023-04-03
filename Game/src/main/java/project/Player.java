@@ -276,6 +276,7 @@ public class Player extends Car {
     window.rect(0, 0, WIDTH, HEIGHT);
     window.popMatrix();
 
+
   }
 
   /**
@@ -324,7 +325,7 @@ public class Player extends Car {
         if (
                 (xpos > 1250
                         || xpos < 100
-                        || ypos > 850
+                        || ypos > 800
                         || ypos < 100
                         || (xpos > 200 && xpos < 1100 && ypos > 250 && ypos < 500 )
                         || (xpos > 200 && xpos < 800 && ypos > 250 && ypos < 700)

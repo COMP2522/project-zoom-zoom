@@ -66,6 +66,7 @@ public class Dashboard implements Drawable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public void drawTwoPlayer() {
