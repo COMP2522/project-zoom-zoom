@@ -8,7 +8,7 @@ import processing.core.PImage;
  * It contains methods for initializing and running the game,
  * as well as accessing player controls and timer settings.
  */
-public class TwoPlayers {
+public class TwoPlayers implements Countdownable {
   /**
    * The window field represents the GameManager object
    * that this game mode is running in.
@@ -84,6 +84,11 @@ public class TwoPlayers {
    * whether or not the game timer is currently active.
    */
   boolean timerCheck = true;
+  /** Data for the race countdown. */
+  private long startTime;
+  private long currentTime;
+  private int countdown;
+  private boolean raceDelay;
 
   /**
    * The constructor for TwoPlayers class is private
@@ -116,6 +121,7 @@ public class TwoPlayers {
    * @param p2 - The second Player object.
    */
   public void init2Player(Player p1, Player p2) {
+    startTime = System.currentTimeMillis();
     stopwatch = Stopwatch.getInstance(window);
     cars = new ArrayList<Car>();
     player1 = p1;
@@ -132,22 +138,46 @@ public class TwoPlayers {
    * and updates the game state and draws sprites on the screen.
    */
   public void draw() {
-    if (timerCheck && stopwatch.getShowTimer()) {
-      stopwatch.restartTimer();
-      timerCheck = false;
+    createCountdown();
+    if (!raceDelay) {
+      if (timerCheck && stopwatch.getShowTimer()) {
+        stopwatch.restartTimer();
+        timerCheck = false;
+      }
+      if (timerCheck) {
+        stopwatch.setStartTimer(true);
+        timerCheck = false;
+      }
+      stopwatch.startTimer();
+      // Move player around the screen.
+      Controls.playerMovement();
+      for (Car sprite : cars) {
+        sprite.update();
+        sprite.draw();
+        drawP1Car();
+        drawP2Car();
+      }
     }
-    if (timerCheck) {
-      stopwatch.setStartTimer(true);
-      timerCheck = false;
-    }
-    stopwatch.startTimer();
-    // Move player around the screen.
-    Controls.playerMovement();
-    for (Car sprite : cars) {
-      sprite.update();
-      sprite.draw();
-      drawP1Car();
-      drawP2Car();
+  }
+
+  /**
+   * createCountdown, starts a 3-second countdown before the race begins.
+   */
+  @Override
+  public void createCountdown() {
+    currentTime = System.currentTimeMillis() - startTime;
+    int threeThousand = 3000;
+    int largeFont = 200;
+    int x = window.displayWidth / 2;
+    int y = window.displayHeight / 2;
+    if (currentTime < threeThousand) {
+      raceDelay = true;
+      countdown = (int) (threeThousand - currentTime);
+      window.textAlign(PConstants.CENTER, PConstants.CENTER);
+      window.textSize(largeFont);
+      window.text(countdown, x, y);
+    } else {
+      raceDelay = false;
     }
   }
 
