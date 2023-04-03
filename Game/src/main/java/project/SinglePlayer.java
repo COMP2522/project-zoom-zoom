@@ -10,7 +10,7 @@ import processing.core.PVector;
  * The SinglePlayer class represents the main game mode for single player.
  * It extends the PApplet class from Processing and implements the GameManager interface.
  */
-public class SinglePlayer {
+public class SinglePlayer implements Countdownable {
 
   /**
    * The window instance variable represents the game manager for the current game.
@@ -73,6 +73,12 @@ public class SinglePlayer {
    */
   static boolean timerCheck = true;
 
+  /** Data for the race countdown. */
+  private long startTime;
+  private long currentTime;
+  private int countdown;
+  private boolean raceDelay;
+
   /**
    * The constructor for the SinglePlayer class.
    *
@@ -104,6 +110,7 @@ public class SinglePlayer {
    * @param p1 The player controlled by the user.
    */
   public void init1Player(Player p1) {
+    startTime = System.currentTimeMillis();
     stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Car>();
     player1 = p1;
@@ -135,27 +142,51 @@ public class SinglePlayer {
    * Draw method of SinglePlayer class.
    */
   public void draw() {
-    if (timerCheck && stopwatch.getShowTimer()) {
-      stopwatch.restartTimer();
-      timerCheck = false;
-    }
-    if (timerCheck) {
-      stopwatch.setStartTimer(true);
-      timerCheck = false;
-    }
-    stopwatch.startTimer();
-    Controls.playerMovement();
-    // Move player around the screen.
-    player1.draw();
-    player1.update();
-    drawImage();
-    for (Car sprite : sprites) {
-      if (sprite instanceof Bot) {
-        bot = (Bot) sprite;
-        bot.draw();
-        bot.update();
+    createCountdown();
+    if (!raceDelay) {
+      if (timerCheck && stopwatch.getShowTimer()) {
+        stopwatch.restartTimer();
+        timerCheck = false;
       }
-      dash.draw();
+      if (timerCheck) {
+        stopwatch.setStartTimer(true);
+        timerCheck = false;
+      }
+      stopwatch.startTimer();
+      Controls.playerMovement();
+      // Move player around the screen.
+      player1.draw();
+      player1.update();
+      drawImage();
+      for (Car sprite : sprites) {
+        if (sprite instanceof Bot) {
+          bot = (Bot) sprite;
+          bot.draw();
+          bot.update();
+        }
+        dash.draw();
+      }
+    }
+  }
+
+  /**
+   * createCountdown, starts a 3-second countdown before the race begins.
+   */
+  @Override
+  public void createCountdown() {
+    currentTime = System.currentTimeMillis() - startTime;
+    int threeThousand = 3000;
+    int largeFont = 200;
+    int x = window.displayWidth / 2;
+    int y = window.displayHeight / 2;
+    if (currentTime < threeThousand) {
+      raceDelay = true;
+      countdown = (int) (threeThousand - currentTime);
+      window.textAlign(PConstants.CENTER, PConstants.CENTER);
+      window.textSize(largeFont);
+      window.text(countdown, x, y);
+    } else {
+      raceDelay = false;
     }
   }
 
