@@ -7,5 +7,5 @@ package project;
  */
 public interface Countdownable {
 
-  void countdown();
+  void createCountdown();
 }
