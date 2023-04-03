@@ -79,7 +79,7 @@ public class GameManager extends PApplet {
     trackManager = new TrackManager(this);
 
     player1 = new Player(
-            new PVector(100, 100), // Default location, overridden during startRace
+            new PVector(300, 200), // Default location, overridden during startRace
             new PVector(50, 1),
             0.1F,
             this, "1",

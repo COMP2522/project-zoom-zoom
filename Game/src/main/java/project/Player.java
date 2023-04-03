@@ -253,18 +253,23 @@ public class Player extends Car {
   public Player(PVector position, PVector direction, float speed,
                 GameManager window, String playerNum, Stopwatch timer) {
     super(position, direction, speed, window);
-    xpos = position.x;
-    ypos = position.y;
+    xpos = 300;
+    ypos = 200;
     weight = engine.getWeight() + aero.getWeight() + chassis.getWeight();
     gearRatio = gears.start();
     this.playerNum = playerNum;
     trackManager = window.getTrackManager();
     time = timer;
   }
+  int size = 20;
   @Override
   public void draw() {
+//    window.pushStyle();
+//    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
+//    window.ellipse(xpos, ypos, size, size);
+//    window.popStyle();
     window.pushMatrix();
-    window.translate((position.x + WIDTH) / 2, (position.y + HEIGHT) / 2);
+    window.translate((xpos + WIDTH) / 2, (xpos + HEIGHT) / 2);
     window.rotate((float) direction);
     window.rectMode(PConstants.CORNER);
     window.fill(0, 0);
@@ -294,7 +299,8 @@ public class Player extends Car {
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
-
+    System.out.println(xpos);
+    System.out.println(ypos);
 
   }
 
@@ -318,7 +324,7 @@ public class Player extends Car {
         if (
                 (xpos > 1250
                         || xpos < 100
-                        || ypos > 900
+                        || ypos > 850
                         || ypos < 100
                         || (xpos > 200 && xpos < 1100 && ypos > 250 && ypos < 500 )
                         || (xpos > 200 && xpos < 800 && ypos > 250 && ypos < 700)

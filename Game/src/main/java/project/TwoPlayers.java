@@ -194,7 +194,7 @@ public class TwoPlayers implements Countdownable {
    */
   public void drawP1Car() {
     window.pushMatrix();
-    window.translate((player1.position.x + Car.WIDTH) / 2, (player1.position.y + Car.HEIGHT) / 2);
+    window.translate((player1.xpos), (player1.ypos));
     window.imageMode(PConstants.CENTER);
     window.rotate((float) player1.direction);
     window.image(player1Car, (float) 0, (float) 12.5);
@@ -206,7 +206,7 @@ public class TwoPlayers implements Countdownable {
    */
   public void drawP2Car() {
     window.pushMatrix();
-    window.translate((player2.position.x + Car.WIDTH) / 2, (player2.position.y + Car.HEIGHT) / 2);
+    window.translate((player2.xpos), (player2.ypos));
     window.imageMode(PConstants.CENTER);
     window.rotate((float) player2.direction);
     window.image(player2Car, (float) 0, (float) 10);
