@@ -135,7 +135,7 @@ public class SinglePlayer implements Countdownable {
       window,
       waypoints, "B");
     sprites.add(bot);
-    dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
+    dash = new Dashboard(window, player1);
   }
 
   /**
@@ -195,7 +195,7 @@ public class SinglePlayer implements Countdownable {
    */
   public void drawImage() {
     window.pushMatrix();
-    window.translate((player1.position.x + Car.WIDTH) / 2, (player1.position.y + Car.HEIGHT) / 2);
+    window.translate((player1.xpos), (player1.ypos));
     window.imageMode(PConstants.CENTER);
     window.rotate((float) player1.direction);
     window.image(player1Car, (float) 0, (float) 12.5);

@@ -72,29 +72,36 @@ public class GameManager extends PApplet {
   public void setup() {
     bgm = Bgm.getInstance();
     mongoDB = MongoDB.getInstance();
+    stopwatch = Stopwatch.getInstance(this);
+    if (MongoEnabled) {
+      mongoDB = MongoDB.getInstance();
+    }
     trackManager = new TrackManager(this);
 
     player1 = new Player(
-            new PVector(100, 100), // Default location, overridden during startRace
+            new PVector(300, 200), // Default location, overridden during startRace
             new PVector(50, 1),
             0.1F,
-            this, "1");
+            this, "1",
+            stopwatch);
     player2 = new Player(
             new PVector(100, 100), // Default location, overridden during startRace
             new PVector(50, 1),
             0.1F,
             this, "2");
+            this, "2",
+            stopwatch);
   }
 
   public void startRace() {
     //startCountDown();  // Initialize countdown before race begins
     if (player1 != null) {
-      player1.position = trackManager.getStartCords(1);
+      player1.position = trackManager.getStartCords(1, 1);
       player1.xpos = player1.position.x;
       player1.ypos = player1.position.y;
     }
     if (player2 != null) {
-      player2.position = trackManager.getStartCords(2);
+      player2.position = trackManager.getStartCords(2, 2);
       player2.xpos = player2.position.x;
       player2.ypos = player2.position.y;
     }
@@ -232,6 +239,9 @@ public class GameManager extends PApplet {
         carModMenu = CarModMenu.getInstance(this);
         carModMenu.setup();
         carModMenu.draw();
+        trackManager.setTrackChoice(1);
+        player1.setTrack(1);
+        player2.setTrack(1);
       }
       case 5 -> {
         trackMenu = TrackMenu.getInstance(this);
@@ -242,6 +252,22 @@ public class GameManager extends PApplet {
         ranking = Ranking.getInstance(this);
         ranking.setUp();
         ranking.draw();
+      }
+      case 7 -> {
+        carModMenu = CarModMenu.getInstance(this);
+        carModMenu.setup();
+        carModMenu.draw();
+        trackManager.setTrackChoice(2);
+        player1.setTrack(2);
+        player2.setTrack(2);
+      }
+      case 8 -> {
+        carModMenu = CarModMenu.getInstance(this);
+        carModMenu.setup();
+        carModMenu.draw();
+        trackManager. setTrackChoice(3);
+        player1.setTrack(3);
+        player2.setTrack(3);
       }
       default -> {
         break;
@@ -273,7 +299,7 @@ public class GameManager extends PApplet {
   }
 
   public PVector getStartingPosition(int playerNumber) {
-    return trackManager.getStartCords(playerNumber);
+    return new PVector(300,200);
   }
 
   public int getDisplayWidthCustom() {

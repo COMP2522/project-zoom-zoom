@@ -11,8 +11,6 @@ import processing.core.PVector;
  */
 public class TrackMenu {
 
-  private TrackManager trackManager;
-
   /**
    * The GameManager object that creates and manages the game window.
    */
@@ -103,6 +101,13 @@ public class TrackMenu {
         buttonHeight, "", Button.PURPLE, window);
     track3 = new Button(new PVector(halfWindowSize + 325, 490), buttonWidth,
         buttonHeight, "", Button.PURPLE, window);
+    window.textSize(40);
+    track1 = new Button(new PVector(halfWindowSize - 525, 490), 300,
+            80, "", new Color(104, 52, 235), window);
+    track2 = new Button(new PVector(halfWindowSize - 125, 490), 300,
+            80, "", new Color(64,64,64), window);
+    track3 = new Button(new PVector(halfWindowSize + 325, 490), 300,
+            80, "", new Color(64,64,64), window);
   }
 
   /**
@@ -141,23 +146,19 @@ public class TrackMenu {
   }
 
   public void buttonIsClicked() {
+    window.image(track1Font,(float) (window.displayWidth / 2) - 500, 500);
+    track2.click();
+    track2.draw();
+    track3.click();
+    track3.draw();
     if (track1.isLeftClicked()) {
-      trackManager.clearTrack();
-      trackManager.initTrack("Track 1");
-      window.startRace();
       window.menu = 4;
     }
-    if (track2.isLeftClicked()) {
-      trackManager.clearTrack();
-      trackManager.initTrack("Track 2");
-      window.startRace();
-      window.menu = 4;
+    if (track2.isLeftClicked()){
+      window.menu = 7;
     }
-    if (track3.isLeftClicked()) {
-      trackManager.clearTrack();
-      trackManager.initTrack("Track 3");
-      window.startRace();
-      window.menu = 4;
+    if(track3.isLeftClicked()){
+      window.menu = 8;
     }
   }
 }
