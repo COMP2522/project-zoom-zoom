@@ -218,9 +218,9 @@ public class Player extends Car {
    * Declaring the defaults to all of the car parts
    */
   PartGears gears = new PartGears(GEAR1, GEAR2, GEAR3, GEAR4);
-  PartEngine engine = new PartEngine(POWER, DROPOFF, OPTIMAL_REVS, ENGINE_WEIGHT);
-  PartAero aero = new PartAero(DOWNFORCE, AERO_DRAG, AERO_WEIGHT);
-  PartChassis chassis = new PartChassis(CHASSIS_WEIGHT, WHEELBASEX, WHEELBASEY);
+  PartEngine engine = PartEngine.engineParts[0];
+  PartAero aero = PartAero.aeroParts[0];
+  PartChassis chassis = PartChassis.chassisParts[0];
 
   public PartGears getGears() {
     return gears;
