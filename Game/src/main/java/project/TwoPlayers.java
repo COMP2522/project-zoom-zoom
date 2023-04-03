@@ -89,6 +89,11 @@ public class TwoPlayers implements Countdownable {
   private long currentTime;
   private int countdown;
   private boolean raceDelay;
+  /**
+   * The dash instance variable represents
+   * the dashboard for displaying information during the game.
+   */
+  Dashboard dash;
 
   /**
    * The constructor for TwoPlayers class is private
@@ -131,6 +136,7 @@ public class TwoPlayers implements Countdownable {
     playerControls = new Controls(player1, player2, player1Keys, player2Keys);
     cars.add(player1);
     cars.add(player2);
+    dash = new Dashboard(window, player1, player2);
   }
 
   /**
@@ -157,6 +163,8 @@ public class TwoPlayers implements Countdownable {
         drawP1Car();
         drawP2Car();
       }
+      dash.draw();
+      dash.drawTwoPlayer();
     }
   }
 
