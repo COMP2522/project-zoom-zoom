@@ -161,7 +161,7 @@ public class SinglePlayer implements Countdownable {
       for (Car sprite : sprites) {
         if (sprite instanceof Bot) {
           bot = (Bot) sprite;
-          bot.draw();
+          //bot.draw();
           bot.update();
         }
         dash.draw();

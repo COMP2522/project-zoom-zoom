@@ -48,7 +48,6 @@ public class TrackMenu {
    * representing the clock rate of the title animation.
    */
   private static final int clock = 5;
-  private TrackManager trackManager;
 
   /**
    * These are private instance variables of the PImage
@@ -67,7 +66,7 @@ public class TrackMenu {
    */
   private TrackMenu(GameManager gameManager) {
     this.window = gameManager;
-    trackManager = window.getTrackManager();
+    TrackManager trackManager = window.getTrackManager();
     halfWindowSize = window.displayWidth / 2.0f;
   }
 
