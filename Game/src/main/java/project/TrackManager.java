@@ -1,5 +1,6 @@
 package project;
 
+import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
@@ -75,16 +76,14 @@ public class TrackManager implements Drawable {
     }
 
     for (TrackPiece eachPiece : tracks) {
-      trackPixels = eachPiece.addPixels(trackPixels, window.getDisplayWidthCustom(), window.getDisplayHeightCustom());
+      trackPixels = eachPiece.addPixels(trackPixels);
     }
 
-//    printPixels();
-
-//    grassImage = window.loadImage("Game/images/trackGrass4.png");
-//    int pixelModifier = 100;   // Default BG Image Dimensions: 600 x 400.
-//    grassImage.width = window.getDisplayWidthCustom() / pixelModifier;
-//    grassImage.height = window.getDisplayHeightCustom() / pixelModifier;
-//    window.image(grassImage, 0, 0);
+    grassImage = window.loadImage("Game/images/trackGrass4.png");
+    int pixelModifier = 100;   // Default BG Image Dimensions: 600 x 400.
+    grassImage.width = window.getDisplayWidthCustom() / pixelModifier;
+    grassImage.height = window.getDisplayHeightCustom() / pixelModifier;
+    window.image(grassImage, 0, 0);
   }
 
   public PVector getStartCords(int playerNumber) {
@@ -96,13 +95,24 @@ public class TrackManager implements Drawable {
    */
   public void draw() {
     // Flat color option kept because BG Image causing lag on some computers
-    window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getBlue());
-//    window.image(grassImage, 0, 0, window.getDisplayWidthCustom(), window.getDisplayHeightCustom());
+    //window.image(grassImage, 0, 0, window.getDisplayWidthCustom(), window.getDisplayHeightCustom());
+    window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getRed());
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
     }
+    window.fill(255,255,255);
+    for (int wTimer = 0; wTimer < window.getDisplayWidthCustom(); wTimer++) {
+      for (int hTimer = 0; hTimer < window.getDisplayHeightCustom(); hTimer++) {
+//        if (trackPixels[wTimer][hTimer]) {
+////          window.ellipse(wTimer, hTimer, 2, 2);
+//        }
+      }
+    }
   }
 
+  /**
+   * Clear's the tracks arraylist and onTrack array.
+   */
   public void clearTrack() {
     for (int wTimer = 0; wTimer < window.getDisplayWidthCustom(); wTimer++) {
       for (int hTimer = 0; hTimer < window.getDisplayHeightCustom(); hTimer++) {
@@ -112,19 +122,29 @@ public class TrackManager implements Drawable {
     tracks.clear();
   }
 
+  /**
+   * Checks if the cords are on the track.
+   *
+   * @param inputCords Coordinates to be checked
+   * @return True / False for if cords fall on the track
+   */
   public boolean isOnTrack(PVector inputCords) {
-    if (0 < inputCords.x || inputCords.x > window.getDisplayWidthCustom()
-            || 0 < inputCords.y || inputCords.y > window.getDisplayHeightCustom()) {
+    // Check if cords are on screen (Range of the array)
+    if ((int) inputCords.x > window.getDisplayWidthCustom() - 1 || (int) inputCords.y > window.getDisplayHeightCustom() - 1||
+            (int) inputCords.x < 0 || (int) inputCords.y < 0) {
       return false;
     }
     return trackPixels[(int) inputCords.x][(int) inputCords.y];
   }
 
+  /**
+   * Prints the array, - is grass, X is track.
+   */
   public void printPixels() {
     String output = "";
-    for (int hTimer = 0; hTimer < window.getDisplayHeightCustom(); hTimer++) {
+    for (int hTimer = 0; hTimer < window.getDisplayHeightCustom(); hTimer += 2) {
       System.out.print(hTimer + "\t");
-      for (int wTimer = 0; wTimer < window.getDisplayWidthCustom(); wTimer++) {
+      for (int wTimer = 0; wTimer < window.getDisplayWidthCustom(); wTimer += 2) {
         if (trackPixels[wTimer][hTimer] == true) {
           System.out.print("X");
         } else {

@@ -11,10 +11,6 @@ import java.awt.Color;
  * @author MaxwellV
  */
 public class TrackPiece extends PApplet implements Drawable {
-
-  /** Booleans that toggle System outs. */
-  private boolean arrayPrintOverride = false;
-
   /** Color of the road. */
   private Color roadColor = new Color(76, 76, 76);
 
@@ -69,28 +65,34 @@ public class TrackPiece extends PApplet implements Drawable {
                     GameManager gameManager) {
     this.gameManager = gameManager;
 
+    // The starting position for each racer
     cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 1);
     cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 2);
 
+    // Extremes of each coordinate
+    smallestX = Math.min( Math.min(closeLeftX, farLeftX), Math.min(farRightX, closeRightX));
+    smallestY = Math.min( Math.min(closeLeftY, farLeftY), Math.min(farRightY, closeRightY));
+    largestX = Math.max(  Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
+    largestY = Math.max(  Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
 
-    smallestX = Math.min(Math.min(closeLeftX, farLeftX), Math.min(farRightX, closeRightX));
-    smallestY = Math.min(Math.min(closeLeftY, farLeftY), Math.min(farRightY, closeRightY));
-    largestX = Math.max(Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
-    largestY = Math.max(Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
-
+    // Overall size of the object
     segmentWidth = largestX - smallestX;
     segmentHeight = largestY - smallestY;
+
+    // Overall size of the array (Object + 1 to account for index 0)
     arrayWidth = segmentWidth + 1;
     arrayHeight = segmentHeight + 1;
 
-    // Boolean array that constitutes shape of this segment
+    // Boolean array that tracks of this segment
     shapePixels = new boolean[arrayWidth][arrayHeight];
 
-    // Setup boolean array to accurately portray actual shape
-    addSlopeLine(closeRightX - smallestX, closeRightY - smallestY, closeLeftX - smallestX, closeLeftY - smallestY);
-    addSlopeLine(farLeftX - smallestX, farLeftY - smallestY, farRightX - smallestX, farRightY - smallestY);
-    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, farLeftX - smallestX, farLeftY - smallestY);
-    addSlopeLine(closeRightX - smallestX, closeRightY - smallestY, farRightX - smallestX, farRightY - smallestY);
+    // Add each border of this shape
+    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, farLeftX - smallestX, farLeftY - smallestY); // 1
+    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, closeRightX - smallestX, closeRightY - smallestY); // 2
+    addSlopeLine(farRightX - smallestX, farRightY - smallestY, closeRightX - smallestX, closeRightY - smallestY); // 3
+    addSlopeLine(farRightX - smallestX, farRightY - smallestY, farLeftX - smallestX, farLeftY - smallestY); // 4
+
+    // Fills the void created by the lines
     fillArray();
 
     // Setup drawable shape object.
@@ -105,6 +107,7 @@ public class TrackPiece extends PApplet implements Drawable {
     road.endShape();
   }
 
+
   /** Get the starting location
    *
    * @param playerNumber Either 1 or 2
@@ -112,8 +115,10 @@ public class TrackPiece extends PApplet implements Drawable {
    */
   public PVector getStartCord(int playerNumber) {
     if (playerNumber == 1) {
+      System.out.println(cordStart1);
       return cordStart1;
     } else {
+      System.out.print(cordStart2);
       return cordStart2;
     }
   }
@@ -130,21 +135,18 @@ public class TrackPiece extends PApplet implements Drawable {
   /** Fills line area outlined by addSlopeLines. */
   public void fillArray() {
     int activePixels = 0;
+    boolean currentFill = false;
 
-    // Runs each column
     for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
       activePixels = 0;
-      boolean currentFill = false;
-      // Checks how many lines are in this column
+      currentFill = false;
       for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-        if (shapePixels[wTimer][hTimer] == true) {
+        if (shapePixels[wTimer][hTimer] == true) { // Get the number of lines crossed
           activePixels++;
         }
       }
-      // If there is a gap in the segment, fills until other is reached
-      if (activePixels % 2 == 0) {
+      if (activePixels % 2 == 0 && activePixels < 5) { // If crosses even lines, fill
         for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-          // If the newly reached segment is true, toggle fill mode
           if (shapePixels[wTimer][hTimer] == true) {
             currentFill = !currentFill;
           }
@@ -166,62 +168,40 @@ public class TrackPiece extends PApplet implements Drawable {
 
     // Resolve corner case slopes (Same X and/or Y)
     if (y1 == y2 && x1 == x2) { // Same cords
-        shapePixels[x2][y2] = true;
-        return;
-      } else if (y1 == y2) { // Same Y = Horizontal line
-        for (int timer = Math.min(x1, x2); timer < Math.max(x1, x2); timer++) {
-          shapePixels[timer][y2] = true;
-        }
-        return;
+      shapePixels[x2][y2] = true;
 
-      } else if (x1 == x2) { // Same X = Vertical Line
-        for (int timer = Math.min(y1, y2); timer < Math.max(y1, y2); timer++) {
-          shapePixels[x2][timer] = true;
-        }
-        return;
+    } else if (y1 == y2) { // Same Y = Horizontal line
+      for (int timer = Math.min(x1, x2); timer < Math.max(x1, x2); timer++) {
+        shapePixels[timer][y2] = true;
       }
 
-    // Cord with smaller X designated as "first"
-    if (x1 < x2) {
-      firstX = x1;
-      firstY = y1;
-      secondX = x2;
-      secondY = y2;
+    } else if (x1 == x2) { // Same X = Vertical Line
+      for (int timer = Math.min(y1, y2); timer < Math.max(y1, y2); timer++) {
+        shapePixels[x2][timer] = true;
+      }
     } else {
-      secondX = x1;
-      secondY = y1;
-      firstX = x2;
-      firstY = y2;
-    }
+      // Cord with smaller X designated as "first"
+      if (x1 < x2) {
+        firstX = x1;
+        firstY = y1;
+        secondX = x2;
+        secondY = y2;
+      } else {
+        secondX = x1;
+        secondY = y1;
+        firstX = x2;
+        firstY = y2;
+      }
 
-    // Get slope for future calculations
-    slope = (y2 - y1) / (x2 - x1);
+      // Get slope for future calculations
+      slope = (y2 - y1) / (x2 - x1);
 
-    // Set y for each X between x1 & x2
-    for (int timer = firstX; timer <= secondX; timer++) {
-      placeY = (int) (firstY + (slope * (timer - firstX)));
-      shapePixels[placeY][timer] = true;
-    }
-  }
-
-  /** Add this piece's array to the track manager's array.
-   *
-   * @param inputArray Array to add this pieces cords to
-   * @param inputWidth Width of the inputted array
-   * @param inputHeight Height of the inputted array
-   * @return Modified input array, this array added.
-   */
-  public boolean[][] addPixels(boolean[][] inputArray, int inputWidth, int inputHeight) {
-    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
-      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-        if (shapePixels[wTimer][hTimer] == true) { // If piece array
-//          if (inputArray[wTimer + smallestX][hTimer + smallestY] == false) { // Avoid overriding manager array
-            inputArray[wTimer + smallestX][hTimer + smallestY] = shapePixels[wTimer][hTimer];
-//          }
-        }
+      // Set y for each X between x1 & x2
+      for (int timer = firstX; timer <= secondX; timer++) {
+        placeY = (int) (firstY + (slope * (timer - firstX)));
+        shapePixels[timer][placeY] = true;
       }
     }
-    return inputArray;
   }
 
   /** Draw each frame. */
@@ -230,35 +210,50 @@ public class TrackPiece extends PApplet implements Drawable {
     gameManager.shape(road, smallestX, smallestY);
   }
 
-  /** Prints the shape array to assist visualize. */
-  public void printPixels() {
-    if (arrayPrintOverride && TrackManager.isOnTesterMode) { // Prints boolean array shapes
-      int row = 0;
-      // Testing pixels that prints '-' as false, 'X' as true
-      System.out.print("  ");
-      for (int timer = 0; timer < arrayWidth; timer++) {
-        System.out.print(timer % 10);
-      }
-      System.out.print("\n");
-      for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
-        System.out.print(row % 10 + " ");
-        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-          if (shapePixels[wTimer][hTimer] == true) {
-            System.out.print("X");
-          } else {
-            System.out.print("-");
+  /** Add this piece's array to the track manager's array.
+   *
+   * @param inputArray Array to add this pieces cords to
+   * @return Modified input array, this array added.
+   */
+  public boolean[][] addPixels(boolean[][] inputArray) {
+    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
+      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+        if (shapePixels[wTimer][hTimer]) {
+          if (!inputArray[wTimer + smallestX][hTimer + smallestY]) { // Don't override manager array
+            inputArray[(wTimer + smallestX)][(hTimer + smallestY)] = shapePixels[wTimer][hTimer];
           }
         }
-        // Labels rows
-        System.out.print(" " + row % 10 + "\n");
-        row++;
       }
-      System.out.print("  ");
-      for (int timer = 0; timer < arrayWidth; timer++) {
-        System.out.print(timer % 10);
-      }
-      System.out.println();
     }
+    if (false) {
+      System.out.print("\n\nManagers:\n");
+      for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
+        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+          if (inputArray[(wTimer + smallestX)][(hTimer + smallestY)]) {
+            System.out.print("X");
+          } else {
+            System.out.print('-');
+          }
+        }
+        System.out.print("\n");
+      }
+    }
+    return inputArray;
   }
 
+  /** Prints the shape array to assist visualization. */
+  public void printPixels() {
+    // Testing pixels that prints '-' as false, 'X' as true
+    for (int hTimer = 0; hTimer <= arrayHeight - 1; hTimer++) {
+      for (int wTimer = 0; wTimer <= arrayWidth - 1; wTimer++) {
+        if (shapePixels[wTimer][hTimer] == true) {
+          System.out.print("X");
+          gameManager.ellipse(wTimer, hTimer, 1, 1);
+        } else {
+          System.out.print("-");
+        }
+      }
+      System.out.print("\n");
+    }
+  }
 }

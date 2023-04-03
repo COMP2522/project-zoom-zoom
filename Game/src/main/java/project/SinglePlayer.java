@@ -114,6 +114,7 @@ public class SinglePlayer implements Countdownable {
     stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Car>();
     player1 = p1;
+    player1.position = window.getStartingPosition(1);
     playerControls = new Controls(player1, player1Keys);
 //    sprites.add(player1);
     player1Car = window.loadImage("Game/images/Player1Car.png");
@@ -128,7 +129,7 @@ public class SinglePlayer implements Countdownable {
 
     // Add the AI player
     bot = new Bot(
-      window.getStartingPosition(1),
+      window.getStartingPosition(2),
         new PVector(50, 1),
       0.1F,
         new Color(255, 0, 0),

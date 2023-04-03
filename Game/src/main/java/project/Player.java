@@ -234,6 +234,7 @@ public class Player extends Car {
   }
   @Override
   public void draw() {
+    window.ellipse(position.x, position.y, 20, 20);
     window.pushMatrix();
     window.translate((position.x + WIDTH) / 2, (position.y + HEIGHT) / 2);
     window.rotate((float) direction);
@@ -245,9 +246,8 @@ public class Player extends Car {
   }
 
   public void onTrack() {
-    if (!trackManager.isOnTrack(position)) {
-      System.out.println(playerNum + "\tOff track penalty");
-    }
+    if (!trackManager.isOnTrack(position))
+      System.out.println(playerNum + "\tOff Track");
   }
 
   /**
@@ -270,8 +270,6 @@ public class Player extends Car {
     position.x = xpos;
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
     position.y = ypos;
-    if (trackManager.isOnTrack(position))
-      System.out.println("\tOn Track");
   }
 
 
