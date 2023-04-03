@@ -26,10 +26,6 @@ public class ControlMenu {
   public Button Twop2Stop;
   public Button Twop2Left;
   public Button Twop2Right;
-  public Button Twop1Go;
-  public Button Twop1Stop;
-  public Button Twop1Left;
-  public Button Twop1Right;
   private Bgm bgm;
   private boolean check = true;
   private char p1upkey;
@@ -40,10 +36,6 @@ public class ControlMenu {
   private char twop2downkey;
   private char twop2leftkey;
   private char twop2rightkey;
-//  private char twop1upkey;
-//  private char twop1downkey;
-//  private char twop1leftkey;
-//  private char twop1rightkey;
   private ControlMenu(GameManager window) {
     this.window = window;
     bgm = Bgm.getInstance();
@@ -64,10 +56,6 @@ public class ControlMenu {
       p1rightkey = window.singlePlayer.getRight();
     }
     if (window.twoPlayers != null) {
-//      twop1upkey = window.twoPlayers.getP1Up();
-//      twop1downkey = window.twoPlayers.getP1Down();
-//      twop1leftkey = window.twoPlayers.getP1Left();
-//      twop1rightkey = window.twoPlayers.getP1Right();
       twop2upkey = window.twoPlayers.getP2Up();
       twop2downkey = window.twoPlayers.getP2Down();
       twop2leftkey = window.twoPlayers.getP2Left();
@@ -107,14 +95,6 @@ public class ControlMenu {
         80, "", new Color(0, 0, 150), window);
     Twop2Right = new Button(new PVector((float) (window.displayWidth / 2) + 90, 790), 300,
         80, "", new Color(0, 0, 150), window);
-//    Twop1Go = new Button(new PVector((float) (window.displayWidth / 2) + 400, 200), 225,
-//        50, "ACELER: " + twop2upkey, new Color(200, 50, 50), window);
-//    Twop1Stop = new Button(new PVector((float) (window.displayWidth / 2) + 400, 400), 225,
-//        50, "BRAKE: " + twop2downkey, new Color(200, 50, 50), window);
-//    Twop1Left = new Button(new PVector((float) (window.displayWidth / 2) + 400, 600), 225,
-//        50, "LEFT: " + twop2leftkey, new Color(200, 50, 50), window);
-//    Twop1Right = new Button(new PVector((float) (window.displayWidth / 2) + 400, 800), 225,
-//        50, "RIGHT: " + twop2rightkey, new Color(200, 50, 50), window);
   }
 
   public void draw() {
@@ -123,8 +103,6 @@ public class ControlMenu {
     window.image(background, 0, 0, window.displayWidth, window.displayHeight);
     window.fill(0);
     window.image(setting, (float) window.displayWidth / 2 - 150, (float) window.displayHeight / 20);
-
-//    window.text("KEY SETTING", (float) window.displayWidth / 2 + 10, (float) window.displayHeight / 20);
     soundoff.click();
     soundoff.draw();
     soundon.draw();
@@ -169,15 +147,6 @@ public class ControlMenu {
     window.text(twop2downkey, (float) (window.displayWidth / 2) + 350, 400);
     window.text(twop2leftkey, (float) (window.displayWidth / 2) + 350, 600);
     window.text(twop2rightkey, (float) (window.displayWidth / 2) + 350, 800);
-//    Twop1Go.update();
-//    Twop1Go.draw();
-//    Twop1Stop.update();
-//    Twop1Stop.draw();
-//    Twop1Left.update();
-//    Twop1Left.draw();
-//    Twop1Right.update();
-//    Twop1Right.draw();
-//    textBox.draw();
     if (soundoff.isLeftClicked()) {
       bgm.stopBGM(false);
       check = true;
@@ -211,17 +180,5 @@ public class ControlMenu {
     if (Twop2Right.isLeftClicked()) {
       Controls.setRight(Controls.player2, window.inputChar);
     }
-//    if (Twop1Go.isClicked()) {
-//      Controls.setUp(Controls.player2, window.inputChar);
-//    }
-//    if (Twop1Stop.isClicked()) {
-//      Controls.setDown(Controls.player2, window.inputChar);
-//    }
-//    if (Twop1Left.isClicked()) {
-//      Controls.setLeft(Controls.player2, window.inputChar);
-//    }
-//    if (Twop1Right.isClicked()) {
-//      Controls.setRight(Controls.player2, window.inputChar);
-//    }
   }
 }

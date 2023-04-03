@@ -25,7 +25,6 @@ public class GameManager extends PApplet {
   Ranking ranking;
   public static boolean audio = true;
   private int check = 1;
-
   static Player player1;
   static Player player2;
 
@@ -72,9 +71,7 @@ public class GameManager extends PApplet {
    */
   public void setup() {
     bgm = Bgm.getInstance();
-    if (MongoEnabled) {
-      mongoDB = MongoDB.getInstance();
-    }
+    mongoDB = MongoDB.getInstance();
     trackManager = new TrackManager(this);
 
     player1 = new Player(
@@ -87,7 +84,6 @@ public class GameManager extends PApplet {
             new PVector(50, 1),
             0.1F,
             this, "2");
-
   }
 
   public void startRace() {
@@ -128,11 +124,11 @@ public class GameManager extends PApplet {
       if (mongoDB != null && singlePlayer != null && MongoEnabled) {
         mongoDB.put("time", singlePlayer.stopwatch.currentTime);
       }
-      if (singlePlayer != null) {
+      if (singlePlayer != null && singlePlayer.stopwatch != null) {
         singlePlayer.stopwatch.stopTimer();
         singlePlayer.setTimerCheck(true);
       }
-      if (twoPlayers != null) {
+      if (twoPlayers != null && twoPlayers.stopwatch != null) {
         twoPlayers.stopwatch.stopTimer();
         twoPlayers.setTimerCheck(true);
       }
