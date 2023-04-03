@@ -17,13 +17,6 @@ public class Player extends Car {
 
   //This sets the default options for the car
 
-  /**
-   * The gear ratios for the car's transmission.
-   */
-  int GEAR1 = 700;
-  int GEAR2 = 300;
-  int GEAR3 = 125;
-  int GEAR4 = 80;
 
   /**
    * The maximum power output of the car's engine.
@@ -217,13 +210,16 @@ public class Player extends Car {
   /**
    * Declaring the defaults to all of the car parts
    */
-  PartGears gears = new PartGears(GEAR1, GEAR2, GEAR3, GEAR4);
+  PartGears gears = new PartGears(PartGears.gears);
   PartEngine engine = PartEngine.engineParts[0];
   PartAero aero = PartAero.aeroParts[0];
   PartChassis chassis = PartChassis.chassisParts[0];
 
   public PartGears getGears() {
     return gears;
+  }
+  public void setGear(int index, int value) {
+    gears.setGear(index, value);
   }
 
   public PartEngine getEngine() {
@@ -359,10 +355,6 @@ public class Player extends Car {
     }
   }
 
-
-
-
-
   /**
    * Calculates the effect of drag on the car's speed.
    * Aero drag is the main factor
@@ -394,20 +386,6 @@ public class Player extends Car {
     // Debugging print statement
     //System.out.println("acc " + prpacc);
   }
-
-
-
-//  public void printInfo(){
-//    System.out.println("speed " + speed);
-//    System.out.println("RPM " + revs);
-//    System.out.println("acc " + (int)acc());
-//    System.out.println("drag " + ((int)drag() + 1));
-//    System.out.println("xpos " + xpos);
-//    System.out.println("ypos " + ypos + "\n");
-//    System.out.println("Momentum " + (weight * speed));
-//    System.out.println(("Drifting " + drifting));
-//    System.out.println("Direction " + direction + "\n");
-//  }
 
   public void turn(int dir){
     double turnAmt = CAMBER * dir;

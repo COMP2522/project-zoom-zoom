@@ -74,9 +74,11 @@ public class GearButton extends Button {
     int gearsIndex = Arrays.asList(gears).indexOf(gear);
     if (gear.isLeftClicked()) {
       // Set player1 gear1
+      player1.setGear(gearsIndex, window.inputVal);
       System.out.println("p1 g" + (gearsIndex + 1) + ": " + window.inputVal);
     } else if (gear.isRightClicked()) {
       // Set player2 gear1
+      player2.setGear(gearsIndex, window.inputVal);
       System.out.println("p2 g" + (gearsIndex + 1) + ": " + window.inputVal);
     }
   }
