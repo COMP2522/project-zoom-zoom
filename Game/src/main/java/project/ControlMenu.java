@@ -30,6 +30,7 @@ public class ControlMenu {
   public Button Twop1Stop;
   public Button Twop1Left;
   public Button Twop1Right;
+  private Bgm bgm;
   private boolean check = true;
   private char p1upkey;
   private char p1downkey;
@@ -45,6 +46,7 @@ public class ControlMenu {
 //  private char twop1rightkey;
   private ControlMenu(GameManager window) {
     this.window = window;
+    bgm = Bgm.getInstance();
   }
 
   public static ControlMenu getInstance(GameManager window) {
@@ -177,12 +179,12 @@ public class ControlMenu {
 //    Twop1Right.draw();
 //    textBox.draw();
     if (soundoff.isLeftClicked()) {
-      BGM.stopBGM(false);
+      bgm.stopBGM(false);
       check = true;
       GameManager.audio = true;
     }
     if (soundon.isLeftClicked() && check && GameManager.audio) {
-      BGM.getBGM(true);
+      bgm.getBGM(true);
       check = false;
     }
     if (p1Go.isLeftClicked()) {
