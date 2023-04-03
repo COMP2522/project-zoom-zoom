@@ -48,6 +48,7 @@ public class TrackMenu {
    * representing the clock rate of the title animation.
    */
   private static final int clock = 5;
+  private TrackManager trackManager;
 
   /**
    * These are private instance variables of the PImage
@@ -101,13 +102,6 @@ public class TrackMenu {
         buttonHeight, "", Button.PURPLE, window);
     track3 = new Button(new PVector(halfWindowSize + 325, 490), buttonWidth,
         buttonHeight, "", Button.PURPLE, window);
-    window.textSize(40);
-    track1 = new Button(new PVector(halfWindowSize - 525, 490), 300,
-            80, "", new Color(104, 52, 235), window);
-    track2 = new Button(new PVector(halfWindowSize - 125, 490), 300,
-            80, "", new Color(64,64,64), window);
-    track3 = new Button(new PVector(halfWindowSize + 325, 490), 300,
-            80, "", new Color(64,64,64), window);
   }
 
   /**
@@ -146,11 +140,6 @@ public class TrackMenu {
   }
 
   public void buttonIsClicked() {
-    window.image(track1Font,(float) (window.displayWidth / 2) - 500, 500);
-    track2.click();
-    track2.draw();
-    track3.click();
-    track3.draw();
     if (track1.isLeftClicked()) {
       window.menu = 4;
     }
