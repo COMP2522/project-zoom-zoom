@@ -194,7 +194,7 @@ public class GameManager extends PApplet {
     if (menu == 3) {
       controlMenu.textBox.textBoxClicked();
     }
-    if (menu == 4) {
+    if (menu == 4 || menu == 7 || menu == 8) {
       carModMenu.gearInput.textBoxClicked();
     }
   }
