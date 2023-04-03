@@ -135,7 +135,7 @@ public class SinglePlayer implements Countdownable {
       window,
       waypoints, "B");
     sprites.add(bot);
-    dash = new Dashboard(window, player1, window.displayWidth / 8, window.displayHeight / 20);
+    dash = new Dashboard(window, player1);
   }
 
   /**
