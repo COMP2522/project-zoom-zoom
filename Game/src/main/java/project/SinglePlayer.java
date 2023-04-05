@@ -119,21 +119,29 @@ public class SinglePlayer implements Countdownable {
     player1Car = window.loadImage("Game/images/Player1Car.png");
 
     ArrayList<PVector> waypoints = new ArrayList<>();
-    waypoints.add(new PVector(window.width / 2, window.height / 2));
-    waypoints.add(new PVector(50, 1));
-    waypoints.add(new PVector(60, 1));
-    waypoints.add(new PVector(70, 10));
-    waypoints.add(new PVector(80, 1));
-    waypoints.add(new PVector(90, 1));
+    waypoints.add(new PVector(1100, 100));
+    waypoints.add(new PVector(1150, 150));
+    waypoints.add(new PVector(1200, 170));
+    waypoints.add(new PVector(1250, 180));
+    waypoints.add(new PVector(1200, 600));
+    waypoints.add(new PVector(1100, 650));
+    waypoints.add(new PVector(150, 650));
+    waypoints.add(new PVector(100, 600));
+    waypoints.add(new PVector(100, 550));
+    waypoints.add(new PVector(100, 450));
+    waypoints.add(new PVector(100, 90));
+    waypoints.add(new PVector(120, 100));
+
 
     // Add the AI player
     bot = new Bot(
-      window.getStartingPosition(1),
-        new PVector(50, 1),
+      new PVector(100, 100),
+      new PVector(50, 1),
       0.1F,
-        new Color(255, 0, 0),
+      new Color(255, 0, 0),
       window,
-      waypoints, "B");
+      waypoints,
+      "B");
     sprites.add(bot);
     dash = new Dashboard(window, player1);
   }
@@ -157,13 +165,10 @@ public class SinglePlayer implements Countdownable {
       // Move player around the screen.
       player1.draw();
       player1.update();
+      bot.draw();
+      bot.update();
       drawImage();
       for (Car sprite : sprites) {
-        if (sprite instanceof Bot) {
-          bot = (Bot) sprite;
-          bot.draw();
-          bot.update();
-        }
         dash.draw();
       }
     }

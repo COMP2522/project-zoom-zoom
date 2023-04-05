@@ -9,8 +9,8 @@ import static java.lang.Math.PI;
 import static processing.core.PApplet.constrain;
 
 public class Bot extends Car {
-  private PVector position;
-  private PVector direction;
+  protected PVector position;
+  protected PVector direction;
   private PVector velocity;
   private float steeringAngle;
   private int framesUntilTurn;
@@ -29,7 +29,7 @@ public class Bot extends Car {
     this.framesUntilTurn = 0; // start turning immediately
     this.random = new Random();
     this.pid = new PID(0.1, 0.1, 0.1);
-    this.speed = 100;
+    this.speed = 10;
     this.frameRate = window.frameRate;
     this.waypoints = waypoints;
     this.currentWaypointIndex = 0;
@@ -44,7 +44,7 @@ public class Bot extends Car {
     }
 
     // calculate the steering angle using PID control
-    PVector desiredDirection = PVector.sub(waypoints.get(currentWaypointIndex), position);
+    PVector desiredDirection = PVector.sub(waypoints.get((currentWaypointIndex + 1) % waypoints.size()), position);
     float desiredHeading = desiredDirection.heading();
     double error = desiredHeading - direction.heading();
     double dt = 1 / frameRate;
@@ -56,6 +56,8 @@ public class Bot extends Car {
     velocity.normalize();
     velocity.mult((float) speed);
     setVelocity(velocity);
+    position.add(velocity);
+    direction.rotate(steeringAngle);
 
     // update the bot's position
     super.update();
