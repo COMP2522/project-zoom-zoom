@@ -205,7 +205,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-      bgm.getBGM(true);
+//      bgm.getBGM(true);
       audio = false;
       check++;
     }

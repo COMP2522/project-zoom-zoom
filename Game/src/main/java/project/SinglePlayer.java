@@ -82,7 +82,7 @@ public class SinglePlayer implements Countdownable {
   /**
    * The constructor for the SinglePlayer class.
    *
-   * @param window The game manager for the current game.
+   * @param window The window for the current game.
    */
   private SinglePlayer(GameManager window) {
     this.window = window;
