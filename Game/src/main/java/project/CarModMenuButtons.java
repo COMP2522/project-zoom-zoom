@@ -18,6 +18,9 @@ public class CarModMenuButtons implements Drawable {
   // Player objects
   private Player player1 = GameManager.player1;
   private Player player2 = GameManager.player2;
+  private PartEngine engine;
+  private PartChassis partChassis;
+  private PartAero partAero;
 
   /**
    * CarModMenuButtons, private constructor for class using singleton design.
@@ -118,10 +121,40 @@ public class CarModMenuButtons implements Drawable {
     if (saveCarBuild.isLeftClicked()) {
       // Save player1's car parts to database
       System.out.println("Player 1 build saved");
+      putStatsInMongoDB(player1);
     } else if (saveCarBuild.isRightClicked()) {
       // Save player2's car parts to database
       System.out.println("Player 2 build saved");
+      putStatsInMongoDB(player2);
     }
+  }
+
+  /**
+   * This method puts stats of each parts of car (Engine, Chassis, Aero) by calling
+   * methods in MongoDB Class.
+   *
+   * @param player either player1 or player2
+   */
+  public void putStatsInMongoDB(Player player) {
+    String whichPlayer;
+    if (player == player1) {
+      whichPlayer = "P1 ";
+    } else {
+      whichPlayer = "P2 ";
+    }
+    engine = player.getEngine();
+    partChassis = player.getChassis();
+    partAero = player.getAero();
+    window.mongoDB.putEngine(whichPlayer + "Power", engine.getPower(),
+        whichPlayer + "DropOff", engine.getDropoff(),
+        whichPlayer + "OptimalRevs", engine.getOpRevs(),
+        whichPlayer + "EngineWeight", engine.getWeight());
+    window.mongoDB.putChasis(whichPlayer + "WheelBaseX", partChassis.getWheelBaseX(),
+        whichPlayer + "WheelBaseY", partChassis.wheelBaseY,
+        whichPlayer + "ChasisWeight", partChassis.getWeight());
+    window.mongoDB.putAero(whichPlayer + "DownForce", partAero.getDownForce(),
+        whichPlayer + "Drag", partAero.getDrag(),
+        whichPlayer + "AeroWeight,", partAero.getWeight());
   }
 }
 
