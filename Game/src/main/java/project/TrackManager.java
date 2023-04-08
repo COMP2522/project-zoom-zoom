@@ -1,6 +1,5 @@
 package project;
 
-import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
@@ -12,12 +11,9 @@ import java.util.ArrayList;
  * @author MaxwellV
  */
 public class TrackManager implements Drawable {
-
   /**
-   * Enables testing mode
+   * Contains whether each pixel is on the track.
    */
-  final static boolean isOnTesterMode = false;
-
   private boolean[][] trackPixels;
 
   /**
@@ -25,6 +21,9 @@ public class TrackManager implements Drawable {
    */
   private GameManager window;
 
+  /**
+   * Grass background image.
+   */
   private PImage grassImage;
 
   /**
@@ -47,51 +46,120 @@ public class TrackManager implements Drawable {
     trackPixels = new boolean[window.getDisplayWidthCustom()][window.getDisplayHeightCustom()];
   }
 
+  private boolean isParseTrackTestingPrints = false;
+
   /**
-   * Initializes track manager.
+   * Initializes track. Test version to init from string.
+   *
+   * @param input String to be parsed
    */
   public void initTrack(String input) {
-    if (input == "Track 1") {
-      tracks.add(new TrackPiece(180, 40, 1100, 40, 1100, 140, 180, 140, window)); // Top Straight
-      tracks.add(new TrackPiece(1100, 40, 1240, 180, 1140, 180, 1100, 140, window)); // Top -> Right
-      tracks.add(new TrackPiece(1240, 180, 1240, 540, 1140, 540, 1140, 180, window)); // Right
-      tracks.add(new TrackPiece(1240, 540, 1100, 680, 1100, 580, 1140, 540, window)); // Right -> Bottom
-      tracks.add(new TrackPiece(1100, 680, 180, 680, 180, 580, 1100, 580, window)); // Bottom Straight
-      tracks.add(new TrackPiece(180, 680, 40, 540, 140, 540, 180, 580, window)); // Bottom -> Left
-      tracks.add(new TrackPiece(40, 540, 40, 180, 140, 180, 140, 540, window)); // Left
-      tracks.add(new TrackPiece(40, 180, 180, 40, 180, 140, 140, 180, window)); // Left -> Top
-    } else if (input == "Track 2") {
+    // Uses inputted string to populate track arraylist
+    parseTrackCords(input);
 
-      /** Close/far and right/left are from the perspective a car driving,
-       * not top/bottom or left/right of the screen.
-       *
-       * Slope calculations occasionally  round to out of bounds of the array, just work around it
-       *
-       * Also, not required, but it makes sense for the far cords of a piece match the close cords \
-       * of the next piece.
-       */
-      tracks.add(new TrackPiece(20, 20, 20, 500, 1000, 500, 1000, 20, window));
-    } else if (input == "Track 3") {
-      tracks.add(new TrackPiece(20, 20, 20, 500, 1000, 500, 1000, 20, window)); // Left
-    }
-
+    // Adds copies each tracks boolean array to manager's
     for (TrackPiece eachPiece : tracks) {
       trackPixels = eachPiece.addPixels(trackPixels);
     }
-
-    grassImage = window.loadImage("Game/images/trackGrass4.png");
-    int pixelModifier = 100;   // Default BG Image Dimensions: 600 x 400.
-    grassImage.width = window.getDisplayWidthCustom() / pixelModifier;
-    grassImage.height = window.getDisplayHeightCustom() / pixelModifier;
-    window.image(grassImage, 0, 0);
-  }
-
-  public PVector getStartCords(int playerNumber) {
-    return tracks.get(0).getStartCord(playerNumber);
   }
 
   /**
-   * Draws to screen.
+   * Sets all values of int array to zero.
+   *
+   * @param inputArray Array to be reset
+   */
+  private void resetArray(int[] inputArray) {
+    for (int timer = 0; timer < inputArray.length; timer++) {
+      inputArray[timer] = 0;
+    }
+  }
+
+  /**
+   * Parses string to generate track pieces.
+   *
+   * @param input inputted string, to be converted to JSON
+   */
+  private void parseTrackCords(String input) {
+    // Testing print
+    if (isParseTrackTestingPrints) {
+      System.out.println("parseTracks Called\nInput: \t" + input + "\n");
+    }
+
+    // Initialize array values
+    int[] cordsHolder = new int[8];
+    int arrayPlacement = 0;
+    resetArray(cordsHolder);
+
+    // Initialize parsing values
+    int currCordInt = 0;
+    String currCordString = "";
+
+    // Decide what to do with inputted values
+    for (int timer = 0; timer < input.length(); timer++) {
+      switch (input.charAt(timer)) {
+        case ' ', ',': // Space and comma character separates portions of single piece
+          // Store int parsed from the input string.
+          currCordInt = Integer.parseInt(currCordString);
+          cordsHolder[arrayPlacement] = currCordInt;
+          arrayPlacement++;
+
+          // Reset parsing string, now int is stored
+          currCordString = "";
+
+          // Testing prints
+          if (isParseTrackTestingPrints) {
+            System.out.print("\t");
+          }
+          break;
+
+        case 'n': // n Character separates a each pieces cords.
+          // Parse and store final last int
+          currCordInt = Integer.parseInt(currCordString);
+          cordsHolder[arrayPlacement] = currCordInt;
+
+          // Add track to arraylist
+          tracks.add(new TrackPiece(cordsHolder[0], cordsHolder[1], cordsHolder[2], cordsHolder[3],
+                      cordsHolder[4],cordsHolder[5], cordsHolder[6], cordsHolder[7], window));
+
+          // Reset values for next piece
+          resetArray(cordsHolder);
+          arrayPlacement = 0;
+          currCordString = "";
+
+          // Testing prints
+          if (isParseTrackTestingPrints) {
+            System.out.print("\nNext Track\t");
+          }
+          break;
+
+        default:
+          // Checks if char is digit.
+          if (Character.isDigit(input.charAt(timer))) {
+            currCordString += input.charAt(timer);
+
+            // Testing prints
+            if (isParseTrackTestingPrints) {
+              System.out.print("'" + input.charAt(timer) + "' ");
+            }
+
+          // Ignore tabs and newlines, to formatting when manually writing cords
+          } else if (!(input.charAt(timer) == '\t' || (input.charAt(timer) == '\n'))) {
+            System.out.println("Character '" + input.charAt(timer) + "' is not valid");
+          }
+        break;
+      }
+    }
+    // If tracks cords aren't filled, create shape with 0 in remaining slots.
+    if (arrayPlacement > 0) {
+      System.out.println("Incomplete track added, remaining values set to 0");
+      tracks.add(new TrackPiece(cordsHolder[0], cordsHolder[1], cordsHolder[2], cordsHolder[3],
+              cordsHolder[4],cordsHolder[5], cordsHolder[6], cordsHolder[7], window));
+    }
+  }
+
+
+  /**
+   * Draws the track background and pieces to screen.
    */
   public void draw() {
     // Flat color option kept because BG Image causing lag on some computers
@@ -99,14 +167,6 @@ public class TrackManager implements Drawable {
     window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getRed());
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
-    }
-    window.fill(255,255,255);
-    for (int wTimer = 0; wTimer < window.getDisplayWidthCustom(); wTimer++) {
-      for (int hTimer = 0; hTimer < window.getDisplayHeightCustom(); hTimer++) {
-//        if (trackPixels[wTimer][hTimer]) {
-////          window.ellipse(wTimer, hTimer, 2, 2);
-//        }
-      }
     }
   }
 
@@ -130,15 +190,16 @@ public class TrackManager implements Drawable {
    */
   public boolean isOnTrack(PVector inputCords) {
     // Check if cords are on screen (Range of the array)
-    if ((int) inputCords.x > window.getDisplayWidthCustom() - 1 || (int) inputCords.y > window.getDisplayHeightCustom() - 1||
-            (int) inputCords.x < 0 || (int) inputCords.y < 0) {
+    if ((int) inputCords.x > window.getDisplayWidthCustom() - 1
+            || (int) inputCords.y > window.getDisplayHeightCustom() - 1
+            || (int) inputCords.x < 0 || (int) inputCords.y < 0) {
       return false;
     }
     return trackPixels[(int) inputCords.x][(int) inputCords.y];
   }
 
   /**
-   * Prints the array, - is grass, X is track.
+   * Prints the array to console, '-' is grass, 'X' is track.
    */
   public void printPixels() {
     String output = "";
@@ -154,5 +215,18 @@ public class TrackManager implements Drawable {
       System.out.print("\n");
     }
     System.out.println(window.getDisplayWidthCustom() + " x " + window.getDisplayHeightCustom());
+  }
+
+  /**
+   * Return the starting position for designated player.
+   * @param playerNumber Which player's position (1 or 2)
+   * @return Relevant player's position
+   */
+  public PVector getStartCords(int playerNumber) {
+    try {
+      return tracks.get(0).getStartCord(playerNumber);
+    } catch (Exception e) {
+      throw new NullPointerException();
+    }
   }
 }

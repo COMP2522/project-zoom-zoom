@@ -1,10 +1,9 @@
 package project;
 
+import java.awt.Color;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
-
-import java.awt.Color;
 
 /** Bezier curves for all tracks in our game.
  *
@@ -13,7 +12,6 @@ import java.awt.Color;
 public class TrackPiece extends PApplet implements Drawable {
   /** Color of the road. */
   private Color roadColor = new Color(76, 76, 76);
-
 
   /** Closest point to X = 0. */
   private int smallestX;
@@ -28,6 +26,9 @@ public class TrackPiece extends PApplet implements Drawable {
   private PVector cordStart1;
   /** Player2's starting location. */
   private PVector cordStart2;
+
+  /** Cords in a string, for outputting custom track codes. */
+  private String cordsString;
 
   /** This segment's shape object, that is drawn to the screen. */
   private PShape road;
@@ -65,15 +66,11 @@ public class TrackPiece extends PApplet implements Drawable {
                     GameManager gameManager) {
     this.gameManager = gameManager;
 
-    // The starting position for each racer
-    cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 1);
-    cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 2);
-
     // Extremes of each coordinate
-    smallestX = Math.min( Math.min(closeLeftX, farLeftX), Math.min(farRightX, closeRightX));
-    smallestY = Math.min( Math.min(closeLeftY, farLeftY), Math.min(farRightY, closeRightY));
-    largestX = Math.max(  Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
-    largestY = Math.max(  Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
+    smallestX = Math.min(Math.min(closeLeftX, farLeftX), Math.min(farRightX, closeRightX));
+    smallestY = Math.min(Math.min(closeLeftY, farLeftY), Math.min(farRightY, closeRightY));
+    largestX = Math.max(Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
+    largestY = Math.max(Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
 
     // Overall size of the object
     segmentWidth = largestX - smallestX;
@@ -83,17 +80,23 @@ public class TrackPiece extends PApplet implements Drawable {
     arrayWidth = segmentWidth + 1;
     arrayHeight = segmentHeight + 1;
 
-    // Boolean array that tracks of this segment
+    // Boolean array that tracks onTrack of this segment
     shapePixels = new boolean[arrayWidth][arrayHeight];
 
-    // Add each border of this shape
+    // Add each line segment, then fill
     addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, farLeftX - smallestX, farLeftY - smallestY); // 1
     addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, closeRightX - smallestX, closeRightY - smallestY); // 2
     addSlopeLine(farRightX - smallestX, farRightY - smallestY, closeRightX - smallestX, closeRightY - smallestY); // 3
     addSlopeLine(farRightX - smallestX, farRightY - smallestY, farLeftX - smallestX, farLeftY - smallestY); // 4
-
-    // Fills the void created by the lines
     fillArray();
+
+    // Calculate the start point for each racer
+    cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 1);
+    cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 2);
+
+    // This track's cords copied to a string. comma between 1 cord's X & Y, space between cords.
+    cordsString = closeLeftX + "," + closeLeftY + " " + farLeftX + "," + farLeftY + " "
+            + farRightX + "," + farRightY + " " + closeRightX + "," + closeRightY;
 
     // Setup drawable shape object.
     road = gameManager.createShape();
@@ -107,57 +110,14 @@ public class TrackPiece extends PApplet implements Drawable {
     road.endShape();
   }
 
-
-  /** Get the starting location
+  /**
+   * Uses slope calculation (y = mx + b) to find lines between points.
    *
-   * @param playerNumber Either 1 or 2
-   * @return Starting position of the relevant player
+   * @param x1 First cord X
+   * @param y1 First cord Y
+   * @param x2 Second cord X
+   * @param y2 Second cord Y
    */
-  public PVector getStartCord(int playerNumber) {
-    if (playerNumber == 1) {
-      System.out.println(cordStart1);
-      return cordStart1;
-    } else {
-      System.out.print(cordStart2);
-      return cordStart2;
-    }
-  }
-
-  /** Uses averages calc to find starting position. */
-  private PVector calculateStartCords(int x1, int y1, int x2, int y2, int playerNum) {
-    int smallerX = Math.min(x1, x2);
-    int smallerY = Math.min(y1, y2);
-    int xPosition = smallerX + (x2 - x1) / 3 * playerNum;
-    int yPosition = smallerY + (y2 - y1) / 3 * playerNum;
-    return new PVector(xPosition, yPosition);
-  }
-
-  /** Fills line area outlined by addSlopeLines. */
-  public void fillArray() {
-    int activePixels = 0;
-    boolean currentFill = false;
-
-    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
-      activePixels = 0;
-      currentFill = false;
-      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-        if (shapePixels[wTimer][hTimer] == true) { // Get the number of lines crossed
-          activePixels++;
-        }
-      }
-      if (activePixels % 2 == 0 && activePixels < 5) { // If crosses even lines, fill
-        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-          if (shapePixels[wTimer][hTimer] == true) {
-            currentFill = !currentFill;
-          }
-          if (currentFill == true) {
-            shapePixels[wTimer][hTimer] = true;
-          }
-        }
-      }
-    }
-  }
-
   public void addSlopeLine(int x1, int y1, int x2, int y2) {
     int firstX;
     int firstY;
@@ -202,6 +162,50 @@ public class TrackPiece extends PApplet implements Drawable {
         shapePixels[timer][placeY] = true;
       }
     }
+  }
+
+  /** Fills line area outlined by addSlopeLines. */
+  public void fillArray() {
+    int activePixels = 0;
+    boolean currentFill = false;
+
+    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
+      activePixels = 0;
+      currentFill = false;
+      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+        if (shapePixels[wTimer][hTimer] == true) { // Get the number of lines crossed
+          activePixels++;
+        }
+      }
+      if (activePixels % 2 == 0 && activePixels < 5) { // If crosses even lines, fill
+        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+          if (shapePixels[wTimer][hTimer] == true) {
+            currentFill = !currentFill;
+          }
+          if (currentFill == true) {
+            shapePixels[wTimer][hTimer] = true;
+          }
+        }
+      }
+    }
+  }
+
+
+  /** Uses averages calc to find starting position.
+   *
+   * @param x1 X position of cord 1
+   * @param y1 Y position of cord 1
+   * @param x2 Y position of cord 2
+   * @param y2 X position of cord 2
+   * @param playerNum Which player's position is being calculated
+   * @return Starting position of player
+   */
+  private PVector calculateStartCords(int x1, int y1, int x2, int y2, int playerNum) {
+    int smallerX = Math.min(x1, x2);
+    int smallerY = Math.min(y1, y2);
+    int xPosition = smallerX + (x2 - x1) / 3 * playerNum;
+    int yPosition = smallerY + (y2 - y1) / 3 * playerNum;
+    return new PVector(xPosition, yPosition);
   }
 
   /** Draw each frame. */
@@ -255,5 +259,36 @@ public class TrackPiece extends PApplet implements Drawable {
       }
       System.out.print("\n");
     }
+  }
+
+  /** Get the starting location.
+   *
+   * @param playerNumber Either 1 or 2
+   * @return Starting position of the relevant player
+   */
+  public PVector getStartCord(int playerNumber) {
+    if (playerNumber == 1) {
+      return cordStart1;
+    } else {
+      return cordStart2;
+    }
+  }
+
+  /**
+   *  Get string of this piece's coordinates.
+   *
+   * @return String of this piece's cords
+   */
+  public String getCodeString() {
+    return cordsString;
+  }
+
+  /**
+   * toString method
+   *
+   * @return String of this piece's coordinates
+   */
+  public String toString() {
+    return cordsString;
   }
 }
