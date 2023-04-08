@@ -254,16 +254,16 @@ public class ControlMenu {
       ControlCommandInvoker.setPlayer1Keys(3, window.inputChar);
     }
     if (twop2Go.isLeftClicked()) {
-      ControlCommandInvoker.setPlayer1Keys(0, window.inputChar);
+      ControlCommandInvoker.setPlayer2Keys(0, window.inputChar);
     }
     if (twop2Stop.isLeftClicked()) {
-      ControlCommandInvoker.setPlayer1Keys(1, window.inputChar);
+      ControlCommandInvoker.setPlayer2Keys(1, window.inputChar);
     }
     if (twop2Left.isLeftClicked()) {
-      ControlCommandInvoker.setPlayer1Keys(2, window.inputChar);
+      ControlCommandInvoker.setPlayer2Keys(2, window.inputChar);
     }
     if (twop2Right.isLeftClicked()) {
-      ControlCommandInvoker.setPlayer1Keys(3, window.inputChar);
+      ControlCommandInvoker.setPlayer2Keys(3, window.inputChar);
     }
   }
 }
