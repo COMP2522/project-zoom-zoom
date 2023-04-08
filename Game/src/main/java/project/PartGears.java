@@ -4,10 +4,16 @@ package project;
  * Represents the gears part of a car, which includes gear ratios and shifting.
  */
 public class PartGears {
+
+    /** Default gear values. */
+    private static int gear1 = 800;
+    private static int gear2 = 300;
+    private static int gear3 = 150;
+    private static int gear4 = 100;
     /**
      * An array of gear ratios for the car.
      */
-    int [] gears = new int[4];
+    static int [] gears = {gear1, gear2, gear3, gear4};
     /**
      * The current gear of the car.
      */
@@ -15,50 +21,24 @@ public class PartGears {
 
     /**
      * Constructor for PartGears objects.
-     * @param a The gear ratio for gear 1.
-     * @param b The gear ratio for gear 2.
-     * @param c The gear ratio for gear 3.
-     * @param d The gear ratio for gear 4.
+     *
+     * @param gear The gear ratio for each gear.
      */
-    public PartGears(int a, int b, int c, int d) {
-        gears[0] = a;
-        gears[1] = b;
-        gears[2] = c;
-        gears[3] = d;
-    }
-
-
-
-    /**
-     * Sets the gear ratio for gear 1.
-     * @param r The new gear ratio.
-     */
-    public void setGear1(int r){
-        gears[0] = r;
+    public PartGears(int[] gear) {
+        gears[0] = gear[0];
+        gears[1] = gear[1];
+        gears[2] = gear[2];
+        gears[3] = gear[3];
     }
 
     /**
-     * Sets the gear ratio for gear 2.
-     * @param r The new gear ratio.
+     * Sets the gear ratio for the specified gear.
+     *
+     * @param index of gear
+     * @param value of new gear ratio
      */
-    public void setGear2(int r){
-        gears[1] = r;
-    }
-
-    /**
-     * Sets the gear ratio for gear 3.
-     * @param r The new gear ratio.
-     */
-    public void setGear3(int r){
-        gears[2] = r;
-    }
-
-    /**
-     * Sets the gear ratio for gear 4.
-     * @param r The new gear ratio.
-     */
-    public void setGear4(int r){
-        gears[3] = r;
+    public void setGear(int index, int value) {
+        gears[index] = value;
     }
 
     /**
