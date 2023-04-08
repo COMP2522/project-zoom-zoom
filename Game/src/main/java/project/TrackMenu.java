@@ -27,17 +27,20 @@ public class TrackMenu {
   private static TrackMenu instance;
 
   /**
-   * This is a private instance variable of the Button class representing the first track button.
+   * This is a private instance variable of the Button class representing
+   * the first track button.
    */
   private Button track1;
 
   /**
-   * This is a private instance variable of the Button class representing the second track button.
+   * This is a private instance variable of the Button class
+   * representing the second track button.
    */
   private Button track2;
 
   /**
-   * This is a private instance variable of the Button class representing the third track button.
+   * This is a private instance variable of the Button class
+   * representing the third track button.
    */
   private Button track3;
 
@@ -53,17 +56,34 @@ public class TrackMenu {
    */
   private static final int clock = 5;
 
+  /**
+   * Half the width of the display.
+   */
   private float halfDisplayWidth;
 
   /**
-   * These are private instance variables of the PImage
-   * class representing the background image, title
-   * image, and font images for each track button.
+   * Background image.
    */
   private PImage bg;
+
+  /**
+   * Title test image.
+   */
   private PImage title;
+
+  /**
+   * Text for Track 1.
+   */
   private PImage track1Font;
+
+  /**
+   * Text for Track 2.
+   */
   private PImage track2Font;
+
+  /**
+   * Text for Track 3.
+   */
   private PImage track3Font;
 
   /**
@@ -153,7 +173,7 @@ public class TrackMenu {
 
   /**
    * This is a private method that draws the font images for each track button.
-   * It draws the font images for each track button, and draws the track buttons.
+   * It draws the font images for the track button, and draws the track buttons.
    */
   private void drawFont() {
     track1.click();
@@ -168,33 +188,40 @@ public class TrackMenu {
   }
 
   /**
-   * This is a private method that checks if the user has clicked on one of the track buttons.
+   * This is a private method that checks if the user has clicked on one of the
+   * track buttons.
    */
   private void checkButtonClick() {
     if (track1.isLeftClicked()) {
-      trackManager.clearTrack();trackManager.initTrack("180,40 1100,40 1100,140 180,140n1100,40 1240,180 1140,180 1100" +
-              ",140n1240,180 1240,540 1140,540 1140,180n1240,540 1100,680 1100,580 1140," +
-              "540n1100,680 180,680 180,580 1100,580n180,680 40,540 140,540 180,580n40,540 " +
-              "40,180 140,180 140,540n40,180 180,40 180,140 140,180n");
-
+      trackManager.clearTrack();
+                          // To be converted to JSON
+      trackManager.initTrack("180,40 1100,40 1100,140 180,140n1100,40"
+              + " 1240,180 1140,180 1100,140n1240,180 1240,540 1140,540 1140,"
+              + "180n1240,540 1100,680 1100,580 1140,540n1100,680 180,680 180,"
+              + "580 1100,580n180,680 40,540 140,540 180,580n40,540 40,180 140,"
+              + "180 140,540n40,180 180,40 180,140 140,180n");
       window.startRace();
       window.menu = 4;
     }
     if (track2.isLeftClicked()) {
-      trackManager.clearTrack();trackManager.initTrack("180,40 1100,40 1100,140 180,140n1100,40 1240,180 1140,180 1100" +
-              ",140n1240,180 1240,540 1140,540 1140,180n1240,540 1100,680 1100,580 1140," +
-              "540n1100,680 180,680 180,580 1100,580n180,680 40,540 140,540 180,580n40,540 " +
-              "40,180 140,180 140,540n40,180 180,40 180,140 140,180n");
-
+      trackManager.clearTrack();
+                      // To be converted to JSON
+      trackManager.initTrack("180,40 1100,40 1100,140 180,140n1100,40"
+              + " 1240,180 1140,180 1100,140n1240,180 1240,540 1140,540 1140,"
+              + "180n1240,540 1100,680 1100,580 1140,540n1100,680 180,680 180,"
+              + "580 1100,580n180,680 40,540 140,540 180,580n40,540 40,180 140,"
+              + "180 140,540n40,180 180,40 180,140 140,180n");
       window.startRace();
       window.menu = 4;
     }
     if (track3.isLeftClicked()) {
-      trackManager.clearTrack();trackManager.initTrack("180,40 1100,40 1100,140 180,140n1100,40 1240,180 1140,180 1100" +
-              ",140n1240,180 1240,540 1140,540 1140,180n1240,540 1100,680 1100,580 1140," +
-              "540n1100,680 180,680 180,580 1100,580n180,680 40,540 140,540 180,580n40,540 " +
-              "40,180 140,180 140,540n40,180 180,40 180,140 140,180n");
-
+      trackManager.clearTrack();
+                        // To be converted to JSON
+      trackManager.initTrack("180,40 1100,40 1100,140 180,140n1100,40"
+              + " 1240,180 1140,180 1100,140n1240,180 1240,540 1140,540 1140,"
+              + "180n1240,540 1100,680 1100,580 1140,540n1100,680 180,680 180,"
+              + "580 1100,580n180,680 40,540 140,540 180,580n40,540 40,180 140,"
+              + "180 140,540n40,180 180,40 180,140 140,180n");
       window.startRace();
       window.menu = 4;
     }

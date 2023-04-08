@@ -62,15 +62,15 @@ public class TrackPiece extends PApplet implements Drawable {
    * @param gameManager gameManager, link to the display
    */
   public TrackPiece(int closeLeftX, int closeLeftY, int farLeftX, int farLeftY,
-                    int farRightX, int farRightY, int closeRightX, int closeRightY,
-                    GameManager gameManager) {
+                 int farRightX, int farRightY, int closeRightX, int closeRightY,
+                 GameManager gameManager) {
     this.gameManager = gameManager;
 
     // Extremes of each coordinate
     smallestX = Math.min(Math.min(closeLeftX, farLeftX), Math.min(farRightX, closeRightX));
     smallestY = Math.min(Math.min(closeLeftY, farLeftY), Math.min(farRightY, closeRightY));
-    largestX = Math.max(Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
-    largestY = Math.max(Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
+    largestX = Math.max( Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
+    largestY = Math.max( Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
 
     // Overall size of the object
     segmentWidth = largestX - smallestX;
@@ -84,19 +84,26 @@ public class TrackPiece extends PApplet implements Drawable {
     shapePixels = new boolean[arrayWidth][arrayHeight];
 
     // Add each line segment, then fill
-    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, farLeftX - smallestX, farLeftY - smallestY); // 1
-    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, closeRightX - smallestX, closeRightY - smallestY); // 2
-    addSlopeLine(farRightX - smallestX, farRightY - smallestY, closeRightX - smallestX, closeRightY - smallestY); // 3
-    addSlopeLine(farRightX - smallestX, farRightY - smallestY, farLeftX - smallestX, farLeftY - smallestY); // 4
+    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY,
+            farLeftX - smallestX, farLeftY - smallestY);
+    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY,
+            closeRightX - smallestX, closeRightY - smallestY);
+    addSlopeLine(farRightX - smallestX, farRightY - smallestY,
+            closeRightX - smallestX, closeRightY - smallestY);
+    addSlopeLine(farRightX - smallestX, farRightY - smallestY,
+            farLeftX - smallestX, farLeftY - smallestY);
     fillArray();
 
     // Calculate the start point for each racer
-    cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 1);
-    cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 2);
+    cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX,
+            closeRightY, 1);
+    cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX,
+            closeRightY, 2);
 
-    // This track's cords copied to a string. comma between 1 cord's X & Y, space between cords.
-    cordsString = closeLeftX + "," + closeLeftY + " " + farLeftX + "," + farLeftY + " "
-            + farRightX + "," + farRightY + " " + closeRightX + "," + closeRightY;
+    // This track's cords copied to a string.
+    cordsString = closeLeftX + "," + closeLeftY + " " + farLeftX + ","
+            + farLeftY + " " + farRightX + "," + farRightY + " "
+            + closeRightX + "," + closeRightY;
 
     // Setup drawable shape object.
     road = gameManager.createShape();
@@ -173,11 +180,11 @@ public class TrackPiece extends PApplet implements Drawable {
       activePixels = 0;
       currentFill = false;
       for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-        if (shapePixels[wTimer][hTimer] == true) { // Get the number of lines crossed
+        if (shapePixels[wTimer][hTimer] == true) {
           activePixels++;
         }
       }
-      if (activePixels % 2 == 0 && activePixels < 5) { // If crosses even lines, fill
+      if (activePixels % 2 == 0 && activePixels < 5) {
         for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
           if (shapePixels[wTimer][hTimer] == true) {
             currentFill = !currentFill;
@@ -200,7 +207,8 @@ public class TrackPiece extends PApplet implements Drawable {
    * @param playerNum Which player's position is being calculated
    * @return Starting position of player
    */
-  private PVector calculateStartCords(int x1, int y1, int x2, int y2, int playerNum) {
+  private PVector calculateStartCords(int x1, int y1, int x2, int y2,
+                                      int playerNum) {
     int smallerX = Math.min(x1, x2);
     int smallerY = Math.min(y1, y2);
     int xPosition = smallerX + (x2 - x1) / 3 * playerNum;
@@ -210,7 +218,8 @@ public class TrackPiece extends PApplet implements Drawable {
 
   /** Draw each frame. */
   public void draw() {
-    gameManager.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
+    gameManager.fill(roadColor.getRGB(), roadColor.getGreen(),
+            roadColor.getBlue());
     gameManager.shape(road, smallestX, smallestY);
   }
 
@@ -223,8 +232,9 @@ public class TrackPiece extends PApplet implements Drawable {
     for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
       for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
         if (shapePixels[wTimer][hTimer]) {
-          if (!inputArray[wTimer + smallestX][hTimer + smallestY]) { // Don't override manager array
-            inputArray[(wTimer + smallestX)][(hTimer + smallestY)] = shapePixels[wTimer][hTimer];
+          if (!inputArray[wTimer + smallestX][hTimer + smallestY]) {
+            inputArray[(wTimer + smallestX)][(hTimer + smallestY)]
+                    = shapePixels[wTimer][hTimer];
           }
         }
       }
@@ -284,7 +294,7 @@ public class TrackPiece extends PApplet implements Drawable {
   }
 
   /**
-   * toString method
+   * toString method.
    *
    * @return String of this piece's coordinates
    */

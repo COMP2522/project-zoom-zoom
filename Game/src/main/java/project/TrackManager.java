@@ -1,10 +1,10 @@
 package project;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.awt.Color;
-import java.util.ArrayList;
 
 /** Manages the track segments.
  *
@@ -46,8 +46,6 @@ public class TrackManager implements Drawable {
     trackPixels = new boolean[window.getDisplayWidthCustom()][window.getDisplayHeightCustom()];
   }
 
-  private boolean isParseTrackTestingPrints = false;
-
   /**
    * Initializes track. Test version to init from string.
    *
@@ -80,11 +78,6 @@ public class TrackManager implements Drawable {
    * @param input inputted string, to be converted to JSON
    */
   private void parseTrackCords(String input) {
-    // Testing print
-    if (isParseTrackTestingPrints) {
-      System.out.println("parseTracks Called\nInput: \t" + input + "\n");
-    }
-
     // Initialize array values
     int[] cordsHolder = new int[8];
     int arrayPlacement = 0;
@@ -97,7 +90,7 @@ public class TrackManager implements Drawable {
     // Decide what to do with inputted values
     for (int timer = 0; timer < input.length(); timer++) {
       switch (input.charAt(timer)) {
-        case ' ', ',': // Space and comma character separates portions of single piece
+        case ' ', ',': // ' ' and , character separates portions of single piece
           // Store int parsed from the input string.
           currCordInt = Integer.parseInt(currCordString);
           cordsHolder[arrayPlacement] = currCordInt;
@@ -106,10 +99,6 @@ public class TrackManager implements Drawable {
           // Reset parsing string, now int is stored
           currCordString = "";
 
-          // Testing prints
-          if (isParseTrackTestingPrints) {
-            System.out.print("\t");
-          }
           break;
 
         case 'n': // n Character separates a each pieces cords.
@@ -118,29 +107,22 @@ public class TrackManager implements Drawable {
           cordsHolder[arrayPlacement] = currCordInt;
 
           // Add track to arraylist
-          tracks.add(new TrackPiece(cordsHolder[0], cordsHolder[1], cordsHolder[2], cordsHolder[3],
-                      cordsHolder[4],cordsHolder[5], cordsHolder[6], cordsHolder[7], window));
+          tracks.add(new TrackPiece(cordsHolder[0], cordsHolder[1],
+                  cordsHolder[2], cordsHolder[3], cordsHolder[4],
+                  cordsHolder[5], cordsHolder[6], cordsHolder[7],
+                  window));
 
           // Reset values for next piece
           resetArray(cordsHolder);
           arrayPlacement = 0;
           currCordString = "";
 
-          // Testing prints
-          if (isParseTrackTestingPrints) {
-            System.out.print("\nNext Track\t");
-          }
           break;
 
         default:
           // Checks if char is digit.
           if (Character.isDigit(input.charAt(timer))) {
             currCordString += input.charAt(timer);
-
-            // Testing prints
-            if (isParseTrackTestingPrints) {
-              System.out.print("'" + input.charAt(timer) + "' ");
-            }
 
           // Ignore tabs and newlines, to formatting when manually writing cords
           } else if (!(input.charAt(timer) == '\t' || (input.charAt(timer) == '\n'))) {
@@ -152,8 +134,9 @@ public class TrackManager implements Drawable {
     // If tracks cords aren't filled, create shape with 0 in remaining slots.
     if (arrayPlacement > 0) {
       System.out.println("Incomplete track added, remaining values set to 0");
-      tracks.add(new TrackPiece(cordsHolder[0], cordsHolder[1], cordsHolder[2], cordsHolder[3],
-              cordsHolder[4],cordsHolder[5], cordsHolder[6], cordsHolder[7], window));
+      tracks.add(new TrackPiece(cordsHolder[0], cordsHolder[1], cordsHolder[2],
+              cordsHolder[3], cordsHolder[4], cordsHolder[5], cordsHolder[6],
+              cordsHolder[7], window));
     }
   }
 
@@ -163,7 +146,6 @@ public class TrackManager implements Drawable {
    */
   public void draw() {
     // Flat color option kept because BG Image causing lag on some computers
-    //window.image(grassImage, 0, 0, window.getDisplayWidthCustom(), window.getDisplayHeightCustom());
     window.background(grassColor.getRed(), grassColor.getGreen(), grassColor.getRed());
     for (TrackPiece eachPiece : tracks) {
       eachPiece.draw();
@@ -203,10 +185,10 @@ public class TrackManager implements Drawable {
    */
   public void printPixels() {
     String output = "";
-    for (int hTimer = 0; hTimer < window.getDisplayHeightCustom(); hTimer += 2) {
-      System.out.print(hTimer + "\t");
-      for (int wTimer = 0; wTimer < window.getDisplayWidthCustom(); wTimer += 2) {
-        if (trackPixels[wTimer][hTimer] == true) {
+    for (int hTime = 0; hTime < window.getDisplayHeightCustom(); hTime += 2) {
+      System.out.print(hTime + "\t");
+      for (int wTime = 0; wTime < window.getDisplayWidthCustom(); wTime += 2) {
+        if (trackPixels[wTime][hTime] == true) {
           System.out.print("X");
         } else {
           System.out.print("-");
@@ -214,11 +196,13 @@ public class TrackManager implements Drawable {
       }
       System.out.print("\n");
     }
-    System.out.println(window.getDisplayWidthCustom() + " x " + window.getDisplayHeightCustom());
+    System.out.println(window.getDisplayWidthCustom() + " x "
+            + window.getDisplayHeightCustom());
   }
 
   /**
    * Return the starting position for designated player.
+   *
    * @param playerNumber Which player's position (1 or 2)
    * @return Relevant player's position
    */
