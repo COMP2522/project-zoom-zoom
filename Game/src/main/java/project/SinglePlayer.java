@@ -1,0 +1,200 @@
+package project;
+
+import java.awt.*;
+import java.util.ArrayList;
+import processing.core.PConstants;
+import processing.core.PImage;
+import processing.core.PVector;
+
+/**
+ * The SinglePlayer class represents the main game mode for single player.
+ * It extends the PApplet class from Processing and implements the GameManager interface.
+ */
+public class SinglePlayer implements Countdownable {
+
+  /**
+   * The window instance variable represents the game manager for the current game.
+   */
+  public final GameManager window;
+
+  /**
+   * The instance variable represents the singleton instance of the SinglePlayer class.
+   */
+  private static SinglePlayer instance;
+
+  /**
+   * The bot instance variable represents the semi-computer-controlled player in the game.
+   */
+  Bot bot;
+
+  /**
+   * The sprites instance variable represents
+   * the list of sprites (e.g. bot, player itself) in the game.
+   */
+  ArrayList<Car> sprites;
+
+  /**
+   * The player1 instance variable represents
+   * the human-controlled player in the game.
+   */
+  Player player1;
+
+  /**
+   * Image used for player 1.
+   */
+  private PImage player1Car;
+
+  /**
+   * The dash instance variable represents
+   * the dashboard for displaying information during the game.
+   */
+  Dashboard dash;
+
+  /**
+   * The stopwatch instance variable represents the timer for the game.
+   */
+  public Stopwatch stopwatch;
+
+  /**
+   * The timerCheck instance variable represents
+   * a boolean value indicating whether the timer is currently active.
+   */
+  static boolean timerCheck = true;
+
+  /** Data for the race countdown. */
+  private long startTime;
+  private long currentTime;
+  private int countdown;
+  private boolean raceDelay;
+
+  /**
+   * The constructor for the SinglePlayer class.
+   *
+   * @param window The window for the current game.
+   */
+  private SinglePlayer(GameManager window) {
+    this.window = window;
+  }
+
+  /**
+   * The getInstance method returns the singleton instance of the SinglePlayer class.
+   * If the instance does not exist, it is created.
+   *
+   * @param window The game manager for the current game.
+   *
+   * @return The singleton instance of the SinglePlayer class.
+   */
+  public static SinglePlayer getInstance(GameManager window) {
+    if (instance == null) {
+      instance = new SinglePlayer(window);
+    }
+    return instance;
+  }
+
+  /**
+   * Initializes the game by setting up the stopwatch, creating the player and bot,
+   * adding the player and bot to the list of sprites, and creating the dashboard.
+   *
+   * @param p1 The player controlled by the user.
+   */
+  public void init1Player(Player p1) {
+    startTime = System.currentTimeMillis();
+    stopwatch = Stopwatch.getInstance(window);
+    sprites = new ArrayList<Car>();
+    player1 = p1;
+    ControlCommandInvoker.p1Commands();
+    player1Car = window.loadImage("Game/images/Player1Car.png");
+
+    ArrayList<PVector> waypoints = new ArrayList<>();
+    waypoints.add(new PVector(window.width / 2, window.height / 2));
+    waypoints.add(new PVector(50, 1));
+    waypoints.add(new PVector(60, 1));
+    waypoints.add(new PVector(70, 10));
+    waypoints.add(new PVector(80, 1));
+    waypoints.add(new PVector(90, 1));
+
+    // Add the AI player
+    bot = new Bot(
+      window.getStartingPosition(1),
+        new PVector(50, 1),
+      0.1F,
+        new Color(255, 0, 0),
+      window,
+      waypoints, "B");
+    sprites.add(bot);
+    dash = new Dashboard(window, player1);
+  }
+
+  /**
+   * Draw method of SinglePlayer class.
+   */
+  public void draw() {
+    createCountdown();
+    if (!raceDelay) {
+      if (timerCheck && stopwatch.getShowTimer()) {
+        stopwatch.restartTimer();
+        timerCheck = false;
+      }
+      if (timerCheck) {
+        stopwatch.setStartTimer(true);
+        timerCheck = false;
+      }
+      stopwatch.startTimer();
+      // Move player around the screen
+      ControlCommandInvoker.player1Movement();
+      player1.draw();
+      player1.update();
+      drawImage();
+      for (Car sprite : sprites) {
+        if (sprite instanceof Bot) {
+          bot = (Bot) sprite;
+          bot.draw();
+          bot.update();
+        }
+        dash.draw();
+      }
+    }
+  }
+
+  /**
+   * createCountdown, starts a 3-second countdown before the race begins.
+   */
+  @Override
+  public void createCountdown() {
+    currentTime = System.currentTimeMillis() - startTime;
+    int threeThousand = 3000;
+    int largeFont = 200;
+    int x = window.displayWidth / 2;
+    int y = window.displayHeight / 2;
+    if (currentTime < threeThousand) {
+      raceDelay = true;
+      countdown = (int) (threeThousand - currentTime);
+      window.textAlign(PConstants.CENTER, PConstants.CENTER);
+      window.textSize(largeFont);
+      window.text(countdown, x, y);
+    } else {
+      raceDelay = false;
+    }
+  }
+
+  /**
+   * drawImage, draws and rotates the image on top of the rectangle.
+   */
+  public void drawImage() {
+    window.pushMatrix();
+    window.translate((player1.position.x + Car.WIDTH) / 2, (player1.position.y + Car.HEIGHT) / 2);
+    window.imageMode(PConstants.CENTER);
+    window.rotate((float) player1.direction);
+    window.image(player1Car, (float) 0, (float) 12.5);
+    window.popMatrix();
+  }
+
+  /**
+   * Setter for timerCheck variable that checks status of timer.
+   *
+   * @param timerCheck boolean variable of timer status of this class
+   */
+  public void setTimerCheck(boolean timerCheck) {
+    this.timerCheck = timerCheck;
+  }
+}
