@@ -3,8 +3,6 @@ package project;
 import processing.core.PConstants;
 import processing.core.PVector;
 
-import java.awt.*;
-
 /**
  * Player, creates a player sprite to be controlled by the user.
  */
@@ -189,13 +187,17 @@ public class Player extends Car {
   /**
    * Declaring the defaults to all of the car parts
    */
-  PartGears gears = new PartGears(GEAR1, GEAR2, GEAR3, GEAR4);
-  PartEngine engine = new PartEngine(POWER, DROPOFF, OPTIMAL_REVS, ENGINE_WEIGHT);
-  PartAero aero = new PartAero(DOWNFORCE, AERO_DRAG, AERO_WEIGHT);
-  PartChassis chassis = new PartChassis(CHASSIS_WEIGHT, WHEELBASEX, WHEELBASEY);
+  PartGears gears = new PartGears(PartGears.gears);
+  PartEngine engine = PartEngine.engineParts[0];
+  PartAero aero = PartAero.aeroParts[0];
+  PartChassis chassis = PartChassis.chassisParts[0];
 
   public PartGears getGears() {
     return gears;
+  }
+
+  public void setGears(int index, int value) {
+    gears.setGear(index, value);
   }
 
   public PartEngine getEngine() {
@@ -246,7 +248,7 @@ public class Player extends Car {
 
   public void onTrack() {
     if (!trackManager.isOnTrack(position)) {
-      System.out.println(playerNum + "\tOff track penalty");
+//      System.out.println(playerNum + "\tOff track penalty");
     }
   }
 

@@ -34,19 +34,14 @@ public class ControlMenu {
   public Button twop2Stop;
   public Button twop2Left;
   public Button twop2Right;
-  private char p1upkey;
-  private char p1downkey;
-  private char p1leftkey;
-  private char p1rightkey;
-  private char twop2upkey;
-  private char twop2downkey;
-  private char twop2leftkey;
-  private char twop2rightkey;
   private float halfDisplayWidth;
   private static final int BUTTON_WIDTH = 300;
   private static final int BUTTON_HEIGHT = 80;
   private static final int P1_WIDTH_ADJUSTMENT = 610;
   private static final int P2_WIDTH_ADJUSTMENT = 90;
+  private static final int KEY_AMOUNT = 4;
+  private char[] p1Keys = new char[KEY_AMOUNT];
+  private char[] p2Keys = new char[KEY_AMOUNT];
   private final float p1AdjustedWidth;
   private final float p2AdjustedWidth;
   private Bgm bgm;
@@ -106,17 +101,9 @@ public class ControlMenu {
    * Sets the buttons for the control menu.
    */
   private void setPlayerKeys() {
-    if (window.singlePlayer != null) {
-      p1upkey = window.singlePlayer.getUp();
-      p1downkey = window.singlePlayer.getDown();
-      p1leftkey = window.singlePlayer.getLeft();
-      p1rightkey = window.singlePlayer.getRight();
-    }
-    if (window.twoPlayers != null) {
-      twop2upkey = window.twoPlayers.getP2Up();
-      twop2downkey = window.twoPlayers.getP2Down();
-      twop2leftkey = window.twoPlayers.getP2Left();
-      twop2rightkey = window.twoPlayers.getP2Right();
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      p1Keys[i] = ControlCommandInvoker.getPlayer1Keys(i);
+      p2Keys[i] = ControlCommandInvoker.getPlayer2Keys(i);
     }
   }
 
@@ -224,17 +211,21 @@ public class ControlMenu {
    * Update the fonts for the control menu.
    */
   private void updateFonts() {
+    float x = halfDisplayWidth - 350;
+    float y = 200;
     window.textSize(50);
     window.fill(117, 204, 32);
-    window.text(p1upkey, halfDisplayWidth - 350, 200);
-    window.text(p1downkey, halfDisplayWidth - 350, 400);
-    window.text(p1leftkey, halfDisplayWidth - 350, 600);
-    window.text(p1rightkey, halfDisplayWidth - 350, 800);
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      window.text(p1Keys[i], x, y);
+      y += 200;
+    }
+    x = halfDisplayWidth + 350;
+    y = 200;
     window.fill(72, 194, 249);
-    window.text(twop2upkey, halfDisplayWidth + 350, 200);
-    window.text(twop2downkey, halfDisplayWidth + 350, 400);
-    window.text(twop2leftkey, halfDisplayWidth + 350, 600);
-    window.text(twop2rightkey, halfDisplayWidth + 350, 800);
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      window.text(p2Keys[i], x, y);
+      y += 200;
+    }
   }
 
   /**
@@ -251,28 +242,28 @@ public class ControlMenu {
       check = false;
     }
     if (p1Go.isLeftClicked()) {
-      Controls.setUp(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(0, window.inputChar);
     }
     if (p1Stop.isLeftClicked()) {
-      Controls.setDown(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(1, window.inputChar);
     }
     if (p1Left.isLeftClicked()) {
-      Controls.setLeft(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(2, window.inputChar);
     }
     if (p1Right.isLeftClicked()) {
-      Controls.setRight(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(3, window.inputChar);
     }
     if (twop2Go.isLeftClicked()) {
-      Controls.setUp(Controls.player2, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(0, window.inputChar);
     }
     if (twop2Stop.isLeftClicked()) {
-      Controls.setDown(Controls.player2, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(1, window.inputChar);
     }
     if (twop2Left.isLeftClicked()) {
-      Controls.setLeft(Controls.player2, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(2, window.inputChar);
     }
     if (twop2Right.isLeftClicked()) {
-      Controls.setRight(Controls.player2, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(3, window.inputChar);
     }
   }
 }
