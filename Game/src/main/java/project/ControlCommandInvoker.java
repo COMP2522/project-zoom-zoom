@@ -2,6 +2,12 @@ package project;
 
 import java.util.Hashtable;
 
+/**
+ * ControlCommandInvoker, invoker class that manages the player's controls
+ * and executes each control.
+ *
+ * @author James Langille
+ */
 public class ControlCommandInvoker {
   /** Constant. */
   private static final int CONTROLS = 6;

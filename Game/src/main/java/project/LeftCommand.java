@@ -1,5 +1,10 @@
 package project;
 
+/**
+ * LeftCommand, command class that manages the left control.
+ *
+ * @author James Langille
+ */
 public class LeftCommand extends ControlCommand {
   @Override
   public void executeP1() {

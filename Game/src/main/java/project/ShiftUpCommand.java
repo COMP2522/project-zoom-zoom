@@ -1,5 +1,10 @@
 package project;
 
+/**
+ * ShiftUpCommand, command class that manages the shift up control.
+ *
+ * @author James Langille
+ */
 public class ShiftUpCommand extends ControlCommand {
   @Override
   public void executeP1() {

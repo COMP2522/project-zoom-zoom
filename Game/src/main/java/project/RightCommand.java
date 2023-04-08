@@ -1,5 +1,10 @@
 package project;
 
+/**
+ * RightCommand, command class that manages the right control.
+ *
+ * @author James Langille
+ */
 public class RightCommand extends ControlCommand {
   @Override
   public void executeP1() {

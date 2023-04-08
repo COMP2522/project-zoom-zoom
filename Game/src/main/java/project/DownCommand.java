@@ -1,5 +1,10 @@
 package project;
 
+/**
+ * DownCommand, command class that manages the down control.
+ *
+ * @author James Langille
+ */
 public class DownCommand extends ControlCommand {
   @Override
   public void executeP1() {
