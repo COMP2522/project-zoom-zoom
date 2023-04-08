@@ -14,9 +14,18 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for MongoDB that saves specific information in game
+ */
 public class MongoDB {
+
+  /**
+   * MongoDb instance as private
+   */
   private static MongoDB instance;
+
   MongoDatabase database;
+  Document document;
 
   public static MongoDB getInstance() {
     if (instance == null) {
@@ -36,15 +45,39 @@ public class MongoDB {
     database = mongoClient.getDatabase("Zoom-Zoom");
   }
 
+  public void putEngine(String key1, double value1, String key2, double value2,
+                        String key3, int value3, String key4, int value4) {
+    document = new Document();
+    document.append(key1, value1);
+    document.append(key2, value2);
+    document.append(key3, value3);
+    document.append(key4, value4);
+  }
+
+  public void putChasis(String key1, int value1, String key2, int value2,
+                        String key3, int value3) {
+    document.append(key1, value1);
+    document.append(key2, value2);
+    document.append(key3, value3);
+  }
+
+  public void putAero(String key1, int value1, String key2, int value2,
+                      String key3, int value3) {
+    document.append(key1, value1);
+    document.append(key2, value2);
+    document.append(key3, value3);
+    new Thread(() -> database.getCollection("Build").insertOne(document)).start();
+  }
+
   public void put(String key, long value) {
-    Document document = new Document();
-    document.append(key, value);
+    Document documentTime = new Document();
+    documentTime.append(key, value);
     new Thread(() -> database.getCollection("Time").insertOne(document)).start();
   }
 
   public List<Document> queryTop5() {
     List<Document> results = new ArrayList<>();
-    Bson sort = Sorts.ascending("time"); // replace "fieldName" with the name of the field that stores the long data
+    Bson sort = Sorts.ascending("time");
     database.getCollection("Time").find().sort(sort).limit(5).forEach(results::add);
     return results;
   }
