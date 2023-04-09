@@ -11,8 +11,6 @@ import processing.core.PVector;
 public class ControlMenu {
   private final GameManager window;
   private static ControlMenu instance;
-  private static final Player player1 = Controls.player1;
-  private static final Player player2 = Controls.player2;
   protected TextBox textBox;
   private PImage background;
   private PImage soundOn;
@@ -41,6 +39,10 @@ public class ControlMenu {
   private static final int BUTTON_HEIGHT = 80;
   private static final int P1_WIDTH_ADJUSTMENT = 610;
   private static final int P2_WIDTH_ADJUSTMENT = 90;
+  private static final float ACC_HEIGHT = 200;
+  private static final float BRAKE_HEIGHT = 400;
+  private static final float LEFT_HEIGHT = 600;
+  private static final float RIGHT_HEIGHT = 800;
   private static final int KEY_AMOUNT = 4;
   private char[] p1Keys = new char[KEY_AMOUNT];
   private char[] p2Keys = new char[KEY_AMOUNT];
