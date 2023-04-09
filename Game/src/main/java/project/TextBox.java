@@ -2,12 +2,25 @@ package project;
 
 import processing.core.PVector;
 
+/**
+ * The TextBox class represents a text box that can be used to input text.
+ * It implements the Drawable interface.
+ */
 public class TextBox implements Drawable {
   private PVector position;
   private float width;
   private float height;
   public String text = "";
   private final GameManager window;
+
+  /**
+   * TextBox, constructor for the text box.
+   *
+   * @param position position of the text box
+   * @param width width of the text box
+   * @param height height of the text box
+   * @param window the window for current game
+   */
   public TextBox(PVector position, float width, float height, GameManager window) {
     this.position = position;
     this.width = width;
@@ -16,7 +29,7 @@ public class TextBox implements Drawable {
   }
 
   /**
-   * draw, draws the textbox.
+   * draw, draws the text box.
    */
   @Override
   public void draw() {

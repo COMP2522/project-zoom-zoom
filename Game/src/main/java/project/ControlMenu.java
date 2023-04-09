@@ -11,6 +11,8 @@ import processing.core.PVector;
 public class ControlMenu {
   private final GameManager window;
   private static ControlMenu instance;
+  private static final Player player1 = Controls.player1;
+  private static final Player player2 = Controls.player2;
   protected TextBox textBox;
   private PImage background;
   private PImage soundOn;
@@ -47,6 +49,10 @@ public class ControlMenu {
   private static final int BUTTON_HEIGHT = 80;
   private static final int P1_WIDTH_ADJUSTMENT = 610;
   private static final int P2_WIDTH_ADJUSTMENT = 90;
+  private static final float ACC_HEIGHT = 200;
+  private static final float BRAKE_HEIGHT = 400;
+  private static final float LEFT_HEIGHT = 600;
+  private static final float RIGHT_HEIGHT = 800;
   private final float p1AdjustedWidth;
   private final float p2AdjustedWidth;
   private Bgm bgm;
@@ -106,17 +112,19 @@ public class ControlMenu {
    * Sets the buttons for the control menu.
    */
   private void setPlayerKeys() {
+    final SinglePlayer singlePlayer = window.singlePlayer;
+    final TwoPlayers twoPlayers = window.twoPlayers;
     if (window.singlePlayer != null) {
-      p1upkey = window.singlePlayer.getUp();
-      p1downkey = window.singlePlayer.getDown();
-      p1leftkey = window.singlePlayer.getLeft();
-      p1rightkey = window.singlePlayer.getRight();
+      p1upkey = singlePlayer.getUp();
+      p1downkey = singlePlayer.getDown();
+      p1leftkey = singlePlayer.getLeft();
+      p1rightkey = singlePlayer.getRight();
     }
     if (window.twoPlayers != null) {
-      twop2upkey = window.twoPlayers.getP2Up();
-      twop2downkey = window.twoPlayers.getP2Down();
-      twop2leftkey = window.twoPlayers.getP2Left();
-      twop2rightkey = window.twoPlayers.getP2Right();
+      twop2upkey = twoPlayers.getP2Up();
+      twop2downkey = twoPlayers.getP2Down();
+      twop2leftkey = twoPlayers.getP2Left();
+      twop2rightkey = twoPlayers.getP2Right();
     }
   }
 
@@ -152,27 +160,33 @@ public class ControlMenu {
    * Update the buttons for the control menu.
    */
   private void setButtons() {
+    final float soundWidth = (float) (window.displayWidth / 20);
+    final float soundHeight = 900;
+    final float soundbuttonwidthandheight = 50;
+    final float accbuttonpvectory = 190;
+    final float brakebuttonpvectory = 390;
+    final float leftbuttonpvectory = 590;
+    final float rightbuttonpvectory = 790;
     window.textAlign(PApplet.CENTER, PApplet.CENTER);
-
-    soundoff = new Button(new PVector((float) (window.displayWidth / 20) + 100, 900), 50,
-        50, "", Color.GREEN, window);
-    soundon = new Button(new PVector((float) (window.displayWidth / 20), 900), 50,
-        50, "", Color.GREEN, window);
-    p1Go = new Button(new PVector(p1AdjustedWidth, 190), BUTTON_WIDTH,
+    soundoff = new Button(new PVector(soundWidth + 100, soundHeight), soundbuttonwidthandheight,
+        soundbuttonwidthandheight, "", Color.GREEN, window);
+    soundon = new Button(new PVector(soundWidth, soundHeight), soundbuttonwidthandheight,
+        soundbuttonwidthandheight, "", Color.GREEN, window);
+    p1Go = new Button(new PVector(p1AdjustedWidth, accbuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.GREEN, window);
-    p1Stop = new Button(new PVector(p1AdjustedWidth, 390), BUTTON_WIDTH,
+    p1Stop = new Button(new PVector(p1AdjustedWidth, brakebuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.GREEN, window);
-    p1Left = new Button(new PVector(p1AdjustedWidth, 590), BUTTON_WIDTH,
+    p1Left = new Button(new PVector(p1AdjustedWidth, leftbuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.GREEN, window);
-    p1Right = new Button(new PVector(p1AdjustedWidth, 790), BUTTON_WIDTH,
+    p1Right = new Button(new PVector(p1AdjustedWidth, rightbuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.GREEN, window);
-    twop2Go = new Button(new PVector(p2AdjustedWidth, 190), BUTTON_WIDTH,
+    twop2Go = new Button(new PVector(p2AdjustedWidth, accbuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.BLUE, window);
-    twop2Stop = new Button(new PVector(p2AdjustedWidth, 390), BUTTON_WIDTH,
+    twop2Stop = new Button(new PVector(p2AdjustedWidth, brakebuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.BLUE, window);
-    twop2Left = new Button(new PVector(p2AdjustedWidth, 590), BUTTON_WIDTH,
+    twop2Left = new Button(new PVector(p2AdjustedWidth, leftbuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.BLUE, window);
-    twop2Right = new Button(new PVector(p2AdjustedWidth, 790), BUTTON_WIDTH,
+    twop2Right = new Button(new PVector(p2AdjustedWidth, rightbuttonpvectory), BUTTON_WIDTH,
         BUTTON_HEIGHT, "", Color.BLUE, window);
   }
 
@@ -181,60 +195,52 @@ public class ControlMenu {
    * Update the buttons for the control menu.
    */
   private void updateButtons() {
-    soundoff.click();
-    soundoff.draw();
-    soundon.draw();
-    soundon.click();
-    p1Go.click();
-    p1Go.draw();
-    p1Stop.click();
-    p1Stop.draw();
-    p1Left.click();
-    p1Left.draw();
-    p1Right.click();
-    p1Right.draw();
-    twop2Go.click();
-    twop2Go.draw();
-    twop2Stop.click();
-    twop2Stop.draw();
-    twop2Left.click();
-    twop2Left.draw();
-    twop2Right.click();
-    twop2Right.draw();
+    Button[] buttons = {soundoff, soundon, p1Go, p1Stop, p1Left,
+        p1Right, twop2Go, twop2Stop, twop2Left, twop2Right};
+    for (Button button : buttons) {
+      button.click();
+      button.draw();
+    }
   }
 
   /**
    * Update the images for the control menu.
    */
   private void updateImages() {
+    final float p1imageWidth = halfDisplayWidth - 600;
+    final float p2imageWidth = halfDisplayWidth + 100;
+    final float soundWidth = (float) (window.displayWidth / 20);
+    final float soundHeight = 900;
     window.image(setting, halfDisplayWidth - 150, (float) window.displayHeight / 20);
-    window.image(soundOn, (float) (window.displayWidth / 20), 900);
-    window.image(soundOff, (float) (window.displayWidth / 20) + 100, 900);
-    window.image(p1acc, halfDisplayWidth - 600, 200);
-    window.image(p1brake, halfDisplayWidth - 600, 400);
-    window.image(p1left, halfDisplayWidth - 600, 600);
-    window.image(p1right, halfDisplayWidth - 600, 800);
-    window.image(p2acc, halfDisplayWidth + 100, 200);
-    window.image(p2brake, halfDisplayWidth + 100, 400);
-    window.image(p2left, halfDisplayWidth + 100, 600);
-    window.image(p2right, halfDisplayWidth + 100, 800);
+    window.image(soundOn, soundWidth, soundHeight);
+    window.image(soundOff, soundWidth + 100, soundHeight);
+    window.image(p1acc, p1imageWidth, ACC_HEIGHT);
+    window.image(p1brake, p1imageWidth, BRAKE_HEIGHT);
+    window.image(p1left, p1imageWidth, LEFT_HEIGHT);
+    window.image(p1right, p1imageWidth, RIGHT_HEIGHT);
+    window.image(p2acc, p2imageWidth, ACC_HEIGHT);
+    window.image(p2brake, p2imageWidth, BRAKE_HEIGHT);
+    window.image(p2left, p2imageWidth, LEFT_HEIGHT);
+    window.image(p2right, p2imageWidth, RIGHT_HEIGHT);
   }
 
   /**
    * Update the fonts for the control menu.
    */
   private void updateFonts() {
+    final float p1fontWidth = halfDisplayWidth - 350;
+    final float p2fontWidth = halfDisplayWidth + 350;
     window.textSize(50);
     window.fill(117, 204, 32);
-    window.text(p1upkey, halfDisplayWidth - 350, 200);
-    window.text(p1downkey, halfDisplayWidth - 350, 400);
-    window.text(p1leftkey, halfDisplayWidth - 350, 600);
-    window.text(p1rightkey, halfDisplayWidth - 350, 800);
+    window.text(p1upkey, p1fontWidth, ACC_HEIGHT);
+    window.text(p1downkey, p1fontWidth, BRAKE_HEIGHT);
+    window.text(p1leftkey, p1fontWidth, LEFT_HEIGHT);
+    window.text(p1rightkey, p1fontWidth, RIGHT_HEIGHT);
     window.fill(72, 194, 249);
-    window.text(twop2upkey, halfDisplayWidth + 350, 200);
-    window.text(twop2downkey, halfDisplayWidth + 350, 400);
-    window.text(twop2leftkey, halfDisplayWidth + 350, 600);
-    window.text(twop2rightkey, halfDisplayWidth + 350, 800);
+    window.text(twop2upkey, p2fontWidth, ACC_HEIGHT);
+    window.text(twop2downkey, p2fontWidth, BRAKE_HEIGHT);
+    window.text(twop2leftkey, p2fontWidth, LEFT_HEIGHT);
+    window.text(twop2rightkey, p2fontWidth, RIGHT_HEIGHT);
   }
 
   /**
@@ -242,37 +248,29 @@ public class ControlMenu {
    */
   private void checkButtonClicks() {
     if (soundoff.isLeftClicked()) {
-      bgm.stopBGM(false);
+      bgm.stopBgm(false);
       check = true;
       GameManager.audio = true;
-    }
-    if (soundon.isLeftClicked() && check && GameManager.audio) {
-      bgm.getBGM(true);
+    } else if (soundon.isLeftClicked() && check && GameManager.audio) {
+      bgm.getBgm(true);
       check = false;
-    }
-    if (p1Go.isLeftClicked()) {
-      Controls.setUp(Controls.player1, window.inputChar);
-    }
-    if (p1Stop.isLeftClicked()) {
-      Controls.setDown(Controls.player1, window.inputChar);
-    }
-    if (p1Left.isLeftClicked()) {
-      Controls.setLeft(Controls.player1, window.inputChar);
-    }
-    if (p1Right.isLeftClicked()) {
-      Controls.setRight(Controls.player1, window.inputChar);
-    }
-    if (twop2Go.isLeftClicked()) {
-      Controls.setUp(Controls.player2, window.inputChar);
-    }
-    if (twop2Stop.isLeftClicked()) {
-      Controls.setDown(Controls.player2, window.inputChar);
-    }
-    if (twop2Left.isLeftClicked()) {
-      Controls.setLeft(Controls.player2, window.inputChar);
-    }
-    if (twop2Right.isLeftClicked()) {
-      Controls.setRight(Controls.player2, window.inputChar);
+    } else if (p1Go.isLeftClicked()) {
+      Controls.setUp(player1, window.inputChar);
+    } else if (p1Stop.isLeftClicked()) {
+      Controls.setDown(player1, window.inputChar);
+    } else if (p1Left.isLeftClicked()) {
+      Controls.setLeft(player1, window.inputChar);
+    } else if (p1Right.isLeftClicked()) {
+      Controls.setRight(player1, window.inputChar);
+    } else if (twop2Go.isLeftClicked()) {
+      Controls.setUp(player2, window.inputChar);
+    } else if (twop2Stop.isLeftClicked()) {
+      Controls.setDown(player2, window.inputChar);
+    } else if (twop2Left.isLeftClicked()) {
+      Controls.setLeft(player2, window.inputChar);
+    } else if (twop2Right.isLeftClicked()) {
+      Controls.setRight(player2, window.inputChar);
     }
   }
+
 }
