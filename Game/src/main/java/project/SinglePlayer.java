@@ -119,6 +119,7 @@ public class SinglePlayer implements Countdownable {
     player1Car = window.loadImage("Game/images/Player1Car.png");
 
     ArrayList<PVector> waypoints = new ArrayList<>();
+    // Waypoints for the first track
     waypoints.add(new PVector(1100, 100));
     waypoints.add(new PVector(1150, 150));
     waypoints.add(new PVector(1200, 170));

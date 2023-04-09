@@ -13,8 +13,6 @@ public class Bot extends Car {
   protected PVector direction;
   private PVector velocity;
   private float steeringAngle;
-  private int framesUntilTurn;
-  private Random random;
   private PID pid;
   private float frameRate;
   private ArrayList<PVector> waypoints;
@@ -26,8 +24,6 @@ public class Bot extends Car {
     this.position = position;
     this.direction = direction;
     this.steeringAngle = 0;
-    this.framesUntilTurn = 0; // start turning immediately
-    this.random = new Random();
     this.pid = new PID(0.1, 0.1, 0.1);
     this.speed = 10;
     this.frameRate = window.frameRate;
@@ -54,7 +50,7 @@ public class Bot extends Car {
     // set the velocity to be proportional to the vector pointing towards the current waypoint
     PVector velocity = PVector.sub(waypoints.get(currentWaypointIndex), position);
     velocity.normalize();
-    velocity.mult((float) speed);
+    velocity.mult(speed);
     setVelocity(velocity);
     position.add(velocity);
     direction.rotate(steeringAngle);
@@ -73,6 +69,5 @@ public class Bot extends Car {
     float maxAngle = (float) (PI/4);
     this.steeringAngle = constrain(angle, minAngle, maxAngle);
   }
-
 
 }
