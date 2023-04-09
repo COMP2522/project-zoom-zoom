@@ -124,7 +124,7 @@ public class Mongodb {
   public void put(String key, long value) {
     Document documentTime = new Document();
     documentTime.append(key, value);
-    new Thread(() -> database.getCollection("Time").insertOne(document)).start();
+    new Thread(() -> database.getCollection("Time").insertOne(documentTime)).start();
   }
 
   /**
