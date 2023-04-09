@@ -1,23 +1,17 @@
 package project;
 
+import java.awt.Color;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
-
-import java.awt.Color;
 
 /** Bezier curves for all tracks in our game.
  *
  * @author MaxwellV
  */
 public class TrackPiece extends PApplet implements Drawable {
-
-  /** Booleans that toggle System outs. */
-  private boolean arrayPrintOverride = false;
-
   /** Color of the road. */
   private Color roadColor = new Color(76, 76, 76);
-
 
   /** Closest point to X = 0. */
   private int smallestX;
@@ -32,6 +26,9 @@ public class TrackPiece extends PApplet implements Drawable {
   private PVector cordStart1;
   /** Player2's starting location. */
   private PVector cordStart2;
+
+  /** Cords in a string, for outputting custom track codes. */
+  private String cordsString;
 
   /** This segment's shape object, that is drawn to the screen. */
   private PShape road;
@@ -65,33 +62,48 @@ public class TrackPiece extends PApplet implements Drawable {
    * @param gameManager gameManager, link to the display
    */
   public TrackPiece(int closeLeftX, int closeLeftY, int farLeftX, int farLeftY,
-                    int farRightX, int farRightY, int closeRightX, int closeRightY,
-                    GameManager gameManager) {
+                 int farRightX, int farRightY, int closeRightX, int closeRightY,
+                 GameManager gameManager) {
     this.gameManager = gameManager;
 
-    cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 1);
-    cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX, closeRightY, 2);
-
-
+    // Extremes of each coordinate
     smallestX = Math.min(Math.min(closeLeftX, farLeftX), Math.min(farRightX, closeRightX));
     smallestY = Math.min(Math.min(closeLeftY, farLeftY), Math.min(farRightY, closeRightY));
-    largestX = Math.max(Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
-    largestY = Math.max(Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
+    largestX = Math.max( Math.max(closeLeftX, farLeftX), Math.max(farRightX, closeRightX));
+    largestY = Math.max( Math.max(closeLeftY, farLeftY), Math.max(farRightY, closeRightY));
 
+    // Overall size of the object
     segmentWidth = largestX - smallestX;
     segmentHeight = largestY - smallestY;
+
+    // Overall size of the array (Object + 1 to account for index 0)
     arrayWidth = segmentWidth + 1;
     arrayHeight = segmentHeight + 1;
 
-    // Boolean array that constitutes shape of this segment
+    // Boolean array that tracks onTrack of this segment
     shapePixels = new boolean[arrayWidth][arrayHeight];
 
-    // Setup boolean array to accurately portray actual shape
-    addSlopeLine(closeRightX - smallestX, closeRightY - smallestY, closeLeftX - smallestX, closeLeftY - smallestY);
-    addSlopeLine(farLeftX - smallestX, farLeftY - smallestY, farRightX - smallestX, farRightY - smallestY);
-    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY, farLeftX - smallestX, farLeftY - smallestY);
-    addSlopeLine(closeRightX - smallestX, closeRightY - smallestY, farRightX - smallestX, farRightY - smallestY);
+    // Add each line segment, then fill
+    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY,
+            farLeftX - smallestX, farLeftY - smallestY);
+    addSlopeLine(closeLeftX - smallestX, closeLeftY - smallestY,
+            closeRightX - smallestX, closeRightY - smallestY);
+    addSlopeLine(farRightX - smallestX, farRightY - smallestY,
+            closeRightX - smallestX, closeRightY - smallestY);
+    addSlopeLine(farRightX - smallestX, farRightY - smallestY,
+            farLeftX - smallestX, farLeftY - smallestY);
     fillArray();
+
+    // Calculate the start point for each racer
+    cordStart1 = calculateStartCords(closeLeftX, closeLeftY, closeRightX,
+            closeRightY, 1);
+    cordStart2 = calculateStartCords(closeLeftX, closeLeftY, closeRightX,
+            closeRightY, 2);
+
+    // This track's cords copied to a string.
+    cordsString = closeLeftX + "," + closeLeftY + " " + farLeftX + ","
+            + farLeftY + " " + farRightX + "," + farRightY + " "
+            + closeRightX + "," + closeRightY;
 
     // Setup drawable shape object.
     road = gameManager.createShape();
@@ -105,7 +117,161 @@ public class TrackPiece extends PApplet implements Drawable {
     road.endShape();
   }
 
-  /** Get the starting location
+  /**
+   * Uses slope calculation (y = mx + b) to find lines between points.
+   *
+   * @param x1 First cord X
+   * @param y1 First cord Y
+   * @param x2 Second cord X
+   * @param y2 Second cord Y
+   */
+  public void addSlopeLine(int x1, int y1, int x2, int y2) {
+    int firstX;
+    int firstY;
+    int secondX;
+    int secondY;
+    int placeY;
+    float slope;
+
+    // Resolve corner case slopes (Same X and/or Y)
+    if (y1 == y2 && x1 == x2) { // Same cords
+      shapePixels[x2][y2] = true;
+
+    } else if (y1 == y2) { // Same Y = Horizontal line
+      for (int timer = Math.min(x1, x2); timer < Math.max(x1, x2); timer++) {
+        shapePixels[timer][y2] = true;
+      }
+
+    } else if (x1 == x2) { // Same X = Vertical Line
+      for (int timer = Math.min(y1, y2); timer < Math.max(y1, y2); timer++) {
+        shapePixels[x2][timer] = true;
+      }
+    } else {
+      // Cord with smaller X designated as "first"
+      if (x1 < x2) {
+        firstX = x1;
+        firstY = y1;
+        secondX = x2;
+        secondY = y2;
+      } else {
+        secondX = x1;
+        secondY = y1;
+        firstX = x2;
+        firstY = y2;
+      }
+
+      // Get slope for future calculations
+      slope = (y2 - y1) / (x2 - x1);
+
+      // Set y for each X between x1 & x2
+      for (int timer = firstX; timer <= secondX; timer++) {
+        placeY = (int) (firstY + (slope * (timer - firstX)));
+        shapePixels[timer][placeY] = true;
+      }
+    }
+  }
+
+  /** Fills line area outlined by addSlopeLines. */
+  public void fillArray() {
+    int activePixels = 0;
+    boolean currentFill = false;
+
+    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
+      activePixels = 0;
+      currentFill = false;
+      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+        if (shapePixels[wTimer][hTimer] == true) {
+          activePixels++;
+        }
+      }
+      if (activePixels % 2 == 0 && activePixels < 5) {
+        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+          if (shapePixels[wTimer][hTimer] == true) {
+            currentFill = !currentFill;
+          }
+          if (currentFill == true) {
+            shapePixels[wTimer][hTimer] = true;
+          }
+        }
+      }
+    }
+  }
+
+
+  /** Uses averages calc to find starting position.
+   *
+   * @param x1 X position of cord 1
+   * @param y1 Y position of cord 1
+   * @param x2 Y position of cord 2
+   * @param y2 X position of cord 2
+   * @param playerNum Which player's position is being calculated
+   * @return Starting position of player
+   */
+  private PVector calculateStartCords(int x1, int y1, int x2, int y2,
+                                      int playerNum) {
+    int smallerX = Math.min(x1, x2);
+    int smallerY = Math.min(y1, y2);
+    int xPosition = smallerX + (x2 - x1) / 3 * playerNum;
+    int yPosition = smallerY + (y2 - y1) / 3 * playerNum;
+    return new PVector(xPosition, yPosition);
+  }
+
+  /** Draw each frame. */
+  public void draw() {
+    gameManager.fill(roadColor.getRGB(), roadColor.getGreen(),
+            roadColor.getBlue());
+    gameManager.shape(road, smallestX, smallestY);
+  }
+
+  /** Add this piece's array to the track manager's array.
+   *
+   * @param inputArray Array to add this pieces cords to
+   * @return Modified input array, this array added.
+   */
+  public boolean[][] addPixels(boolean[][] inputArray) {
+    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
+      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+        if (shapePixels[wTimer][hTimer]) {
+          if (!inputArray[wTimer + smallestX][hTimer + smallestY]) {
+            inputArray[(wTimer + smallestX)][(hTimer + smallestY)]
+                    = shapePixels[wTimer][hTimer];
+          }
+        }
+      }
+    }
+    if (false) {
+      System.out.print("\n\nManagers:\n");
+      for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
+        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
+          if (inputArray[(wTimer + smallestX)][(hTimer + smallestY)]) {
+            System.out.print("X");
+          } else {
+            System.out.print('-');
+          }
+        }
+        System.out.print("\n");
+      }
+    }
+    return inputArray;
+  }
+
+  /** Prints the shape array to assist visualization. */
+  public void printPixels() {
+    // Testing pixels that prints '-' as false, 'X' as true
+    for (int hTimer = 0; hTimer <= arrayHeight - 1; hTimer++) {
+      for (int wTimer = 0; wTimer <= arrayWidth - 1; wTimer++) {
+        if (shapePixels[wTimer][hTimer] == true) {
+          System.out.print("X");
+          gameManager.ellipse(wTimer, hTimer, 1, 1);
+        } else {
+          System.out.print("-");
+        }
+      }
+      System.out.print("\n");
+    }
+  }
+
+  /** Get the starting location.
    *
    * @param playerNumber Either 1 or 2
    * @return Starting position of the relevant player
@@ -118,147 +284,21 @@ public class TrackPiece extends PApplet implements Drawable {
     }
   }
 
-  /** Uses averages calc to find starting position. */
-  private PVector calculateStartCords(int x1, int y1, int x2, int y2, int playerNum) {
-    int smallerX = Math.min(x1, x2);
-    int smallerY = Math.min(y1, y2);
-    int xPosition = smallerX + (x2 - x1) / 3 * playerNum;
-    int yPosition = smallerY + (y2 - y1) / 3 * playerNum;
-    return new PVector(xPosition, yPosition);
-  }
-
-  /** Fills line area outlined by addSlopeLines. */
-  public void fillArray() {
-    int activePixels = 0;
-
-    // Runs each column
-    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
-      activePixels = 0;
-      boolean currentFill = false;
-      // Checks how many lines are in this column
-      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-        if (shapePixels[wTimer][hTimer] == true) {
-          activePixels++;
-        }
-      }
-      // If there is a gap in the segment, fills until other is reached
-      if (activePixels % 2 == 0) {
-        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-          // If the newly reached segment is true, toggle fill mode
-          if (shapePixels[wTimer][hTimer] == true) {
-            currentFill = !currentFill;
-          }
-          if (currentFill == true) {
-            shapePixels[wTimer][hTimer] = true;
-          }
-        }
-      }
-    }
-  }
-
-  public void addSlopeLine(int x1, int y1, int x2, int y2) {
-    int firstX;
-    int firstY;
-    int secondX;
-    int secondY;
-    int placeY;
-    float slope;
-
-    // Resolve corner case slopes (Same X and/or Y)
-    if (y1 == y2 && x1 == x2) { // Same cords
-        shapePixels[x2][y2] = true;
-        return;
-      } else if (y1 == y2) { // Same Y = Horizontal line
-        for (int timer = Math.min(x1, x2); timer < Math.max(x1, x2); timer++) {
-          shapePixels[timer][y2] = true;
-        }
-        return;
-
-      } else if (x1 == x2) { // Same X = Vertical Line
-        for (int timer = Math.min(y1, y2); timer < Math.max(y1, y2); timer++) {
-          shapePixels[x2][timer] = true;
-        }
-        return;
-      }
-
-    // Cord with smaller X designated as "first"
-    if (x1 < x2) {
-      firstX = x1;
-      firstY = y1;
-      secondX = x2;
-      secondY = y2;
-    } else {
-      secondX = x1;
-      secondY = y1;
-      firstX = x2;
-      firstY = y2;
-    }
-
-    // Get slope for future calculations
-    slope = (y2 - y1) / (x2 - x1);
-
-    // Set y for each X between x1 & x2
-    for (int timer = firstX; timer <= secondX; timer++) {
-      placeY = (int) (firstY + (slope * (timer - firstX)));
-      shapePixels[placeY][timer] = true;
-    }
-  }
-
-  /** Add this piece's array to the track manager's array.
+  /**
+   *  Get string of this piece's coordinates.
    *
-   * @param inputArray Array to add this pieces cords to
-   * @param inputWidth Width of the inputted array
-   * @param inputHeight Height of the inputted array
-   * @return Modified input array, this array added.
+   * @return String of this piece's cords
    */
-  public boolean[][] addPixels(boolean[][] inputArray, int inputWidth, int inputHeight) {
-    for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
-      for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-        if (shapePixels[wTimer][hTimer] == true) { // If piece array
-//          if (inputArray[wTimer + smallestX][hTimer + smallestY] == false) { // Avoid overriding manager array
-            inputArray[wTimer + smallestX][hTimer + smallestY] = shapePixels[wTimer][hTimer];
-//          }
-        }
-      }
-    }
-    return inputArray;
+  public String getCodeString() {
+    return cordsString;
   }
 
-  /** Draw each frame. */
-  public void draw() {
-    gameManager.fill(roadColor.getRGB(), roadColor.getGreen(), roadColor.getBlue());
-    gameManager.shape(road, smallestX, smallestY);
+  /**
+   * toString method.
+   *
+   * @return String of this piece's coordinates
+   */
+  public String toString() {
+    return cordsString;
   }
-
-  /** Prints the shape array to assist visualize. */
-  public void printPixels() {
-    if (arrayPrintOverride && TrackManager.isOnTesterMode) { // Prints boolean array shapes
-      int row = 0;
-      // Testing pixels that prints '-' as false, 'X' as true
-      System.out.print("  ");
-      for (int timer = 0; timer < arrayWidth; timer++) {
-        System.out.print(timer % 10);
-      }
-      System.out.print("\n");
-      for (int wTimer = 0; wTimer < arrayWidth; wTimer++) {
-        System.out.print(row % 10 + " ");
-        for (int hTimer = 0; hTimer < arrayHeight; hTimer++) {
-          if (shapePixels[wTimer][hTimer] == true) {
-            System.out.print("X");
-          } else {
-            System.out.print("-");
-          }
-        }
-        // Labels rows
-        System.out.print(" " + row % 10 + "\n");
-        row++;
-      }
-      System.out.print("  ");
-      for (int timer = 0; timer < arrayWidth; timer++) {
-        System.out.print(timer % 10);
-      }
-      System.out.println();
-    }
-  }
-
 }
