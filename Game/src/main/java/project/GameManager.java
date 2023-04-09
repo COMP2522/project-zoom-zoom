@@ -22,7 +22,7 @@ public class GameManager extends PApplet {
   TwoPlayers twoPlayers;
   Stopwatch stopwatch;
   TrackMenu trackMenu;
-  MongoDB mongoDB;
+  Mongodb mongoDB;
   Bgm bgm;
   final static boolean MongoEnabled = false;
   Ranking ranking;
@@ -78,7 +78,7 @@ public class GameManager extends PApplet {
   public void setup() {
     bgm = Bgm.getInstance();
     if (MongoEnabled) {
-      mongoDB = MongoDB.getInstance();
+      mongoDB = Mongodb.getInstance();
     }
     trackManager = new TrackManager(this);
 
@@ -206,7 +206,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-//      bgm.getBGM(true);
+      bgm.getBgm(true);
       audio = false;
       check++;
     }
