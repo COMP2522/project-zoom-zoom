@@ -36,23 +36,14 @@ public class ControlMenu {
   public Button twop2Stop;
   public Button twop2Left;
   public Button twop2Right;
-  private char p1upkey;
-  private char p1downkey;
-  private char p1leftkey;
-  private char p1rightkey;
-  private char twop2upkey;
-  private char twop2downkey;
-  private char twop2leftkey;
-  private char twop2rightkey;
   private float halfDisplayWidth;
   private static final int BUTTON_WIDTH = 300;
   private static final int BUTTON_HEIGHT = 80;
   private static final int P1_WIDTH_ADJUSTMENT = 610;
   private static final int P2_WIDTH_ADJUSTMENT = 90;
-  private static final float ACC_HEIGHT = 200;
-  private static final float BRAKE_HEIGHT = 400;
-  private static final float LEFT_HEIGHT = 600;
-  private static final float RIGHT_HEIGHT = 800;
+  private static final int KEY_AMOUNT = 4;
+  private char[] p1Keys = new char[KEY_AMOUNT];
+  private char[] p2Keys = new char[KEY_AMOUNT];
   private final float p1AdjustedWidth;
   private final float p2AdjustedWidth;
   private Bgm bgm;
@@ -112,19 +103,9 @@ public class ControlMenu {
    * Sets the buttons for the control menu.
    */
   private void setPlayerKeys() {
-    final SinglePlayer singlePlayer = window.singlePlayer;
-    final TwoPlayers twoPlayers = window.twoPlayers;
-    if (window.singlePlayer != null) {
-      p1upkey = singlePlayer.getUp();
-      p1downkey = singlePlayer.getDown();
-      p1leftkey = singlePlayer.getLeft();
-      p1rightkey = singlePlayer.getRight();
-    }
-    if (window.twoPlayers != null) {
-      twop2upkey = twoPlayers.getP2Up();
-      twop2downkey = twoPlayers.getP2Down();
-      twop2leftkey = twoPlayers.getP2Left();
-      twop2rightkey = twoPlayers.getP2Right();
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      p1Keys[i] = ControlCommandInvoker.getPlayer1Keys(i);
+      p2Keys[i] = ControlCommandInvoker.getPlayer2Keys(i);
     }
   }
 
@@ -228,19 +209,21 @@ public class ControlMenu {
    * Update the fonts for the control menu.
    */
   private void updateFonts() {
-    final float p1fontWidth = halfDisplayWidth - 350;
-    final float p2fontWidth = halfDisplayWidth + 350;
+    float x = halfDisplayWidth - 350;
+    float y = 200;
     window.textSize(50);
     window.fill(117, 204, 32);
-    window.text(p1upkey, p1fontWidth, ACC_HEIGHT);
-    window.text(p1downkey, p1fontWidth, BRAKE_HEIGHT);
-    window.text(p1leftkey, p1fontWidth, LEFT_HEIGHT);
-    window.text(p1rightkey, p1fontWidth, RIGHT_HEIGHT);
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      window.text(p1Keys[i], x, y);
+      y += 200;
+    }
+    x = halfDisplayWidth + 350;
+    y = 200;
     window.fill(72, 194, 249);
-    window.text(twop2upkey, p2fontWidth, ACC_HEIGHT);
-    window.text(twop2downkey, p2fontWidth, BRAKE_HEIGHT);
-    window.text(twop2leftkey, p2fontWidth, LEFT_HEIGHT);
-    window.text(twop2rightkey, p2fontWidth, RIGHT_HEIGHT);
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      window.text(p2Keys[i], x, y);
+      y += 200;
+    }
   }
 
   /**
@@ -251,25 +234,34 @@ public class ControlMenu {
       bgm.stopBgm(false);
       check = true;
       GameManager.audio = true;
-    } else if (soundon.isLeftClicked() && check && GameManager.audio) {
+    }
+    if (soundon.isLeftClicked() && check && GameManager.audio) {
       bgm.getBgm(true);
       check = false;
-    } else if (p1Go.isLeftClicked()) {
-      Controls.setUp(player1, window.inputChar);
-    } else if (p1Stop.isLeftClicked()) {
-      Controls.setDown(player1, window.inputChar);
-    } else if (p1Left.isLeftClicked()) {
-      Controls.setLeft(player1, window.inputChar);
-    } else if (p1Right.isLeftClicked()) {
-      Controls.setRight(player1, window.inputChar);
-    } else if (twop2Go.isLeftClicked()) {
-      Controls.setUp(player2, window.inputChar);
-    } else if (twop2Stop.isLeftClicked()) {
-      Controls.setDown(player2, window.inputChar);
-    } else if (twop2Left.isLeftClicked()) {
-      Controls.setLeft(player2, window.inputChar);
-    } else if (twop2Right.isLeftClicked()) {
-      Controls.setRight(player2, window.inputChar);
+    }
+    if (p1Go.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer1Keys(0, window.inputChar);
+    }
+    if (p1Stop.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer1Keys(1, window.inputChar);
+    }
+    if (p1Left.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer1Keys(2, window.inputChar);
+    }
+    if (p1Right.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer1Keys(3, window.inputChar);
+    }
+    if (twop2Go.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(0, window.inputChar);
+    }
+    if (twop2Stop.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(1, window.inputChar);
+    }
+    if (twop2Left.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(2, window.inputChar);
+    }
+    if (twop2Right.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(3, window.inputChar);
     }
   }
 

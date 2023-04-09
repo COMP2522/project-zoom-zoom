@@ -4,6 +4,9 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 /**
  * Game manager class to indicate whether the game is running or not.
  *
@@ -28,6 +31,8 @@ public class GameManager extends PApplet {
 
   static Player player1;
   static Player player2;
+
+  static Bot bot;
 
   /*
    * 0. Main menu
@@ -87,7 +92,6 @@ public class GameManager extends PApplet {
             new PVector(50, 1),
             0.1F,
             this, "2");
-
   }
 
   public void startRace() {
@@ -102,13 +106,9 @@ public class GameManager extends PApplet {
       player2.xpos = player2.position.x;
       player2.ypos = player2.position.y;
     }
-
-    // IDK how the bot will be initialized, but if it matches the direct players, the following should work
-    /*if (botPlayer != null) {
-      botPlayer.position = this.getStartingPosition(2);
-      botPlayer.xpos = this.getStartingPosition(2).x;
-      botPlayer.ypos = this.getStartingPosition(2).y;
-    }*/
+    if (bot != null) {
+      bot.position = trackManager.getStartCords(2);
+    }
   }
 
   boolean isEditing = false;
@@ -123,7 +123,6 @@ public class GameManager extends PApplet {
    */
   @Override
   public void keyPressed(KeyEvent event) {
-    int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
       if (mongoDB != null && singlePlayer != null && MongoEnabled) {
         mongoDB.put("time", singlePlayer.stopwatch.currentTime);
@@ -139,8 +138,9 @@ public class GameManager extends PApplet {
       menu = 0;
     }
     if (menu == 1 || menu == 2) {
-      Controls.setMovementTrue(keyCode);
-      Controls.shiftGears(keyCode);
+      ControlCommandInvoker.setP1MovementTrue(keyCode);
+      ControlCommandInvoker.setP2MovementTrue(keyCode);
+      ControlCommandInvoker.shiftGears(keyCode);
     }
     // Scuffed handling for textbox in control menu
     if (isEditing && menu == 3) {
@@ -185,7 +185,8 @@ public class GameManager extends PApplet {
   @Override
   public void keyReleased() {
     if (menu == 1 || menu == 2) {
-      Controls.setMovementFalse(keyCode);
+      ControlCommandInvoker.setP1MovementFalse(keyCode);
+      ControlCommandInvoker.setP2MovementFalse(keyCode);
     }
   }
   @Override

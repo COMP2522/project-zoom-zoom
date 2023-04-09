@@ -45,12 +45,6 @@ public class SinglePlayer implements Countdownable {
   private PImage player1Car;
 
   /**
-   * The playerControls instance variable represents
-   * the controls for the human-controlled player.
-   */
-  Controls playerControls;
-
-  /**
    * The dash instance variable represents
    * the dashboard for displaying information during the game.
    */
@@ -60,12 +54,6 @@ public class SinglePlayer implements Countdownable {
    * The stopwatch instance variable represents the timer for the game.
    */
   public Stopwatch stopwatch;
-
-  /**
-   * The player1Keys instance variable represents
-   * the array of key codes for controlling the human player.
-   */
-  int[] player1Keys = {87, 83, 65, 68, 20, 16};
 
   /**
    * The timerCheck instance variable represents
@@ -114,26 +102,34 @@ public class SinglePlayer implements Countdownable {
     stopwatch = Stopwatch.getInstance(window);
     sprites = new ArrayList<Car>();
     player1 = p1;
-    playerControls = new Controls(player1, player1Keys);
-//    sprites.add(player1);
+    ControlCommandInvoker.p1Commands();
     player1Car = window.loadImage("Game/images/Player1Car.png");
 
     ArrayList<PVector> waypoints = new ArrayList<>();
-    waypoints.add(new PVector(window.width / 2, window.height / 2));
-    waypoints.add(new PVector(50, 1));
-    waypoints.add(new PVector(60, 1));
-    waypoints.add(new PVector(70, 10));
-    waypoints.add(new PVector(80, 1));
-    waypoints.add(new PVector(90, 1));
+    // Waypoints for the first track
+    waypoints.add(new PVector(1100, 100));
+    waypoints.add(new PVector(1150, 150));
+    waypoints.add(new PVector(1200, 170));
+    waypoints.add(new PVector(1250, 180));
+    waypoints.add(new PVector(1200, 600));
+    waypoints.add(new PVector(1100, 650));
+    waypoints.add(new PVector(150, 650));
+    waypoints.add(new PVector(100, 600));
+    waypoints.add(new PVector(100, 550));
+    waypoints.add(new PVector(100, 450));
+    waypoints.add(new PVector(100, 90));
+    waypoints.add(new PVector(120, 100));
+
 
     // Add the AI player
     bot = new Bot(
-      window.getStartingPosition(1),
-        new PVector(50, 1),
+      new PVector(100, 100),
+      new PVector(50, 1),
       0.1F,
-        new Color(255, 0, 0),
+      new Color(255, 0, 0),
       window,
-      waypoints, "B");
+      waypoints,
+      "B");
     sprites.add(bot);
     dash = new Dashboard(window, player1);
   }
@@ -153,17 +149,14 @@ public class SinglePlayer implements Countdownable {
         timerCheck = false;
       }
       stopwatch.startTimer();
-      Controls.playerMovement();
-      // Move player around the screen.
+      // Move player around the screen
+      ControlCommandInvoker.player1Movement();
       player1.draw();
       player1.update();
+      bot.draw();
+      bot.update();
       drawImage();
       for (Car sprite : sprites) {
-        if (sprite instanceof Bot) {
-          bot = (Bot) sprite;
-          bot.draw();
-          bot.update();
-        }
         dash.draw();
       }
     }
@@ -203,128 +196,11 @@ public class SinglePlayer implements Countdownable {
   }
 
   /**
-   * Getter for up key.
-   *
-   * @return up key of player for in game
-   */
-  public char getUp() {
-    return (char) player1Keys[0];
-  }
-
-  /**
-   * Getter for brake key.
-   *
-   * @return brake key of player for in game
-   */
-  public char getDown() {
-    return (char) player1Keys[1];
-  }
-
-  /**
-   * Getter for left key.
-   *
-   * @return left key of player for in game
-   */
-  public char getLeft() {
-    return (char) player1Keys[2];
-  }
-
-  /**
-   * Getter for right key.
-   *
-   * @return right key of player for in game
-   */
-  public char getRight() {
-    return (char) player1Keys[3];
-  }
-
-  /**
-   * Getter for boolean variable that checks status of timer.
-   *
-   * @return boolean variable of timer status of this class
-   */
-  public boolean isTimerCheck() {
-    return timerCheck;
-  }
-
-  /**
    * Setter for timerCheck variable that checks status of timer.
    *
    * @param timerCheck boolean variable of timer status of this class
    */
   public void setTimerCheck(boolean timerCheck) {
     this.timerCheck = timerCheck;
-  }
-
-  /**
-   * Returns the ArrayList of sprites.
-   *
-   * @return the ArrayList of sprites.
-   */
-  public ArrayList<Car> getSprites() {
-    return sprites;
-  }
-
-  /**
-   * Sets the ArrayList of sprites.
-   *
-   * @param sprites the ArrayList of sprites.
-   */
-  public void setSprites(ArrayList<Car> sprites) {
-    this.sprites = sprites;
-  }
-
-  /**
-   * Returns the Player object for player 1.
-   *
-   * @return the Player object for player 1.
-   */
-  public Player getPlayer1() {
-    return player1;
-  }
-
-  /**
-   * Sets the Player object for player 1.
-   *
-   * @param player1 the Player object for player 1.
-   */
-  public void setPlayer1(Player player1) {
-    this.player1 = player1;
-  }
-
-  /**
-   * Returns the Controls object for player 1.
-   *
-   * @return the Controls object for player 1.
-   */
-  public Controls getPlayerControls() {
-    return playerControls;
-  }
-
-  /**
-   * Sets the Controls object for player 1.
-   *
-   * @param playerControls the Controls object for player 1.
-   */
-  public void setPlayerControls(Controls playerControls) {
-    this.playerControls = playerControls;
-  }
-
-  /**
-   * Returns the integer array of keys for player 1.
-   *
-   * @return the integer array of keys for player 1.
-   */
-  public int[] getPlayer1Keys() {
-    return player1Keys;
-  }
-
-  /**
-   * Sets the integer array of keys for player 1.
-   *
-   * @param player1Keys the integer array of keys for player 1.
-   */
-  public void setPlayer1Keys(int[] player1Keys) {
-    this.player1Keys = player1Keys;
   }
 }

@@ -9,12 +9,10 @@ import static java.lang.Math.PI;
 import static processing.core.PApplet.constrain;
 
 public class Bot extends Car {
-  private PVector position;
-  private PVector direction;
+  protected PVector position;
+  protected PVector direction;
   private PVector velocity;
   private float steeringAngle;
-  private int framesUntilTurn;
-  private Random random;
   private PID pid;
   private float frameRate;
   private ArrayList<PVector> waypoints;
@@ -23,13 +21,11 @@ public class Bot extends Car {
   public Bot(PVector position, PVector direction, float speed,
              Color color, GameManager window, ArrayList<PVector> waypoints, String b) {
     super(position, direction, speed, color, window);
-    this.position = position;
+    this.position = window.getStartingPosition(2);
     this.direction = direction;
     this.steeringAngle = 0;
-    this.framesUntilTurn = 0; // start turning immediately
-    this.random = new Random();
     this.pid = new PID(0.1, 0.1, 0.1);
-    this.speed = 100;
+    this.speed = 10;
     this.frameRate = window.frameRate;
     this.waypoints = waypoints;
     this.currentWaypointIndex = 0;
@@ -44,7 +40,7 @@ public class Bot extends Car {
     }
 
     // calculate the steering angle using PID control
-    PVector desiredDirection = PVector.sub(waypoints.get(currentWaypointIndex), position);
+    PVector desiredDirection = PVector.sub(waypoints.get((currentWaypointIndex + 1) % waypoints.size()), position);
     float desiredHeading = desiredDirection.heading();
     double error = desiredHeading - direction.heading();
     double dt = 1 / frameRate;
@@ -54,8 +50,10 @@ public class Bot extends Car {
     // set the velocity to be proportional to the vector pointing towards the current waypoint
     PVector velocity = PVector.sub(waypoints.get(currentWaypointIndex), position);
     velocity.normalize();
-    velocity.mult((float) speed);
+    velocity.mult(speed);
     setVelocity(velocity);
+    position.add(velocity);
+    direction.rotate(steeringAngle);
 
     // update the bot's position
     super.update();
@@ -71,6 +69,5 @@ public class Bot extends Car {
     float maxAngle = (float) (PI/4);
     this.steeringAngle = constrain(angle, minAngle, maxAngle);
   }
-
 
 }

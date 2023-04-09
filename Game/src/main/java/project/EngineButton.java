@@ -101,13 +101,13 @@ public class EngineButton extends Button {
    *  to show player 2's current engine.
    */
   private static void drawPlayer2Indicator() {
-    x = (window.displayWidth / 8) + 90;
+    int indicatorX = (window.displayWidth / 8) + 90;
     buffer = 150;
     for (int i = 0; i < engineLength; i++) {
       y = (window.displayHeight / 5) + buffer;
       if (player2.getEngine().equals(PartEngine.engineParts[i])) {
         window.fill(0, 255, 247);
-        window.ellipse(x, y, 20, 20);
+        window.ellipse(indicatorX, y, 20, 20);
       }
       buffer += 125;
     }
