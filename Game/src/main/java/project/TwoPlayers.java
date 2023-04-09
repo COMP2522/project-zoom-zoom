@@ -28,11 +28,6 @@ public class TwoPlayers implements Countdownable {
   ArrayList<Car> cars;
 
   /**
-   * The playerControls field is a Controls object that handles player movement controls.
-   */
-  Controls playerControls;
-
-  /**
    * The player1 fields represent the Player one object in the game.
    */
   Player player1;
@@ -56,29 +51,6 @@ public class TwoPlayers implements Countdownable {
    * The stopwatch field represents a Stopwatch object used to keep track of game time.
    */
   Stopwatch stopwatch;
-
-  /**
-   * The minSize fields represent the minimum size of the players' circles.
-   */
-  int minSize = 10;
-
-  /**
-   * The maxSize fields represent the maximum size of the players' circles.
-   */
-  int maxSize = 40;
-
-  /**
-   * The player1 Keys instance variable represents
-   * the array of key codes for controlling the first player.
-   */
-  int[] player1Keys = {87, 83, 65, 68, 20, 16};
-
-  /**
-   * The player1 Keys instance variable represents
-   * the array of key codes for controlling the second player.
-   */
-  int[] player2Keys = {73, 75, 74, 76, 59, 47};
-
   /**
    * The timerCheck field is a boolean value that represents
    * whether or not the game timer is currently active.
@@ -129,11 +101,14 @@ public class TwoPlayers implements Countdownable {
     startTime = System.currentTimeMillis();
     stopwatch = Stopwatch.getInstance(window);
     cars = new ArrayList<Car>();
+    // Load player and images
     player1 = p1;
     player2 = p2;
     player1Car = window.loadImage("Game/images/Player1Car.png");
     player2Car = window.loadImage("Game/images/Player2Car.png");
-    playerControls = new Controls(player1, player2, player1Keys, player2Keys);
+    // Load controls
+    ControlCommandInvoker.p1Commands();
+    ControlCommandInvoker.p2Commands();
     cars.add(player1);
     cars.add(player2);
     dash = new Dashboard(window, player1, player2);
@@ -155,8 +130,9 @@ public class TwoPlayers implements Countdownable {
         timerCheck = false;
       }
       stopwatch.startTimer();
-      // Move player around the screen.
-      Controls.playerMovement();
+      // Move player around the screen
+      ControlCommandInvoker.player1Movement();
+      ControlCommandInvoker.player2Movement();
       for (Car sprite : cars) {
         sprite.update();
         sprite.draw();
@@ -212,79 +188,6 @@ public class TwoPlayers implements Countdownable {
     window.image(player2Car, (float) 0, (float) 10);
     window.popMatrix();
   }
-
-  /**
-   * Returns the character representing the key used for Player 2's Up movement.
-   *
-   * @return the character representing the key used for Player 2's Up movement
-   */
-  public char getP2Up() {
-    return (char) player2Keys[0];
-  }
-
-  /**
-   * Returns the character representing the key used for Player 2's Down movement.
-   *
-   * @return the character representing the key used for Player 2's Down movement
-   */
-  public char getP2Down() {
-    return (char) player2Keys[1];
-  }
-
-  /**
-   * Returns the character representing the key used for Player 2's Left movement.
-   *
-   * @return the character representing the key used for Player 2's Left movement
-   */
-  public char getP2Left() {
-    return (char) player2Keys[2];
-  }
-
-  /**
-   * Returns the character representing the key used for Player 2's Right movement.
-   *
-   * @return the character representing the key used for Player 2's Right movement
-   */
-  public char getP2Right() {
-    return (char) player2Keys[3];
-  }
-
-  /**
-   * Returns the character representing the key used for Player 1's Up movement.
-   *
-   * @return the character representing the key used for Player 1's Up movement
-   */
-  public char getP1Up() {
-    return (char) player1Keys[0];
-  }
-
-  /**
-   * Returns the character representing the key used for Player 1's Down movement.
-   *
-   * @return the character representing the key used for Player 1's Down movement
-   */
-  public char getP1Down() {
-    return (char) player1Keys[1];
-  }
-
-  /**
-   * Returns the character representing the key used for Player 1's Left movement.
-   *
-   * @return the character representing the key used for Player 1's Left movement
-   */
-  public char getP1Left() {
-    return (char) player1Keys[2];
-  }
-
-  /**
-   * Returns the character representing the key used for Player 1's Right movement.
-   *
-   * @return the character representing the key used for Player 1's Right movement
-   */
-  public char getP1Right() {
-    return (char) player1Keys[3];
-  }
-
   /**
    * Sets the boolean value indicating whether the timer is currently active or not.
    *

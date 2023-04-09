@@ -1,11 +1,13 @@
 package project;
 
+import java.awt.Color;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.awt.*;
-
+/**
+ * The ControlMenu class represents the control menu for the game.
+ */
 public class ControlMenu {
   private final GameManager window;
   private static ControlMenu instance;
@@ -13,8 +15,14 @@ public class ControlMenu {
   private PImage background;
   private PImage soundOn;
   private PImage soundOff;
-  private PImage p1acc, p1brake, p1left, p1right;
-  private PImage p2acc, p2brake, p2left, p2right;
+  private PImage p1acc;
+  private PImage p1brake;
+  private PImage p1left;
+  private PImage p1right;
+  private PImage p2acc;
+  private PImage p2brake;
+  private PImage p2left;
+  private PImage p2right;
   private PImage setting;
   public Button soundoff;
   public Button soundon;
@@ -22,33 +30,43 @@ public class ControlMenu {
   public Button p1Stop;
   public Button p1Left;
   public Button p1Right;
-  public Button Twop2Go;
-  public Button Twop2Stop;
-  public Button Twop2Left;
-  public Button Twop2Right;
-  public Button Twop1Go;
-  public Button Twop1Stop;
-  public Button Twop1Left;
-  public Button Twop1Right;
+  public Button twop2Go;
+  public Button twop2Stop;
+  public Button twop2Left;
+  public Button twop2Right;
+  private float halfDisplayWidth;
+  private static final int BUTTON_WIDTH = 300;
+  private static final int BUTTON_HEIGHT = 80;
+  private static final int P1_WIDTH_ADJUSTMENT = 610;
+  private static final int P2_WIDTH_ADJUSTMENT = 90;
+  private static final int KEY_AMOUNT = 4;
+  private char[] p1Keys = new char[KEY_AMOUNT];
+  private char[] p2Keys = new char[KEY_AMOUNT];
+  private final float p1AdjustedWidth;
+  private final float p2AdjustedWidth;
   private Bgm bgm;
   private boolean check = true;
-  private char p1upkey;
-  private char p1downkey;
-  private char p1leftkey;
-  private char p1rightkey;
-  private char twop2upkey;
-  private char twop2downkey;
-  private char twop2leftkey;
-  private char twop2rightkey;
-//  private char twop1upkey;
-//  private char twop1downkey;
-//  private char twop1leftkey;
-//  private char twop1rightkey;
+
+  /**
+   * Private constructor of ControlMenu class to keep it singleton.
+   *
+   * @param window the window for current game
+   */
   private ControlMenu(GameManager window) {
     this.window = window;
     bgm = Bgm.getInstance();
+    halfDisplayWidth = window.displayWidth / 2;
+    textBox = new TextBox(new PVector(500, 500), 200, 40, window);
+    p1AdjustedWidth = halfDisplayWidth - P1_WIDTH_ADJUSTMENT;
+    p2AdjustedWidth = halfDisplayWidth + P2_WIDTH_ADJUSTMENT;
   }
 
+  /**
+   * Method that returns the instance of the control menu.
+   *
+   * @param window the window for current game
+   * @return ControlMenu
+   */
   public static ControlMenu getInstance(GameManager window) {
     if (instance == null) {
       instance = new ControlMenu(window);
@@ -56,75 +74,100 @@ public class ControlMenu {
     return instance;
   }
 
+  /**
+   * Method that sets up everything for the control menu.
+   */
   public void setup() {
-    if (window.singlePlayer != null) {
-      p1upkey = window.singlePlayer.getUp();
-      p1downkey = window.singlePlayer.getDown();
-      p1leftkey = window.singlePlayer.getLeft();
-      p1rightkey = window.singlePlayer.getRight();
-    }
-    if (window.twoPlayers != null) {
-//      twop1upkey = window.twoPlayers.getP1Up();
-//      twop1downkey = window.twoPlayers.getP1Down();
-//      twop1leftkey = window.twoPlayers.getP1Left();
-//      twop1rightkey = window.twoPlayers.getP1Right();
-      twop2upkey = window.twoPlayers.getP2Up();
-      twop2downkey = window.twoPlayers.getP2Down();
-      twop2leftkey = window.twoPlayers.getP2Left();
-      twop2rightkey = window.twoPlayers.getP2Right();
-    }
-    background = window.loadImage("Game/images/BGImage.png");
-    soundOn = window.loadImage("Game/images/SoundOn.png");
-    soundOff = window.loadImage("Game/images/SoundOff.png");
-    p1acc = window.loadImage("Game/images/Acceleration.png");
-    p1brake = window.loadImage("Game/images/Brake.png");
-    p1left = window.loadImage("Game/images/Left.png");
-    p1right = window.loadImage("Game/images/Right.png");
-    p2acc = window.loadImage("Game/images/p2Acceleration.png");
-    p2brake = window.loadImage("Game/images/p2Brake.png");
-    p2left = window.loadImage("Game/images/p2Left.png");
-    p2right = window.loadImage("Game/images/p2Right.png");
-    setting = window.loadImage("Game/images/Setting.png");
-    textBox = new TextBox(new PVector(500, 500), 200, 40, window);
-    window.textAlign(PApplet.CENTER, PApplet.CENTER);
-    soundoff = new Button(new PVector((float) (window.displayWidth / 20) + 100, 900), 50,
-        50, "", new Color(0, 150, 0), window);
-    soundon = new Button(new PVector((float) (window.displayWidth / 20), 900), 50,
-        50, "", new Color(0, 150, 0), window);
-    p1Go = new Button(new PVector((float) (window.displayWidth / 2) - 610, 190), 300,
-        80, "", new Color(0, 150, 0), window);
-    p1Stop = new Button(new PVector((float) (window.displayWidth / 2) - 610, 390), 300,
-        80, "", new Color(0, 150, 0), window);
-    p1Left = new Button(new PVector((float) (window.displayWidth / 2) - 610, 590), 300,
-        80, "", new Color(0, 150, 0), window);
-    p1Right = new Button(new PVector((float) (window.displayWidth / 2) - 610, 790), 300,
-        80, "", new Color(0, 150, 0), window);
-    Twop2Go = new Button(new PVector((float) (window.displayWidth / 2) + 90, 190), 300,
-        80, "", new Color(0, 0, 150), window);
-    Twop2Stop = new Button(new PVector((float) (window.displayWidth / 2) + 90, 390), 300,
-        80, "", new Color(0, 0, 150), window);
-    Twop2Left = new Button(new PVector((float) (window.displayWidth / 2) + 90, 590), 300,
-        80, "", new Color(0, 0, 150), window);
-    Twop2Right = new Button(new PVector((float) (window.displayWidth / 2) + 90, 790), 300,
-        80, "", new Color(0, 0, 150), window);
-//    Twop1Go = new Button(new PVector((float) (window.displayWidth / 2) + 400, 200), 225,
-//        50, "ACELER: " + twop2upkey, new Color(200, 50, 50), window);
-//    Twop1Stop = new Button(new PVector((float) (window.displayWidth / 2) + 400, 400), 225,
-//        50, "BRAKE: " + twop2downkey, new Color(200, 50, 50), window);
-//    Twop1Left = new Button(new PVector((float) (window.displayWidth / 2) + 400, 600), 225,
-//        50, "LEFT: " + twop2leftkey, new Color(200, 50, 50), window);
-//    Twop1Right = new Button(new PVector((float) (window.displayWidth / 2) + 400, 800), 225,
-//        50, "RIGHT: " + twop2rightkey, new Color(200, 50, 50), window);
+    setPlayerKeys();
+    loadImages();
+    setButtons();
   }
 
+  /**
+   * Method that draws the control menu.
+   */
   public void draw() {
     window.background(64, 64, 64);
     window.fill(0);
     window.image(background, 0, 0, window.displayWidth, window.displayHeight);
-    window.fill(0);
-    window.image(setting, (float) window.displayWidth / 2 - 150, (float) window.displayHeight / 20);
+    updateButtons();
+    updateFonts();
+    updateImages();
+    checkButtonClicks();
+    textBox.draw();
+  }
 
-//    window.text("KEY SETTING", (float) window.displayWidth / 2 + 10, (float) window.displayHeight / 20);
+  /**
+   * Sets the buttons for the control menu.
+   */
+  private void setPlayerKeys() {
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      p1Keys[i] = ControlCommandInvoker.getPlayer1Keys(i);
+      p2Keys[i] = ControlCommandInvoker.getPlayer2Keys(i);
+    }
+  }
+
+  /**
+   * Gets the image from the path.
+   *
+   * @param name the name of the image
+   * @return PImage the path of the image
+   */
+  private PImage getImage(String name) {
+    return window.loadImage("Game/images/" + name);
+  }
+
+  /**
+   * Load all images for the control menu.
+   */
+  private void loadImages() {
+    background = getImage("BGImage.png");
+    soundOn = getImage("SoundOn.png");
+    soundOff = getImage("SoundOff.png");
+    p1acc = getImage("Acceleration.png");
+    p1brake = getImage("Brake.png");
+    p1left = getImage("Left.png");
+    p1right = getImage("Right.png");
+    p2acc = getImage("p2Acceleration.png");
+    p2brake = getImage("p2Brake.png");
+    p2left = getImage("p2Left.png");
+    p2right = getImage("p2Right.png");
+    setting = getImage("Setting.png");
+  }
+
+  /**
+   * Update the buttons for the control menu.
+   */
+  private void setButtons() {
+    window.textAlign(PApplet.CENTER, PApplet.CENTER);
+
+    soundoff = new Button(new PVector((float) (window.displayWidth / 20) + 100, 900), 50,
+        50, "", Color.GREEN, window);
+    soundon = new Button(new PVector((float) (window.displayWidth / 20), 900), 50,
+        50, "", Color.GREEN, window);
+    p1Go = new Button(new PVector(p1AdjustedWidth, 190), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.GREEN, window);
+    p1Stop = new Button(new PVector(p1AdjustedWidth, 390), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.GREEN, window);
+    p1Left = new Button(new PVector(p1AdjustedWidth, 590), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.GREEN, window);
+    p1Right = new Button(new PVector(p1AdjustedWidth, 790), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.GREEN, window);
+    twop2Go = new Button(new PVector(p2AdjustedWidth, 190), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.BLUE, window);
+    twop2Stop = new Button(new PVector(p2AdjustedWidth, 390), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.BLUE, window);
+    twop2Left = new Button(new PVector(p2AdjustedWidth, 590), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.BLUE, window);
+    twop2Right = new Button(new PVector(p2AdjustedWidth, 790), BUTTON_WIDTH,
+        BUTTON_HEIGHT, "", Color.BLUE, window);
+  }
+
+
+  /**
+   * Update the buttons for the control menu.
+   */
+  private void updateButtons() {
     soundoff.click();
     soundoff.draw();
     soundon.draw();
@@ -137,47 +180,58 @@ public class ControlMenu {
     p1Left.draw();
     p1Right.click();
     p1Right.draw();
-    Twop2Go.click();
-    Twop2Go.draw();
-    Twop2Stop.click();
-    Twop2Stop.draw();
-    Twop2Left.click();
-    Twop2Left.draw();
-    Twop2Right.click();
-    Twop2Right.draw();
-    textBox.draw();
+    twop2Go.click();
+    twop2Go.draw();
+    twop2Stop.click();
+    twop2Stop.draw();
+    twop2Left.click();
+    twop2Left.draw();
+    twop2Right.click();
+    twop2Right.draw();
+  }
+
+  /**
+   * Update the images for the control menu.
+   */
+  private void updateImages() {
+    window.image(setting, halfDisplayWidth - 150, (float) window.displayHeight / 20);
     window.image(soundOn, (float) (window.displayWidth / 20), 900);
     window.image(soundOff, (float) (window.displayWidth / 20) + 100, 900);
-    window.image(p1acc, (float) (window.displayWidth / 2) - 600, 200);
-    window.image(p1brake, (float) (window.displayWidth / 2) - 600, 400);
-    window.image(p1left, (float) (window.displayWidth / 2) - 600, 600);
-    window.image(p1right, (float) (window.displayWidth / 2) - 600, 800);
+    window.image(p1acc, halfDisplayWidth - 600, 200);
+    window.image(p1brake, halfDisplayWidth - 600, 400);
+    window.image(p1left, halfDisplayWidth - 600, 600);
+    window.image(p1right, halfDisplayWidth - 600, 800);
+    window.image(p2acc, halfDisplayWidth + 100, 200);
+    window.image(p2brake, halfDisplayWidth + 100, 400);
+    window.image(p2left, halfDisplayWidth + 100, 600);
+    window.image(p2right, halfDisplayWidth + 100, 800);
+  }
 
-    window.image(p2acc, (float) (window.displayWidth / 2) + 100, 200);
-    window.image(p2brake, (float) (window.displayWidth / 2) + 100, 400);
-    window.image(p2left, (float) (window.displayWidth / 2) + 100, 600);
-    window.image(p2right, (float) (window.displayWidth / 2) + 100, 800);
-
+  /**
+   * Update the fonts for the control menu.
+   */
+  private void updateFonts() {
+    float x = halfDisplayWidth - 350;
+    float y = 200;
     window.textSize(50);
     window.fill(117, 204, 32);
-    window.text(p1upkey, (float) (window.displayWidth / 2) - 350, 200);
-    window.text(p1downkey, (float) (window.displayWidth / 2) - 350, 400);
-    window.text(p1leftkey, (float) (window.displayWidth / 2) - 350, 600);
-    window.text(p1rightkey, (float) (window.displayWidth / 2) - 350, 800);
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      window.text(p1Keys[i], x, y);
+      y += 200;
+    }
+    x = halfDisplayWidth + 350;
+    y = 200;
     window.fill(72, 194, 249);
-    window.text(twop2upkey, (float) (window.displayWidth / 2) + 350, 200);
-    window.text(twop2downkey, (float) (window.displayWidth / 2) + 350, 400);
-    window.text(twop2leftkey, (float) (window.displayWidth / 2) + 350, 600);
-    window.text(twop2rightkey, (float) (window.displayWidth / 2) + 350, 800);
-//    Twop1Go.update();
-//    Twop1Go.draw();
-//    Twop1Stop.update();
-//    Twop1Stop.draw();
-//    Twop1Left.update();
-//    Twop1Left.draw();
-//    Twop1Right.update();
-//    Twop1Right.draw();
-//    textBox.draw();
+    for (int i = 0; i < KEY_AMOUNT; i++) {
+      window.text(p2Keys[i], x, y);
+      y += 200;
+    }
+  }
+
+  /**
+   * Check if the buttons are clicked.
+   */
+  private void checkButtonClicks() {
     if (soundoff.isLeftClicked()) {
       bgm.stopBGM(false);
       check = true;
@@ -188,40 +242,28 @@ public class ControlMenu {
       check = false;
     }
     if (p1Go.isLeftClicked()) {
-      Controls.setUp(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(0, window.inputChar);
     }
     if (p1Stop.isLeftClicked()) {
-      Controls.setDown(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(1, window.inputChar);
     }
     if (p1Left.isLeftClicked()) {
-      Controls.setLeft(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(2, window.inputChar);
     }
     if (p1Right.isLeftClicked()) {
-      Controls.setRight(Controls.player1, window.inputChar);
+      ControlCommandInvoker.setPlayer1Keys(3, window.inputChar);
     }
-    if (Twop2Go.isLeftClicked()) {
-      Controls.setUp(Controls.player2, window.inputChar);
+    if (twop2Go.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(0, window.inputChar);
     }
-    if (Twop2Stop.isLeftClicked()) {
-      Controls.setDown(Controls.player2, window.inputChar);
+    if (twop2Stop.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(1, window.inputChar);
     }
-    if (Twop2Left.isLeftClicked()) {
-      Controls.setLeft(Controls.player2, window.inputChar);
+    if (twop2Left.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(2, window.inputChar);
     }
-    if (Twop2Right.isLeftClicked()) {
-      Controls.setRight(Controls.player2, window.inputChar);
+    if (twop2Right.isLeftClicked()) {
+      ControlCommandInvoker.setPlayer2Keys(3, window.inputChar);
     }
-//    if (Twop1Go.isClicked()) {
-//      Controls.setUp(Controls.player2, window.inputChar);
-//    }
-//    if (Twop1Stop.isClicked()) {
-//      Controls.setDown(Controls.player2, window.inputChar);
-//    }
-//    if (Twop1Left.isClicked()) {
-//      Controls.setLeft(Controls.player2, window.inputChar);
-//    }
-//    if (Twop1Right.isClicked()) {
-//      Controls.setRight(Controls.player2, window.inputChar);
-//    }
   }
 }

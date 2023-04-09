@@ -21,7 +21,7 @@ public class Bot extends Car {
   public Bot(PVector position, PVector direction, float speed,
              Color color, GameManager window, ArrayList<PVector> waypoints, String b) {
     super(position, direction, speed, color, window);
-    this.position = position;
+    this.position = window.getStartingPosition(2);
     this.direction = direction;
     this.steeringAngle = 0;
     this.pid = new PID(0.1, 0.1, 0.1);

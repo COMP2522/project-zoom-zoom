@@ -123,7 +123,6 @@ public class GameManager extends PApplet {
    */
   @Override
   public void keyPressed(KeyEvent event) {
-    int keyCode = event.getKeyCode();
     if (keyCode == TAB) {
       if (mongoDB != null && singlePlayer != null && MongoEnabled) {
         mongoDB.put("time", singlePlayer.stopwatch.currentTime);
@@ -139,8 +138,9 @@ public class GameManager extends PApplet {
       menu = 0;
     }
     if (menu == 1 || menu == 2) {
-      Controls.setMovementTrue(keyCode);
-      Controls.shiftGears(keyCode);
+      ControlCommandInvoker.setP1MovementTrue(keyCode);
+      ControlCommandInvoker.setP2MovementTrue(keyCode);
+      ControlCommandInvoker.shiftGears(keyCode);
     }
     // Scuffed handling for textbox in control menu
     if (isEditing && menu == 3) {
@@ -185,7 +185,8 @@ public class GameManager extends PApplet {
   @Override
   public void keyReleased() {
     if (menu == 1 || menu == 2) {
-      Controls.setMovementFalse(keyCode);
+      ControlCommandInvoker.setP1MovementFalse(keyCode);
+      ControlCommandInvoker.setP2MovementFalse(keyCode);
     }
   }
   @Override
@@ -205,7 +206,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-      bgm.getBGM(true);
+//      bgm.getBGM(true);
       audio = false;
       check++;
     }
