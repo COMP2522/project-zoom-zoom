@@ -4,6 +4,9 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 /**
  * Game manager class to indicate whether the game is running or not.
  *
@@ -19,15 +22,16 @@ public class GameManager extends PApplet {
   TwoPlayers twoPlayers;
   Stopwatch stopwatch;
   TrackMenu trackMenu;
-  MongoDB mongoDB;
+  Mongodb mongoDB;
   Bgm bgm;
-  final static boolean MongoEnabled = false;
   Ranking ranking;
   public static boolean audio = true;
   private int check = 1;
 
   static Player player1;
   static Player player2;
+
+  static Bot bot;
 
   /*
    * 0. Main menu
@@ -72,9 +76,7 @@ public class GameManager extends PApplet {
    */
   public void setup() {
     bgm = Bgm.getInstance();
-    if (MongoEnabled) {
-      mongoDB = MongoDB.getInstance();
-    }
+    mongoDB = Mongodb.getInstance();
     trackManager = new TrackManager(this);
 
     stopwatch = Stopwatch.getInstance(this);
@@ -103,13 +105,9 @@ public class GameManager extends PApplet {
       player2.xpos = player2.position.x;
       player2.ypos = player2.position.y;
     }
-
-    // IDK how the bot will be initialized, but if it matches the direct players, the following should work
-    /*if (botPlayer != null) {
-      botPlayer.position = this.getStartingPosition(2);
-      botPlayer.xpos = this.getStartingPosition(2).x;
-      botPlayer.ypos = this.getStartingPosition(2).y;
-    }*/
+    if (bot != null) {
+      bot.position = trackManager.getStartCords(2);
+    }
   }
 
   boolean isEditing = false;
@@ -125,7 +123,7 @@ public class GameManager extends PApplet {
   @Override
   public void keyPressed(KeyEvent event) {
     if (keyCode == TAB) {
-      if (mongoDB != null && singlePlayer != null && MongoEnabled) {
+      if (mongoDB != null && singlePlayer != null) {
         mongoDB.put("time", singlePlayer.stopwatch.currentTime);
       }
       if (singlePlayer != null) {
@@ -207,7 +205,7 @@ public class GameManager extends PApplet {
    */
   public void draw() {
     if (audio && check == 1) {
-//      bgm.getBGM(true);
+      bgm.getBgm(true);
       audio = false;
       check++;
     }
