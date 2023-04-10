@@ -16,6 +16,7 @@ public class CarModMenu implements Drawable {
   protected TextBox gearInput;
   // Other data
   private GameManager window;
+  private static Bot bot;
   private static CarModMenu instance;
   private DisplayEngineStats engineStats;
   private DisplayChassisStats chassisStats;
@@ -26,10 +27,11 @@ public class CarModMenu implements Drawable {
    *
    * @param window current window
    */
-  private CarModMenu(GameManager window) {
+  private CarModMenu(GameManager window, Bot bot) {
     this.window = window;
+    this.bot = bot;
     carModMenuImages = CarModMenuImages.getInstance(window);
-    carModMenuButtons = CarModMenuButtons.getInstance(window);
+    carModMenuButtons = CarModMenuButtons.getInstance(window, bot);
     engineStats = DisplayEngineStats.getInstance(window);
     chassisStats = DisplayChassisStats.getInstance(window);
     aerodynamicStats = DisplayAerodynamicStats.getInstance(window);
@@ -41,9 +43,9 @@ public class CarModMenu implements Drawable {
    * @param window window class
    * @return a car mod menu object
    */
-  public static CarModMenu getInstance(GameManager window) {
+  public static CarModMenu getInstance(GameManager window, Bot bot) {
     if (instance == null) {
-      instance = new CarModMenu(window);
+      instance = new CarModMenu(window, bot);
     }
     return instance;
   }

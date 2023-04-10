@@ -1,41 +1,83 @@
 package project;
 
 import processing.core.*;
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Random;
 
 import static java.lang.Math.PI;
-import static processing.core.PApplet.constrain;
+import static processing.core.PApplet.*;
 
+/**
+ * The Bot class represents a semi-computer-controlled player in the game.
+ * It extends the Car class.
+ */
 public class Bot extends Car {
+  /**
+   * The position instance variable represents the position of the bot.
+   */
   protected PVector position;
+  /**
+   * The direction instance variable represents the direction of the bot.
+   */
   protected PVector direction;
+  /**
+   * The speed instance variable represents the speed of the bot.
+   */
   private PVector velocity;
+  /**
+   * The steeringAngle instance variable represents the steering angle of the bot.
+   */
   private float steeringAngle;
+  /**
+   * The pid instance variable represents the PID controller for the bot.
+   */
   private PID pid;
+/**
+   * The frameRate instance variable represents the frame rate of the bot from the window.
+   */
   private float frameRate;
-  private ArrayList<PVector> waypoints;
-  private int currentWaypointIndex;
+  /**
+   * The waypoints instance variable represents the list of waypoints for the bot to follow.
+   */
+  ArrayList<PVector> waypoints;
+  /**
+   * The currentWaypointIndex instance variable represents the index of the current waypoint.
+   */
+  int currentWaypointIndex;
+  /**
+   * The waypointReached instance variable represents whether the bot has reached the current waypoint.
+   */
+  boolean waypointReached = false;
 
+  /**
+   * The constructor for the Bot class.
+   * @param position the position of the bot
+   * @param direction the direction of the bot
+   * @param speed the speed of the bot
+   * @param window the game manager for the current game
+   * @param b the type of bot
+   */
   public Bot(PVector position, PVector direction, float speed,
-             Color color, GameManager window, ArrayList<PVector> waypoints, String b) {
-    super(position, direction, speed, color, window);
-    this.position = window.getStartingPosition(2);
+             GameManager window, String b) {
+    super(position, direction, speed, window);
+    this.position = position;
     this.direction = direction;
     this.steeringAngle = 0;
     this.pid = new PID(0.1, 0.1, 0.1);
     this.speed = 10;
     this.frameRate = window.frameRate;
-    this.waypoints = waypoints;
     this.currentWaypointIndex = 0;
+    waypoints = new ArrayList<>();
   }
 
+  /**
+   * The update method updates the bot's position and direction.
+   */
   @Override
   public void update() {
     // check if we have reached the current waypoint
     if (position.dist(waypoints.get(currentWaypointIndex)) < WIDTH) {
-      // if we have, increment to the next waypoint
+      waypointReached = true;
+      // if we have, increment to the next waypoint and update the heading
       currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.size();
     }
 
@@ -55,19 +97,29 @@ public class Bot extends Car {
     position.add(velocity);
     direction.rotate(steeringAngle);
 
-    // update the bot's position
+    // update the bots position
     super.update();
   }
-  
+
+  /**
+   * The setVelocity method sets the velocity of the bot.
+   * @param velocity the velocity of the bot
+   */
   public void setVelocity(PVector velocity) {
     this.velocity = velocity;
   }
 
-
+  /**
+   * The setSteeringAngle method sets the steering angle of the bot.
+   * @param angle the steering angle of the bot
+   */
   public void setSteeringAngle(float angle) {
     float minAngle = (float) (-PI/4);
     float maxAngle = (float) (PI/4);
     this.steeringAngle = constrain(angle, minAngle, maxAngle);
   }
 
+  public void setWaypoints(ArrayList<PVector> waypoints) {
+    this.waypoints = waypoints;
+  }
 }

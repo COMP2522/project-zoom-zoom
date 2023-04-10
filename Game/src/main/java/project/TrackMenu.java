@@ -194,16 +194,19 @@ public class TrackMenu {
   private void checkButtonClick() {
     if (track1.isLeftClicked()) {
       trackManager.setTrackChoice(1);
+      trackManager.TrackCords();
       window.startRace();
       window.menu = 4;
     }
     if (track2.isLeftClicked()) {
       trackManager.setTrackChoice(2);
+      trackManager.TrackCords();
       window.startRace();
       window.menu = 4;
     }
     if (track3.isLeftClicked()) {
       trackManager.setTrackChoice(3);
+      trackManager.TrackCords();
       window.startRace();
       window.menu = 4;
     }

@@ -10,7 +10,7 @@ Race by yourself, with bots, or against a friend!
 <b>Mike:</b> Car, Player, Parts, Car Physics, Tracks<br />
 <b>Jayden:</b> UI, Database, Sound, Menu<br />
 <b>James:</b> Controls, UI, Menu, Car<br />
-<b>Rohil:</b> Manager, Bots, Tests
+<b>Rohil:</b> Manager, Bots
 
 ## Controls
 TAB: Go back to main menu
