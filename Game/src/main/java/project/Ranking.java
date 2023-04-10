@@ -13,7 +13,7 @@ public class Ranking {
   private final GameManager window;
   private static Ranking instance;
   private PImage bg;
-  private MongoDB mongodb;
+  private Mongodb mongodb;
   private ArrayList<Long> list;
   public static boolean once = true;
   private final float halfDisplayWidth;
@@ -51,7 +51,7 @@ public class Ranking {
   public void setUp() {
     bg = window.loadImage("Game/images/BGImage.png");
     if (once) {
-      mongodb = MongoDB.getInstance();
+      mongodb = Mongodb.getInstance();
       for (Document data : mongodb.queryTop5()) {
         list.add((Long) data.get("time"));
       }

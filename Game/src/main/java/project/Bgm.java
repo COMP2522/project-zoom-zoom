@@ -19,6 +19,12 @@ public class Bgm {
 
   private Bgm() {}
 
+  /**
+   * The getInstance method returns the singleton instance of the BGM class.
+   * If the instance does not exist, it is created.
+   *
+   * @return The singleton instance of the BGM class.
+   */
   public static Bgm getInstance() {
     if (instance == null) {
       instance = new Bgm();
@@ -30,9 +36,8 @@ public class Bgm {
    * The getBGM method loads the audio file and plays the background music.
    *
    * @param check - a boolean value indicating whether the music should be played or not
-   * @throws Exception if the audio file cannot be loaded or if there is an error playing the audio
    */
-  public void getBGM(boolean check) {
+  public void getBgm(boolean check) {
     try {
       File audioFile = new File("tokyodrift.wav");
       AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -51,7 +56,7 @@ public class Bgm {
    *
    * @param check - a boolean value indicating whether the music should be stopped or not
    */
-  public void stopBGM(boolean check) {
+  public void stopBgm(boolean check) {
     if (!check) {
       clip.close();
     }
