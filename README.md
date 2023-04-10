@@ -40,7 +40,7 @@ Shift Gear Down: <code>/</code>
 1. Run GameManager.java
 2. Click on SinglePlayer or TwoPlayer
 3. Click on the track you want to play
-4. Click on any parts you want to use
+4. Click on any parts you want to use <i>Tip: stick with the defaults at first, some parts require changing your gear ratios to run properly!</i>
 5. For TwoPlayer, player1 uses left click to select their part, while player2 uses right click
 6. To change gear ratios, check the TextBoxes section below, once set refer to step 5 to set your ratio depending on which player you are
 7. Once everything is set click Play!
