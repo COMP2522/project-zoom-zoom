@@ -3,8 +3,6 @@ package project;
 import processing.core.PConstants;
 import processing.core.PVector;
 
-import java.awt.*;
-
 /**
  * Player, creates a player sprite to be controlled by the user.
  */
@@ -249,7 +247,6 @@ public class Player extends Car {
     revs = speed * gearRatio;
     xpos += speed / POSITION_LIMITER * Math.cos(direction);
     ypos += speed / POSITION_LIMITER * Math.sin(direction);
-
   }
 
   /**
@@ -279,14 +276,26 @@ public class Player extends Car {
                         || (xpos > 950 && ypos > 600))
                         && speed > MIN_GRASS_SPEED){
           speed -= OFF_TRACK_PENALTY;
+
         }
+        break;
       case 3:
-//        if((xpos > 1200
-//                || xpos < 100
-//                || ypos > 800
-//                || ypos < 100)
-//          ||(xpos > 750 && xpos < )
-//        )
+        if(((xpos > 1200
+                || xpos < 100
+                || ypos > 800
+                || ypos < 100)
+                ||(xpos > 700 && xpos < 900 && ypos < 350)
+                ||(xpos > 1000 && xpos < 1100 && ypos > 200 && ypos < 650)
+                ||(xpos > 200 && xpos < 1100 && ypos > 450 && ypos < 650)
+                ||(xpos > 200 && xpos < 550 && ypos > 250 && ypos < 650)
+                || (xpos > 500 && xpos < 800 && ypos > 700))
+                && speed > MIN_GRASS_SPEED
+        )
+        {
+          speed -= OFF_TRACK_PENALTY;
+        } else if (xpos > 1050 && xpos < 1075 && ypos > 250 && ypos < 450) {
+          speed = 0;
+        }
 
     }
   }

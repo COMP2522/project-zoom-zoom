@@ -1,4 +1,5 @@
 # ZOOM ZOOM
+
 ## About
 
 Zoom Zoom is a 2D top down racing game inspired by retro games with a twist... Realistic car simulator physics!
@@ -13,24 +14,25 @@ Race by yourself, with bots, or against a friend!
 
 ## Controls
 TAB: Go back to main menu
+<br/>
 
-### Default Player Controls
+### Default Player Class
 
-Player 1 <br/>
-Accelerate: W <br/>
-Brake: S <br/>
-Turn left: A <br/>
-Turn Right: D <br/>
-Shift Gear Up: Caps Lock <br/>
-Shift Gear Down: LShift
+<b>Player 1 <br/></b>
+Accelerate: <code>W</code> <br/>
+Brake: <code>S</code> <br/>
+Turn left: <code>A</code> <br/>
+Turn Right: <code>D</code> <br/>
+Shift Gear Up: <code>CAPS LOCK</code> <br/>
+Shift Gear Down: <code>LSHIFT</code>
 
-Player 2 <br/>
-Accelerate: I <br/>
-Brake: K <br/>
-Turn left: J <br/>
-Turn Right: L <br/>
-Shift Gear Up: ; <br/>
-Shift Gear Down: /
+<b>Player 2 <br/></b>
+Accelerate: <code>I</code> <br/>
+Brake: <code>K</code> <br/>
+Turn left: <code>J</code> <br/>
+Turn Right: <code>L</code> <br/>
+Shift Gear Up: <code>;</code> <br/>
+Shift Gear Down: <code>/</code>
 
 ## Instructions
 ### Running the game

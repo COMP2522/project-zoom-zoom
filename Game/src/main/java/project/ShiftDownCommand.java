@@ -6,6 +6,8 @@ package project;
  * @author James Langille
  */
 public class ShiftDownCommand extends ControlCommand {
+  public static ShiftDownCommand player1ShiftDown = new ShiftDownCommand();
+  public static ShiftDownCommand player2ShiftDown = new ShiftDownCommand();
   @Override
   public void executeP1() {
     player1.shiftDown();

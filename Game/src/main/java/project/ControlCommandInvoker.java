@@ -30,41 +30,45 @@ public class ControlCommandInvoker {
   private static int[] player2Keys = {p2Up, p2Down, p2Left,
     p2Right, p2ShiftUp, p2ShiftDown};
   /** Hash Tables for each player's controls and commands. */
-  private static Hashtable<Integer, ControlCommand> p1HashTable =
-      new Hashtable<Integer, ControlCommand>(CONTROLS);
-  private static Hashtable<Integer, ControlCommand> p2HashTable =
-      new Hashtable<Integer, ControlCommand>(CONTROLS);
+  private static Hashtable<ControlCommand, Integer> p1HashTable =
+      new Hashtable<>(CONTROLS);
+  private static Hashtable<ControlCommand, Integer> p2HashTable =
+      new Hashtable<>(CONTROLS);
   /** Arrays for each player's boolean expressions. */
   private static boolean[] player1flags = new boolean[CONTROLS];
   private static boolean[] player2flags = new boolean[CONTROLS];
+  /** Control commands. */
+  private static UpCommand player1Up = UpCommand.player1Up;
+  private static DownCommand player1Down = DownCommand.player1Down;
+  private static LeftCommand player1Left = LeftCommand.player1Left;
+  private static RightCommand player1Right = RightCommand.player1Right;
+  private static UpCommand player2Up = UpCommand.player2Up;
+  private static DownCommand player2Down = DownCommand.player2Down;
+  private static LeftCommand player2Left = LeftCommand.player2Left;
+  private static RightCommand player2Right = RightCommand.player2Right;
 
   /**
    * p1Commands, adds keycodes and movement commands to p1 hash table.
    */
   public static void p1Commands() {
-    addCommands(p1HashTable, player1Keys);
+    p1HashTable.put(UpCommand.player1Up, player1Keys[0]);
+    p1HashTable.put(DownCommand.player1Down, player1Keys[1]);
+    p1HashTable.put(LeftCommand.player1Left, player1Keys[2]);
+    p1HashTable.put(RightCommand.player1Right, player1Keys[3]);
+    p1HashTable.put(ShiftUpCommand.player1ShiftUp, player1Keys[4]);
+    p1HashTable.put(ShiftDownCommand.player1ShiftDown, player1Keys[5]);
   }
 
   /**
    * p2Commands, adds keycodes and movement commands to p2 hash table.
    */
   public static void p2Commands() {
-    addCommands(p2HashTable, player2Keys);
-  }
-
-  /**
-   * addCommands, adds keycodes and movement commands to each players hash table.
-   *
-   * @param table hashtable for player key/command
-   * @param keys array of player keys
-   */
-  private static void addCommands(Hashtable<Integer, ControlCommand> table, int[] keys) {
-    table.put(keys[0], new UpCommand());
-    table.put(keys[1], new DownCommand());
-    table.put(keys[2], new LeftCommand());
-    table.put(keys[3], new RightCommand());
-    table.put(keys[4], new ShiftUpCommand());
-    table.put(keys[5], new ShiftDownCommand());
+    p2HashTable.put(UpCommand.player2Up, player2Keys[0]);
+    p2HashTable.put(DownCommand.player2Down, player2Keys[1]);
+    p2HashTable.put(LeftCommand.player2Left, player2Keys[2]);
+    p2HashTable.put(RightCommand.player2Right, player2Keys[3]);
+    p2HashTable.put(ShiftUpCommand.player2ShiftUp, player2Keys[4]);
+    p2HashTable.put(ShiftDownCommand.player2ShiftDown, player2Keys[5]);
   }
 
   /**
@@ -124,20 +128,34 @@ public class ControlCommandInvoker {
   }
 
   /**
-   * shiftGears, allows users to shift their car gears up or down
+   * shiftPlayer1Gears, allows player1 to shift their car gears up or down
    * depending on keycode.
    *
    * @param keycode key press as int value
    */
-  public static void shiftGears(int keycode) {
-    if (keycode == p1ShiftUp) {
-      p1HashTable.get(p1ShiftUp).executeP1();
-    } else if (keycode == p1ShiftDown) {
-      p1HashTable.get(p1ShiftDown).executeP1();
-    } else if (keycode == p2ShiftUp) {
-      p2HashTable.get(p2ShiftUp).executeP2();
-    } else if (keycode == p2ShiftDown) {
-      p2HashTable.get(p2ShiftDown).executeP2();
+  public static void shiftPlayer1Gears(int keycode) {
+    ShiftUpCommand p1GearUp = ShiftUpCommand.player1ShiftUp;
+    ShiftDownCommand p1GearDown = ShiftDownCommand.player1ShiftDown;
+    if (keycode == p1HashTable.get(p1GearUp)) {
+      p1GearUp.executeP1();
+    } else if (keycode == p1HashTable.get(p1GearDown)) {
+      p1GearDown.executeP1();
+    }
+  }
+
+  /**
+   * shiftPlayer2Gears, allows player2 to shift their car gears up or down
+   * depending on keycode.
+   *
+   * @param keycode key press as int value
+   */
+  public static void shiftPlayer2Gears(int keycode) {
+    ShiftUpCommand p2GearUp = ShiftUpCommand.player2ShiftUp;
+    ShiftDownCommand p2GearDown = ShiftDownCommand.player2ShiftDown;
+    if (keycode == p2HashTable.get(p2GearUp)) {
+      p2GearUp.executeP2();
+    } else if (keycode == p2HashTable.get(p2GearDown)) {
+      p2GearDown.executeP2();
     }
   }
 
@@ -146,16 +164,16 @@ public class ControlCommandInvoker {
    */
   public static void player1Movement() {
     if (player1flags[0]) {
-      p1HashTable.get(p1Up).executeP1();
+      player1Up.executeP1();
     }
     if (player1flags[1]) {
-      p1HashTable.get(p1Down).executeP1();
+      player1Down.executeP1();
     }
     if (player1flags[2]) {
-      p1HashTable.get(p1Left).executeP1();
+      player1Left.executeP1();
     }
     if (player1flags[3]) {
-      p1HashTable.get(p1Right).executeP1();
+      player1Right.executeP1();
     }
   }
 
@@ -164,16 +182,16 @@ public class ControlCommandInvoker {
    */
   public static void player2Movement() {
     if (player2flags[0]) {
-      p2HashTable.get(p2Up).executeP2();
+      player2Up.executeP2();
     }
     if (player2flags[1]) {
-      p2HashTable.get(p2Down).executeP2();
+      player2Down.executeP2();
     }
     if (player2flags[2]) {
-      p2HashTable.get(p2Left).executeP2();
+      player2Left.executeP2();
     }
     if (player2flags[3]) {
-      p2HashTable.get(p2Right).executeP2();
+      player2Right.executeP2();
     }
   }
 
@@ -194,7 +212,35 @@ public class ControlCommandInvoker {
    * @param keycode new keycode
    */
   public static void setPlayer1Keys(int index, int keycode) {
-    player1Keys[index] = keycode;
+    switch (index) {
+      case 0 -> {
+        p1HashTable.remove(player1Up, player1Keys[index]);
+        player1Keys[index] = keycode;
+        p1HashTable.put(player1Up, player1Keys[index]);
+        break;
+      }
+      case 1 -> {
+        p1HashTable.remove(player1Down, player1Keys[index]);
+        player1Keys[index] = keycode;
+        p1HashTable.put(player1Down, player1Keys[index]);
+        break;
+      }
+      case 2 -> {
+        p1HashTable.remove(player1Left, player1Keys[index]);
+        player1Keys[index] = keycode;
+        p1HashTable.put(player1Left, player1Keys[index]);
+        break;
+      }
+      case 3 -> {
+        p1HashTable.remove(player1Right, player1Keys[index]);
+        player1Keys[index] = keycode;
+        p1HashTable.put(player1Right, player1Keys[index]);
+        break;
+      }
+      default -> {
+        break;
+      }
+    }
   }
 
   /**
@@ -214,6 +260,34 @@ public class ControlCommandInvoker {
    * @param keycode new keycode
    */
   public static void setPlayer2Keys(int index, int keycode) {
-    player2Keys[index] = keycode;
+    switch (index) {
+      case 0 -> {
+        p2HashTable.remove(player2Up, player2Keys[index]);
+        player2Keys[index] = keycode;
+        p2HashTable.put(player2Up, player2Keys[index]);
+        break;
+      }
+      case 1 -> {
+        p2HashTable.remove(player2Down, player2Keys[index]);
+        player2Keys[index] = keycode;
+        p2HashTable.put(player2Down, player2Keys[index]);
+        break;
+      }
+      case 2 -> {
+        p2HashTable.remove(player2Left, player2Keys[index]);
+        player2Keys[index] = keycode;
+        p2HashTable.put(player2Left, player2Keys[index]);
+        break;
+      }
+      case 3 -> {
+        p2HashTable.remove(player2Right, player2Keys[index]);
+        player2Keys[index] = keycode;
+        p2HashTable.put(player2Right, player2Keys[index]);
+        break;
+      }
+      default -> {
+        break;
+      }
+    }
   }
 }

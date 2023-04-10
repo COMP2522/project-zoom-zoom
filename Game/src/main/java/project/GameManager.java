@@ -4,9 +4,6 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
-import java.awt.*;
-import java.util.ArrayList;
-
 /**
  * Game manager class to indicate whether the game is running or not.
  *
@@ -148,7 +145,10 @@ public class GameManager extends PApplet {
     if (menu == 1 || menu == 2) {
       ControlCommandInvoker.setP1MovementTrue(keyCode);
       ControlCommandInvoker.setP2MovementTrue(keyCode);
-      ControlCommandInvoker.shiftGears(keyCode);
+      ControlCommandInvoker.shiftPlayer1Gears(keyCode);
+      if (gameType == 2) {
+        ControlCommandInvoker.shiftPlayer2Gears(keyCode);
+      }
     }
     // Scuffed handling for textbox in control menu
     if (isEditing && menu == 3) {
