@@ -6,6 +6,8 @@ package project;
  * @author James Langille
  */
 public class DownCommand extends ControlCommand {
+  public static DownCommand player1Down = new DownCommand();
+  public static DownCommand player2Down = new DownCommand();
   @Override
   public void executeP1() {
     player1.brake();

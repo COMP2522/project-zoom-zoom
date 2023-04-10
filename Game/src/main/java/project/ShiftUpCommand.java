@@ -6,6 +6,8 @@ package project;
  * @author James Langille
  */
 public class ShiftUpCommand extends ControlCommand {
+  public static ShiftUpCommand player1ShiftUp = new ShiftUpCommand();
+  public static ShiftUpCommand player2ShiftUp = new ShiftUpCommand();
   @Override
   public void executeP1() {
     player1.shiftUp();
