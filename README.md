@@ -2,7 +2,7 @@
 ## About
 
 Zoom Zoom is a 2D top down racing game inspired by retro games with a twist... Realistic car simulator physics!
-Race by yourself, with bots, or against a friend in the three tracks!
+Race by yourself, with bots, or against a friend!
 
 ## Developers
 <b>Max V:</b> Tracks, Track Manager<br />
