@@ -1,35 +1,22 @@
-# <div class="title">ZOOM ZOOM<div>
-<style>
-    .title {
-        text-align: center;
-        font-size: 50px;
-        font-family: "Courier New", Courier, monospace;
-        color: #0000FF;
-    }
-    .subtitle {
-        text-align: center;
-        font-size: 30px;
-        font-family: "Courier New", Courier, monospace;
-        color: #FF0000;
-    }
-</style>
-## <div class="subtitle">About</div>
+# ZOOM ZOOM
+
+## About
 
 Zoom Zoom is a 2D top down racing game inspired by retro games with a twist... Realistic car simulator physics!
 Race by yourself, with bots, or against a friend!
 
-## <div class="subtitle">Developers</div>
+## Developers
 <b>Max V:</b> Tracks, Track Manager<br />
 <b>Mike:</b> Car, Player, Parts, Car Physics, Tracks<br />
 <b>Jayden:</b> UI, Database, Sound, Menu<br />
 <b>James:</b> Controls, UI, Menu, Car<br />
 <b>Rohil:</b> Manager, Bots, Tests
 
-## <div class="subtitle">Controls</div>
+## Controls
 TAB: Go back to main menu
 <br/>
 
-### <div class="subtitle">Default Player Class</div>
+### Default Player Class
 
 <b>Player 1 <br/></b>
 Accelerate: <code>W</code> <br/>
@@ -47,7 +34,7 @@ Turn Right: <code>L</code> <br/>
 Shift Gear Up: <code>;</code> <br/>
 Shift Gear Down: <code>/</code>
 
-## <div class="subtitle">Instructions</div>
+## Instructions
 ### Running the game
 
 1. Run GameManager.java
