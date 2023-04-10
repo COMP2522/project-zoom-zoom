@@ -104,14 +104,11 @@ public class CarModMenuButtons implements Drawable {
         SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
         singlePlayer.init1Player(player1);
         window.menu = 1;
-        player1.setTrack(window.trackManager.getTrackChoice());
       } else if (window.gameType == 2) {
         // Initialize two player game
         TwoPlayers twoPlayers = TwoPlayers.getInstance(window);
         twoPlayers.init2Player(player1, player2);
         window.menu = 2;
-        player1.setTrack(window.trackManager.getTrackChoice());
-        player2.setTrack(window.trackManager.getTrackChoice());
       }
     }
   }

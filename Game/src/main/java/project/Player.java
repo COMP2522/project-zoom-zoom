@@ -223,8 +223,11 @@ public class Player extends Car {
       window.textSize(100);
       window.text(bestTime, window.displayWidth / 2, window.displayHeight / 2);
       window.popStyle();
-
     }
+    window.pushStyle();
+    window.fill(255, 255, 255);
+    window.ellipse(xpos, ypos, 50, 50);
+    window.popStyle();
 
   }
 
@@ -253,46 +256,16 @@ public class Player extends Car {
   }
 
   /**
-   * Checks if the car is within the bounds of the track
+   * Modifies speed if the car is outside the bounds of the track
+   * and over maximum grass speed.
    */
   public void onTrack(){
-    switch (track) {
-      case 1:
-        if ((
-                xpos > 1300
-                        || xpos < 100
-                        || ypos > 800
-                        || ypos < 100
-                        || (xpos > 300 && xpos < 1100 && ypos > 300 && ypos < 600))
-                && (speed > MIN_GRASS_SPEED)) {
-          speed -= OFF_TRACK_PENALTY;
-        }
-        break;
-      case 2:
-        if (
-                (xpos > 1250
-                        || xpos < 100
-                        || ypos > 800
-                        || ypos < 100
-                        || (xpos > 200 && xpos < 1100 && ypos > 250 && ypos < 500 )
-                        || (xpos > 200 && xpos < 800 && ypos > 250 && ypos < 700)
-                        || (xpos > 950 && ypos > 600))
-                        && speed > MIN_GRASS_SPEED){
-          speed -= OFF_TRACK_PENALTY;
-        }
-      case 3:
-//        if((xpos > 1200
-//                || xpos < 100
-//                || ypos > 800
-//                || ypos < 100)
-//          ||(xpos > 750 && xpos < )
-//        )
-
+    if (!trackManager.isOnTrack((int) xpos, (int) ypos) && (speed > MIN_GRASS_SPEED)) {
+      speed -= OFF_TRACK_PENALTY;
     }
   }
 
   public void lap(){
-
     if(xpos > 300 && xpos < 350 && ypos < 350){
       if(!start){
         start = true;
