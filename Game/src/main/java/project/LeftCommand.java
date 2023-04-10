@@ -6,6 +6,8 @@ package project;
  * @author James Langille
  */
 public class LeftCommand extends ControlCommand {
+  public static LeftCommand player1Left = new LeftCommand();
+  public static LeftCommand player2Left = new LeftCommand();
   @Override
   public void executeP1() {
     player1.turn(-1);
