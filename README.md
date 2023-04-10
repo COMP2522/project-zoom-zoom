@@ -1,38 +1,53 @@
-# ZOOM ZOOM
-## About
+# <div class="title">ZOOM ZOOM<div>
+<style>
+    .title {
+        text-align: center;
+        font-size: 50px;
+        font-family: "Courier New", Courier, monospace;
+        color: #0000FF;
+    }
+    .subtitle {
+        text-align: center;
+        font-size: 30px;
+        font-family: "Courier New", Courier, monospace;
+        color: #FF0000;
+    }
+</style>
+## <div class="subtitle">About</div>
 
 Zoom Zoom is a 2D top down racing game inspired by retro games with a twist... Realistic car simulator physics!
 Race by yourself, with bots, or against a friend!
 
-## Developers
+## <div class="subtitle">Developers</div>
 <b>Max V:</b> Tracks, Track Manager<br />
 <b>Mike:</b> Car, Player, Parts, Car Physics, Tracks<br />
 <b>Jayden:</b> UI, Database, Sound, Menu<br />
 <b>James:</b> Controls, UI, Menu, Car<br />
 <b>Rohil:</b> Manager, Bots, Tests
 
-## Controls
+## <div class="subtitle">Controls</div>
 TAB: Go back to main menu
+<br/>
 
-### Default Player Controls
+### <div class="subtitle">Default Player Class</div>
 
-Player 1 <br/>
-Accelerate: W <br/>
-Brake: S <br/>
-Turn left: A <br/>
-Turn Right: D <br/>
-Shift Gear Up: Caps Lock <br/>
-Shift Gear Down: LShift
+<b>Player 1 <br/></b>
+Accelerate: <code>W</code> <br/>
+Brake: <code>S</code> <br/>
+Turn left: <code>A</code> <br/>
+Turn Right: <code>D</code> <br/>
+Shift Gear Up: <code>CAPS LOCK</code> <br/>
+Shift Gear Down: <code>LSHIFT</code>
 
-Player 2 <br/>
-Accelerate: I <br/>
-Brake: K <br/>
-Turn left: J <br/>
-Turn Right: L <br/>
-Shift Gear Up: ; <br/>
-Shift Gear Down: /
+<b>Player 2 <br/></b>
+Accelerate: <code>I</code> <br/>
+Brake: <code>K</code> <br/>
+Turn left: <code>J</code> <br/>
+Turn Right: <code>L</code> <br/>
+Shift Gear Up: <code>;</code> <br/>
+Shift Gear Down: <code>/</code>
 
-## Instructions
+## <div class="subtitle">Instructions</div>
 ### Running the game
 
 1. Run GameManager.java
