@@ -14,6 +14,7 @@ public class CarModMenuButtons implements Drawable {
   private Button saveCarBuild;
   // Other data
   private GameManager window;
+  private static Bot bot;
   private static CarModMenuButtons instance;
   // Player objects
   private Player player1 = GameManager.player1;
@@ -27,8 +28,9 @@ public class CarModMenuButtons implements Drawable {
    *
    * @param window of screen
    */
-  private CarModMenuButtons(GameManager window) {
+  private CarModMenuButtons(GameManager window, Bot bot) {
     this.window = window;
+    this.bot = bot;
   }
 
   /**
@@ -37,9 +39,9 @@ public class CarModMenuButtons implements Drawable {
    * @param window of screen
    * @return singleton object of class
    */
-  public static CarModMenuButtons getInstance(GameManager window) {
+  public static CarModMenuButtons getInstance(GameManager window, Bot bot) {
     if (instance == null) {
-      instance = new CarModMenuButtons(window);
+      instance = new CarModMenuButtons(window, bot);
     }
     return instance;
   }
@@ -101,7 +103,7 @@ public class CarModMenuButtons implements Drawable {
     if (startRace.isLeftClicked()) {
       if (window.gameType == 1) {
         // Initialize one player game
-        SinglePlayer singlePlayer = SinglePlayer.getInstance(window);
+        SinglePlayer singlePlayer = SinglePlayer.getInstance(window, bot);
         singlePlayer.init1Player(player1);
         window.menu = 1;
         player1.setTrack(window.trackManager.getTrackChoice());

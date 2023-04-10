@@ -18,6 +18,7 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'library', include: ['*.jar'])
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.testng:testng:7.1.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'org.mongodb:mongodb-driver-sync:4.9.0'
 }

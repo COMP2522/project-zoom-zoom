@@ -18,6 +18,9 @@ public class TrackManager implements Drawable {
   /** Active window. */
   private GameManager window;
 
+  /** Bot object. */
+  private static Bot bot;
+
   /** Color of the grass. */
   private Color grassColor = new Color(0, 132, 0);
 
@@ -40,8 +43,9 @@ public class TrackManager implements Drawable {
    *
    * @param window Current window
    */
-  public TrackManager(GameManager window) {
+  public TrackManager(GameManager window, Bot bot) {
     this.window = window;
+    this.bot = bot;
   }
 
   /** Initializes track manager. */
@@ -99,6 +103,35 @@ public class TrackManager implements Drawable {
         window.fill(255,235,205);
         window.rect(1050, 250, 25, 200);
         window.popStyle();
+    }
+  }
+
+  /** Returns the waypoints for the bots based on the track. */
+  public void TrackCords(){
+    switch (trackChoice){
+      case 1:
+        bot.waypoints.add(new PVector(1200, 225));
+        bot.waypoints.add(new PVector(1150, 800));
+        bot.waypoints.add(new PVector(100, 750));
+        bot.waypoints.add(new PVector(150, 150));
+        break;
+      case 2:
+        bot.waypoints.add(new PVector(1200, 200));
+        bot.waypoints.add(new PVector(1150, 600));
+        bot.waypoints.add(new PVector(800, 550));
+        bot.waypoints.add(new PVector(850, 800));
+        bot.waypoints.add(new PVector(100, 750));
+        bot.waypoints.add(new PVector(125, 125));
+        break;
+      case 3:
+        bot.waypoints.add(new PVector(600, 225));
+        bot.waypoints.add(new PVector(600, 450));
+        bot.waypoints.add(new PVector(1000, 400));
+        bot.waypoints.add(new PVector(950, 100));
+        bot.waypoints.add(new PVector(1200, 150));
+        bot.waypoints.add(new PVector(1150, 700));
+        bot.waypoints.add(new PVector(100, 650));
+        bot.waypoints.add(new PVector(150, 100));
     }
   }
 }

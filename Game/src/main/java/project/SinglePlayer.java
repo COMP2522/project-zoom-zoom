@@ -25,7 +25,7 @@ public class SinglePlayer implements Countdownable {
   /**
    * The bot instance variable represents the semi-computer-controlled player in the game.
    */
-  Bot bot;
+  static Bot bot;
 
   /**
    * The sprites instance variable represents
@@ -43,6 +43,11 @@ public class SinglePlayer implements Countdownable {
    * Image used for player 1.
    */
   private PImage player1Car;
+
+  /**
+   * Image used for the bot.
+   */
+  private PImage botImage;
 
   /**
    * The dash instance variable represents
@@ -72,8 +77,9 @@ public class SinglePlayer implements Countdownable {
    *
    * @param window The window for the current game.
    */
-  private SinglePlayer(GameManager window) {
+  private SinglePlayer(GameManager window, Bot bot) {
     this.window = window;
+    this.bot = bot;
   }
 
   /**
@@ -84,9 +90,9 @@ public class SinglePlayer implements Countdownable {
    *
    * @return The singleton instance of the SinglePlayer class.
    */
-  public static SinglePlayer getInstance(GameManager window) {
+  public static SinglePlayer getInstance(GameManager window, Bot bot) {
     if (instance == null) {
-      instance = new SinglePlayer(window);
+      instance = new SinglePlayer(window, bot);
     }
     return instance;
   }
@@ -104,32 +110,11 @@ public class SinglePlayer implements Countdownable {
     player1 = p1;
     ControlCommandInvoker.p1Commands();
     player1Car = window.loadImage("Game/images/Player1Car.png");
-
-    ArrayList<PVector> waypoints = new ArrayList<>();
-    // Waypoints for the first track
-    waypoints.add(new PVector(1100, 100));
-    waypoints.add(new PVector(1150, 150));
-    waypoints.add(new PVector(1200, 170));
-    waypoints.add(new PVector(1250, 180));
-    waypoints.add(new PVector(1200, 600));
-    waypoints.add(new PVector(1100, 650));
-    waypoints.add(new PVector(150, 650));
-    waypoints.add(new PVector(100, 600));
-    waypoints.add(new PVector(100, 550));
-    waypoints.add(new PVector(100, 450));
-    waypoints.add(new PVector(100, 90));
-    waypoints.add(new PVector(120, 100));
+    botImage = window.loadImage("Game/images/Bot1.png");
 
 
-    // Add the AI player
-    bot = new Bot(
-      new PVector(100, 100),
-      new PVector(50, 1),
-      0.1F,
-      new Color(255, 0, 0),
-      window,
-      waypoints,
-      "B");
+
+
     sprites.add(bot);
     dash = new Dashboard(window, player1);
   }
@@ -192,6 +177,15 @@ public class SinglePlayer implements Countdownable {
     window.imageMode(PConstants.CENTER);
     window.rotate((float) player1.direction);
     window.image(player1Car, (float) 0, (float) 12.5);
+    window.popMatrix();
+
+    window.pushMatrix();
+    window.translate(bot.position.x, (bot.position.y));
+    window.imageMode(PConstants.CENTER);
+    if (bot.waypointReached) {
+      botImage = window.loadImage("Game/images/Bot2.png");
+    }
+    window.image(botImage, (float) 0, (float) 12.5);
     window.popMatrix();
   }
 

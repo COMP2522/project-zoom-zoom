@@ -77,7 +77,6 @@ public class GameManager extends PApplet {
   public void setup() {
     bgm = Bgm.getInstance();
     mongoDB = Mongodb.getInstance();
-    trackManager = new TrackManager(this);
 
     stopwatch = Stopwatch.getInstance(this);
 
@@ -91,6 +90,16 @@ public class GameManager extends PApplet {
             new PVector(50, 1),
             0.1F,
             this, "2", stopwatch);
+
+    // Add the AI player
+    bot = new Bot(
+      new PVector(100, 100), // Default location, overridden during startRace
+      new PVector(50, 1),
+      0.1F,
+      this,
+      "B");
+
+    trackManager = new TrackManager(this, bot);
   }
 
   public void startRace() {
@@ -217,7 +226,7 @@ public class GameManager extends PApplet {
         mainMenu.draw();
       }
       case 1 -> { // 1 Player game
-        singlePlayer = SinglePlayer.getInstance(this);
+        singlePlayer = SinglePlayer.getInstance(this, bot);
         trackManager.draw();
         singlePlayer.draw();
       }
@@ -233,7 +242,7 @@ public class GameManager extends PApplet {
         controlMenu.draw();
       }
       case 4 -> { // Car modification menu
-        carModMenu = CarModMenu.getInstance(this);
+        carModMenu = CarModMenu.getInstance(this, bot);
         carModMenu.setup();
         carModMenu.draw();
       }
