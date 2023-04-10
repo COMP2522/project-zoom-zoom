@@ -143,4 +143,8 @@ public class Stopwatch {
   public void setShowTimer(boolean showTimer) {
     this.showTimer = showTimer;
   }
+
+    public long getCurrentTime() {
+    return  currentTime;
+    }
 }

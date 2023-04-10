@@ -77,16 +77,18 @@ public class GameManager extends PApplet {
     }
     trackManager = new TrackManager(this);
 
+    stopwatch = Stopwatch.getInstance(this);
+
     player1 = new Player(
             new PVector(100, 100), // Default location, overridden during startRace
             new PVector(50, 1),
             0.1F,
-            this, "1");
+            this, "1", stopwatch);
     player2 = new Player(
             new PVector(100, 100), // Default location, overridden during startRace
             new PVector(50, 1),
             0.1F,
-            this, "2");
+            this, "2", stopwatch);
   }
 
   public void startRace() {

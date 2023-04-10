@@ -182,7 +182,7 @@ public class SinglePlayer implements Countdownable {
    */
   public void drawImage() {
     window.pushMatrix();
-    window.translate((player1.position.x + Car.WIDTH) / 2, (player1.position.y + Car.HEIGHT) / 2);
+    window.translate((player1.xpos), (player1.ypos));
     window.imageMode(PConstants.CENTER);
     window.rotate((float) player1.direction);
     window.image(player1Car, (float) 0, (float) 12.5);
