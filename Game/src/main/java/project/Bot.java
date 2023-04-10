@@ -63,7 +63,7 @@ public class Bot extends Car {
     this.direction = direction;
     this.steeringAngle = 0;
     this.pid = new PID(0.1, 0.1, 0.1);
-    this.speed = 10;
+    this.speed = 3;
     this.frameRate = window.frameRate;
     this.currentWaypointIndex = 0;
     waypoints = new ArrayList<>();
