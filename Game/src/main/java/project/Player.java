@@ -55,7 +55,7 @@ public class Player extends Car {
   /**
    * The weight factor for various calculations.
    */
-  static final double WFACTOR = 0.001;
+  static final double WEIGHT_FACTOR = 0.001;
 
   //these are the variables working on the car
 
@@ -166,9 +166,6 @@ public class Player extends Car {
   public PartGears getGears() {
     return gears;
   }
-  public void setGear(int index, int value) {
-    gears.setGear(index, value);
-  }
 
   public PartEngine getEngine() {
     return engine;
@@ -257,10 +254,10 @@ public class Player extends Car {
       case 1:
         if ((
                 xpos > 1300
-                        || xpos < 100
-                        || ypos > 800
-                        || ypos < 100
-                        || (xpos > 300 && xpos < 1100 && ypos > 300 && ypos < 600))
+                || xpos < 100
+                || ypos > 800
+                || ypos < 100
+                || (xpos > 300 && xpos < 1100 && ypos > 300 && ypos < 600))
                 && (speed > MIN_GRASS_SPEED)) {
           speed -= OFF_TRACK_PENALTY;
         }
@@ -268,13 +265,13 @@ public class Player extends Car {
       case 2:
         if (
                 (xpos > 1250
-                        || xpos < 100
-                        || ypos > 800
-                        || ypos < 100
-                        || (xpos > 200 && xpos < 1100 && ypos > 250 && ypos < 500 )
-                        || (xpos > 200 && xpos < 800 && ypos > 250 && ypos < 700)
-                        || (xpos > 950 && ypos > 600))
-                        && speed > MIN_GRASS_SPEED){
+                 || xpos < 100
+                 || ypos > 800
+                 || ypos < 100
+                 || (xpos > 200 && xpos < 1100 && ypos > 250 && ypos < 500 )
+                 || (xpos > 200 && xpos < 800 && ypos > 250 && ypos < 700)
+                 || (xpos > 950 && ypos > 600))
+                 && speed > MIN_GRASS_SPEED){
           speed -= OFF_TRACK_PENALTY;
 
         }
@@ -294,12 +291,16 @@ public class Player extends Car {
         {
           speed -= OFF_TRACK_PENALTY;
         } else if (xpos > 1050 && xpos < 1075 && ypos > 250 && ypos < 450) {
+          //hit barrier
           speed = 0;
         }
 
     }
   }
 
+  /**
+   * Checks if the player completes a lap
+   */
   public void lap(){
 
     if(xpos > 300 && xpos < 350 && ypos < 350){
@@ -331,7 +332,7 @@ public class Player extends Car {
    */
   public void drag(){
     // Calculate the reduction in speed due to drag
-    speed -= (aero.getDrag() * DRAGFACTOR * speed * (1 + (revs / 5000))) / (weight * WFACTOR) / LIMITER;
+    speed -= (aero.getDrag() * DRAGFACTOR * speed * (1 + (revs / 5000))) / (weight * WEIGHT_FACTOR) / LIMITER;
   }
 
   /**
@@ -346,14 +347,12 @@ public class Player extends Car {
 
   public void acc(){
     // Calculate the proportionate acceleration based on engine power, revs, weight, and other factors
-    double prpacc = engine.getPower() / (Math.abs(revs - engine.getOpRevs()) * engine.getDropoff())
-            / (weight * WFACTOR) / (1 + CAMBER);
+    double possibleAcceleration = engine.getPower() / (Math.abs(revs - engine.getOpRevs()) * engine.getDropoff())
+            / (weight * WEIGHT_FACTOR) / (1 + CAMBER);
     // Cap the acceleration
-    if (prpacc > MAX_ACCELERATION) prpacc = MAX_ACCELERATION;
-    // Increase the car's speed based on the proportionate acceleration
-    speed += prpacc / LIMITER;
-    // Debugging print statement
-    //System.out.println("acc " + prpacc);
+    if (possibleAcceleration > MAX_ACCELERATION) possibleAcceleration = MAX_ACCELERATION;
+    // Increase the car's speed based on the possible acceleration
+    speed += possibleAcceleration / LIMITER;
   }
 
   public void turn(int dir){
@@ -369,8 +368,8 @@ public class Player extends Car {
     }
   }
   public void brake(){
-    if(speed - (BRAKE / weight * WFACTOR) > 0){
-      speed -= BRAKE / (weight * WFACTOR);}
+    if(speed - (BRAKE / weight * WEIGHT_FACTOR) > 0){
+      speed -= BRAKE / (weight * WEIGHT_FACTOR);}
     else speed = 0;
   }
 
