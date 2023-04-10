@@ -6,6 +6,8 @@ package project;
  * @author James Langille
  */
 public class UpCommand extends ControlCommand {
+  public static UpCommand player1Up = new UpCommand();
+  public static UpCommand player2Up = new UpCommand();
   @Override
   public void executeP1() {
     player1.acc();
