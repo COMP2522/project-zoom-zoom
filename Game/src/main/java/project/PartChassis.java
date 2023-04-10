@@ -58,27 +58,9 @@ public class PartChassis {
     return wheelBaseX;
   }
 
-  /**
-   * Sets the distance between the car's front and rear wheels (in the x direction).
-   * @param wheelBaseX The new wheelbase in the x direction.
-   */
-  public void setWheelBaseX(int wheelBaseX) {
-    this.wheelBaseX = wheelBaseX;
-  }
-
-  /**
-   * Returns the distance between the car's front and rear wheels (in the y direction).
-   * @return The wheelbase in the y direction.
-   */
   public int getWheelBaseY() {
     return wheelBaseY;
   }
 
-  /**
-   * Sets the distance between the car's left and right wheels (in the y direction).
-   * @param wheelBaseY The new wheelbase in the y direction.
-   */
-  public void setWheelBaseY(int wheelBaseY) {
-    this.wheelBaseY = wheelBaseY;
-  }
+
 }

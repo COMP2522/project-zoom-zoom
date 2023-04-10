@@ -96,7 +96,7 @@ public class TrackManager implements Drawable {
         window.rect(900, 650, -400, 50);
         window.rect(500, 650, -300, 150);
         window.rect(200, 800, -100, -550);
-        window.fill(255,235,205);
+        window.fill(205,205,165);
         window.rect(1050, 250, 25, 200);
         window.popStyle();
     }
